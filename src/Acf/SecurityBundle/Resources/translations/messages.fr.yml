@@ -1,0 +1,68 @@
+ROLE_USER: 'Utilisateur (Peux se connecter)'
+ROLE_CLIENT1: 'Client (ACF Cloud)'
+ROLE_CLIENT2: 'Client (Bulletin d''Informations)'
+ROLE_CLIENT3: 'Client (ACF Paie)'
+ROLE_ADMIN: 'Administrateur (Collaborateur)'
+ROLE_SUPERADMIN: 'Administrateur (Avancé)'
+ROLE_SUPERSUPERADMIN: 'Administrateur (Développeur)'
+
+User.username.label: 'Identifiant :'
+User.password.label: 'Mot de passe :'
+User.rememberme.label: 'Se souvenir de Moi :'
+
+_security.username.placeholder: Identifiant
+_security.password.placeholder: Mot de passe
+_security.email.placeholder: Email
+_security.tel.placeholder: 'ex: +216.71234567 ou 71234567'
+_mail.lostPassword.subject: '[Acf-expert.tn] Procédure de réinitialisation de mot de passe'
+_mail.lostPassword.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>[Acf-expert.tn] a reçu un requête pour réinitialiser votre Mot de passe.<br><br>Pour réinitialiser votre Mot de passe [Acf-expert.tn], veuiller cliquer sur le lien suivant <a href="%url%">%url%</a>.<br><br>Si vous n''êtes pas à l''origine de cette demande, Vous pouvez ignorer cette procédure.<br><br>Le lien fourni Expire après une heure.'
+_mail.register.subject: '[Acf-expert.tn] Inscription'
+_mail.register.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Bienvenue sur Acf-expert.tn.<br><br>Votre compte a bien été créé mais doit etre validé par un Administrateur.<br><br>Vos paramètres de connexion à la page <a href="%loginurl%">suivante</a> sont:<br>Identifiant: <b>%username%</b><br>Mot de Passe: <b>%password%</b>'
+_mail.register.body.admin: 'Bonjour ,<br><br>le Compte <a href="%useradminurl%">%login%</a> viens d''ètre créé et necessite d''être activé.'
+_mail.genNewPassword.subject: '[Acf-expert.tn] Votre nouveau mot de passe'
+_mail.genNewPassword.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Votre Mot de passe [Acf-expert.tn] a été réinitialisé avec succès!<br><br>Pour vous connecter en utilisant les paramètres suivants:<br><br>Identifiant : <b>%username%</b><br><br>Mot de passe: <b>%password%</b>'
+_security.username.placeholder: 'Veuillez entrer votre Identifiant'
+_security.password.placeholder: 'Veuillez entrer votre Mot de passe'
+'Bad credentials': '<b>Identifiant</b> ou <b>Mot de Passe</b> Erroné.'
+'Bad credentials.': '<b>Identifiant</b> ou <b>Mot de Passe</b> Erroné.'
+_security.lostPassword: 'Veuillez entrer votre <strong>Identifiant</strong> pour recevoir un lien de réinitalisation par Email'
+_security.lostPassword.notfound: 'Compte inconnu "<b>%username%</b>"'
+_security.lostPassword.alreadySent: 'Ce compte a déjà une procédure de réinitialisation de mot de passe en Cours!<br>Veuillez consulter votre Boite Email.'
+_security.lostPassword.mail.newpassSent: 'Un email contenant le lien de réinitalisation a été envoyé à l''adresse suivante "<b>%mail%</b>"'
+_security.genNewPassword.errorparams1: 'Compte Inconnu.'
+_security.genNewPassword.errorparams2: 'Lien Expiré.'
+_security.genNewPassword.errorparams3: 'Code Invalide.'
+_security.genNewPassword.errorparams4: 'Lien Invalide.'
+_security.genNewPassword.ok: 'Un nouveau mot de passe a été généré et vous a été envoyé par Mail'
+_security.register.success: 'Votre Compte a été créé avec succès et les instructions ont été envoyées à l''adresse <b>%mail%</b>'
+_security.register.error: 'Une erreur s''est produite lors de la tentative d''Inscription'
+
+pagetitle.security.login: 'Identification'
+pagetitle.security.login.txt: 'Identification'
+pagetitle.security.lostPassword: 'Mot de passe Perdu'
+pagetitle.security.lostPassword.txt: 'Récupération de mot de passe'
+pagetitle.security.register: 'Inscription'
+pagetitle.security.register.txt: 'Création d''un Nouveau Compte ACF'
+
+# breadcrumb
+
+breadcrumb.home: Acceuil
+breadcrumb.profile: Mon Profil
+pagetitle.profile: Mon Profil Utilisateur
+pagetitle.profile.txt: Mon Profil Utilisateur
+
+Profile.tab.overview: Détails
+Profile.tab.edit: Edition
+Profile.tlabel.overview: 'Aperçu des détails de mon Profil'
+Profile.tlabel.editAvatar: 'Modification de mon Avatar'
+Profile.tlabel.editAvatar.crop: 'Selectionner la partie visible'
+Profile.tlabel.editProfile: 'Modification des détails de mon Profil'
+Profile.tlabel.editPreferedLang: 'Modification du Paramètre de Langue'
+Profile.tlabel.editEmail: 'Modification de mon Email'
+Profile.tlabel.editPassword: 'Modification de mon Mot de passe'
+Profile.edit.success: 'Succès de la modification de votre Profile'
+Profile.edit.failure: 'Echec de la modification de votre Profile'
+
+Agenda.chooseDate.label: 'Allez à :'
+
+menu.newuser: Inscription

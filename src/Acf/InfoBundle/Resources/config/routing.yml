@@ -1,0 +1,11 @@
+_info_homepage:
+    path:     /
+    defaults: { _controller: "AcfInfoBundle:Default:index" }
+
+_info_bulletinInfo_editGet:
+    path:     /bulletinInfo/{uid}
+    defaults: { _controller: "AcfInfoBundle:Default:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+

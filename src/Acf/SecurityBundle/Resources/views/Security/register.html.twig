@@ -1,0 +1,76 @@
+{%extends 'AcfSecurityBundle::security.html.twig'%}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.3.1.js')}}"></script>
+{%if app.request.locale != 'en'%}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.3.1.'~app.request.locale~'.js')}}"></script>
+{% endif %}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+
+	$('#NewUserForm_birthday').datetimepicker({
+		weekStart: 1,
+		startView: 4,
+		minView: 2,
+		autoclose: true,
+		todayHighlight: true,
+		language: "{{app.request.locale}}",
+		format: 'yyyy-mm-dd'
+	});
+
+	$('#NewUserForm_sexe').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#NewUserForm_preferedLang').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect:true});
+
+	$('#NewUserForm_country').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect:true});
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block content%}
+{{form_start(NewUserForm, {'method':'POST', 'action': path('_security_register_post'), 'style': 'horizontal'})}}
+<div class="login-box-body">
+	<img class="img" src="{{asset('bundles/acfres/images/logo_acf_footer.jpg')}}" alt="{{ sitename }}" style="height: 100px;">
+	{%if pagetitle is defined%}<hr><h1 class="text-center">{{pagetitle|raw}}</h1><hr>{%endif%}
+	{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': false }%}
+	{{form_row(NewUserForm.username, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.username.placeholder'}, 'input_group': {'append': faIco('user')} })}}
+	{{form_row(NewUserForm.email, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.email.placeholder'}, 'input_group': {'append': faIco('envelope')} })}}
+	<hr>
+	{{form_row(NewUserForm.sexe, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('male')~'/'~faIco('female')} })}}
+	{{form_row(NewUserForm.lastName, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('info-circle')} })}}
+	{{form_row(NewUserForm.firstName, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('info-circle')} })}}
+	<hr>
+	{{form_row(NewUserForm.preferedLang, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('language')} })}}
+	<hr>
+	{{form_row(NewUserForm.phone, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.tel.placeholder'}, 'input_group': {'append': faIco('phone')} })}}
+	{{form_row(NewUserForm.mobile, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.tel.placeholder'}, 'input_group': {'append': faIco('mobile')} })}}
+	<hr>
+	{{form_row(NewUserForm.birthday, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('calendar')} })}}
+	<hr>
+	{{form_row(NewUserForm.streetNum, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('map-marker')} })}}
+	{{form_row(NewUserForm.address, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('street-view')} })}}
+	{{form_row(NewUserForm.address2, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('street-view')} })}}
+	{{form_row(NewUserForm.town, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('map-pin')} })}}
+	{{form_row(NewUserForm.zipCode, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('location-arrow')} })}}
+	{{form_row(NewUserForm.country, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('globe')} })}}
+	<hr>
+	<div class="form-group">
+		<div class="col-lg-offset-4 col-lg-2">
+			<button class="btn-primary btn" type="submit">{{faIco('sign-in')}} {{'action.btnRegister'|trans|raw}}</button>
+		</div>
+		<div class="col-lg-offset-3 col-lg-2">
+			<button class="btn-warning btn" type="reset">{{faIco('ban')}} {{'action.btnCancel'|trans|raw}}</button>
+		</div>
+	</div>
+	<hr>
+	<p><a href="{{path('_security_login')}}">{{faIco('user')}} {{ 'menu.login'|trans }}</a></p>
+	<p><a href="{{path('_security_lost_password')}}">{{faIco('envelope')}} {{ 'menu.lostpassword'|trans }}</a></p>
+	<p><a href="{{path('_front_homepage')}}">{{faIco('home')}} {{ 'menu.home'|trans }}</a></p>
+</div>
+{{form_end(NewUserForm)}}
+{%endblock content%}

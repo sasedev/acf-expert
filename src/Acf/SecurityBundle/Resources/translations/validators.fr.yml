@@ -1,0 +1,2 @@
+profile.oldPassword.incorrect: 'Ancien mot de passe invalide'
+profile.newPassword.repeat.notequal: 'Les deux mot de passe ne correspondent pas'

@@ -1,0 +1,311 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	{% if companyUser.editSuppliers == constant('CAN', companyUser) %}
+	$('#SupplierUpdateForm_country').chosen({width: "100%", disable_search_threshold: 10});
+
+	var isSupplierMoralType = $('input[name="SupplierUpdateForm\\[physicaltype\\]"]:checked').val();
+
+	if (isSupplierMoralType == {{constant('PHTYPE_MORAL', supplier)}}) {
+		$('#cinSupplier').hide();
+		$('#passportSupplier').hide();
+		$('#commercialRegisterSupplier').show();
+		$('#SupplierUpdateForm_cin').val('');
+		$('#SupplierUpdateForm_passport').val('');
+	} else {
+		$('#cinSupplier').show();
+		$('#passportSupplier').show();
+		$('#commercialRegisterSupplier').hide();
+		$('#SupplierUpdateForm_commercialRegister').val('');
+	}
+
+	$('input[name="SupplierUpdateForm\\[physicaltype\\]"]').change(function(){
+		if ($(this).is(':checked')) {
+			$('#cinSupplier').toggle(300);
+			$('#passportSupplier').toggle(300);
+			$('#commercialRegisterSupplier').toggle(300);
+			var pysicalTypeSupplier = $(this).val();
+			if (pysicalTypeSupplier == {{constant('PHTYPE_MORAL', supplier)}}) {
+				$('#SupplierUpdateForm_cin').val('');
+				$('#SupplierUpdateForm_passport').val('');
+			} else {
+				$('#SupplierUpdateForm_commercialRegister').val('');
+			}
+		}
+	});
+	{% endif %}
+
+	{% if companyUser.editDocs == constant('CAN', companyUser) %}
+	$('#SupplierUpdateDocsForm_docs').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+	{% endif %}
+
+	{% if companyUser.addDocs == constant('CAN', companyUser) %}
+	$("#DocNewForm_fileName").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	{% endif %}
+
+	{% if supplier.docs|length != 0 %}
+	$('#docList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		]
+	});
+	{% endif %}
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_client_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.client'|trans|raw}}</a></li>
+	<li><a href="{{ path('_client_company_editGet', {'uid': supplier.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': supplier.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_client_supplier_editGet', {'uid': supplier.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.supplier.edit'|trans({'%supplier%': supplier.label})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Supplier.tab.overview'|trans|raw}}</a></li>
+				{% if companyUser.editSuppliers == constant('CAN', companyUser) %}
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Supplier.tab.edit'|trans|raw}}</a></li>
+				{% endif %}
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'Supplier.tab.docs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Supplier.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Supplier.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_client_company_editGet', {'uid': supplier.company.id}) }}">{{supplier.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.label'|trans|raw}} :</div>
+								<div class="col-lg-9">{{supplier.label}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.number'|trans|raw}} :</div>
+								<div class="col-lg-9">{{suppliersPrefix~supplier.numberFormated}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.fisc'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.fisc is not empty%}{{supplier.fisc}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								{% if supplier.physicaltype == constant('PHTYPE_MORAL', supplier) %}
+								<div class="col-lg-3 text-right">{{'Supplier.commercialRegister'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.commercialRegister is not empty%}{{supplier.commercialRegister}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								{% else %}
+								<div class="col-lg-3 text-right">{{'Supplier.cin'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.cin is not empty%}{{supplier.cin}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.passport'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.passport is not empty%}{{supplier.passport}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								{% endif %}
+								<div class="col-lg-3 text-right">{{'Supplier.streetNum'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.streetNum is not empty%}{{supplier.streetNum}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.address'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.address is not empty%}{{supplier.address}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.address2'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.address2 is not empty%}{{supplier.address2}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.town'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.town is not empty%}{{supplier.town}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.zipCode'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.zipCode is not empty%}{{supplier.zipCode}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.country'|trans|raw}} :</div>
+								<div class="col-lg-9">{{supplier.country|country}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.phone'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.phone is not empty%}{{supplier.phone}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.mobile'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.mobile is not empty%}{{supplier.mobile}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.fax'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.fax is not empty%}{{supplier.fax}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.email'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.email is not empty%}{{supplier.email}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.otherInfos'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if supplier.otherInfos is not empty%}{{supplier.otherInfos|raw}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{supplier.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{supplier.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Supplier.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{supplier.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{supplier.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% if companyUser.editSuppliers == constant('CAN', companyUser) %}
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Supplier.tlabel.edit'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(SupplierUpdateForm, {'method':'POST', 'action': path('_client_supplier_editPost', {'uid': supplier.id}), 'style': 'horizontal'})}}
+							{{form_row(SupplierUpdateForm.label, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.number, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.fisc, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.physicaltype, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.commercialRegister, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'commercialRegisterCustomer'} })}}
+							{{form_row(SupplierUpdateForm.cin, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'cinCustomer'} })}}
+							{{form_row(SupplierUpdateForm.passport, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'passportCustomer'} })}}
+							{{form_row(SupplierUpdateForm.streetNum, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.address, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.address2, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.town, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.zipCode, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.country, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.email, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.phone, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.mobile, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.fax, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(SupplierUpdateForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(SupplierUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="Docs">
+					<div id="accordion03" class="box-group">
+						{% if companyUser.addDocs == constant('CAN', companyUser) %}
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse31" data-parent="#accordion03" data-toggle="collapse">{{'Supplier.tlabel.docs.add'|trans}}</a></h4>
+							</div>
+							<div id="collapse31" class="panel-collapse collapse{%if tabActive==3 and stabActive==1%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(DocNewForm, {'method':'POST', 'action': path('_client_supplier_editGet', {'uid': supplier.id}), 'style': 'horizontal'})}}
+									{{form_row(DocNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+									{{form_row(DocNewForm.fileName, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DocNewForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+									{{form_end(DocNewForm)}}
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						{% if companyUser.editDocs == constant('CAN', companyUser) %}
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse32" data-parent="#accordion03" data-toggle="collapse">{{'Supplier.tlabel.docs.edit'|trans}}</a></h4>
+							</div>
+							<div id="collapse32" class="panel-collapse collapse{%if tabActive==3 and stabActive==2%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(SupplierUpdateDocsForm, {'method':'POST', 'action': path('_client_supplier_editPost', {'uid': supplier.id}), 'style': 'horizontal'})}}
+									{{form_row(SupplierUpdateDocsForm.docs, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+									{{form_end(SupplierUpdateDocsForm)}}
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						<div class="panel box">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse33" data-parent="#accordion03" data-toggle="collapse">{{'Supplier.tlabel.docs.list'|trans}}</a></h4>
+							</div>
+							<div id="collapse33" class="panel-collapse collapse{%if (tabActive==3 and stabActive==3) or tabActive!=3%} in{%endif%}">
+								<div class="box-body table-responsive">
+									<table id="docList" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+												<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+												<th>{{ 'Doc.size.label'|trans|raw }}</th>
+												<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+												<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+												<th>{{ 'Doc.description.label'|trans|raw }}</th>
+												<th>{{ 'action'|trans|raw }}</th>
+											</tr>
+										</thead>
+										<tbody>
+										{% if supplier.docs|length != 0 %}
+											{% for doc in supplier.docs %}
+											<tr>
+												<td>{{ doc.originalName }}</td>
+												<td>{{ doc.mimeType }}</td>
+												<td>{%if doc.size<1024%}
+														{{doc.size}} o
+													{%elseif doc.size<(1024*1024)%}
+														{{'%.2f'|format(doc.size/1024)}} Ko
+													{%elseif doc.size<(1024*1024*1024)%}
+														{{'%.2f'|format(doc.size/1024/1024)}} Mo
+													{%else%}
+														{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+													{% endif %}
+												</td>
+												<td>{{ doc.nbrDownloads }}</td>
+												<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+												<td>{{ doc.description | raw }}</td>
+												<td>
+													<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+													<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</td>
+											</tr>
+											{% endfor %}
+										{% else %}
+											<tr>
+												<td colspan="7">{{ 'Doc.empty'|trans|raw }}</td>
+											</tr>
+										{% endif %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

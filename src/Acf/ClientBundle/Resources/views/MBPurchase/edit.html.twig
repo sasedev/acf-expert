@@ -1,0 +1,550 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.3.1.js')}}"></script>
+{%if app.request.locale != 'en'%}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.3.1.'~app.request.locale~'.js')}}"></script>
+{% endif %}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$('#BuyNewForm_dtActivation').datetimepicker({
+		weekStart: 1,
+		startView: 4,
+		minView: 2,
+		autoclose: true,
+		todayHighlight: true,
+		language: "{{app.request.locale}}",
+		format: 'yyyy-mm-dd'
+	});
+
+	$('#BuyNewForm_relation').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#BuyNewForm_withholding').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#BuyNewForm_paymentType').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#BuyNewForm_regime').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#BuyNewForm_dtPayment').datetimepicker({
+		weekStart: 1,
+		startView: 4,
+		minView: 2,
+		autoclose: true,
+		todayHighlight: true,
+		language: "{{app.request.locale}}",
+		format: 'yyyy-mm-dd'
+	});
+
+	$('#BuyNewForm_account').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#BuyNewForm_nature').chosen({width: "100%", disable_search_threshold: 10});
+
+	{% if mbpurchase.transactions|length != 0 %}
+	$('#buyList').dataTable({
+		"sScrollX":	  "100%",
+		"sScrollXInner": "150%",
+		"sScrollY":	  "250px",
+		"bScrollCollapse": true,
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if companyUser.deleteBuys == constant('CAN', companyUser) %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmBuy').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmBuy').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmBuy').modal('show');
+			});
+		}{% endif %}
+	});
+	{% endif %}
+
+	$('#chmonth').chosen({disable_search_threshold: 10});
+
+	$('#changeMonth').click(function () {
+		window.location.replace($('#chmonth').val());
+	});
+
+	$('#BuyNewForm_devise').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#BuyNewForm_vatDevise').change(function(){
+		value = $(this).val();
+		$('#BuyNewForm_vat').val(value);
+	});
+
+	$('#BuyNewForm_stampDevise').change(function(){
+		value = $(this).val();
+		$('#BuyNewForm_stamp').val(value);
+	});
+
+	$('#BuyNewForm_balanceTtcDevise').change(function(){
+		value = $(this).val();
+		$('#BuyNewForm_balanceTtc').val(value);
+	});
+
+	$('#BuyNewForm_balanceNetDevise').change(function(){
+		value = $(this).val();
+		$('#BuyNewForm_balanceNet').val(value);
+	});
+
+	var currentMoney = $('#BuyNewForm_devise').val();
+	if(currentMoney == 'TND') {
+		$('#BuyNewForm_conversionRate').val(1);
+		$('#conversionRate').hide();
+		$('#vatDevise').hide();
+		$('#stampDevise').hide();
+		$('#balanceTtcDevise').hide();
+		$('#balanceNetDevise').hide();
+		$('#vat').show();
+		$('#stamp').show();
+		$('#balanceTtc').show();
+		$('#balanceNet').show();
+	} else {
+		$('#conversionRate').show();
+		$('#vatDevise').show();
+		$('#stampDevise').show();
+		$('#balanceTtcDevise').show();
+		$('#balanceNetDevise').show();
+		$('#vat').hide();
+		$('#stamp').hide();
+		$('#balanceTtc').hide();
+		$('#balanceNet').hide();
+	}
+
+	$('#BuyNewForm_devise').change(function(){
+		value = $(this).val();
+		if ((value == 'TND' && currentMoney != 'TND') || (value != 'TND' && currentMoney == 'TND')) {
+			if (value == 'TND' && currentMoney != 'TND') {
+				$('#BuyNewForm_conversionRate').val(1);
+			}
+			$('#conversionRate').toggle(300);
+			$('#vatDevise').toggle(300);
+			$('#stampDevise').toggle(300);
+			$('#balanceTtcDevise').toggle(300);
+			$('#balanceNetDevise').toggle(300);
+			$('#vat').toggle(300);
+			$('#stamp').toggle(300);
+			$('#balanceTtc').toggle(300);
+			$('#balanceNet').toggle(300);
+		}
+		currentMoney = value;
+	});
+
+	var cntDocs = {{BuyNewForm.docs|length}};
+
+	for (nbrDocs = 0; nbrDocs< cntDocs; nbrDocs++) {
+		$('#BuyNewForm_docs_'+nbrDocs+'_fileName').fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	}
+
+	$('#addDoc').on('click', function(evt) {
+		evt.preventDefault();
+		var txttoapp = '';
+		txttoapp += '<div class="box box-success" id="BuyNewForm_docs_'+cntDocs+'">';
+			txttoapp += '<div class="box-header">';
+				txttoapp += '<div class="text-right">';
+					txttoapp += '<a class="btn btn-xs btn-danger removeDoc" id="removeDoc'+cntDocs+'">{{'Buy.docs.Delete'|trans}} {{glyphIco('trash')}}</a>&nbsp;';
+				txttoapp += '</div>';
+			txttoapp += '</div>';
+			txttoapp += '<div class="box-body">';
+				txttoapp += '<div class="form-group row">';
+					txttoapp += '<label class="control-label col-lg-3 required" for="BuyNewForm_docs_'+cntDocs+'_fileName">{{'Doc.fileName.label'|trans}}</label>';
+					txttoapp += '<div class="col-lg-8">';
+						txttoapp += '<input id="BuyNewForm_docs_'+cntDocs+'_fileName" class="form-control" widget_col="8" label_col="3" type="file" required="required" name="BuyNewForm[docs]['+cntDocs+'][fileName]">';
+					txttoapp += '</div>';
+				txttoapp += '</div>';
+				txttoapp += '<div class="form-group row">';
+					txttoapp += '<label class="control-label col-lg-3" for="BuyNewForm_docs_'+cntDocs+'_description">{{'Doc.description.label'|trans}}</label>';
+					txttoapp += '<div class="col-lg-8">';
+						txttoapp += '<textarea id="BuyNewForm_docs_'+cntDocs+'_description" class="form-control" widget_col="8" label_col="3" name="BuyNewForm[docs]['+cntDocs+'][description]"></textarea>';
+					txttoapp += '</div>';
+				txttoapp += '</div>';
+			txttoapp += '</div>';
+		txttoapp += '</div>';
+		var buydocList = $('#buydocList');
+		buydocList.append(txttoapp);
+
+		$('#BuyNewForm_docs_'+cntDocs+'_fileName').fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+		$('#removeDoc'+cntDocs).on('click', function(e) {
+			e.preventDefault();
+			$(this).parent().parent().parent().remove();
+		});
+
+		cntDocs++;
+	});
+
+	$('.removeDoc').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().parent().parent().remove();
+	});
+
+	$('#MBPurchaseUpdateDocsForm_docs').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+
+	$("#DocNewForm_fileName").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+	{% if mbpurchase.docs|length != 0 %}
+	$('#docList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		]
+	});
+	{% endif %}
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_client_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.client'|trans|raw}}</a></li>
+	<li><a href="{{ path('_client_company_editGet', {'uid': mbpurchase.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': mbpurchase.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_client_mbpurchase_editGet', {'uid': mbpurchase.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.mbpurchase.edit'|trans({'%mbpurchase%': mbpurchase.ref})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<select id="chmonth">
+			{% for month in mbpurchase.company.purchases %}
+				<option value="{{ path('_client_mbpurchase_editGet', {'uid': month.id}) }}" {% if month.id == mbpurchase.id %}selected="selected"{% endif %}>{{ month.ref }}</option>
+			{% endfor %}
+			</select>
+			<button id="changeMonth" class="btn btn-primary">{{ faIco('calendar') }} {{ 'action.changeMonth'|trans }}</button>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'MBPurchase.tab.overview'|trans|raw}}</a></li>
+				{% if companyUser.addBuys == constant('CAN', companyUser) %}
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#addBuy" data-toggle="tab">{{'MBPurchase.tab.addBuy'|trans|raw}}</a></li>
+				{% endif %}
+				<li {%if tabActive==4%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'MBPurchase.tab.docs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'MBPurchase.tlabel.overview'|trans}} {{ mbpurchase.ref }} (<a href="{{ path('_client_company_editGet', {'uid': mbpurchase.company.id}) }}">{{ mbpurchase.company.corporateName }}</a>)</h3></div>
+						<div class="box-body table-responsive">
+							<table id="buyList" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>{{ 'Buy.number.label'|trans|raw }}</th>
+										<th>{{ 'Buy.dtActivation.label'|trans|raw }}</th>
+										<th>{{ 'Buy.bill.label'|trans|raw }}</th>
+										<th>{{ 'Buy.relation.label'|trans|raw }}</th>
+										<th>{{ 'Buy.relation.number.label'|trans|raw }}</th>
+										<th>{{ 'Buy.label.label'|trans|raw }}</th>
+										<th>{{ 'Buy.balanceHt.label'|trans|raw }}</th>
+										<th>{{ 'Buy.vat.label'|trans|raw }}</th>
+										<th>{{ 'Buy.stamp.label'|trans|raw }}</th>
+										<th>{{ 'Buy.balanceTtc.label'|trans|raw }}</th>
+										<th>{{ 'Buy.regime.label'|trans|raw }}</th>
+										<th>{{ 'Buy.withholding.value.label'|trans|raw }}</th>
+										<th>{{ 'Buy.withholding.label'|trans|raw }}</th>
+										<th>{{ 'Buy.balanceNet.label'|trans|raw }}</th>
+										<th>{{ 'Buy.paymentType.label'|trans|raw }}</th>
+										<th>{{ 'Buy.dtPayment.label'|trans|raw }}</th>
+										<th>{{ 'Buy.account.label'|trans|raw }}</th>
+										<th>{{ 'Buy.nature.label'|trans|raw }}</th>
+										<th>{{ 'Buy.transactionStatus.label'|trans|raw }}</th>
+										<th>{{ 'Buy.otherInfos.label'|trans|raw }}</th>
+										<th>{{ 'action'|trans|raw }}</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% if mbpurchase.transactions|length != 0 %}
+									{% for buy in mbpurchase.transactions %}
+									<tr>
+										<td>{{ buy.number }}</td>
+										<td>{{ buy.dtActivation|date('d/m/Y') }}</td>
+										<td>{{ buy.bill }}</td>
+										<td>{{ buy.relation.label }}</td>
+										<td>{{ suppliersPrefix~buy.relation.numberFormated }}</td>
+										<td>{{ buy.label }}</td>
+										<td>{%set balanceHt = buy.balanceTtc - buy.stamp - buy.vat%}{{ balanceHt|number_format(3, '.', '') }}</td>
+										<td>{{ buy.vat|number_format(3, '.', '') }}</td>
+										<td>{{ buy.stamp|number_format(3, '.', '') }}</td>
+										<td>{{ buy.balanceTtc|number_format(3, '.', '') }}</td>
+										<td>{{ ('Buy.regime.'~buy.regime)|trans }}</td>
+										<td>{{ buy.withholding.value |number_format(2, '.', '')}}%</td>
+										<td>{%set withholding = buy.balanceTtc - buy.balanceNet%}{{ withholding|number_format(3, '.', '') }}</td>
+										<td>{{ buy.balanceNet|number_format(3, '.', '') }}</td>
+										<td>{{ ('Transaction.paymentType.'~buy.paymentType)|trans }}</td>
+										<td>{{ buy.dtPayment|date('d/m/Y') }}</td>
+										<td>{{ buy.account.label }}</td>
+										<td>{% if buy.nature is not null%} {{ buy.nature.label }}{% else %}ACHATS DE MARCHANDISES{% endif %}</td>
+										<td>{{ ('Transaction.transactionStatus.'~buy.transactionStatus)|trans }}</td>
+										<td>{{ buy.otherInfos }}</td>
+										<td>
+											<a class="btn btn-sm btn-info" href="{{path('_client_buy_editGet',{'uid':buy.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+											{% if companyUser.deleteBuys == constant('CAN', companyUser) %}
+											<a class="btn btn-sm btn-danger deleteConfirmBuy" href="{{path('_client_buy_delete',{'uid':buy.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+											{% endif %}
+										</td>
+									</tr>
+									{% endfor %}
+								{% else %}
+									<tr>
+										<td colspan="21">{{ 'Buy.empty'|trans|raw }}</td>
+									</tr>
+								{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				{% if companyUser.addBuys == constant('CAN', companyUser) %}
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="addBuy">
+					<div class="box box-danger">
+						<div class="box-header">
+							<h4 class="box-title">{{'MBPurchase.tlabel.addBuy'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							{{form_start(BuyNewForm, {'method':'POST', 'action': path('_client_mbpurchase_editPost', {'uid': mbpurchase.id}), 'style': 'horizontal'})}}
+							{{form_row(BuyNewForm.monthlyBalance, {'label_col': 3, 'widget_col': 8 , 'attr': {'row_class': 'hidden'} })}}
+							{{form_row(BuyNewForm.dtActivation, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.bill, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.relation, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.label, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.devise, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.conversionRate, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'conversionRate'} })}}
+							{{form_row(BuyNewForm.vat, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'vat'} })}}
+							{{form_row(BuyNewForm.vatDevise, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'vatDevise'} })}}
+							{{form_row(BuyNewForm.stamp, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'stamp'} })}}
+							{{form_row(BuyNewForm.stampDevise, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'stampDevise'} })}}
+							{{form_row(BuyNewForm.balanceTtc, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'balanceTtc'} })}}
+							{{form_row(BuyNewForm.balanceTtcDevise, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'balanceTtcDevise'} })}}
+							{{form_row(BuyNewForm.regime, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.withholding, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.balanceNet, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'balanceNet'} })}}
+							{{form_row(BuyNewForm.balanceNetDevise, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'balanceNetDevise'} })}}
+							{{form_row(BuyNewForm.paymentType, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.dtPayment, {'label_col': 3, 'widget_col': 8 , 'attr':{'row_id':'dtPayment'} })}}
+							{{form_row(BuyNewForm.account, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.nature, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BuyNewForm.transactionStatus, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group row">
+								{% if companyUser.addDocs == constant('CAN', companyUser) %}
+								{{form_label(BuyNewForm.docs)}}
+								{% endif %}
+								<div class="col-lg-8">
+									{% if companyUser.addDocs == constant('CAN', companyUser) %}
+									<div class="text-right"><a class="btn btn-primary" id="addDoc">{{'Buy.docs.Add'|trans}} {{glyphIco('plus')}}</a></div>
+									<br>
+									{% endif %}
+									{{form_errors(BuyNewForm.docs)}}
+									<div class="row">
+										<div class="col-lg-12" id="buydocList">
+										{%set i=0%}
+										{%for BuyNewForm_doc in BuyNewForm.docs%}
+											<div class="box box-success" id="BuyNewForm_docs_{{i}}">
+												<div class="box-header">
+													<div class="text-right">
+														<a class="btn btn-xs btn-danger removeDoc" id="removeDoc{{i}}">{{'Buy.docs.Delete'|trans}} {{glyphIco('trash')}}</a>&nbsp;
+													</div>
+												</div>
+												<div class="box-body">
+												{{form_row(BuyNewForm_doc.fileName, {'label_col': 3, 'widget_col': 8})}}
+												{{form_row(BuyNewForm_doc.description, {'label_col': 3, 'widget_col': 8 })}}
+												</div>
+											</div>
+											{%set i=i+1%}
+										{%endfor%}
+										</div>
+									</div>
+								</div>
+								{% do BuyNewForm.docs.setRendered %}
+							</div>
+							{{form_row(BuyNewForm.otherInfos, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+							{{form_end(BuyNewForm)}}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				<div class="tab-pane fade{%if tabActive==4%} in active{%endif%}" id="Docs">
+					<div id="accordion04" class="box-group">
+						{% if companyUser.addDocs == constant('CAN', companyUser) %}
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse41" data-parent="#accordion04" data-toggle="collapse">{{'MBPurchase.tlabel.docs.add'|trans}}</a></h4>
+							</div>
+							<div id="collapse41" class="panel-collapse collapse{%if tabActive==4 and stabActive==1%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(DocNewForm, {'method':'POST', 'action': path('_client_mbpurchase_editPost', {'uid': mbpurchase.id}), 'style': 'horizontal'})}}
+									{{form_row(DocNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+									{{form_row(DocNewForm.fileName, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DocNewForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+									{{form_end(DocNewForm)}}
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						{% if companyUser.editDocs == constant('CAN', companyUser) %}
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse42" data-parent="#accordion04" data-toggle="collapse">{{'MBPurchase.tlabel.docs.edit'|trans}}</a></h4>
+							</div>
+							<div id="collapse42" class="panel-collapse collapse{%if tabActive==4 and stabActive==2%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(MBPurchaseUpdateDocsForm, {'method':'POST', 'action': path('_client_mbpurchase_editPost', {'uid': mbpurchase.id}), 'style': 'horizontal'})}}
+									{{form_row(MBPurchaseUpdateDocsForm.docs, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+									{{form_end(MBPurchaseUpdateDocsForm)}}
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						<div class="panel box">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse43" data-parent="#accordion04" data-toggle="collapse">{{'MBPurchase.tlabel.docs.list'|trans}}</a></h4>
+							</div>
+							<div id="collapse43" class="panel-collapse collapse{%if (tabActive==4 and stabActive==3) or tabActive!=4%} in{%endif%}">
+								<div class="box-body table-responsive">
+									<table id="docList" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+												<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+												<th>{{ 'Doc.size.label'|trans|raw }}</th>
+												<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+												<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+												<th>{{ 'Doc.description.label'|trans|raw }}</th>
+												<th>{{ 'action'|trans|raw }}</th>
+											</tr>
+										</thead>
+										<tbody>
+										{% if mbpurchase.docs|length != 0 %}
+											{% for doc in mbpurchase.docs %}
+											<tr>
+												<td>{{ doc.originalName }}</td>
+												<td>{{ doc.mimeType }}</td>
+												<td>{%if doc.size<1024%}
+														{{doc.size}} o
+													{%elseif doc.size<(1024*1024)%}
+														{{'%.2f'|format(doc.size/1024)}} Ko
+													{%elseif doc.size<(1024*1024*1024)%}
+														{{'%.2f'|format(doc.size/1024/1024)}} Mo
+													{%else%}
+														{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+													{% endif %}
+												</td>
+												<td>{{ doc.nbrDownloads }}</td>
+												<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+												<td>{{ doc.description | raw }}</td>
+												<td>
+													<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+													<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</td>
+											</tr>
+											{% endfor %}
+										{% else %}
+											<tr>
+												<td colspan="7">{{ 'Doc.empty'|trans|raw }}</td>
+											</tr>
+										{% endif %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmBuy" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Buy.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'Buy.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{%endblock content%}

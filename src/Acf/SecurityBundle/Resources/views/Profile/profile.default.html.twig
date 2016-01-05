@@ -1,0 +1,250 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/jquery/ui/jquery-ui-1.10.3.custom.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/jquery/jcrop/0.9.12.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.3.1.js')}}"></script>
+{%if app.request.locale != 'en'%}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.3.1.'~app.request.locale~'.js')}}"></script>
+{% endif %}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/ui/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/form/20130711.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/color/2.0pre.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/jcrop/0.9.12.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$('#UserUpdateProfileForm_birthday').datetimepicker({
+		weekStart: 1,
+		startView: 4,
+		minView: 2,
+		autoclose: true,
+		todayHighlight: true,
+		language: "{{app.request.locale}}",
+		format: 'yyyy-mm-dd'
+	});
+
+	$('#UserUpdateProfileForm_sexe').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#UserUpdateProfileForm_country').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect:true});
+
+//	$('#UserUpdatePreferedLangForm_preferedLang').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect:true});
+
+	$("#UserUploadAvatarForm_avatar").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " Image", browseIcon: '{{glyphIco('picture')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+	var bar = $('.bar');
+	var percent = $('.percent');
+	var status = $('#status');
+	var avatar_sel = $('#avatar_sel');
+
+	$("#dialog").dialog({autoOpen: false, maxWidth: 500, maxHeight: 500, modal: true});
+
+	$('#avatar_upload').ajaxForm({
+		beforeSend: function() {
+			$("#dialog").dialog("open");
+			status.empty();
+			avatar_sel.empty();
+			var percentVal = '0%';
+			bar.width(percentVal);
+			percent.html(percentVal);
+		},
+		uploadProgress: function(event, position, total, percentComplete) {
+			var percentVal = percentComplete + '%';
+			bar.width(percentVal);
+			percent.html(percentVal);
+		},
+		complete: function(xhr) {
+			$("#dialog").dialog("close");
+			avatar_sel.html(xhr.responseText);
+		}
+	});
+
+
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_front_homepage') }}">{{ faIco('home') }} &nbsp; {{'breadcrumb.home'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_security_profile') }}">{{glyphIco('user')}} &nbsp; {{'breadcrumb.profile'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+	<div class="nav-tabs-custom">
+		<ul class="nav nav-tabs">
+			<li {%if tabActive==1%} class="active" {%endif%}><a href="#overview" data-toggle="tab">{{'Profile.tab.overview'|trans|raw}}</a></li>
+			<li {%if tabActive==2%} class="active" {%endif%}><a href="#edit" data-toggle="tab">{{'Profile.tab.edit'|trans|raw}}</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+				<div class="box box-primary">
+					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.overview'|trans}}</h3></div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-lg-3 text-right">{{'User.username'|trans }} :</div>
+							<div class="col-lg-9">{{user.username}}</div>
+							<div class="col-lg-3 text-right">{{'User.email'|trans}} :</div>
+							<div class="col-lg-9">
+								<a href="mailto:{{user.email}}">{{user.email}}</a>
+							</div>
+							<div class="col-lg-3 text-right">{{'User.dtCrea'|trans}} :</div>
+							<div class="col-lg-9">{{user.dtCrea|localeDate('full')}} {{'_at'|trans}} {{user.dtCrea|localeDate('none','medium')}}</div>
+							<div class="col-lg-3 text-right">{{'User.logins'|trans}} :</div>
+							<div class="col-lg-9">{{user.logins}}</div>
+							<div class="col-lg-3 text-right">{{'User.lastLogin'|trans}} :</div>
+							<div class="col-lg-9">{%if user.lastLogin is not null%}{{user.lastLogin|localeDate('full')}} {{'_at'|trans}} {{user.lastLogin|localeDate('none', 'medium')}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+						</div>
+				{%if user.avatar is not empty%}
+						<div class="row">
+							<div class="col-lg-12"><br></div>
+							<div class="col-lg-3 text-right">{{'User.avatar'|trans}} :</div>
+							<div class="col-lg-9">
+								<img class="img-responsive img-thumbnail" alt="{{user.fullName}}" src="{{asset('res/avatars/'~user.avatar)}}">
+							</div>
+						</div>
+				{%endif%}
+						<div class="row">
+							<div class="col-lg-12"><br></div>
+							<div class="col-lg-3 text-right">{{'User.sexe'|trans}} :</div>
+							<div class="col-lg-9">{%if user.sexe is not null%}{{('User.sexe.'~user.sexe)|trans|raw}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-3 text-right">{{'User.lastName'|trans}} :</div>
+							<div class="col-lg-9">{%if user.lastName is not null%}{{user.lastName}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-3 text-right">{{'User.firstName'|trans}} :</div>
+							<div class="col-lg-9">{%if user.firstName is not null%}{{user.firstName}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-12"><br></div>
+							<div class="col-lg-3 text-right">{{'User.mobile'|trans}} :</div>
+							<div class="col-lg-9">
+								{%if user.mobile is not null%}<a href="tel:{{user.mobile}}">{{glyphIco('phone')}} {{user.mobile}}</a>{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}
+							</div>
+							<div class="col-lg-3 text-right">{{'User.phone'|trans}} :</div>
+							<div class="col-lg-9">
+								{%if user.phone is not null%}<a href="tel:{{user.phone}}">{{glyphIco('phone-alt')}} {{user.phone}}</a>{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}
+							</div>
+							<div class="col-lg-12"><br></div>
+							<div class="col-lg-3 text-right">{{'User.birthday'|trans}} :</div>
+							<div class="col-lg-9">{%if user.birthday is not null%}{{user.birthday|localeDate('full')}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-12"><br></div>
+							<div class="col-lg-3 text-right">{{'User.streetNum'|trans}} :</div>
+							<div class="col-lg-9">{%if user.streetNum is not empty%}{{user.streetNum|raw}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-3 text-right">{{'User.address'|trans}} :</div>
+							<div class="col-lg-9">{%if user.address is not empty%}{{user.address|raw}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-3 text-right">{{'User.address2'|trans}} :</div>
+							<div class="col-lg-9">{%if user.address2 is not empty%}{{user.address2|raw}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-3 text-right">{{'User.town'|trans}} :</div>
+							<div class="col-lg-9">{%if user.town is not empty%}{{user.town}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-3 text-right">{{'User.zipCode'|trans}} :</div>
+							<div class="col-lg-9">{%if user.zipCode is not empty%}{{user.zipCode}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+							<div class="col-lg-3 text-right">{{'User.country'|trans}} :</div>
+							<div class="col-lg-9">{%if user.country is not empty%}{{user.country|country}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+				<div class="box box-danger">
+					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.editAvatar'|trans|raw}}</h3></div>
+					<div class="box-body">
+						{{form_start(UserUploadAvatarForm, {'method':'POST', 'action': path('_security_profile_post'), 'style': 'horizontal', 'attr': {'id':'avatar_upload'}})}}
+						{{form_row(UserUploadAvatarForm.avatar, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+						<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnUpload'|trans|raw}}</button></div></div>
+						{{form_end(UserUploadAvatarForm)}}
+						<div id="avatar_sel"></div>
+						<div id="dialog" title="{{'User.tlabel.editAvatar.crop'|trans}}">
+							<div class="progress">
+								<div class="bar"></div>
+								<div class="percent">0%</div>
+							</div>
+							<div id="status"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="box box-danger">
+					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.editProfile'|trans|raw}}</h3></div>
+					<div class="box-body">
+						{{form_start(UserUpdateProfileForm, {'method':'POST','action': path('_security_profile_post') ,'style': 'horizontal' }) }}
+						{{form_row(UserUpdateProfileForm.sexe, {'label_col': 3, 'widget_col': 3})}}
+						{{form_row(UserUpdateProfileForm.firstName, {'label_col': 3, 'widget_col': 5})}}
+						{{form_row(UserUpdateProfileForm.lastName, {'label_col': 3, 'widget_col': 5})}}
+						{{form_row(UserUpdateProfileForm.birthday, {'label_col': 3, 'widget_col': 3})}}
+						{{form_row(UserUpdateProfileForm.streetNum, {'label_col': 3, 'widget_col': 3})}}
+						{{form_row(UserUpdateProfileForm.address, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+						{{form_row(UserUpdateProfileForm.address2, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+						{{form_row(UserUpdateProfileForm.town, {'label_col': 3, 'widget_col': 5})}}
+						{{form_row(UserUpdateProfileForm.zipCode, {'label_col': 3, 'widget_col': 3})}}
+						{{form_row(UserUpdateProfileForm.country, {'label_col': 3, 'widget_col': 6})}}
+						{{form_row(UserUpdateProfileForm.phone, {'label_col': 3, 'widget_col': 5 })}}
+						{{form_row(UserUpdateProfileForm.mobile, {'label_col': 3, 'widget_col': 5 })}}
+						<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+						{{form_end(UserUpdateProfileForm)}}
+					</div>
+				</div>
+{#
+				<div class="box box-danger">
+					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.editPreferedLang'|trans|raw}}</h3></div>
+					<div class="box-body">
+						{{form_start(UserUpdatePreferedLangForm, {'method':'POST','action': path('_security_profile_post') ,'style': 'horizontal' }) }}
+						{{form_row(UserUpdatePreferedLangForm.preferedLang, {'label_col': 3, 'widget_col': 5 })}}
+						<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+						{{form_end(UserUpdatePreferedLangForm)}}
+					</div>
+				</div>
+#}
+				<div class="box box-danger">
+					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.editEmail'|trans|raw}}</h3></div>
+					<div class="box-body">
+						{{form_start(UserUpdateEmailForm, {'method':'POST','action': path('_security_profile_post') ,'style': 'horizontal' }) }}
+						{{form_row(UserUpdateEmailForm.email, {'label_col': 3, 'widget_col': 5 })}}
+						<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+						{{form_end(UserUpdateEmailForm)}}
+					</div>
+				</div>
+
+				<div class="box box-danger">
+					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.editPassword'|trans|raw}}</h3></div>
+					<div class="box-body">
+						{{form_start(UserUpdatePasswordForm, {'method':'POST','action': path('_security_profile_post') ,'style': 'horizontal' }) }}
+						{{form_row(UserUpdatePasswordForm.oldPassword, { 'label_col': 3, 'widget_col': 5, 'input_group': {'append': glyphIco('asterisk')} })}}
+						{{form_row(UserUpdatePasswordForm.clearPassword, { 'label_col': 3, 'widget_col': 5})}}
+						<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+						{{form_end(UserUpdatePasswordForm) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+{%endblock content%}

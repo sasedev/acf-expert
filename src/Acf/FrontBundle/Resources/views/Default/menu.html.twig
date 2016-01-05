@@ -1,0 +1,33 @@
+{% if is_granted('ROLE_USER') %}
+							<li>
+								<a href="{{ path('_security_profile') }}">{{ 'menu.top.connexion'|trans }}</a>
+								<ul class="dropdown">
+									<li><a class="active" href="{{ path('_security_profile') }}">{{ 'menu.top.profile'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_security_agenda_index') }}">{{ 'menu.top.agenda'|trans }}</a>
+									</li>
+									{% if is_granted('ROLE_ADMIN') %}
+									<li><a href="{{ path('_admin_homepage') }}">{{ 'menu.top.admin'|trans }}</a>
+									</li>
+									{% endif %}
+									{% if is_granted('ROLE_CLIENT1') %}
+									<li><a href="{{ path('_client_homepage') }}">{{ 'menu.top.client1'|trans }}</a>
+									</li>
+									{% endif %}
+									{% if is_granted('ROLE_CLIENT2') %}
+									<li><a href="{{ path('_info_homepage') }}">{{ 'menu.top.client2'|trans }}</a>
+									</li>
+									{% endif %}
+									{% if is_granted('ROLE_CLIENT3') %}
+									<li><a href="{{ path('_payroll_homepage') }}">{{ 'menu.top.client3'|trans }}</a>
+									</li>
+									{% endif %}
+									<li><a href="{{ path('_security_logout') }}">{{ 'menu.top.logout'|trans }}</a>
+									</li>
+								</ul>
+							</li>
+							{% else %}
+							<li>
+								<a href="{{ path('_security_login') }}">{{ 'menu.top.connexion'|trans }}</a>
+							</li>
+							{% endif %}

@@ -1,0 +1,1183 @@
+_admin_homepage:
+    path:     /
+    defaults: { _controller: "AcfAdminBundle:Default:index" }
+
+_admin_autoinc_list:
+    path:     /autoincs
+    defaults: { _controller: "AcfAdminBundle:Autoinc:list" }
+
+_admin_autoinc_addGet:
+    path:     /autoinc/add
+    defaults: { _controller: "AcfAdminBundle:Autoinc:addGet" }
+    methods: [GET]
+
+_admin_autoinc_addPost:
+    path:     /autoinc/add
+    defaults: { _controller: "AcfAdminBundle:Autoinc:addPost" }
+    methods: [POST]
+
+_admin_autoinc_delete:
+    path:     /autoinc/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Autoinc:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_autoinc_editGet:
+    path:     /autoinc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Autoinc:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_autoinc_editPost:
+    path:     /autoinc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Autoinc:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantStr_list:
+    path:     /constantStrs
+    defaults: { _controller: "AcfAdminBundle:ConstantStr:list" }
+
+_admin_constantStr_addGet:
+    path:     /constantStr/add
+    defaults: { _controller: "AcfAdminBundle:ConstantStr:addGet" }
+    methods: [GET]
+
+_admin_constantStr_addPost:
+    path:     /constantStr/add
+    defaults: { _controller: "AcfAdminBundle:ConstantStr:addPost" }
+    methods: [POST]
+
+_admin_constantStr_delete:
+    path:     /constantStr/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantStr:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantStr_editGet:
+    path:     /constantStr/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantStr:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantStr_editPost:
+    path:     /constantStr/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantStr:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantInt_list:
+    path:     /constantInts
+    defaults: { _controller: "AcfAdminBundle:ConstantInt:list" }
+
+_admin_constantInt_addGet:
+    path:     /constantInt/add
+    defaults: { _controller: "AcfAdminBundle:ConstantInt:addGet" }
+    methods: [GET]
+
+_admin_constantInt_addPost:
+    path:     /constantInt/add
+    defaults: { _controller: "AcfAdminBundle:ConstantInt:addPost" }
+    methods: [POST]
+
+_admin_constantInt_delete:
+    path:     /constantInt/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantInt:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantInt_editGet:
+    path:     /constantInt/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantInt:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantInt_editPost:
+    path:     /constantInt/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantInt:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantFloat_list:
+    path:     /constantFloats
+    defaults: { _controller: "AcfAdminBundle:ConstantFloat:list" }
+
+_admin_constantFloat_addGet:
+    path:     /constantFloat/add
+    defaults: { _controller: "AcfAdminBundle:ConstantFloat:addGet" }
+    methods: [GET]
+
+_admin_constantFloat_addPost:
+    path:     /constantFloat/add
+    defaults: { _controller: "AcfAdminBundle:ConstantFloat:addPost" }
+    methods: [POST]
+
+_admin_constantFloat_delete:
+    path:     /constantFloat/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantFloat:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantFloat_editGet:
+    path:     /constantFloat/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantFloat:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_constantFloat_editPost:
+    path:     /constantFloat/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:ConstantFloat:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_lang_list:
+    path:     /langs
+    defaults: { _controller: "AcfAdminBundle:Lang:list" }
+
+_admin_lang_addGet:
+    path:     /lang/add
+    defaults: { _controller: "AcfAdminBundle:Lang:addGet" }
+    methods: [GET]
+
+_admin_lang_addPost:
+    path:     /lang/add
+    defaults: { _controller: "AcfAdminBundle:Lang:addPost" }
+    methods: [POST]
+
+_admin_lang_delete:
+    path:     /lang/delete/{id}
+    defaults: { _controller: "AcfAdminBundle:Lang:delete" }
+    requirements:
+        id: \d+
+
+_admin_lang_editGet:
+    path:     /lang/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:Lang:editGet" }
+    methods: [GET]
+    requirements:
+        id: \d+
+
+_admin_lang_editPost:
+    path:     /lang/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:Lang:editPost" }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+_admin_role_list:
+    path:     /roles
+    defaults: { _controller: "AcfAdminBundle:Role:list" }
+
+_admin_role_addGet:
+    path:     /role/add
+    defaults: { _controller: "AcfAdminBundle:Role:addGet" }
+    methods: [GET]
+
+_admin_role_addPost:
+    path:     /role/add
+    defaults: { _controller: "AcfAdminBundle:Role:addPost" }
+    methods: [POST]
+
+_admin_role_delete:
+    path:     /role/delete/{id}
+    defaults: { _controller: "AcfAdminBundle:Role:delete" }
+    requirements:
+        id: \d+
+
+_admin_role_editGet:
+    path:     /role/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:Role:editGet" }
+    methods: [GET]
+    requirements:
+        id: \d+
+
+_admin_role_editPost:
+    path:     /role/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:Role:editPost" }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+_admin_user_list:
+    path:     /users
+    defaults: { _controller: "AcfAdminBundle:User:list" }
+
+_admin_user_addGet:
+    path:     /user/add
+    defaults: { _controller: "AcfAdminBundle:User:addGet" }
+    methods: [GET]
+
+_admin_user_addPost:
+    path:     /user/add
+    defaults: { _controller: "AcfAdminBundle:User:addPost" }
+    methods: [POST]
+
+_admin_user_delete:
+    path:     /user/delete/{id}
+    defaults: { _controller: "AcfAdminBundle:User:delete" }
+    requirements:
+        id: \d+
+
+_admin_user_editGet:
+    path:     /user/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:User:editGet" }
+    methods: [GET]
+    requirements:
+        id: \d+
+
+_admin_user_editPost:
+    path:     /user/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:User:editPost" }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+
+_admin_job_list:
+    path:     /jobs
+    defaults: { _controller: "AcfAdminBundle:Job:list" }
+
+_admin_job_addGet:
+    path:     /job/add
+    defaults: { _controller: "AcfAdminBundle:Job:addGet" }
+    methods: [GET]
+
+_admin_job_addPost:
+    path:     /job/add
+    defaults: { _controller: "AcfAdminBundle:Job:addPost" }
+    methods: [POST]
+
+_admin_job_delete:
+    path:     /job/delete/{id}
+    defaults: { _controller: "AcfAdminBundle:Job:delete" }
+    requirements:
+        id: \d+
+
+_admin_job_editGet:
+    path:     /job/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:Job:editGet" }
+    methods: [GET]
+    requirements:
+        id: \d+
+
+_admin_job_editPost:
+    path:     /job/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:Job:editPost" }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+
+
+_admin_companyType_list:
+    path:     /companyTypes
+    defaults: { _controller: "AcfAdminBundle:CompanyType:list" }
+
+_admin_companyType_addGet:
+    path:     /companyType/add
+    defaults: { _controller: "AcfAdminBundle:CompanyType:addGet" }
+    methods: [GET]
+
+_admin_companyType_addPost:
+    path:     /companyType/add
+    defaults: { _controller: "AcfAdminBundle:CompanyType:addPost" }
+    methods: [POST]
+
+_admin_companyType_delete:
+    path:     /companyType/delete/{id}
+    defaults: { _controller: "AcfAdminBundle:CompanyType:delete" }
+    requirements:
+        id: \d+
+
+_admin_companyType_editGet:
+    path:     /companyType/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:CompanyType:editGet" }
+    methods: [GET]
+    requirements:
+        id: \d+
+
+_admin_companyType_editPost:
+    path:     /companyType/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:CompanyType:editPost" }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+
+
+_admin_sector_list:
+    path:     /sectors
+    defaults: { _controller: "AcfAdminBundle:Sector:list" }
+
+_admin_sector_addGet:
+    path:     /sector/add
+    defaults: { _controller: "AcfAdminBundle:Sector:addGet" }
+    methods: [GET]
+
+_admin_sector_addPost:
+    path:     /sector/add
+    defaults: { _controller: "AcfAdminBundle:Sector:addPost" }
+    methods: [POST]
+
+_admin_sector_delete:
+    path:     /sector/delete/{id}
+    defaults: { _controller: "AcfAdminBundle:Sector:delete" }
+    requirements:
+        id: \d+
+
+_admin_sector_editGet:
+    path:     /sector/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:Sector:editGet" }
+    methods: [GET]
+    requirements:
+        id: \d+
+
+_admin_sector_editPost:
+    path:     /sector/edit/{id}
+    defaults: { _controller: "AcfAdminBundle:Sector:editPost" }
+    methods: [POST]
+    requirements:
+        id: \d+
+
+
+
+_admin_company_list:
+    path:     /companies
+    defaults: { _controller: "AcfAdminBundle:Company:list" }
+
+_admin_company_exportexcel:
+    path:     /companies/excel
+    defaults: { _controller: "AcfAdminBundle:Company:excel" }
+
+_admin_company_addGet:
+    path:     /company/add
+    defaults: { _controller: "AcfAdminBundle:Company:addGet" }
+    methods: [GET]
+
+_admin_company_addPost:
+    path:     /company/add
+    defaults: { _controller: "AcfAdminBundle:Company:addPost" }
+    methods: [POST]
+
+_admin_company_delete:
+    path:     /company/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_editGet:
+    path:     /company/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_editPost:
+    path:     /company/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_companyLabelExcel:
+    path:     /company/companyLabelExcel/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:companyLabelExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_companyNatureExcel:
+    path:     /company/companyNatureExcel/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:companyNatureExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_pilotExcel:
+    path:     /company/pilot/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:pilotExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_customerExcel:
+    path:     /company/customerExcel/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:customerExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_supplierExcel:
+    path:     /company/supplierExcel/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:supplierExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_bankExcel:
+    path:     /company/bankExcel/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:bankExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_fundExcel:
+    path:     /company/fundExcel/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:fundExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_withholdingExcel:
+    path:     /company/withholdingExcel/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:withholdingExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_shareholderExcel:
+    path:     /company/shareholderExcel/{uid}
+    defaults: { _controller: "AcfAdminBundle:Company:shareholderExcel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_address_delete:
+    path:     /address/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Address:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_address_editGet:
+    path:     /address/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Address:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_address_editPost:
+    path:     /address/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Address:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_phone_delete:
+    path:     /phone/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Phone:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_phone_editGet:
+    path:     /phone/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Phone:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_phone_editPost:
+    path:     /phone/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Phone:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyFrame_delete:
+    path:     /companyFrame/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyFrame:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyFrame_editGet:
+    path:     /companyFrame/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyFrame:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyFrame_editPost:
+    path:     /companyFrame/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyFrame:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyLabel_delete:
+    path:     /companyLabel/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyLabel:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyLabel_editGet:
+    path:     /companyLabel/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyLabel:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyLabel_editPost:
+    path:     /companyLabel/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyLabel:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_shareholder_delete:
+    path:     /shareholder/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Shareholder:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_shareholder_editGet:
+    path:     /shareholder/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Shareholder:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_shareholder_editPost:
+    path:     /shareholder/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Shareholder:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_pilot_delete:
+    path:     /pilot/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Pilot:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_pilot_editGet:
+    path:     /pilot/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Pilot:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_pilot_editPost:
+    path:     /pilot/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Pilot:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyNature_delete:
+    path:     /companyNature/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyNature:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyNature_editGet:
+    path:     /companyNature/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyNature:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyNature_editPost:
+    path:     /companyNature/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyNature:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyUser_delete:
+    path:     /companyUser/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyUser:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyUser_editGet:
+    path:     /companyUser/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyUser:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyUser_editPost:
+    path:     /companyUser/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyUser:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_companyAdmin_delete:
+    path:     /companyAdmin/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:CompanyAdmin:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_customer_delete:
+    path:     /customer/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Customer:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_customer_editGet:
+    path:     /customer/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Customer:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_customer_editPost:
+    path:     /customer/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Customer:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_supplier_delete:
+    path:     /supplier/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Supplier:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_supplier_editGet:
+    path:     /supplier/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Supplier:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_supplier_editPost:
+    path:     /supplier/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Supplier:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bank_delete:
+    path:     /bank/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Bank:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bank_editGet:
+    path:     /bank/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Bank:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bank_editPost:
+    path:     /bank/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Bank:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_fund_delete:
+    path:     /fund/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Fund:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_fund_editGet:
+    path:     /fund/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Fund:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_fund_editPost:
+    path:     /fund/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Fund:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_withholding_delete:
+    path:     /withholding/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Withholding:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_withholding_editGet:
+    path:     /withholding/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Withholding:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_withholding_editPost:
+    path:     /withholding/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Withholding:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mbsale_editGet:
+    path:     /mbsale/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:MBSale:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mbsale_editPost:
+    path:     /mbsale/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:MBSale:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mbsale_excel:
+    path:     /mbsale/excel/{uid}
+    defaults: { _controller: "AcfAdminBundle:MBSale:excel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_admin_mbsale_excelYear:
+    path:     /mbsale/excel/{year}/{uid}
+    defaults: { _controller: "AcfAdminBundle:MBSale:excelYear" }
+    requirements:
+        year: \d+
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mbpurchase_editGet:
+    path:     /mbpurchase/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:MBPurchase:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mbpurchase_editPost:
+    path:     /mbpurchase/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:MBPurchase:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mbpurchase_excel:
+    path:     /mbpurchase/excel/{uid}
+    defaults: { _controller: "AcfAdminBundle:MBPurchase:excelYear" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_admin_mbpurchase_excelYear:
+    path:     /mbpurchase/excel/{year}/{uid}
+    defaults: { _controller: "AcfAdminBundle:MBPurchase:excelYear" }
+    requirements:
+        year: \d+
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_sale_delete:
+    path:     /sale/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Sale:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_sale_editGet:
+    path:     /sale/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Sale:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_sale_editPost:
+    path:     /sale/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Sale:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_secondaryVat_delete:
+    path:     /secondaryVat/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:SecondaryVat:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_secondaryVat_editGet:
+    path:     /secondaryVat/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:SecondaryVat:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_secondaryVat_editPost:
+    path:     /secondaryVat/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:SecondaryVat:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_buy_delete:
+    path:     /buy/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Buy:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_buy_editGet:
+    path:     /buy/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Buy:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_buy_editPost:
+    path:     /buy/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Buy:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_doc_delete:
+    path:     /doc/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Doc:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_doc_download:
+    path:     /doc/download/{uid}
+    defaults: { _controller: "AcfAdminBundle:Doc:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_doc_editGet:
+    path:     /doc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Doc:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_doc_editPost:
+    path:     /doc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Doc:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupcomptable_delete:
+    path:     /docgroupcomptable/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupcomptable:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupcomptable_editGet:
+    path:     /docgroupcomptable/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupcomptable:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupcomptable_editPost:
+    path:     /docgroupcomptable/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupcomptable:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupbank_delete:
+    path:     /docgroupbank/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupbank:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupbank_editGet:
+    path:     /docgroupbank/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupbank:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupbank_editPost:
+    path:     /docgroupbank/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupbank:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroup_delete:
+    path:     /docgroup/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroup:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroup_editGet:
+    path:     /docgroup/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroup:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroup_editPost:
+    path:     /docgroup/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroup:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupfiscal_delete:
+    path:     /docgroupfiscal/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupfiscal:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupfiscal_editGet:
+    path:     /docgroupfiscal/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupfiscal:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupfiscal_editPost:
+    path:     /docgroupfiscal/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupfiscal:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupperso_delete:
+    path:     /docgroupperso/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupperso:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupperso_editGet:
+    path:     /docgroupperso/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupperso:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupperso_editPost:
+    path:     /docgroupperso/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupperso:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupsyst_delete:
+    path:     /docgroupsyst/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupsyst:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupsyst_editGet:
+    path:     /docgroupsyst/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupsyst:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupsyst_editPost:
+    path:     /docgroupsyst/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupsyst:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupaudit_delete:
+    path:     /docgroupaudit/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupaudit:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupaudit_editGet:
+    path:     /docgroupaudit/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupaudit:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_docgroupaudit_editPost:
+    path:     /docgroupaudit/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Docgroupaudit:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_feedRead_list:
+    path:     /feedRead/list
+    defaults: { _controller: "AcfAdminBundle:FeedRead:list" }
+
+_admin_feedRead_addGet:
+    path:     /feedRead/add
+    defaults: { _controller: "AcfAdminBundle:FeedRead:addGet" }
+    methods: [GET]
+
+_admin_feedRead_addPost:
+    path:     /feedRead/add
+    defaults: { _controller: "AcfAdminBundle:FeedRead:addPost" }
+    methods: [POST]
+
+_admin_feedRead_delete:
+    path:     /feedRead/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:FeedRead:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_feedRead_editGet:
+    path:     /feedRead/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:FeedRead:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_feedRead_editPost:
+    path:     /feedRead/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:FeedRead:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_goodLink_list:
+    path:     /goodLink/list
+    defaults: { _controller: "AcfAdminBundle:GoodLink:list" }
+
+_admin_goodLink_addGet:
+    path:     /goodLink/add
+    defaults: { _controller: "AcfAdminBundle:GoodLink:addGet" }
+    methods: [GET]
+
+_admin_goodLink_addPost:
+    path:     /goodLink/add
+    defaults: { _controller: "AcfAdminBundle:GoodLink:addPost" }
+    methods: [POST]
+
+_admin_goodLink_delete:
+    path:     /goodLink/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:GoodLink:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_goodLink_download:
+    path:     /goodLink/download/{uid}
+    defaults: { _controller: "AcfAdminBundle:GoodLink:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_goodLink_editGet:
+    path:     /goodLink/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:GoodLink:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_goodLink_editPost:
+    path:     /goodLink/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:GoodLink:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_goodDoc_list:
+    path:     /goodDoc/list
+    defaults: { _controller: "AcfAdminBundle:GoodDoc:list" }
+
+_admin_goodDoc_addGet:
+    path:     /goodDoc/add
+    defaults: { _controller: "AcfAdminBundle:GoodDoc:addGet" }
+    methods: [GET]
+
+_admin_goodDoc_addPost:
+    path:     /goodDoc/add
+    defaults: { _controller: "AcfAdminBundle:GoodDoc:addPost" }
+    methods: [POST]
+
+_admin_goodDoc_delete:
+    path:     /goodDoc/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:GoodDoc:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_goodDoc_download:
+    path:     /goodDoc/download/{uid}
+    defaults: { _controller: "AcfAdminBundle:GoodDoc:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_goodDoc_editGet:
+    path:     /goodDoc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:GoodDoc:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_goodDoc_editPost:
+    path:     /goodDoc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:GoodDoc:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bulletinInfo_list:
+    path:     /bulletinInfo/list
+    defaults: { _controller: "AcfAdminBundle:BulletinInfo:list" }
+
+_admin_bulletinInfo_importGet:
+    path:     /bulletinInfo/import
+    defaults: { _controller: "AcfAdminBundle:BulletinInfo:importGet" }
+    methods: [GET]
+
+_admin_bulletinInfo_importPost:
+    path:     /bulletinInfo/import
+    defaults: { _controller: "AcfAdminBundle:BulletinInfo:importPost" }
+    methods: [POST]
+    methods: [POST]
+
+_admin_bulletinInfo_delete:
+    path:     /bulletinInfo/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfo:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bulletinInfo_editGet:
+    path:     /bulletinInfo/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfo:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bulletinInfo_editPost:
+    path:     /bulletinInfo/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfo:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+    methods: [POST]
+    methods: [POST]
+
+_admin_bulletinInfoTitle_delete:
+    path:     /bulletinInfoTitle/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfoTitle:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bulletinInfoTitle_editGet:
+    path:     /bulletinInfoTitle/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfoTitle:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bulletinInfoTitle_editPost:
+    path:     /bulletinInfoTitle/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfoTitle:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+    methods: [POST]
+    methods: [POST]
+
+_admin_bulletinInfoContent_delete:
+    path:     /bulletinInfoContent/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfoContent:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bulletinInfoContent_editGet:
+    path:     /bulletinInfoContent/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfoContent:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_bulletinInfoContent_editPost:
+    path:     /bulletinInfoContent/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfoContent:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

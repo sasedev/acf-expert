@@ -1,0 +1,40 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_sector_list') }}">{{faIco('leaf')}} &nbsp; {{'breadcrumb.sector.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_sector_addGet') }}">{{glyphIco('plus')}} &nbsp; {{'breadcrumb.sector.add'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_sector_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'Sector.tlabel.add'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(SectorNewForm, {'method':'POST', 'action': path('_admin_sector_addPost'), 'style': 'horizontal'})}}
+				{{form_row(SectorNewForm.label, {'label_col': 3, 'widget_col': 8})}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+				{{form_end(SectorNewForm)}}
+			</div>
+		</div>
+	</div>
+</div>
+<div id="newSector" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Sector.tlabel.add'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body" id="newSectoreForm">
+		{{form_start(SectorNewForm, {'method':'POST', 'action': path('_admin_sector_addPost'), 'style': 'horizontal'})}}
+		{{form_row(SectorNewForm.label, {'label_col': 3, 'widget_col': 8})}}
+		<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+		{{form_end(SectorNewForm)}}
+	</div>
+</div>
+{%endblock content%}

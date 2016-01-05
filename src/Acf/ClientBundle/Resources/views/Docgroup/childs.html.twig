@@ -1,0 +1,65 @@
+<div class="box-body table-responsive">
+	<div id="accordionDocgroupJur{{ parent.id }}" class="box-group">
+		{% for docgroup in parent.childs %}
+		<div class="panel box box-warning">
+			<div class="box-header">
+				<h4 class="box-title"><a href="#collapse{{ docgroup.id }}" data-parent="#accordionDocgroupJur{{ parent.id }}" data-toggle="collapse">{{ docgroup.label }}</a></h4>
+			</div>
+			<div id="collapse{{ docgroup.id }}" class="panel-collapse collapse">
+				<div class="row">
+					<div class="col-lg-9">&nbsp;</div>
+					<div class="col-lg-3">
+						<a class="btn btn-sm btn-info" href="{{path('_client_docgroup_editGet',{'uid':docgroup.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+					</div>
+					{% if docgroup.otherInfos is not empty %}
+					<div class="col-lg-12">{{ docgroup.otherInfos | raw }}</div>
+					{% endif %}
+				</div>
+				{% if docgroup.docs|length != 0 %}
+				<table class="table table-bordered table-hover docgroupDocs">
+					<thead>
+						<tr>
+							<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+							<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+							<th>{{ 'Doc.size.label'|trans|raw }}</th>
+							<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+							<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+							<th>{{ 'action'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for doc in docgroup.docs %}
+						<tr>
+							<td>{{ doc.originalName }}</td>
+							<td>{{ doc.mimeType }}</td>
+							<td>{%if doc.size<1024%}
+									{{doc.size}} o
+								{%elseif doc.size<(1024*1024)%}
+									{{'%.2f'|format(doc.size/1024)}} Ko
+								{%elseif doc.size<(1024*1024*1024)%}
+									{{'%.2f'|format(doc.size/1024/1024)}} Mo
+								{%else%}
+									{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+								{% endif %}
+							</td>
+							<td>{{ doc.nbrDownloads }}</td>
+							<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+							<td>
+								<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+								<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% else %}
+				<br><br><br>
+				{% endif %}
+				{% if docgroup.childs|length != 0 %}
+				{{ render(controller('AcfClientBundle:Docgroup:childs', {parent: docgroup.id})) }}
+				{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>

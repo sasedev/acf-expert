@@ -1,0 +1,1777 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/form/20130711.min.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	{% if companyUser.editCompanyinfos == constant('CAN', companyUser) %}
+	$('#CompanyUpdateTypeForm_type').chosen({width: "100%", disable_search_threshold: 10});
+	$('#CompanyUpdateAdrForm_country').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect:true});
+	$('#CompanyUpdateSectorsForm_sectors').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+	{% endif %}
+
+	{% if companyUser.addAddresses == constant('CAN', companyUser) %}
+	$('#AddressNewForm_country').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect:true});
+	{% endif %}
+
+	{% if companyUser.addFrames == constant('CAN', companyUser) %}
+	$('#CompanyFrameNewForm_job').chosen({width: "100%", disable_search_threshold: 10});
+	$('#CompanyFrameNewForm_sexe').chosen({width: "100%", disable_search_threshold: 10});
+	$('#CompanyFrameNewForm_country').chosen({width: "100%", disable_search_threshold: 10});
+	{% endif %}
+
+	{% if companyUser.addCustomers == constant('CAN', companyUser) %}
+	$('#CustomerNewForm_sectors').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+	$('#CustomerNewForm_country').chosen({width: "100%", disable_search_threshold: 10});
+	{% endif %}
+
+	{% if companyUser.addSuppliers == constant('CAN', companyUser) %}
+	$('#SupplierNewForm_country').chosen({width: "100%", disable_search_threshold: 10});
+	{% endif %}
+
+	{% if companyUser.addSales == constant('CAN', companyUser) %}
+	$('#MBSaleNewForm_month').chosen({width: "100%", disable_search_threshold: 12});
+	{% endif %}
+
+	{% if companyUser.addBuys == constant('CAN', companyUser) %}
+	$('#MBPurchaseNewForm_month').chosen({width: "100%", disable_search_threshold: 12});
+	{% endif %}
+
+	{% if company.addresses|length != 0 %}
+	$('#addressList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if companyUser.deleteAddresses == constant('CAN', companyUser) %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmAddress').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmAddress').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmAddress').modal('show');
+			});
+		}{% endif %}
+	});
+	{% endif %}
+
+	{% if company.phones|length != 0 %}
+	$('#phoneList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if companyUser.deletePhones == constant('CAN', companyUser) %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmPhone').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmPhone').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmPhone').modal('show');
+			});
+		}{% endif %}
+	});
+	{% endif %}
+
+	{% if company.companyFrames|length != 0 %}
+	$('#companyFrameList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if companyUser.deleteFrames == constant('CAN', companyUser) %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmCompanyFrame').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmCompanyFrame').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmCompanyFrame').modal('show');
+			});
+		}
+		{% endif %}
+	});
+	{% endif %}
+
+	{% if company.customers|length != 0 %}
+	$('#customerList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if companyUser.deleteCustomers == constant('CAN', companyUser) %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmCustomer').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmCustomer').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmCustomer').modal('show');
+			});
+		}
+		{% endif %}
+	});
+	{% endif %}
+
+	{% if company.suppliers|length != 0 %}
+	$('#supplierList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if companyUser.deleteSuppliers == constant('CAN', companyUser) %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmSupplier').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmSupplier').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmSupplier').modal('show');
+			});
+		}
+		{% endif %}
+	});
+	{% endif %}
+
+	$('.mbsaleList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"bPaginate": false
+	});
+
+	$('.mbpurchaseList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"bPaginate": false
+	});
+
+	$('.docgroupDocs').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10
+	});
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_client_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.client'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_client_company_editGet', {'uid': company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': company.corporateName})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%} {%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1 or tabActive==2 or tabActive==3 or tabActive==4 or tabActive==5 or tabActive==6 or tabActive==7 or tabActive==8 or tabActive==9 or tabActive==10 or tabActive==11 %} class="active" {%endif%}><a href="#tab1" data-toggle="tab">{{'Company.tab.tab1'|trans|raw}}</a></li>
+				<li {%if tabActive==22 or tabActive==23 or tabActive==24 or tabActive==25 or tabActive==26 or tabActive==27 or tabActive==28 or tabActive==29 or tabActive==30 %} class="active" {%endif%}><a href="#tab2" data-toggle="tab">{{'Company.tab.tab2'|trans|raw}}</a></li>
+				<li {%if tabActive==41 or tabActive==42 %} class="active" {%endif%}><a href="#tab3" data-toggle="tab">{{'Company.tab.tab3'|trans|raw}}</a></li>
+				<li {%if tabActive==51 %} class="active" {%endif%}><a href="#tab4" data-toggle="tab">{{'Company.tab.tab4'|trans|raw}}</a></li>
+				<li {%if tabActive==61 %} class="active" {%endif%}><a href="#tab5" data-toggle="tab">{{'Company.tab.tab5'|trans|raw}}</a></li>
+				<li {%if tabActive==71 %} class="active" {%endif%}><a href="#tab6" data-toggle="tab">{{'Company.tab.tab6'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div
+					class="tab-pane fade{%if tabActive==1 or tabActive==2 or tabActive==3 or tabActive==4 or tabActive==5 or tabActive==6 or tabActive==7 or tabActive==8 or tabActive==9 or tabActive==10 or tabActive==11%} in active{%endif%}"
+					id="tab1">
+					<div class="panel">
+						<div class="nav-tabs-custom">
+							<ul class="nav nav-tabs">
+								<li {%if tabActive==1 or ( tabActive!=1 and tabActive!=2 and tabActive!=3 and tabActive!=4 and tabActive!=5 and tabActive!=6 and tabActive!=7 and tabActive!=8 and tabActive!=9 and tabActive!=10 and tabActive!=11 )%}class="active" {%endif%}><a href="#overview" data-toggle="tab">{{'Company.tab.overview'|trans|raw}}</a></li>
+								{% if companyUser.editCompanyinfos == constant('CAN', companyUser) %}
+								<li {%if tabActive==2%} class="active" {%endif%}><a href="#edit" data-toggle="tab">{{'Company.tab.edit'|trans|raw}}</a></li> {% endif %}
+								<li {%if tabActive==3%} class="active" {%endif%}><a href="#Addresses" data-toggle="tab">{{'Company.tab.addresses'|trans|raw}}</a></li>
+								<li {%if tabActive==4%} class="active" {%endif%}><a href="#Phones" data-toggle="tab">{{'Company.tab.phones'|trans|raw}}</a></li>
+								<li {%if tabActive==5%} class="active" {%endif%}><a href="#Frames" data-toggle="tab">{{'Company.tab.frames'|trans|raw}}</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade{%if tabActive==1 or ( tabActive!=1 and tabActive!=2 and tabActive!=3 and tabActive!=4 and tabActive!=5 and tabActive!=6 and tabActive!=7 and tabActive!=8 and tabActive!=9 and tabActive!=10 and tabActive!=11 )%} in active{%endif%}" id="overview">
+									<div class="panel box box-primary">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.overview'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											<div class="row">
+												<div class="col-lg-3 text-right">{{'Company.corporateName'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.corporateName is not empty%}{{company.corporateName}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.type'|trans|raw}} :</div>
+												<div class="col-lg-9">{{company.type.label}}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.sectors'|trans|raw}} :</div>
+												<div class="col-lg-9">
+													{%if company.sectors|length !=0%}{% for sector in company.sectors %}{{sector.label}}<br />{% endfor %}{% else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;
+												</div>
+												<div class="col-lg-3 text-right">{{'Company.fisc'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.fisc is not empty%}{{company.fisc}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.tribunal'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.tribunal is not empty%}{{company.tribunal}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.cnss'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.cnss is not empty%}{{company.cnss}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.cnssBureau'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.cnssBureau is not empty%}{{company.cnssBureau}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.commercialRegister'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.commercialRegister is not empty%}{{company.commercialRegister}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.commercialRegisterBureau'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.commercialRegisterBureau is not empty%}{{company.commercialRegisterBureau}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.customsCode'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.customsCode is not empty%}{{company.customsCode}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.cin'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.cin is not empty%}{{company.cin}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.passport'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.passport is not empty%}{{company.passport}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												{% if company.physicaltype == constant('PHTYPE_MORAL', company) %}
+												<div class="col-lg-12">&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.capital'|trans|raw}} :</div>
+												<div class="col-lg-9">{{company.capital}} TND&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.actionvn'|trans|raw}} :</div>
+												<div class="col-lg-9">{{company.actionvn}} TND&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.actioncount'|trans|raw}} :</div>
+												<div class="col-lg-9">{{company.actioncount}} &nbsp;</div>
+												{% endif %}
+												<div class="col-lg-12">&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.phone'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.phone is not empty%}{{company.phone}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.mobile'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.mobile is not empty%}{{company.mobile}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.fax'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.fax is not empty%}{{company.fax}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.email'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.email is not empty%}{{company.email}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.streetNum'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.streetNum is not empty%}{{company.streetNum}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.address'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.address is not empty%}{{company.address}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.address2'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.address2 is not empty%}{{company.address2}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.town'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.town is not empty%}{{company.town}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.zipCode'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.zipCode is not empty%}{{company.zipCode}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.country'|trans|raw}} :</div>
+												<div class="col-lg-9">{{company.country|country}}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.otherInfos'|trans|raw}} :</div>
+												<div class="col-lg-9">{%if company.otherInfos is not empty%}{{company.otherInfos|raw}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+												<div class="col-lg-12">&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.dtCrea'|trans|raw}} :</div>
+												<div class="col-lg-9">{{company.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{company.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.dtUpdate'|trans|raw}} :</div>
+												<div class="col-lg-9">{{company.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{company.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+												<br>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% if companyUser.editCompanyinfos == constant('CAN', companyUser) %}
+								<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.type'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateTypeForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateTypeForm.type, {'label_col': 3, 'widget_col': 4})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateTypeForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.corporateName'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateCorporateNameForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateCorporateNameForm.corporateName, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateCorporateNameForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.fisc'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateFiscForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateFiscForm.fisc, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateFiscForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.tribunal'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateTribunalForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateTribunalForm.tribunal, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateTribunalForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.physicaltype'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdatePhysicaltypeForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdatePhysicaltypeForm.physicaltype, {'label_col': 3, 'widget_col': 8})}}
+											{{form_row(CompanyUpdatePhysicaltypeForm.commercialRegister, {'label_col': 3, 'widget_col': 8 })}}
+											{{form_row(CompanyUpdatePhysicaltypeForm.commercialRegisterBureau, {'label_col': 3, 'widget_col': 8 })}}
+											{{form_row(CompanyUpdatePhysicaltypeForm.customsCode, {'label_col': 3, 'widget_col': 8 })}}
+											{{form_row(CompanyUpdatePhysicaltypeForm.cin, {'label_col': 3, 'widget_col': 8 })}}
+											{{form_row(CompanyUpdatePhysicaltypeForm.passport, {'label_col': 3, 'widget_col': 8 })}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdatePhysicaltypeForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.cnss'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateCnssForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateCnssForm.cnss, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateCnssForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.cnssBureau'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateCnssBureauForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateCnssBureauForm.cnssBureau, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateCnssBureauForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.sectors'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateSectorsForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateSectorsForm.sectors, {'label_col': 3, 'widget_col': 8}) }}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateSectorsForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.phone'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdatePhoneForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdatePhoneForm.phone, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdatePhoneForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.mobile'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateMobileForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateMobileForm.mobile, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateMobileForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.fax'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateFaxForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateFaxForm.fax, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateFaxForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.email'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateEmailForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateEmailForm.email, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateEmailForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.adr'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateAdrForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateAdrForm.streetNum, {'label_col': 3, 'widget_col': 8})}}
+											{{form_row(CompanyUpdateAdrForm.address, {'label_col': 3, 'widget_col': 8})}}
+											{{form_row(CompanyUpdateAdrForm.address2, {'label_col': 3, 'widget_col': 8})}}
+											{{form_row(CompanyUpdateAdrForm.town, {'label_col': 3, 'widget_col': 8})}}
+											{{form_row(CompanyUpdateAdrForm.zipCode, {'label_col': 3, 'widget_col': 8})}}
+											{{form_row(CompanyUpdateAdrForm.country, {'label_col': 3, 'widget_col': 8})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateAdrForm)}}
+										</div>
+									</div>
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.otherInfos'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateOtherInfosForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+											{{form_row(CompanyUpdateOtherInfosForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateOtherInfosForm)}}
+										</div>
+									</div>
+									{% if company.physicaltype == constant('PHTYPE_MORAL', company) %}
+									<div class="panel box box-danger">
+										<div class="box-header">
+											<h3 class="box-title">{{'Company.tlabel.edit.actionvn'|trans}}</h3>
+										</div>
+										<div class="box-body">
+											{{form_start(CompanyUpdateActionvnForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}),
+											'style': 'horizontal'})}} {{form_row(CompanyUpdateActionvnForm.actionvn, {'label_col': 3, 'widget_col': 8, 'attr':
+											{'class':'wysiwyg'}})}}
+											<div class="form-group">
+												<div class="col-lg-offset-3 col-lg-2">
+													<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+												</div>
+											</div>
+											{{form_end(CompanyUpdateActionvnForm)}}
+										</div>
+									</div>
+									{% endif %}
+								</div>
+								{% endif %}
+								<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="Addresses">
+									<div id="accordion03" class="box-group">
+										{% if companyUser.addAddresses == constant('CAN', companyUser) %}
+										<div class="panel box box-danger">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse31" data-parent="#accordion03" data-toggle="collapse">{{'Company.tlabel.addresses.add'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse31" class="panel-collapse collapse{%if tabActive==3 and stabActive==1%} in{%endif%}">
+												<div class="box-body">
+													{{form_start(AddressNewForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+													{{form_row(AddressNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+													{{form_row(AddressNewForm.label, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.streetNum, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.address, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.address2, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.town, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.zipCode, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.country, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.phone, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.mobile, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.fax, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.email, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(AddressNewForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+													<div class="form-group">
+														<div class="col-lg-offset-3 col-lg-2">
+															<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button>
+														</div>
+													</div>
+													{{form_end(AddressNewForm)}}
+												</div>
+											</div>
+										</div>
+										{% endif %}
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse32" data-parent="#accordion03" data-toggle="collapse">{{'Company.tlabel.addresses.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse32" class="panel-collapse collapse{%if (tabActive==3 and stabActive==2) or tabActive!=3%} in{%endif%}">
+												<div class="box-body table-responsive">
+													<table id="addressList" class="table table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>{{ 'Address.label.label'|trans|raw }}</th>
+																<th>{{ 'Address.fullAddress.label'|trans|raw }}</th>
+																<th>{{ 'action'|trans|raw }}</th>
+															</tr>
+														</thead>
+														<tbody>
+															{% if company.addresses|length != 0 %} {% for address in company.addresses %}
+															<tr>
+																<td>{{ address.label }}</td>
+																<td>{{ address.fullAddress}}</td>
+																<td>
+																	<a class="btn btn-sm btn-info" href="{{path('_client_address_editGet',{'uid':address.id})}}">{{ glyphIco('edit') }} {{'action.edit'|trans }}</a>
+																	{% if companyUser.deleteAddresses == constant('CAN', companyUser) %}
+																	<a class="btn btn-sm btn-danger deleteConfirmAddress" href="{{path('_client_address_delete',{'uid':address.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+																	{% endif %}
+																</td>
+															</tr>
+															{% endfor %}
+															{% else %}
+															<tr>
+																<td colspan="3">{{ 'Address.empty'|trans|raw }}</td>
+															</tr>
+															{% endif %}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade{%if tabActive==4%} in active{%endif%}" id="Phones">
+									<div id="accordion04" class="box-group">
+										{% if companyUser.addPhones == constant('CAN', companyUser) %}
+										<div class="panel box box-danger">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse41" data-parent="#accordion04" data-toggle="collapse">{{'Company.tlabel.phones.add'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse41" class="panel-collapse collapse{%if tabActive==4 and stabActive==1%} in{%endif%}">
+												<div class="box-body">
+													{{form_start(PhoneNewForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+													{{form_row(PhoneNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+													{{form_row(PhoneNewForm.label, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(PhoneNewForm.phone, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(PhoneNewForm.contact, {'label_col': 3, 'widget_col': 8 })}}
+													<div class="form-group">
+														<div class="col-lg-offset-3 col-lg-2">
+															<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button>
+														</div>
+													</div>
+													{{form_end(PhoneNewForm)}}
+												</div>
+											</div>
+										</div>
+										{% endif %}
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse42" data-parent="#accordion04" data-toggle="collapse">{{'Company.tlabel.phones.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse42" class="panel-collapse collapse{%if (tabActive==4 and stabActive==2) or tabActive!=4%} in{%endif%}">
+												<div class="box-body table-responsive">
+													<table id="phoneList" class="table table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>{{ 'Phone.label.label'|trans|raw }}</th>
+																<th>{{ 'Phone.phone.label'|trans|raw }}</th>
+																<th>{{ 'Phone.contact.label'|trans|raw }}</th>
+																<th>{{ 'action'|trans|raw }}</th>
+															</tr>
+														</thead>
+														<tbody>
+															{% if company.phones|length != 0 %}
+															{% for phone in company.phones %}
+															<tr>
+																<td>{{ phone.label }}</td>
+																<td>{{ phone.phone }}</td>
+																<td>{{ phone.contact}}</td>
+																<td><a class="btn btn-sm btn-info" href="{{path('_client_phone_editGet',{'uid':phone.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																{% if companyUser.deletePhones == constant('CAN', companyUser) %}
+																<a class="btn btn-sm btn-danger deleteConfirmPhone" href="{{path('_client_phone_delete',{'uid':phone.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+																{% endif %}
+															</td>
+															</tr>
+															{% endfor %}
+															{% else %}
+															<tr>
+																<td colspan="4">{{ 'Phone.empty'|trans|raw }}</td>
+															</tr>
+															{% endif %}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade{%if tabActive==5%} in active{%endif%}" id="Frames">
+									<div id="accordion05" class="box-group">
+										{% if companyUser.addFrames == constant('CAN', companyUser) %}
+										<div class="panel box box-danger">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse51" data-parent="#accordion05" data-toggle="collapse">{{'Company.tlabel.frames.add'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse51" class="panel-collapse collapse{%if tabActive==5 and stabActive==1%} in{%endif%}">
+												<div class="box-body">
+													{{form_start(CompanyFrameNewForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+													{{form_row(CompanyFrameNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+													{{form_row(CompanyFrameNewForm.job, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.sexe, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.lastName, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.firstName, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.cin, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.passport, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.email, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.phone, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.mobile, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CompanyFrameNewForm.streetNum, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(CompanyFrameNewForm.address, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(CompanyFrameNewForm.address2, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(CompanyFrameNewForm.town, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(CompanyFrameNewForm.zipCode, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(CompanyFrameNewForm.country, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(CompanyFrameNewForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+													<div class="form-group">
+														<div class="col-lg-offset-3 col-lg-2">
+															<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button>
+														</div>
+													</div>
+													{{form_end(CompanyFrameNewForm)}}
+												</div>
+											</div>
+										</div>
+										{% endif %}
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse52" data-parent="#accordion05" data-toggle="collapse">{{'Company.tlabel.frames.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse52" class="panel-collapse collapse{%if (tabActive==5 and stabActive==2) or tabActive!=5%} in{%endif%}">
+												<div class="box-body table-responsive">
+													<table id="companyFrameList" class="table table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>{{ 'CompanyFrame.job.label'|trans|raw }}</th>
+																<th>{{ 'CompanyFrame.fullName.label'|trans|raw }}</th>
+																<th>{{ 'action'|trans|raw }}</th>
+															</tr>
+														</thead>
+														<tbody>
+															{% if company.companyFrames|length != 0 %}
+															{% for companyFrame in company.companyFrames %}
+															<tr>
+																<td>{{ companyFrame.job.label }}</td>
+																<td>{%if companyFrame.sexe is not null%}{{('CompanyFrame.sexe.'~companyFrame.sexe)|trans}}{%endif%} {{ companyFrame.fullName}}</td>
+																<td>
+																	<a class="btn btn-sm btn-info" href="{{path('_client_companyFrame_editGet',{'uid':companyFrame.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																	{% if companyUser.deleteFrames == constant('CAN', companyUser) %}
+																	<a class="btn btn-sm btn-danger deleteConfirmCompanyFrame" href="{{path('_client_companyFrame_delete',{'uid':companyFrame.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+																	{% endif %}
+																</td>
+															</tr>
+															{% endfor %}
+															{% else %}
+															<tr>
+																<td colspan="3">{{ 'CompanyFrame.empty'|trans|raw }}</td>
+															</tr>
+															{% endif %}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="tab-pane fade{%if tabActive==22 or tabActive==23 or tabActive==24 or tabActive==25 or tabActive==26 or tabActive==27 or tabActive==28 or tabActive==29 or tabActive==30%} in active{%endif%}" id="tab2">
+					<div class="panel">
+						<div class="nav-tabs-custom">
+							<ul class="nav nav-tabs">
+								<li {%if tabActive==22 or ( tabActive!=22 and tabActive!=23 and tabActive!=24 and tabActive!=25 and tabActive!=26 and tabActive!=27 and tabActive!=28 and tabActive!=29 and tabActive!=30)%} class="active" {%endif%}><a href="#Customers" data-toggle="tab">{{'Company.tab.customers'|trans|raw}}</a></li>
+								<li {%if tabActive==23%} class="active" {%endif%}><a href="#Suppliers" data-toggle="tab">{{'Company.tab.suppliers'|trans|raw}}</a></li>
+								<li {%if tabActive==27%} class="active" {%endif%}><a href="#MBSales" data-toggle="tab">{{'Company.tab.sales'|trans|raw}}</a></li>
+								<li {%if tabActive==28%} class="active" {%endif%}><a href="#MBPurchases" data-toggle="tab">{{'Company.tab.purchases'|trans|raw}}</a></li>
+								<li {%if tabActive==29%} class="active" {%endif%}><a href="#Docgroupcomptables" data-toggle="tab">{{'Company.tab.docgroupcomptables'|trans|raw}}</a></li>
+								<li {%if tabActive==30%} class="active" {%endif%}><a href="#Docgroupbanks" data-toggle="tab">{{'Company.tab.docgroupbanks'|trans|raw}}</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade{%if tabActive==22 or ( tabActive!=22 and tabActive!=23 and tabActive!=24 and tabActive!=25 and tabActive!=26 and tabActive!=27 and tabActive!=28 and tabActive!=29 and tabActive!=30)%} in active{%endif%}" id="Customers">
+									<div id="accordion22" class="box-group">
+										{% if companyUser.addCustomers == constant('CAN', companyUser) %}
+										<div class="panel box box-danger">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse221" data-parent="#accordion22" data-toggle="collapse">{{'Company.tlabel.customers.add'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse221" class="panel-collapse collapse{%if tabActive==22 and stabActive==1%} in{%endif%}">
+												<div class="box-body">
+													{{form_start(CustomerNewForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+													{{form_row(CustomerNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+													{{form_row(CustomerNewForm.label, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.number, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.fisc, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.physicaltype, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.commercialRegister, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.cin, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.passport, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.sectors, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.streetNum, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.address, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.address2, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.town, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.zipCode, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.country, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.email, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.phone, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.mobile, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.fax, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(CustomerNewForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+													<div class="form-group">
+														<div class="col-lg-offset-3 col-lg-2">
+															<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button>
+														</div>
+													</div>
+													{{form_end(CustomerNewForm)}}
+												</div>
+											</div>
+										</div>
+										{% endif %}
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse223" data-parent="#accordion22" data-toggle="collapse">{{'Company.tlabel.customers.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse223" class="panel-collapse collapse{%if (tabActive==22 and stabActive==3) or tabActive!=22%} in{%endif%}">
+												<div class="box-body table-responsive">
+													<table id="customerList" class="table table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>{{ 'Customer.label.label'|trans|raw }}</th>
+																<th>{{ 'Customer.number.label'|trans|raw }}</th>
+																<th>{{ 'Customer.fisc.label'|trans|raw }}</th>
+																<th>{{ 'Customer.sectors.label'|trans|raw }}</th>
+																<th>{{ 'Customer.address.label'|trans|raw }}</th>
+																<th>{{ 'Customer.commercialRegister.label'|trans|raw }}</th>
+																<th>{{ 'action'|trans|raw }}</th>
+															</tr>
+														</thead>
+														<tbody>
+															{% if company.customers|length != 0 %}
+															{% for customer in company.customers %}
+															<tr>
+																<td>{{ customer.label }}</td>
+																<td>{{customersPrefix~customer.numberFormated}}</td>
+																<td>{{ customer.fisc}}</td>
+																<td>{% for sector in customer.sectors %}{{sector.label}}{% endfor %}</td>
+																<td>{{ customer.fullAddress}}</td>
+																<td>{{ customer.commercialRegister}}</td>
+																<td>
+																	<a class="btn btn-sm btn-info" href="{{path('_client_customer_editGet',{'uid':customer.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																	{% if companyUser.deleteCustomers == constant('CAN', companyUser) %}
+																	<a class="btn btn-sm btn-danger deleteConfirmCustomer" href="{{path('_client_customer_delete',{'uid':customer.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+																	{% endif %}
+																</td>
+															</tr>
+															{% endfor %}
+															{% else %}
+															<tr>
+																<td colspan="7">{{ 'Customer.empty'|trans|raw }}</td>
+															</tr>
+															{% endif %}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade{%if tabActive==23%} in active{%endif%}" id="Suppliers">
+									<div id="accordion23" class="box-group">
+										{% if companyUser.addSuppliers == constant('CAN', companyUser) %}
+										<div class="panel box box-danger">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse231" data-parent="#accordion23" data-toggle="collapse">{{'Company.tlabel.suppliers.add'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse231" class="panel-collapse collapse{%if tabActive==23 and stabActive==1%} in{%endif%}">
+												<div class="box-body">
+													{{form_start(SupplierNewForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+													{{form_row(SupplierNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+													{{form_row(SupplierNewForm.label, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.number, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.fisc, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.physicaltype, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.commercialRegister, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'commercialRegisterSupplier'} })}}
+													{{form_row(SupplierNewForm.cin, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'cinSupplier'} })}}
+													{{form_row(SupplierNewForm.passport, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'passportSupplier'} })}}
+													{{form_row(SupplierNewForm.streetNum, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.address, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.address2, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.town, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.zipCode, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.country, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.email, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.phone, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.mobile, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.fax, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(SupplierNewForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+													<div class="form-group">
+														<div class="col-lg-offset-3 col-lg-2">
+															<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button>
+														</div>
+													</div>
+													{{form_end(SupplierNewForm)}}
+												</div>
+											</div>
+										</div>
+										{% endif %}
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse233" data-parent="#accordion23" data-toggle="collapse">{{'Company.tlabel.suppliers.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse233" class="panel-collapse collapse{%if (tabActive==23 and stabActive==3) or tabActive!=23%} in{%endif%}">
+												<div class="box-body table-responsive">
+													{% if tabActive == 23 %}
+													{% for flashMessage in app.session.flashbag.get('log') %}
+													<div class="callout callout-info">{{ flashMessage|raw }}</div>
+													{% endfor %}
+													{% endif %}
+													<table id="supplierList" class="table table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>{{ 'Supplier.label.label'|trans|raw }}</th>
+																<th>{{ 'Supplier.number.label'|trans|raw }}</th>
+																<th>{{ 'Supplier.fisc.label'|trans|raw }}</th>
+																<th>{{ 'Supplier.address.label'|trans|raw }}</th>
+																<th>{{ 'Supplier.commercialRegister.label'|trans|raw }}</th>
+																<th>{{ 'action'|trans|raw }}</th>
+															</tr>
+														</thead>
+														<tbody>
+															{% if company.suppliers|length != 0 %}
+															{% for supplier in company.suppliers %}
+															<tr>
+																<td>{{ supplier.label }}</td>
+																<td>{{suppliersPrefix~supplier.numberFormated}}</td>
+																<td>{%if supplier.fisc is not empty%}{{supplier.fisc}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}</td>
+																<td>{{ supplier.fullAddress}}</td>
+																<td>{{ supplier.commercialRegister}}</td>
+																<td>
+																	<a class="btn btn-sm btn-info" href="{{path('_client_supplier_editGet',{'uid':supplier.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																	{% if companyUser.deleteSuppliers == constant('CAN', companyUser) %}
+																	<a class="btn btn-sm btn-danger deleteConfirmSupplier" href="{{path('_client_supplier_delete',{'uid':supplier.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+																	{% endif %}
+																</td>
+															</tr>
+															{% endfor %}
+															{% else %}
+															<tr>
+																<td colspan="6">{{ 'Supplier.empty'|trans|raw }}</td>
+															</tr>
+															{% endif %}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade{%if tabActive==27%} in active{%endif%}" id="MBSales">
+									<div id="accordion27" class="box-group">
+										{% if companyUser.addSales == constant('CAN', companyUser) %}
+										<div class="panel box box-danger">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse271" data-parent="#accordion27" data-toggle="collapse">{{'Company.tlabel.sales.add'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse271" class="panel-collapse collapse{%if tabActive==27 and stabActive==1%} in{%endif%}">
+												<div class="box-body">
+													{{form_start(MBSaleNewForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+													{{form_row(MBSaleNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+													{{form_row(MBSaleNewForm.year, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(MBSaleNewForm.month, {'label_col': 3, 'widget_col': 8 })}}
+													<div class="form-group">
+														<div class="col-lg-offset-3 col-lg-2">
+															<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button>
+														</div>
+													</div>
+													{{form_end(MBSaleNewForm)}}
+												</div>
+											</div>
+										</div>
+										{% endif %}
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse272" data-parent="#accordion27" data-toggle="collapse">{{'Company.tlabel.sales.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse272" class="panel-collapse collapse{%if (tabActive==27 and stabActive==2) or tabActive!=27%} in{%endif%}">
+												<div class="box-body table-responsive">
+													{% if mbsaleYears | length != 0 %}
+													<div id="accordionMbsaleList" class="box-group">
+														{% for mbsaleYear in mbsaleYears %}
+														<div class="panel box box-info">
+															<div class="box-header">
+																<h4 class="box-title">
+																	<a href="#collapseMbsaleList{{ mbsaleYear.year }}" data-parent="#accordionMbsaleList" data-toggle="collapse">{{ mbsaleYear.year }}</a>
+																</h4>
+															</div>
+															<div id="collapseMbsaleList{{ mbsaleYear.year }}" class="panel-collapse collapse">
+																<table class="table table-bordered table-hover mbsaleList">
+																	<thead>
+																		<tr>
+																			<th>{{ 'MBSale.ref.label'|trans|raw }}</th>
+																			<th>{{ 'MBSale.month.label'|trans|raw }}</th>
+																			<th>{{ 'MBSale.year.label'|trans|raw }}</th>
+																			<th>{{ 'MBSale.type.label'|trans|raw }}</th>
+																			<th>{{ 'action'|trans|raw }}</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		{% if company.sales|length != 0 %}
+																		{% for mbsale in company.sales %}
+																		{% if mbsale.year == mbsaleYear.year %}
+																		<tr>
+																			<td>{{ mbsale.ref }}</td>
+																			<td>{{('MonthlyBalance.month.'~mbsale.month)|trans}}</td>
+																			<td>{{ mbsale.year }}</td>
+																			<td>{{'MBSale.type.2'|trans}}</td>
+																			<td><a class="btn btn-sm btn-info" href="{{path('_client_mbsale_editGet',{'uid':mbsale.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a></td>
+																		</tr>
+																		{% endif %}
+																		{% endfor %}
+																		{% else %}
+																		<tr>
+																			<td colspan="5">{{ 'MBSale.empty'|trans|raw }}</td>
+																		</tr>
+																		{% endif %}
+																	</tbody>
+																</table>
+															</div>
+														</div>
+														{% endfor %}
+													</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade{%if tabActive==28%} in active{%endif%}" id="MBPurchases">
+									<div id="accordion28" class="box-group">
+										{% if companyUser.addBuys == constant('CAN', companyUser) %}
+										<div class="panel box box-danger">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse281" data-parent="#accordion28" data-toggle="collapse">{{'Company.tlabel.purchases.add'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse281" class="panel-collapse collapse{%if tabActive==28 and stabActive==1%} in{%endif%}">
+												<div class="box-body">
+													{{form_start(MBPurchaseNewForm, {'method':'POST', 'action': path('_client_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+													{{form_row(MBPurchaseNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+													{{form_row(MBPurchaseNewForm.year, {'label_col': 3, 'widget_col': 8 })}}
+													{{form_row(MBPurchaseNewForm.month, {'label_col': 3, 'widget_col': 8 })}}
+													<div class="form-group">
+														<div class="col-lg-offset-3 col-lg-2">
+															<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button>
+														</div>
+													</div>
+													{{form_end(MBPurchaseNewForm)}}
+												</div>
+											</div>
+										</div>
+										{% endif %}
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse282" data-parent="#accordion28" data-toggle="collapse">{{'Company.tlabel.purchases.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse282" class="panel-collapse collapse{%if (tabActive==28 and stabActive==2) or tabActive!=28%} in{%endif%}">
+												<div class="box-body table-responsive">
+													{% if mbpurchaseYears | length != 0 %}
+													<div id="accordionMbpurchaseList" class="box-group">
+														{% for mbpurchaseYear in mbpurchaseYears %}
+														<div class="panel box box-info">
+															<div class="box-header">
+																<h4 class="box-title">
+																	<a href="#collapseMbpurchaseList{{ mbpurchaseYear.year }}" data-parent="#accordionMbpurchaseList" data-toggle="collapse">{{ mbpurchaseYear.year }}</a>
+																</h4>
+															</div>
+															<div id="collapseMbpurchaseList{{ mbpurchaseYear.year }}" class="panel-collapse collapse">
+																<table class="table table-bordered table-hover mbpurchaseList">
+																	<thead>
+																		<tr>
+																			<th>{{ 'MBPurchase.ref.label'|trans|raw }}</th>
+																			<th>{{ 'MBPurchase.month.label'|trans|raw }}</th>
+																			<th>{{ 'MBPurchase.year.label'|trans|raw }}</th>
+																			<th>{{ 'MBPurchase.type.label'|trans|raw }}</th>
+																			<th>{{ 'action'|trans|raw }}</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		{% if company.purchases|length != 0 %}
+																		{% for mbpurchase in company.purchases %}
+																		{% if mbpurchase.year == mbpurchaseYear.year %}
+																		<tr>
+																			<td>{{ mbpurchase.ref }}</td>
+																			<td>{{('MonthlyBalance.month.'~mbpurchase.month)|trans}}</td>
+																			<td>{{ mbpurchase.year }}</td>
+																			<td>{{'MBPurchase.type.1'|trans}}</td>
+																			<td><a class="btn btn-sm btn-info" href="{{path('_client_mbpurchase_editGet',{'uid':mbpurchase.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a></td>
+																		</tr>
+																		{% endif %}
+																		{% endfor %}
+																		{% else %}
+																		<tr>
+																			<td colspan="5">{{ 'MBPurchase.empty'|trans|raw }}</td>
+																		</tr>
+																		{% endif %}
+																	</tbody>
+																</table>
+															</div>
+														</div>
+														{% endfor %}
+													</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade{%if tabActive==29%} in active{%endif%}" id="Docgroupcomptables">
+									<div id="accordion29" class="box-group">
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse292" data-parent="#accordion29" data-toggle="collapse">{{'Company.tlabel.docgroupcomptables.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse292" class="panel-collapse collapse{%if (tabActive==29 and stabActive==2) or tabActive!=29%} in{%endif%}">
+												<div class="box-body table-responsive">
+													{% if docgroupcomptables|length != 0 %}
+													<div id="accordionDocgroupComptable" class="box-group">
+														{% for docgroupcomptable in docgroupcomptables %}
+														<div class="panel box box-warning">
+															<div class="box-header">
+																<h4 class="box-title">
+																	<a href="#collapse{{ docgroupcomptable.id }}" data-parent="#accordionDocgroupComptable" data-toggle="collapse">{{ docgroupcomptable.label }}</a>
+																</h4>
+															</div>
+															<div id="collapse{{ docgroupcomptable.id }}" class="panel-collapse collapse">
+																<div class="row">
+																	<div class="col-lg-9">&nbsp;</div>
+																	<div class="col-lg-3">
+																		<a class="btn btn-sm btn-info" href="{{path('_client_docgroupcomptable_editGet',{'uid':docgroupcomptable.id})}}">{{
+																			glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																	</div>
+																	{% if docgroupcomptable.otherInfos is not empty %}
+																	<div class="col-lg-12">{{ docgroupcomptable.otherInfos | raw }}</div>
+																	{% endif %}
+																</div>
+																{% if docgroupcomptable.docs|length != 0 %}
+																<table class="table table-bordered table-hover docgroupcomptableDocs">
+																	<thead>
+																		<tr>
+																			<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+																			<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+																			<th>{{ 'Doc.size.label'|trans|raw }}</th>
+																			<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+																			<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																			<th>{{ 'action'|trans|raw }}</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		{% for doc in docgroupcomptable.docs %}
+																		<tr>
+																			<td>{{ doc.originalName }}</td>
+																			<td>{{ doc.mimeType }}</td>
+																			<td>
+																				{%if doc.size<1024%}
+																				{{doc.size}} o
+																				{%elseif doc.size<(1024*1024)%}
+																				{{'%.2f'|format(doc.size/1024)}} Ko
+																				{%elseif doc.size<(1024*1024*1024)%}
+																				{{'%.2f'|format(doc.size/1024/1024)}} Mo
+																				{%else%}
+																				{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+																				{% endif %}
+																			</td>
+																			<td>{{ doc.nbrDownloads }}</td>
+																			<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																			<td>
+																				<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+																				<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																			</td>
+																		</tr>
+																		{% endfor %}
+																	</tbody>
+																</table>
+																{% else %} <br>
+																<br>
+																<br>
+																{% endif %}
+																{% if docgroupcomptable.childs|length != 0 %}
+																	{{ render_hinclude(controller('AcfClientBundle:Docgroupcomptable:childs', {parent: docgroupcomptable.id})) }}
+																{% endif %}
+															</div>
+														</div>
+														{% endfor %}
+													</div>
+													{% else %}
+													{{ 'Docgroupcomptable.empty'|trans|raw }}
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade{%if tabActive==30%} in active{%endif%}" id="Docgroupbanks">
+									<div id="accordion30" class="box-group">
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title">
+													<a href="#collapse302" data-parent="#accordion30" data-toggle="collapse">{{'Company.tlabel.docgroupbanks.list'|trans}}</a>
+												</h4>
+											</div>
+											<div id="collapse302" class="panel-collapse collapse{%if (tabActive==30 and stabActive==2) or tabActive!=30%} in{%endif%}">
+												<div class="box-body table-responsive">
+													{% if docgroupbanks|length != 0 %}
+													<div id="accordionDocgroupBank" class="box-group">
+														{% for docgroupbank in docgroupbanks %}
+														<div class="panel box box-warning">
+															<div class="box-header">
+																<h4 class="box-title">
+																	<a href="#collapse{{ docgroupbank.id }}" data-parent="#accordionDocgroupBank" data-toggle="collapse">{{ docgroupbank.label }}</a>
+																</h4>
+															</div>
+															<div id="collapse{{ docgroupbank.id }}" class="panel-collapse collapse">
+																<div class="row">
+																	<div class="col-lg-9">&nbsp;</div>
+																	<div class="col-lg-3">
+																		<a class="btn btn-sm btn-info" href="{{path('_client_docgroupbank_editGet',{'uid':docgroupbank.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																	</div>
+																	{% if docgroupbank.otherInfos is not empty %}
+																	<div class="col-lg-12">{{ docgroupbank.otherInfos | raw }}</div>
+																	{% endif %}
+																</div>
+																{% if docgroupbank.docs|length != 0 %}
+																<table class="table table-bordered table-hover docgroupbankDocs">
+																	<thead>
+																		<tr>
+																			<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+																			<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+																			<th>{{ 'Doc.size.label'|trans|raw }}</th>
+																			<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+																			<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																			<th>{{ 'action'|trans|raw }}</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		{% for doc in docgroupbank.docs %}
+																		<tr>
+																			<td>{{ doc.originalName }}</td>
+																			<td>{{ doc.mimeType }}</td>
+																			<td>
+																				{%if doc.size<1024%}
+																				{{doc.size}} o
+																				{%elseif doc.size<(1024*1024)%}
+																				{{'%.2f'|format(doc.size/1024)}} Ko
+																				{%elseif doc.size<(1024*1024*1024)%}
+																				{{'%.2f'|format(doc.size/1024/1024)}} Mo
+																				{%else%}
+																				{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+																				{% endif %}
+																			</td>
+																			<td>{{ doc.nbrDownloads }}</td>
+																			<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																			<td>
+																				<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+																				<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																			</td>
+																		</tr>
+																		{% endfor %}
+																	</tbody>
+																</table>
+																{% else %} <br>
+																<br>
+																<br>
+																{% endif %}
+																{% if docgroupbank.childs|length != 0 %}
+																	{{ render_hinclude(controller('AcfClientBundle:Docgroupbank:childs', {parent: docgroupbank.id})) }}
+																{% endif %}
+															</div>
+														</div>
+														{% endfor %}
+													</div>
+													{% else %}
+														{{ 'Docgroupbank.empty'|trans|raw }}
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==41 or tabActive==42%} in active{%endif%}" id="tab3">
+					<div class="panel box">
+						<div class="box-header">
+							<h4 class="box-title">{{'Company.tlabel.docgroups.list'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="table-responsive">
+								{% if docgroups|length != 0 %}
+								<div id="accordionDocgroupJur" class="box-group">
+									{% for docgroup in docgroups %}
+									<div class="panel box box-warning">
+										<div class="box-header">
+											<h4 class="box-title">
+												<a href="#collapse{{ docgroup.id }}" data-parent="#accordionDocgroupJur" data-toggle="collapse">{{ docgroup.label }}</a>
+											</h4>
+										</div>
+										<div id="collapse{{ docgroup.id }}" class="panel-collapse collapse">
+											<div class="row">
+												<div class="col-lg-9">&nbsp;</div>
+												<div class="col-lg-3">
+													<a class="btn btn-sm btn-info" href="{{path('_client_docgroup_editGet',{'uid':docgroup.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</div>
+												{% if docgroup.otherInfos is not empty %}
+												<div class="col-lg-12">{{ docgroup.otherInfos | raw }}</div>
+												{% endif %}
+											</div>
+											{% if docgroup.docs|length != 0 %}
+											<table class="table table-bordered table-hover docgroupDocs">
+												<thead>
+													<tr>
+														<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+														<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+														<th>{{ 'Doc.size.label'|trans|raw }}</th>
+														<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+														<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+														<th>{{ 'action'|trans|raw }}</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for doc in docgroup.docs %}
+													<tr>
+														<td>{{ doc.originalName }}</td>
+														<td>{{ doc.mimeType }}</td>
+														<td>
+															{%if doc.size<1024%}
+															{{doc.size}} o
+															{%elseif doc.size<(1024*1024)%}
+															{{'%.2f'|format(doc.size/1024)}} Ko
+															{%elseif doc.size<(1024*1024*1024)%}
+															{{'%.2f'|format(doc.size/1024/1024)}} Mo
+															{%else%}
+															{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+															{% endif %}
+														</td>
+														<td>{{ doc.nbrDownloads }}</td>
+														<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+														<td>
+															<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+															<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+														</td>
+													</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+											{% else %}
+											<br>
+											<br>
+											<br>
+											{% endif %}
+											{% if docgroup.childs|length != 0 %}
+												{{ render_hinclude(controller('AcfClientBundle:Docgroup:childs', {parent: docgroup.id})) }}
+											{% endif %}
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+								{% else %}
+									{{ 'Docgroup.empty'|trans|raw }}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==51%} in active{%endif%}" id="tab4">
+					<div class="panel box">
+						<div class="box-header">
+							<h4 class="box-title">{{'Company.tlabel.docgroupfiscals.list'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="table-responsive">
+								{% if docgroupfiscals|length != 0 %}
+								<div id="accordionDocgroupFiscal" class="box-group">
+									{% for docgroupfiscal in docgroupfiscals %}
+									<div class="panel box box-warning">
+										<div class="box-header">
+											<h4 class="box-title">
+												<a href="#collapse{{ docgroupfiscal.id }}" data-parent="#accordionDocgroupFiscal" data-toggle="collapse">{{ docgroupfiscal.label }}</a>
+											</h4>
+										</div>
+										<div id="collapse{{ docgroupfiscal.id }}" class="panel-collapse collapse">
+											<div class="row">
+												<div class="col-lg-9">&nbsp;</div>
+												<div class="col-lg-3">
+													<a class="btn btn-sm btn-info" href="{{path('_client_docgroupfiscal_editGet',{'uid':docgroupfiscal.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</div>
+												{% if docgroupfiscal.otherInfos is not empty %}
+												<div class="col-lg-12">{{ docgroupfiscal.otherInfos | raw }}</div>
+												{% endif %}
+											</div>
+											{% if docgroupfiscal.docs|length != 0 %}
+											<table class="table table-bordered table-hover docgroupfiscalDocs">
+												<thead>
+													<tr>
+														<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+														<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+														<th>{{ 'Doc.size.label'|trans|raw }}</th>
+														<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+														<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+														<th>{{ 'action'|trans|raw }}</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for doc in docgroupfiscal.docs %}
+													<tr>
+														<td>{{ doc.originalName }}</td>
+														<td>{{ doc.mimeType }}</td>
+														<td>
+															{%if doc.size<1024%}
+															{{doc.size}} o
+															{%elseif doc.size<(1024*1024)%}
+															{{'%.2f'|format(doc.size/1024)}} Ko
+															{%elseif doc.size<(1024*1024*1024)%}
+															{{'%.2f'|format(doc.size/1024/1024)}} Mo
+															{%else%}
+															{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+															{% endif %}
+														</td>
+														<td>{{ doc.nbrDownloads }}</td>
+														<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+														<td>
+															<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+															<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+														</td>
+													</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+											{% else %}
+											<br>
+											<br>
+											<br>
+											{% endif %}
+											{% if docgroupfiscal.childs|length != 0 %}
+												{{ render_hinclude(controller('AcfClientBundle:Docgroupfiscal:childs', {parent: docgroupfiscal.id})) }}
+											{% endif %}
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+								{% else %}
+									{{ 'Docgroupfiscal.empty'|trans|raw }}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==61%} in active{%endif%}" id="tab5">
+					<div class="panel box">
+						<div class="box-header">
+							<h4 class="box-title">{{'Company.tlabel.docgrouppersos.list'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="table-responsive">
+								{% if docgrouppersos|length != 0 %}
+								<div id="accordionDocgroupPerso" class="box-group">
+									{% for docgroupperso in docgrouppersos %}
+									<div class="panel box box-warning">
+										<div class="box-header">
+											<h4 class="box-title">
+												<a href="#collapse{{ docgroupperso.id }}" data-parent="#accordionDocgroupPerso" data-toggle="collapse">{{ docgroupperso.label }}</a>
+											</h4>
+										</div>
+										<div id="collapse{{ docgroupperso.id }}" class="panel-collapse collapse">
+											<div class="row">
+												<div class="col-lg-9">&nbsp;</div>
+												<div class="col-lg-3">
+													<a class="btn btn-sm btn-info" href="{{path('_client_docgroupperso_editGet',{'uid':docgroupperso.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</div>
+												{% if docgroupperso.otherInfos is not empty %}
+												<div class="col-lg-12">{{ docgroupperso.otherInfos | raw }}</div>
+												{% endif %}
+											</div>
+											{% if docgroupperso.docs|length != 0 %}
+											<table class="table table-bordered table-hover docgrouppersoDocs">
+												<thead>
+													<tr>
+														<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+														<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+														<th>{{ 'Doc.size.label'|trans|raw }}</th>
+														<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+														<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+														<th>{{ 'action'|trans|raw }}</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for doc in docgroupperso.docs %}
+													<tr>
+														<td>{{ doc.originalName }}</td>
+														<td>{{ doc.mimeType }}</td>
+														<td>
+															{%if doc.size<1024%}
+															{{doc.size}} o
+															{%elseif doc.size<(1024*1024)%}
+															{{'%.2f'|format(doc.size/1024)}} Ko
+															{%elseif doc.size<(1024*1024*1024)%}
+															{{'%.2f'|format(doc.size/1024/1024)}} Mo
+															{%else%}
+															{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+															{% endif %}
+														</td>
+														<td>{{ doc.nbrDownloads }}</td>
+														<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+														<td>
+															<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+															<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+														</td>
+													</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+											{% else %}
+											<br>
+											<br>
+											<br>
+											{% endif %}
+											{% if docgroupperso.childs|length != 0 %}
+												{{ render_hinclude(controller('AcfClientBundle:Docgroupperso:childs', {parent: docgroupperso.id})) }}
+											{% endif %}
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+								{% else %} {{ 'Docgroupperso.empty'|trans|raw }} {% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==71%} in active{%endif%}" id="tab6">
+					<div class="panel box">
+						<div class="box-header">
+							<h4 class="box-title">{{'Company.tlabel.docgrouppersos.list'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="table-responsive">
+								{% if docgroupsysts|length != 0 %}
+								<div id="accordionDocgroupSyst" class="box-group">
+									{% for docgroupsyst in docgroupsysts %}
+									<div class="panel box box-warning">
+										<div class="box-header">
+											<h4 class="box-title">
+												<a href="#collapse{{ docgroupsyst.id }}" data-parent="#accordionDocgroupSyst" data-toggle="collapse">{{ docgroupsyst.label }}</a>
+											</h4>
+										</div>
+										<div id="collapse{{ docgroupsyst.id }}" class="panel-collapse collapse">
+											<div class="row">
+												<div class="col-lg-9">&nbsp;</div>
+												<div class="col-lg-3">
+													<a class="btn btn-sm btn-info" href="{{path('_client_docgroupsyst_editGet',{'uid':docgroupsyst.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</div>
+												{% if docgroupsyst.otherInfos is not empty %}
+												<div class="col-lg-12">{{ docgroupsyst.otherInfos | raw }}</div>
+												{% endif %}
+											</div>
+											{% if docgroupsyst.docs|length != 0 %}
+											<table class="table table-bordered table-hover docgroupsystDocs">
+												<thead>
+													<tr>
+														<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+														<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+														<th>{{ 'Doc.size.label'|trans|raw }}</th>
+														<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+														<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+														<th>{{ 'action'|trans|raw }}</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for doc in docgroupsyst.docs %}
+													<tr>
+														<td>{{ doc.originalName }}</td>
+														<td>{{ doc.mimeType }}</td>
+														<td>
+															{%if doc.size<1024%}
+															{{doc.size}} o
+															{%elseif doc.size<(1024*1024)%}
+															{{'%.2f'|format(doc.size/1024)}} Ko
+															{%elseif doc.size<(1024*1024*1024)%}
+															{{'%.2f'|format(doc.size/1024/1024)}} Mo
+															{%else%}
+															{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+															{% endif %}
+														</td>
+														<td>{{ doc.nbrDownloads }}</td>
+														<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+														<td>
+															<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+															<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+														</td>
+													</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+											{% else %}
+											<br>
+											<br>
+											<br>
+											{% endif %}
+											{% if docgroupsyst.childs|length != 0 %}
+												{{ render_hinclude(controller('AcfClientBundle:Docgroupsyst:childs', {parent: docgroupsyst.id})) }}
+											{% endif %}
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+								{% else %}
+									{{ 'Docgroupsyst.empty'|trans|raw }}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% if companyUser.deleteAddresses == constant('CAN', companyUser) %}
+<div id="deleteConfirmAddress" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Address.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">{{'Address.delete.confirm.txt'|trans|raw}}</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{% endif %} {% if companyUser.deletePhones == constant('CAN', companyUser) %}
+<div id="deleteConfirmPhone" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Phone.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">{{'Phone.delete.confirm.txt'|trans|raw}}</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{% endif %} {% if companyUser.deleteFrames == constant('CAN', companyUser) %}
+<div id="deleteConfirmCompanyFrame" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'CompanyFrame.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">{{'CompanyFrame.delete.confirm.txt'|trans|raw}}</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{% endif %} {% if companyUser.deleteCustomers == constant('CAN', companyUser) %}
+<div id="deleteConfirmCustomer" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Customer.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">{{'Customer.delete.confirm.txt'|trans|raw}}</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{% endif %} {% if companyUser.deleteSuppliers == constant('CAN', companyUser) %}
+<div id="deleteConfirmSupplier" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Supplier.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">{{'Supplier.delete.confirm.txt'|trans|raw}}</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{% endif %} {%endblock content%}

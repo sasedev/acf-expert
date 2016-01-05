@@ -1,0 +1,20 @@
+{%extends 'AcfSecurityBundle::security.html.twig'%}
+{%block content%}
+{{form_start(LoginForm, {'method':'POST', 'action': path('_security_check'), 'style': 'horizontal'})}}
+<div class="login-box-body">
+	<img class="img" src="{{asset('bundles/acfres/images/logo_acf_footer.jpg')}}" alt="{{ sitename }}" style="height: 100px;">
+	{%if pagetitle is defined%}<hr><h1 class="text-center">{{pagetitle|raw}}</h1><hr>{%endif%}
+	{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': false }%}
+	{{form_row(LoginForm.username, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.username.placeholder'} })}}
+	{{form_row(LoginForm.password, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.password.placeholder'} })}}
+	{{form_row(LoginForm.remember_me, {'label_col': 4, 'widget_col': 8, 'attr': {'align_with_widget': true} })}}
+	{{form_row(LoginForm.target_path, {'label_col': 12, 'widget_col': 0})}}
+	{{form_row(LoginForm.submit, {'label_col': 4, 'widget_col': 8, 'attr': {'class': 'bg-blue btn-block'} })}}
+	{{form_row(LoginForm.reset, {'label_col': 4, 'widget_col': 8, 'attr': {'class': 'bg-yellow btn-block'} })}}
+	<hr>
+	<p><a href="{{path('_security_register')}}">{{faIco('user-plus')}} {{ 'menu.newuser'|trans }}</a></p>
+	<p><a href="{{path('_security_lost_password')}}">{{faIco('envelope')}} {{ 'menu.lostpassword'|trans }}</a></p>
+	<p><a href="{{path('_front_homepage')}}">{{faIco('home')}} {{ 'menu.home'|trans }}</a></p>
+</div>
+{{form_end(LoginForm)}}
+{%endblock content%}

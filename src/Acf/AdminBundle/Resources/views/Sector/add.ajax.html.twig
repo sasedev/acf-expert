@@ -1,0 +1,19 @@
+		{{form_start(SectorNewForm, {'method':'POST', 'action': path('_admin_sector_addPost'), 'style': 'horizontal', 'attr': {'id':'newSectorFormAjax'}})}}
+		{{form_row(SectorNewForm.label, {'label_col': 3, 'widget_col': 8})}}
+		<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+		{{form_end(SectorNewForm)}}
+		<script type="text/javascript">
+		$(function () {
+			$('#newSector').modal('hide');
+			$('#CompanyNewForm_sectors').append('<option value="{{ sector.id }}">{{ sector.label }}</option>');
+			$('#CompanyNewForm_sectors').bootstrapDualListbox('refresh', true);
+			$('#CompanyUpdateSectorsForm_sectors').append('<option value="{{ sector.id }}">{{ sector.label }}</option>');
+			$('#CompanyUpdateSectorsForm_sectors').bootstrapDualListbox('refresh', true);
+
+			$('#newSectorFormAjax').ajaxForm({
+				complete: function(xhr) {
+					$('#newSectorForm').html(xhr.responseText);
+				}
+			});
+		});
+		</script>

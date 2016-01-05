@@ -1,0 +1,29 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_goodLink_list') }}">{{faIco('newspaper-o')}} &nbsp; {{'breadcrumb.goodLink.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_goodLink_addGet') }}">{{glyphIco('plus')}} &nbsp; {{'breadcrumb.goodLink.add'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_goodLink_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'GoodLink.tlabel.add'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(GoodLinkNewForm, {'method':'POST', 'action': path('_admin_goodLink_addPost'), 'style': 'horizontal'})}}
+				{{form_row(GoodLinkNewForm.title, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(GoodLinkNewForm.url, {'label_col': 3, 'widget_col': 8})}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+				{{form_end(GoodLinkNewForm)}}
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

@@ -1,0 +1,141 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	{% if is_granted('ROLE_SUPERADMIN') %}
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	{% endif %}
+	<li><a href="{{ path('_admin_company_editGet', {'uid': withholding.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': withholding.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_withholding_editGet', {'uid': withholding.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.withholding.edit'|trans({'%withholding%': withholding.label})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_SUPERADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_company_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Withholding.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Withholding.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Withholding.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Withholding.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_company_editGet', {'uid': withholding.company.id}) }}">{{withholding.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Withholding.label'|trans|raw}} :</div>
+								<div class="col-lg-9">{{withholding.label}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Withholding.number'|trans|raw}} :</div>
+								<div class="col-lg-9">{{withholdingsPrefix~withholding.numberFormated}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Withholding.value'|trans|raw}} :</div>
+								<div class="col-lg-9">{{withholding.value}} %&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Withholding.otherInfos'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if withholding.otherInfos is not empty%}{{withholding.otherInfos|raw}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Withholding.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{withholding.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{withholding.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Withholding.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{withholding.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{withholding.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Withholding.tlabel.editLabel'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(WithholdingUpdateLabelForm, {'method':'POST', 'action': path('_admin_withholding_editPost', {'uid': withholding.id}), 'style': 'horizontal'})}}
+							{{form_row(WithholdingUpdateLabelForm.label, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(WithholdingUpdateLabelForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Withholding.tlabel.editNumber'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(WithholdingUpdateNumberForm, {'method':'POST', 'action': path('_admin_withholding_editPost', {'uid': withholding.id}), 'style': 'horizontal'})}}
+							{{form_row(WithholdingUpdateNumberForm.number, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(WithholdingUpdateNumberForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Withholding.tlabel.editValue'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(WithholdingUpdateValueForm, {'method':'POST', 'action': path('_admin_withholding_editPost', {'uid': withholding.id}), 'style': 'horizontal'})}}
+							{{form_row(WithholdingUpdateValueForm.value, {'label_col': 3, 'widget_col': 8 , 'input_group':{'append':'%'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(WithholdingUpdateValueForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Withholding.tlabel.editOtherInfos'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(WithholdingUpdateOtherInfosForm, {'method':'POST', 'action': path('_admin_withholding_editPost', {'uid': withholding.id}), 'style': 'horizontal'})}}
+							{{form_row(WithholdingUpdateOtherInfosForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(WithholdingUpdateOtherInfosForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

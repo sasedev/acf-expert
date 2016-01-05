@@ -1,0 +1,45 @@
+{{form_start(UserCropAvatarForm, {'method':'POST','action': path('_admin_user_editPost', {'id': user.id}) ,'style': 'horizontal', 'attr': {'id':'avatar_resize'} }) }}
+<div class="form-group row">
+	<div class="col-lg-offset-3 col-lg-9">
+		<img src="{{ path('vfs_tmp_files', {'file': '/'}) }}{{ tmp_avatar }}" alt="" id="avatar_big" class="img-responsive jcrop-preview">
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-lg-offset-3 col-lg-9">
+		<button type="submit" id="resize_avatar_tmp" class="btn btn-primary">{{glyphIco('resize-small')}} {{'action.btnSelect' | trans|raw}}</button>
+		<button type="button" id="cancel_avatar_tmp" class="btn bg-red">{{glyphIco('remove-sign')}} {{'action.btnCancel'| trans|raw}}</button>
+	</div>
+</div>
+{{form_row(UserCropAvatarForm.x1)}}
+{{form_row(UserCropAvatarForm.y1)}}
+{{form_row(UserCropAvatarForm.w)}}
+{{form_row(UserCropAvatarForm.h)}}
+{{form_row(UserCropAvatarForm.avatar_tmp)}}
+{{form_rest(UserCropAvatarForm)}}
+{{form_end(UserCropAvatarForm)}}
+<br>
+<script type="text/javascript">
+$(function () {
+	$('#avatar_big').Jcrop({aspectRatio: 1, onChange: showCoords, onSelect: showCoords});
+	function showCoords(c) {
+		$('#UserCropAvatarForm_x1').val(c.x);
+		$('#UserCropAvatarForm_y1').val(c.y);
+		$('#UserCropAvatarForm_w').val(c.w);
+		$('#UserCropAvatarForm_h').val(c.h);
+		if (c.w == 0) {
+			$('#resize_avatar_tmp').attr('disabled', 'disabled');
+		} else {
+			$('#resize_avatar_tmp').removeAttr('disabled');
+		}
+	};
+	$('#avatar_upload').hide();
+	$('#resize_avatar_tmp').attr('disabled', 'disabled');
+	$("#cancel_avatar_tmp").click(function() {
+		$('#UserUploadAvatarForm_avatar').val('');
+		$('#avatar_upload').show();
+		$('#avatar_sel').html('');
+		window.location.reload(true);
+	});
+});
+</script>
+<br />

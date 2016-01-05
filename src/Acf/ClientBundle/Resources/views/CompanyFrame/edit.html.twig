@@ -1,0 +1,146 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	{% if companyUser.editFrames == constant('CAN', companyUser) %}
+	$('#CompanyFrameUpdateForm_job').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#CompanyFrameUpdateForm_sexe').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#CompanyFrameUpdateForm_country').chosen({width: "100%", disable_search_threshold: 10});
+	{% endif %}
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_client_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.client'|trans|raw}}</a></li>
+	<li><a href="{{ path('_client_company_editGet', {'uid': companyFrame.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': companyFrame.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_client_companyFrame_editGet', {'uid': companyFrame.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.companyFrame.edit'|trans({'%companyFrame%': companyFrame.fullName})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'CompanyFrame.tab.overview'|trans|raw}}</a></li>
+				{% if companyUser.editFrames == constant('CAN', companyUser) %}
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'CompanyFrame.tab.edit'|trans|raw}}</a></li>
+				{% endif %}
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'CompanyFrame.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'CompanyFrame.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_client_company_editGet', {'uid': companyFrame.company.id}) }}">{{companyFrame.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.sexe'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.sexe is not null%}{{('CompanyFrame.sexe.'~companyFrame.sexe)|trans}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.firstName'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.firstName is not empty%}{{companyFrame.firstName}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.lastName'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.lastName is not empty%}{{companyFrame.lastName}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.job'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.job is not empty%}{{companyFrame.job.label}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.cin'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.cin is not empty%}{{companyFrame.cin}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.passport'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.passport is not empty%}{{companyFrame.passport}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.streetNum'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.streetNum is not empty%}{{companyFrame.streetNum}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.address'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.address is not empty%}{{companyFrame.address}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.address2'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.address2 is not empty%}{{companyFrame.address2}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.town'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.town is not empty%}{{companyFrame.town}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.zipCode'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.zipCode is not empty%}{{companyFrame.zipCode}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.country'|trans|raw}} :</div>
+								<div class="col-lg-9">{{companyFrame.country|country}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.phone'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.phone is not empty%}{{companyFrame.phone}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.mobile'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.mobile is not empty%}{{companyFrame.mobile}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.email'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.email is not empty%}{{companyFrame.email}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.otherInfos'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if companyFrame.otherInfos is not empty%}{{companyFrame.otherInfos|raw}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{companyFrame.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{companyFrame.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyFrame.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{companyFrame.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{companyFrame.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% if companyUser.editFrames == constant('CAN', companyUser) %}
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'CompanyFrame.tlabel.edit'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CompanyFrameUpdateForm, {'method':'POST', 'action': path('_client_companyFrame_editPost', {'uid': companyFrame.id}), 'style': 'horizontal'})}}
+							{{form_row(CompanyFrameUpdateForm.job, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.sexe, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.lastName, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.firstName, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.cin, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.passport, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.email, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.phone, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.mobile, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyFrameUpdateForm.streetNum, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CompanyFrameUpdateForm.address, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CompanyFrameUpdateForm.address2, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CompanyFrameUpdateForm.town, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CompanyFrameUpdateForm.zipCode, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CompanyFrameUpdateForm.country, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CompanyFrameUpdateForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CompanyFrameUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

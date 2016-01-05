@@ -1,0 +1,202 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	{% if bulletinInfoTitle.contents|length != 0 %}
+	$('#bulletinInfoContentList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmBulletinInfoContent').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmBulletinInfoContent').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmBulletinInfoContent').modal('show');
+			});
+		}
+	});
+	{% endif %}
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_bulletinInfo_list') }}">{{faIco('exclamation-triangle')}} &nbsp; {{'breadcrumb.bulletinInfo.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_bulletinInfo_editGet', {'uid': bulletinInfoTitle.bulletinInfo.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.bulletinInfo.edit'|trans({'%bulletinInfo%': bulletinInfoTitle.bulletinInfo.num})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_bulletinInfoTitle_editGet', {'uid': bulletinInfoTitle.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.bulletinInfoTitle.edit'|trans({'%bulletinInfoTitle%': bulletinInfoTitle.title})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_bulletinInfo_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		{% for flashMessage in app.session.flashbag.get('log') %}
+		<div class="callout callout-info">
+		{{ flashMessage|raw }}
+		</div>
+		{% endfor %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'BulletinInfoTitle.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'BulletinInfoTitle.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#Contents" data-toggle="tab">{{'BulletinInfoTitle.tab.contents'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'BulletinInfoTitle.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'BulletinInfoTitle.title'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoTitle.title}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoTitle.contents'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoTitle.contents|length}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoTitle.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoTitle.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{bulletinInfoTitle.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoTitle.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoTitle.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{bulletinInfoTitle.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'BulletinInfoTitle.tlabel.edit'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(BulletinInfoTitleUpdateForm, {'method':'POST', 'action': path('_admin_bulletinInfoTitle_editPost', {'uid': bulletinInfoTitle.id}), 'style': 'horizontal'})}}
+							{{form_row(BulletinInfoTitleUpdateForm.title, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(BulletinInfoTitleUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="Contents">
+					<div id="accordion03" class="box-group">
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse31" data-parent="#accordion03" data-toggle="collapse">{{'BulletinInfoTitle.tlabel.contents.add'|trans}}</a></h4>
+							</div>
+							<div id="collapse31" class="panel-collapse collapse{%if tabActive==3 and stabActive==1%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(BulletinInfoContentNewForm, {'method':'POST', 'action': path('_admin_bulletinInfoTitle_editGet', {'uid': bulletinInfoTitle.id}), 'style': 'horizontal'})}}
+									{{form_row(BulletinInfoContentNewForm.bulletinInfoTitle, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+									{{form_row(BulletinInfoContentNewForm.title, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(BulletinInfoContentNewForm.content, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+									{{form_row(BulletinInfoContentNewForm.theme, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(BulletinInfoContentNewForm.jort, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(BulletinInfoContentNewForm.txtNum, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(BulletinInfoContentNewForm.artTxt, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(BulletinInfoContentNewForm.dtTxt, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(BulletinInfoContentNewForm.artCode, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(BulletinInfoContentNewForm.companyType, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(BulletinInfoContentNewForm.dtApplication, {'label_col': 3, 'widget_col': 8 })}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+									{{form_end(BulletinInfoContentNewForm)}}
+								</div>
+							</div>
+						</div>
+						<div class="panel box">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse32" data-parent="#accordion03" data-toggle="collapse">{{'BulletinInfoTitle.tlabel.contents.list'|trans}}</a></h4>
+							</div>
+							<div id="collapse32" class="panel-collapse collapse{%if (tabActive==3 and stabActive==2) or tabActive!=3%} in{%endif%}">
+								<div class="box-body table-responsive">
+									<table id="bulletinInfoContentList" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>{{ 'BulletinInfoContent.title.label'|trans|raw }}</th>
+												<th>{{ 'BulletinInfoContent.content.label'|trans|raw }}</th>
+												<th>{{ 'BulletinInfoContent.dtCrea.label'|trans|raw }}</th>
+												<th>{{ 'action'|trans|raw }}</th>
+											</tr>
+										</thead>
+										<tbody>
+										{% if bulletinInfoTitle.contents|length != 0 %}
+											{% for bulletinInfoContent in bulletinInfoTitle.contents %}
+											<tr>
+												<td>{{ bulletinInfoContent.title }}</td>
+												<td>{{ bulletinInfoContent.content|raw }}</td>
+												<td>{{ bulletinInfoContent.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+												<td>
+													<a class="btn btn-sm btn-info" href="{{path('_admin_bulletinInfoContent_editGet',{'uid':bulletinInfoContent.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+													<a class="btn btn-sm btn-danger deleteConfirmBulletinInfoContent" href="{{path('_admin_bulletinInfoContent_delete',{'uid':bulletinInfoContent.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+												</td>
+											</tr>
+											{% endfor %}
+										{% else %}
+											<tr>
+												<td colspan="4">{{ 'BulletinInfoContent.empty'|trans|raw }}</td>
+											</tr>
+										{% endif %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmBulletinInfoContent" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'BulletinInfoContent.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'BulletinInfoContent.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{%endblock content%}

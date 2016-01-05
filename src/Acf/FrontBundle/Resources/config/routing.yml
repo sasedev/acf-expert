@@ -1,0 +1,19 @@
+_front_homepage:
+    path:     /
+    defaults: { _controller: "AcfFrontBundle:Default:index" }
+
+_front_basedoc:
+    path:     /base_documentaire
+    defaults: { _controller: "AcfFrontBundle:BaseDoc:index" }
+
+_front_extlnk:
+    path:     /extlink/{uid}
+    defaults: { _controller: "AcfFrontBundle:BaseDoc:redirect" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_front_gooddoc:
+    path:     /DocDl/{uid}
+    defaults: { _controller: "AcfFrontBundle:BaseDoc:docDl" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

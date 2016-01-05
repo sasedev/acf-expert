@@ -1,0 +1,254 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/2.4.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/2.4.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$('#FundUpdateDocsForm_docs').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+
+	$("#DocNewForm_fileName").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+	{% if fund.docs|length != 0 %}
+	$('#docList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		]
+	});
+	{% endif %}
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	{% if is_granted('ROLE_SUPERADMIN') %}
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	{% endif %}
+	<li><a href="{{ path('_admin_company_editGet', {'uid': fund.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': fund.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_fund_editGet', {'uid': fund.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.fund.edit'|trans({'%fund%': fund.label})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_SUPERADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_company_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Fund.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Fund.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'Fund.tab.docs'|trans|raw}}</a></li>
+				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Fund.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Fund.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_company_editGet', {'uid': fund.company.id}) }}">{{fund.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Fund.label'|trans|raw}} :</div>
+								<div class="col-lg-9">{{fund.label}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Fund.number'|trans|raw}} :</div>
+								<div class="col-lg-9">{{fundsPrefix~fund.numberFormated}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Fund.otherInfos'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if fund.otherInfos is not empty%}{{fund.otherInfos|raw}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Fund.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{fund.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{fund.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Fund.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{fund.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{fund.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Fund.tlabel.editLabel'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(FundUpdateLabelForm, {'method':'POST', 'action': path('_admin_fund_editPost', {'uid': fund.id}), 'style': 'horizontal'})}}
+							{{form_row(FundUpdateLabelForm.label, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(FundUpdateLabelForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Fund.tlabel.editNumber'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(FundUpdateNumberForm, {'method':'POST', 'action': path('_admin_fund_editPost', {'uid': fund.id}), 'style': 'horizontal'})}}
+							{{form_row(FundUpdateNumberForm.number, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(FundUpdateNumberForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Fund.tlabel.editOtherInfos'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(FundUpdateOtherInfosForm, {'method':'POST', 'action': path('_admin_fund_editPost', {'uid': fund.id}), 'style': 'horizontal'})}}
+							{{form_row(FundUpdateOtherInfosForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(FundUpdateOtherInfosForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="Docs"><div id="accordion03" class="box-group">
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse31" data-parent="#accordion03" data-toggle="collapse">{{'Fund.tlabel.docs.add'|trans}}</a></h4>
+							</div>
+							<div id="collapse31" class="panel-collapse collapse{%if tabActive==3 and stabActive==1%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(DocNewForm, {'method':'POST', 'action': path('_admin_fund_editGet', {'uid': fund.id}), 'style': 'horizontal'})}}
+									{{form_row(DocNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+									{{form_row(DocNewForm.fileName, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DocNewForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+									{{form_end(DocNewForm)}}
+								</div>
+							</div>
+						</div>
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse32" data-parent="#accordion03" data-toggle="collapse">{{'Fund.tlabel.docs.edit'|trans}}</a></h4>
+							</div>
+							<div id="collapse32" class="panel-collapse collapse{%if tabActive==3 and stabActive==2%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(FundUpdateDocsForm, {'method':'POST', 'action': path('_admin_fund_editPost', {'uid': fund.id}), 'style': 'horizontal'})}}
+									{{form_row(FundUpdateDocsForm.docs, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+									{{form_end(FundUpdateDocsForm)}}
+								</div>
+							</div>
+						</div>
+						<div class="panel box">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse33" data-parent="#accordion03" data-toggle="collapse">{{'Fund.tlabel.docs.list'|trans}}</a></h4>
+							</div>
+							<div id="collapse33" class="panel-collapse collapse{%if (tabActive==3 and stabActive==3) or tabActive!=3%} in{%endif%}">
+								<div class="box-body table-responsive">
+									<table id="docList" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+												<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+												<th>{{ 'Doc.size.label'|trans|raw }}</th>
+												<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+												<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+												<th>{{ 'Doc.description.label'|trans|raw }}</th>
+												<th>{{ 'action'|trans|raw }}</th>
+											</tr>
+										</thead>
+										<tbody>
+										{% if fund.docs|length != 0 %}
+											{% for doc in fund.docs %}
+											<tr>
+												<td>{{ doc.originalName }}</td>
+												<td>{{ doc.mimeType }}</td>
+												<td>{%if doc.size<1024%}
+														{{doc.size}} o
+													{%elseif doc.size<(1024*1024)%}
+														{{'%.2f'|format(doc.size/1024)}} Ko
+													{%elseif doc.size<(1024*1024*1024)%}
+														{{'%.2f'|format(doc.size/1024/1024)}} Mo
+													{%else%}
+														{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+													{% endif %}
+												</td>
+												<td>{{ doc.nbrDownloads }}</td>
+												<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+												<td>{{ doc.description | raw }}</td>
+												<td>
+													<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+													<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</td>
+											</tr>
+											{% endfor %}
+										{% else %}
+											<tr>
+												<td colspan="7">{{ 'Doc.empty'|trans|raw }}</td>
+											</tr>
+										{% endif %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true, 'showlinks': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

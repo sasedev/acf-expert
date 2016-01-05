@@ -1,0 +1,201 @@
+{% extends 'AcfFrontBundle::front.html.twig' %} {%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_company_editGet', {'uid': pilot.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': pilot.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_pilot_editGet', {'uid': pilot.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.pilot.edit'|trans({'%pilot%': pilot.mission})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%} {%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_company_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li  {%if tabActive==1%} class="active" {%endif%}><a href="#overview" data-toggle="tab">{{'Pilot.tab.overview'|trans|raw}}</a></li>
+				<li  {%if tabActive==2%} class="active" {%endif%}><a href="#edit" data-toggle="tab">{{'Pilot.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">{{'Pilot.tlabel.overview'|trans}}</h3>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Pilot.company'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									<a href="{{ path('_admin_company_editGet', {'uid': pilot.company.id}) }}">{{pilot.company.corporateName}}</a>&nbsp;
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.ref'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.ref | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.mission'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.mission | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.natureMission'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.natureMission | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.prestataire'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.prestataire | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.recetteFinance'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.recetteFinance | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.pinAnce'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.pinAnce | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.expirationAnce'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.expirationAnce | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.mpImpots'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.mpImpots | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.idCnss'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.idCnss | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.mpCnss'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.mpCnss | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.nomCac'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.nomCac | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.dureeMandat'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.dureeMandat | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.numMandat'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.numMandat | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.rapportCac'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.rapportCac | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.declEmpl'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.declEmpl | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.isDur'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.isDur | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.pvCa'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.pvCa | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.rapportGerance'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.rapportGerance | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.pvAgo'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.pvAgo | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.pvAge'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.pvAge | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.livresCotes'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.livresCotes | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.honTeorAnn'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.honTeorAnn | number_format(3, '.', ' ')}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.modeFact'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.modeFact | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.nonFactMont'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.nonFactMont | number_format(3, '.', ' ')}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.nonFactDesc'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.nonFactDesc | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.nonEncMont'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.nonEncMont | number_format(3, '.', ' ')}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.nonEncDesc'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.nonEncDesc | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.commentQuit'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.commentQuit | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.mqQuitImpots'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.mqQuitImpots | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.mqQuitCnss'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.mqQuitCnss | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.comments'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.comments | raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{pilot.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Pilot.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{pilot.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{pilot.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header">
+							<h3 class="box-title">{{'Pilot.tlabel.edit'|trans}}</h3>
+						</div>
+						<div class="box-body">
+							{{form_start(PilotUpdateForm, {'method':'POST', 'action': path('_admin_pilot_editPost', {'uid': pilot.id}), 'style': 'horizontal'})}}
+							{{form_row(PilotUpdateForm.ref, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(PilotUpdateForm.mission, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.natureMission, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.prestataire, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.recetteFinance, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.pinAnce, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.expirationAnce, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.mpImpots, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.idCnss, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.mpCnss, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.nomCac, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.dureeMandat, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.numMandat, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.rapportCac, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.declEmpl, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.isDur, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.pvCa, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.rapportGerance, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.pvAgo, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.pvAge, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.livresCotes, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.honTeorAnn, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.modeFact, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.nonFactMont, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.nonFactDesc, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.nonEncMont, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.nonEncDesc, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.commentQuit, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.mqQuitImpots, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.mqQuitCnss, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(PilotUpdateForm.comments, {'label_col': 3, 'widget_col': 8})}}
+
+							<div class="form-group">
+								<div class="col-lg-offset-3 col-lg-2">
+									<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+								</div>
+							</div>
+							{{form_end(PilotUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

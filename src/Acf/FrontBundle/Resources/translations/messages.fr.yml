@@ -1,0 +1,63 @@
+menu.home: Accueil
+#menu.logout: Déconnexion
+menu.logout: '<span class="glyphicon glyphicon-log-out"></span>'
+#menu.profile: 'Mon Profil'
+menu.profile: '<span class="glyphicon glyphicon-wrench"></span>'
+menu.agenda: '<span class="glyphicon glyphicon-calendar"></span>'
+menu.lostpassword: Mot de passe Perdu
+menu.login: Identification
+menu.top.home: Accueil
+menu.top.valeurs: 'Nos Valeurs'
+menu.top.cabinet: 'Notre Cabinet'
+menu.top.metier: 'Nos Métiers'
+menu.top.metier1: 'Assistance comptable, fiscale sociale et juridique'
+menu.top.metier2: 'Audit et Commissariat aux comptes'
+menu.top.metier3: 'Outsourcing - Délocalisation'
+menu.top.metier4: 'Conseil et gestion des risques'
+menu.top.metier5: 'Due Diligence - Evaluation'
+menu.top.contact: 'Contact'
+menu.top.contact1: 'Contactez-nous'
+menu.top.contact2: 'Coordonnées'
+menu.top.contact3: 'Position géographique'
+menu.top.basedoc: 'Base documentaire'
+menu.top.basedoc1: 'Fils d''actualités'
+menu.top.basedoc2: 'Liens et informations utiles'
+menu.top.basedoc3: 'Bulletin ACF Info'
+menu.top.connexion: 'Espace Client'
+menu.top.profile: 'Mon Profile'
+menu.top.admin: 'ACF Admin'
+menu.top.agenda: 'ACF Agenda'
+menu.top.client1: 'ACF Cloud'
+menu.top.client2: 'ACF Info'
+menu.top.client3: 'ACF Paie'
+menu.top.logout: 'Déconnexion'
+
+menu.bottom.links: Liens
+menu.footer.home: Accueil
+menu.footer.valeurs: 'Nos Valeurs'
+menu.footer.cabinet: 'Notre Cabinet'
+menu.footer.metier: 'Notre metier'
+menu.footer.contact: 'Contact'
+menu.footer.basedoc: 'Base documentaire'
+menu.footer.login: 'Espace Client'
+menu.footer.profile: 'Mon Profile'
+menu.footer.logout: 'Déconnexion'
+
+bottom.followus: 'Suivez-nous'
+bottom.contactus: 'Contactez-nous'
+
+site.global.addr.title: 'Adresse'
+site.global.addr: '16 Rue de Syrie - EPI Center Bloc C - 3 ème étage - 1002 Tunis Tunisie'
+site.global.mail: 'acceuil@cabinet-fakhfakh.tn'
+site.global.mailto: 'mailto:acceuil@cabinet-fakhfakh.tn'
+site.global.phone1: ' + 216 71 835 144'
+site.global.phone1.call: 'call:+21671835144'
+site.global.fax: ' +216 71 835 312'
+site.global.fax.call: 'call:+21671835312'
+
+facebook.url: 'https://www.facebook.com'
+linkedin.url: 'https://linkedin.com'
+twitter.url: 'https://twitter.com'
+googleplus.url: 'https://plus.google.com'
+skype.url: 'https://www.skype.com'
+

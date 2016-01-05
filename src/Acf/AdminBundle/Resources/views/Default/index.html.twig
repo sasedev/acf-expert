@@ -1,0 +1,20 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li class="active"><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_SUPERADMIN') %}
+		<div class="well well-sm">
+			{% for user in activeUsers %}
+			{{ faIco('user-secret fa-2x')}} <a href="{{ path('_admin_user_editGet', {'id': user.id})}}">{{ user.fullName}}</a> ({{ user.lastActivity|localeDate('medium', 'medium') }})<br>
+			{% endfor %}
+		</div>
+		{% endif %}
+		{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true, 'showlinks3': true, 'showlinks4': true, 'showlinks': true, 'showCompany': true, 'showRelation': true, 'showAccount': true, 'showMB': true, 'showTR': true, 'showSV': true, 'showDG': true })}}
+	</div>
+</div>
+{%endblock content%}

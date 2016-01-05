@@ -1,0 +1,46 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+    database_path: null
+    default_locale:            "%locale%"
+    adapter_cache_dir:         "%kernel.root_dir%/cache/%kernel.environment%/filesystem"
+    adapter_tmp_files:         "%kernel.root_dir%/../var/TempFiles"
+    adapter_files:             "%kernel.root_dir%/../var/Files"
+    mail_from:                 "system@acf-expert.tn"
+    mail_from_name:            "acf-expert.tn"
+    mailtos:
+        - { name: 'Faiez Fakhfakh', email: 'faiez.fakhfakh@acf-expert.tn' }
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
+
+    twig.extension.intl:
+       class: Twig_Extensions_Extension_Intl
+       tags:
+           - { name: twig.extension }
+
+    twig.extension.i18n:
+       class: Twig_Extensions_Extension_I18n
+       tags:
+           - { name: twig.extension }
+
+    twig.extension.array:
+       class: Twig_Extensions_Extension_Array
+       tags:
+           - { name: twig.extension }
+
+    get_set_method_normalizer:
+        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+        tags:
+            - { name: serializer.normalizer }
+
+    validator.mapping.cache.doctrine:
+        class: Symfony\Component\Validator\Mapping\Cache\DoctrineCache
+        arguments:
+            - '@doctrine_cache.providers.vendor_filesystem_validation_cache'
+

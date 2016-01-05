@@ -1,0 +1,16 @@
+menu.info: ACF-Info
+breadcrumb.info: ACF-Info
+breadcrumb.info.bulletinInfo.edit: 'Bulletins d''Information <b>%bulletinInfo%</b>'
+
+pagetitle.info.bulletinInfo.list: 'Bulletins d''Informations'
+pagetitle.info.bulletinInfo.list.txt: 'Bulletins d''Informations'
+pagetitle.info.bulletinInfo.edit: 'Bulletins d''Information <b>%bulletinInfo%</b>'
+pagetitle.info.bulletinInfo.edit.txt: 'Bulletins d''Information %bulletinInfo%'
+
+
+info.BulletinInfo.num.label: "N° :"
+info.BulletinInfo.dtStart.label: "Période :"
+info.BulletinInfo.description.label: "Description :"
+
+info.BulletinInfo.title: BULLETIN D'INFORMATION ET DE DOCUMENTATION
+info.BulletinInfo.desc: BULLETIN N° <b>%num%</b> DU <b>%dtStart%</b>

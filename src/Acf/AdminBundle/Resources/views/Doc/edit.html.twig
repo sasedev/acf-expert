@@ -1,0 +1,170 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$("#DocUpdateContentForm_doc").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+	{% if doc.groups|length != 0 %}
+	$('#docgroupList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		]
+	});
+	{% endif %}
+
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	{% if is_granted('ROLE_SUPERADMIN') %}
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	{% endif %}
+	<li><a href="{{ path('_admin_company_editGet', {'uid': doc.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': doc.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_doc_editGet', {'uid': doc.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.doc.edit'|trans({'%doc%': doc.originalName})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_SUPERADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_doc_download',{'uid':doc.id})}}" class="btn btn-success">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Doc.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Doc.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Doc.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Doc.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_company_editGet', {'uid': doc.company.id}) }}">{{doc.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Doc.originalName'|trans|raw}} :</div>
+								<div class="col-lg-9">{{doc.originalName}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Doc.description'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if doc.description is not empty%}{{doc.description|raw}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Doc.size'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if doc.size<1024%}
+									{{doc.size}} o
+								{%elseif doc.size<(1024*1024)%}
+									{{'%.2f'|format(doc.size/1024)}} Ko
+								{%elseif doc.size<(1024*1024*1024)%}
+									{{'%.2f'|format(doc.size/1024/1024)}} Mo
+								{%else%}
+									{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+								{% endif %}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Doc.mimeType'|trans|raw}} :</div>
+								<div class="col-lg-9">{{doc.mimeType}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Doc.md5'|trans|raw}} :</div>
+								<div class="col-lg-9">{{doc.md5}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Doc.nbrDownloads'|trans|raw}} :</div>
+								<div class="col-lg-9">{{doc.nbrDownloads}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+
+								<div class="col-lg-3 text-right">{{'Doc.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{doc.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{doc.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Doc.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{doc.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{doc.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Doc.tlabel.editDescription'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(DocUpdateDescriptionForm, {'method':'POST', 'action': path('_admin_doc_editPost', {'uid': doc.id}), 'style': 'horizontal'})}}
+							{{form_row(DocUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(DocUpdateDescriptionForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Doc.tlabel.editOriginalName'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(DocUpdateOriginalNameForm, {'method':'POST', 'action': path('_admin_doc_editPost', {'uid': doc.id}), 'style': 'horizontal'})}}
+							{{form_row(DocUpdateOriginalNameForm.originalName, {'label_col': 3, 'widget_col': 5})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(DocUpdateOriginalNameForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Doc.tlabel.editContent'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(DocUpdateContentForm, {'method':'POST', 'action': path('_admin_doc_editPost', {'uid': doc.id}), 'style': 'horizontal'})}}
+							{{form_row(DocUpdateContentForm.doc, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(DocUpdateContentForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

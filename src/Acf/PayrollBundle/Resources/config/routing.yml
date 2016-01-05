@@ -1,0 +1,3 @@
+_payroll_homepage:
+    path:     /
+    defaults: { _controller: "AcfPayrollBundle:Default:index" }

@@ -1,0 +1,220 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	{% if is_granted('ROLE_SUPERADMIN') %}
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	{% endif %}
+	<li><a href="{{ path('_admin_company_editGet', {'uid': companyUser.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': companyUser.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_companyUser_editGet', {'uid': companyUser.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.companyUser.edit'|trans({'%user%': companyUser.user.fullName})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_SUPERADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_company_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'CompanyUser.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'CompanyUser.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'CompanyUser.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'CompanyUser.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_company_editGet', {'uid': companyUser.company.id}) }}">{{companyUser.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editCompanyinfos'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editCompanyinfos) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addAddresses'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addAddresses) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editAddresses'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editAddresses) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.deleteAddresses'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.deleteAddresses) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addPhones'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addPhones) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editPhones'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editPhones) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.deletePhones'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.deletePhones) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addFrames'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addFrames) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editFrames'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editFrames) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.deleteFrames'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.deleteFrames) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addDocs'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addDocs) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editDocs'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editDocs) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.deleteDocs'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.deleteDocs) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addSuppliers'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addSuppliers) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editSuppliers'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editSuppliers) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.deleteSuppliers'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.deleteSuppliers) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addCustomers'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addCustomers) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editCustomers'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editCustomers) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.deleteCustomers'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.deleteCustomers) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addSales'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addSales) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editSales'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editSales) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.deleteSales'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.deleteSales) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addBuys'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addBuys) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editBuys'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editBuys) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.deleteBuys'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.deleteBuys) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addDocgroupComptables'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addDocgroupComptables) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editDocgroupComptables'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editDocgroupComptables) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addDocgroupBanks'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addDocgroupBanks) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editDocgroupBanks'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editDocgroupBanks) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addDocgroupJuridics'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addDocgroupJuridics) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editDocgroupJuridics'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editDocgroupJuridics) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addDocgroupFiscals'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addDocgroupFiscals) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editDocgroupFiscals'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editDocgroupFiscals) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addDocgroupPersos'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addDocgroupPersos) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editDocgroupPersos'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editDocgroupPersos) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.addDocgroupSysts'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.addDocgroupSysts) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.editDocgroupSysts'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bsLabelSuccess(('CompanyUser.tf.'~companyUser.editDocgroupSysts) | trans)}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{companyUser.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{companyUser.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'CompanyUser.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{companyUser.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{companyUser.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'CompanyUser.tlabel.edit'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CompanyUserUpdateForm, {'method':'POST', 'action': path('_admin_companyUser_editPost', {'uid': companyUser.id}), 'style': 'horizontal'})}}
+							{{form_row(CompanyUserUpdateForm.editCompanyinfos, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addAddresses, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editAddresses, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.deleteAddresses, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addPhones, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editPhones, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.deletePhones, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addFrames, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editFrames, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.deleteFrames, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addDocs, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editDocs, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.deleteDocs, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addSuppliers, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editSuppliers, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.deleteSuppliers, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addCustomers, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editCustomers, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.deleteCustomers, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addSales, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editSales, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.deleteSales, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addBuys, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editBuys, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.deleteBuys, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addDocgroupComptables, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editDocgroupComptables, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addDocgroupBanks, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editDocgroupBanks, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addDocgroupJuridics, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editDocgroupJuridics, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addDocgroupFiscals, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editDocgroupFiscals, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addDocgroupPersos, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editDocgroupPersos, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.addDocgroupSysts, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CompanyUserUpdateForm.editDocgroupSysts, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CompanyUserUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

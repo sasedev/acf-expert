@@ -1,0 +1,42 @@
+{% extends 'AcfResBundle::base.html.twig' %}
+{%if menu_active is not defined%}{%set menu_active=''%}{%endif%}
+{%if smenu_active is not defined%}{%set smenu_active=''%}{%endif%}
+{%if tabActive is not defined%}{%set tabActive=1%}{%endif%}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/theme/AdminLTE/AdminLTE.css')}}">
+{%endblock static_css%}
+{%block html_body%}
+<body class="login-page">
+	{%block html_body_content%}
+	<div class="login-box">
+		{%block content%}
+			{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': false }%}
+		{%endblock content%}
+	</div>
+	{%endblock html_body_content%}
+	<script type="text/javascript">
+	<!--
+	{%block end1_dynamic_jstxt%}
+	{%endblock end1_dynamic_jstxt%}
+	-->
+	</script>
+	{%block end_static_js%}
+	{{ parent() }}
+	<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/AdminLTE/app.js')}}"></script>
+	{%endblock end_static_js%}
+	{%block end_dynamic_js%}
+		{%if end_javascripts is defined%}{%for js in end_javascripts%}
+	<script type="text/javascript" src="/{{js|raw}}"></script>
+	  {%endfor%}{%endif%}
+	{%endblock end_dynamic_js%}
+	<script type="text/javascript">
+	<!--
+	{%block end2_dynamic_jstxt%}
+	$(function() {
+	});
+	{%endblock end2_dynamic_jstxt%}
+	-->
+	</script>
+	{%block endappend%}{%endblock endappend%}
+</body>
+{%endblock html_body%}

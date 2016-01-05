@@ -1,0 +1,12 @@
+vfs_tmp_files:
+    path:  /tmpVfs{file}
+    defaults: { _controller: "AcfResBundle:Vfs:tempfile", file: null }
+    requirements:
+        file:  ".*"
+
+vfs_files:
+    path:  /Vfs{file}
+    defaults: { _controller: "AcfResBundle:Vfs:file", file: null }
+    requirements:
+        file:  ".*"
+

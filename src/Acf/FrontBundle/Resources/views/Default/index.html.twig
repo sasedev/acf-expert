@@ -1,0 +1,563 @@
+{% extends 'AcfResBundle::base.html.twig' %}
+{%if menu_active is not defined%}{%set menu_active=''%}{%endif%}
+{%if smenu_active is not defined%}{%set smenu_active=''%}{%endif%}
+{%if tabActive is not defined%}{%set tabActive=1%}{%endif%}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/theme/margo/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/jquery/layerslider/layerslider.css')}}">
+{%endblock static_css%}
+{%block end_static_js%} {{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/jquery.nicescroll.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/easing/1.3.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/layerslider/kreaturamedia.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/script.js')}}"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+{%endblock end_static_js%}
+{%block html_body_content%}
+<div id="container">
+
+
+		{% block header %}
+		<div class="hidden-header"></div>
+		<header class="clearfix">
+
+			{% block topbar %}
+			<div class="top-bar">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<ul class="contact-details">
+								<li><a>Cabinet FAKHFAKH d'Expertise Comptable</a>
+								</li>
+								<li><a href="{{ 'site.global.mailto'|trans }}"><i class="fa fa-envelope-o"></i> {{ 'site.global.mail'|trans }}</a>
+								</li>
+								<li><a href="{{ 'site.global.phone1.call'|trans }}"><i class="fa fa-phone"></i> {{ 'site.global.phone1'|trans }}</a>
+								</li>
+								<li><a href="{{ 'site.global.fax.call'|trans }}"><i class="fa fa-fax"></i> {{ 'site.global.fax'|trans }}</a>
+								</li>
+								<li><a>Votre Cabinet d'Expertise Comptable en ligne</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endblock topbar %}
+
+
+			<div class="navbar navbar-default navbar-top" id="navbar-menu">
+				<div class="container">
+					<div class="navbar-header">
+						<!-- Stat Toggle Nav Link For Mobiles -->
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<i class="fa fa-bars"></i>
+						</button>
+						<!-- End Toggle Nav Link For Mobiles -->
+						<a class="navbar-brand" href="{{ path('_front_homepage') }}">
+							<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{asset('bundles/acfres/images/logo_acf.jpg')}}">
+						</a>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="{{ path('_front_homepage')}}#home">{{ 'menu.top.home'|trans }}</a>
+							</li>
+							<li>
+								<a href="{{ path('_front_homepage')}}#cabinet">{{ 'menu.top.cabinet'|trans }}</a>
+							</li>
+							<li>
+								<a href="{{ path('_front_homepage')}}#valeurs">{{ 'menu.top.valeurs'|trans }}</a>
+							</li>
+							<li>
+								<a href="{{ path('_front_homepage')}}#metier">{{ 'menu.top.metier'|trans }}</a>
+								<ul class="dropdown">
+									<li><a href="{{ path('_front_homepage')}}#metier1">{{ 'menu.top.metier1'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_homepage')}}#metier2">{{ 'menu.top.metier2'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_homepage')}}#metier3">{{ 'menu.top.metier3'|trans }}</a>
+									</li>
+									<li><a href="#metier4">{{ 'menu.top.metier4'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_homepage')}}#metier5">{{ 'menu.top.metier5'|trans }}</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact'|trans }}</a>
+								<ul class="dropdown">
+									<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact1'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact2'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_homepage')}}#map0">{{ 'menu.top.contact3'|trans }}</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="{{ path('_front_basedoc')}}">{{ 'menu.top.basedoc'|trans }}</a>
+								<ul class="dropdown">
+									<li><a href="{{ path('_front_basedoc')}}#actus">{{ 'menu.top.basedoc1'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_basedoc')}}#links">{{ 'menu.top.basedoc2'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_basedoc')}}#bulltin">{{ 'menu.top.basedoc3'|trans }}</a>
+									</li>
+								</ul>
+							</li>
+							{{ include('AcfFrontBundle:Default:menu.html.twig') }}
+						</ul>
+						<!-- End Navigation List -->
+					</div>
+				</div>
+			</div>
+			<!-- End Header Logo & Naviagtion -->
+
+		</header>
+		{% endblock header %}
+
+
+
+
+
+		{% block banner %}
+		<div>
+			<div id="layerslider-container-fw">
+				<div id="layerslider" style="width: 100%; height: 700px; margin: 0px auto; ">
+					<div class="ls-layer" style="slidedirection: right; slidedelay: 5000; durationin: 1500; durationout: 1500;">
+						<img src="/res/banners/01.jpg" class="ls-bg" alt="Cabinet FAKHFAKH d'Expertise Comptable" title="Cabinet FAKHFAKH d'Expertise Comptable">
+						<h2 class="ls-s3 l1-s1" style="position: absolute; top:60px; color:#000; font-weight: bold; background-color: rgba(155,43,32,0); left: 50%; slidedirection : bottom; slideoutdirection : left; durationin : 3000; durationout : 750; easingin : easeInOutQuint; easingout : easeInBack; delayin : 500;">
+							Espace client dédié : dématérialisation de la relation client
+						</h2>
+					</div>
+					<div class="ls-layer" style="slidedirection: right; slidedelay: 5000; durationin: 1500; durationout: 1500;">
+						<img src="/res/banners/04.jpg" class="ls-bg" alt="Cabinet FAKHFAKH d'Expertise Comptable" title="Cabinet FAKHFAKH d'Expertise Comptable">
+						<h2 class="ls-s3 l1-s1" style="position: absolute; top:340px; color:#000; font-weight: bold; background-color: rgba(155,43,32,0); left: 50%; slidedirection : right; slideoutdirection : left; durationin : 3000; durationout : 750; easingin : easeInOutQuint; easingout : easeInBack; delayin : 400;">
+							Le Web pour vous simplifiez la comptabilité
+						</h2>
+					</div>
+					<div class="ls-layer" style="slidedirection: right; slidedelay: 5000; durationin: 1500; durationout: 1500;">
+						<img src="/res/banners/02.jpg" class="ls-bg" alt="Cabinet FAKHFAKH d'Expertise Comptable" title="Cabinet FAKHFAKH d'Expertise Comptable">
+						<h2 class="ls-s3 l1-s1" style="position: absolute; top:180px; color:#fff; font-weight: bold; background-color: rgba(155,43,32,0); left: 50%; slidedirection : right; slideoutdirection : left; durationin : 3000; durationout : 750; easingin : easeInOutQuint; easingout : easeInBack; delayin : 400;">
+							Votre comptabilité en ligne
+						</h2>
+						<h2 class="ls-s3 l1-s1" style="position: absolute; top:580px; color:#000; font-weight: bold; background-color: rgba(155,43,32,0); left: 50%; slidedirection : bottom; slideoutdirection : left; durationin : 3000; durationout : 750; easingin : easeInOutQuint; easingout : easeInBack; delayin : 500;">
+							Gestion de vos documents en ligne
+						</h2>
+					</div>
+					<div class="ls-layer" style="slidedirection: right; slidedelay: 5000; durationin: 1500; durationout: 1500;">
+						<img src="/res/banners/03.jpg" class="ls-bg" alt="Cabinet FAKHFAKH d'Expertise Comptable" title="Cabinet FAKHFAKH d'Expertise Comptable">
+						<h2 class="ls-s3 l1-s1" style="position: absolute; top:340px; color:#000; font-weight: bold; background-color: rgba(155,43,32,0); left: 50%; slidedirection : bottom; slideoutdirection : left; durationin : 3000; durationout : 750; easingin : easeInOutQuint; easingout : easeInBack; delayin : 400;">
+							Outsourcing
+						</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endblock banner %}
+
+		{% block breadcrumb %}
+		<div class="page-banner">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumbs">
+							{%block breadcrumbcnt%}
+							<li class="active"><a href="{{ path('_front_homepage') }}">{{ faIco('home') }} &nbsp; <i>Cabinet FAKHFAKH d'Expertise Comptable</i></a></li>
+							{%endblock breadcrumbcnt%}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endblock breadcrumb %}
+
+
+		{% block maincontainer %}
+		<div id="content">
+			<div class="container">
+				<div class="row sidebar-page">
+					<div class="col-md-12 page-content" id="home">
+						<br>
+						<br>
+						<br>
+						<h4 class="classic-title"><span>Acceuil</span></h4>
+						<p>
+						Dans le souci d'être à l'écoute des clients les plus exigeants et d'être dans l'ère numérique, le cabinet ACF Expert - Cabinet FAKHFAKH d'Expertise Comptable - a développé une infrastructure logicielle qui permet de gérer les documents en ligne.
+						</p>
+						<p>
+						L'infrastructure logicielle assure les fonctionnalités suivantes :
+						</p>
+						<ul>
+							<li>Gérer, via le net, les documents comptables et juridiques de votre entreprise ;</li>
+							<li>Assurer une communication bi-directionnelle entre le cabinet et ses clients locaux et étrangers via leur espace client réservé ;</li>
+							<li>Communiquer les pièces comptables et autres documents au cabinet via l'espace client réservé ;</li>
+							<li>Scanner, stocker et consulter à tout moment les pièces comptables et les documents juridiques ;</li>
+							<li>GED par lot : envoyer un lot de pièces scannées en même temps et en une seule action.</li>
+						</ul>
+					</div>
+					<div class="col-md-12 page-content" id="cabinet">
+						<br>
+						<br>
+						<br>
+						<h4 class="classic-title"><span>Notre Cabinet</span></h4>
+						<div class="col-md-8">
+						<p>
+						ACF Expert - Cabinet FAKHFAKH d'Expertise Comptable - est un cabinet indépendant d'expertise comptable, d'audit et de conseil membre de l'Ordre des Experts Comptables de Tunisie.
+						</p>
+						<p>
+						Notre cabinet accompagne des entreprises de différentes tailles opérant dans divers secteurs d'activité.
+						</p>
+						<p>
+						Soucieux d'offrir un niveau de qualité maximum, notre cabinet a misé sur une technologie avancée dans sa gestion courante ainsi que dans les missions effectuées.
+						</p>
+						</div>
+						<div class="col-md-4">
+							<img class="img" alt="Nos Valeurs" src="/res/cnt/01.jpg">
+						</div>
+					</div>
+					<div class="col-md-12 page-content" id="valeurs">
+						<br>
+						<br>
+						<br>
+						<h4 class="classic-title"><span>Nos Valeurs</span></h4>
+						<div class="col-md-8">
+						<ul>
+							<li>Satisfaire nos clients.</li>
+							<li>Inscrire nos services dans le strict cadre réglementaire et déontologique.</li>
+							<li>Offrir des prestations de qualité en toute indépendance et être à l'écoute de nos clients.</li>
+							<li>Respecter strictement le secret professionnel.</li>
+							<li>Tisser avec nos clients des liens basés sur la pérennité, la confiance et le respect mutuel.</li>
+							<li>Conserver en permanence un niveau de connaissances et de compétences professionnelles justifiant les attentes de nos clients.</li>
+							<li>Offrir à nos clients des solutions innovantes et adaptées à leurs besoins.</li>
+						</ul>
+						</div>
+						<div class="col-md-4">
+							<img class="img" alt="Nos Valeurs" src="/res/cnt/02.jpg">
+							<br>
+							<br>
+							<img class="img" alt="Nos Valeurs" src="/res/cnt/03.jpg">
+						</div>
+					</div>
+					<div class="col-md-12 page-content" id="metier">
+						<br>
+						<br>
+						<br>
+						<h4 class="classic-title"><span>Nos Métiers</span></h4>
+						<div class="text-center"><img class="img" alt="Nos Métiers" src="/res/cnt/04.jpg"></div>
+						<div id="metier1"></div>
+						<br>
+						<br>
+						<br>
+						<h5 class="classic-title"><span>Assistance comptable, fiscale, sociale et juridique</span></h5>
+						<ul>
+							<li>Satisfaire nos clients.</li>
+							<li>Inscrire nos services dans le strict cadre réglementaire et déontologique.</li>
+							<li>Offrir des prestations de qualité en toute indépendance et être à l'écoute de nos clients.</li>
+							<li>Respecter strictement le secret professionnel.</li>
+							<li>Tisser avec nos clients des liens basés sur la pérennité, la confiance et le respect mutuel.</li>
+							<li>Conserver en permanence un niveau de connaissances et de compétences professionnelles justifiant les attentes de nos clients.</li>
+							<li>Offrir à nos clients des solutions innovantes et adaptées à leurs besoins.</li>
+						</ul>
+						<div id="metier2"></div>
+						<br>
+						<br>
+						<br>
+						<h5 class="classic-title"><span>Audit et Commissariat aux comptes</span></h5>
+						<p>
+						Notre cabinet assure des missions d’audit et de commissariat aux comptes pour le compte de ses clients locaux et internationaux exerçant dans différents secteurs d’activité.
+						</p>
+						<div id="metier3"></div>
+						<br>
+						<br>
+						<br>
+						<h5 class="classic-title"><span>Outsourcing -Délocalisation</span></h5>
+						<p>
+						L'outsourcing consiste à confier la responsabilité de tout ou partie de la fonction administrative et comptable à l’expert comptable.
+						</p>
+						<p>
+						L’externalisation comptable et financière est un service proposé à nos clients soucieux d’optimiser leurs marges et désirant se concentrer sur leurs cœurs de métiers.
+						</p>
+						<p>
+						A travers l'espace privé dédié à chaque client, notre cabinet propose à ses clients un service de délocalisation et d'externalisation comptable et financier.
+						</p>
+						<p>
+						Grâce à notre infrastructure logicielle et à la dématérialisation des supports écrits, nous sommes en mesure de vous offrir un service performant et de qualité aboutissant au traitement, à l’analyse et a la sauvegarde des données que vous souhaitez sous-traiter.
+						</p>
+						<p>
+						Nous vous assurons toutes les étapes de vos travaux comptables, sociaux et fiscaux.
+						</p>
+						<p>
+						Nous vous proposons un tarif très compétitif :
+						</p>
+						<ul>
+							<li>par ligne de saisie</li>
+							<li>par bulletin de paie</li>
+						</ul>
+						<p>
+						Nous offrons à nos clients une mise à disposition de ressources hautement qualifiées (Maîtrise, Master), travaillant à distance sur la plateforme logicielle du client et sous sa supervision.
+						</p>
+						<div id="metier4"></div>
+						<br>
+						<br>
+						<br>
+						<h5 class="classic-title"><span>Conseil et gestion des risques</span></h5>
+						<ul>
+							<li>Etude stratégique - Etude de marché</li>
+							<li>Accompagnement / création de projets </li>
+							<li>Préparation de business plan</li>
+							<li>Mise en place et élaboration de tableaux de bords</li>
+							<li>Diagnostic et gestion des risques</li>
+							<li>Audit fiscal et social</li>
+							<li>Optimisation fiscale</li>
+							<li>Accompagnement lors de contrôles fiscaux</li>
+							<li>Organisation et diagnostic des procédures</li>
+							<li>Conseil en transactions</li>
+							<li>Audit interne</li>
+							<li>Contrôle interne</li>
+						</ul>
+						<div id="metier5"></div>
+						<br>
+						<br>
+						<br>
+						<h5 class="classic-title"><span>Due Diligence - Evaluation</span></h5>
+						<p>
+						Notre cabinet assure des missions de due diligence financière et comptable et prend en charge la coordination avec des cabinets d’avocats de renommée pour la partie de due diligence juridique opérée à l’occasion de cessions, acquisitions, privatisations, fusions et autres...
+						</p>
+						<p>
+						Nous assurons aussi des évaluations financières indépendantes à la demande des clients.
+						</p>
+					</div>
+					<div class="col-md-8 page-content" id="contact">
+						<br>
+						<br>
+						<br>
+						<h4 class="classic-title"><span>Contactez-nous</span></h4>
+						<img class="img" alt="Contactez-nous" src="/res/contact/01.jpg">
+						<br>
+						<br>
+						<form role="form" class="contact-form" id="contact-form" method="post">
+							<div class="form-group">
+								<div class="controls">
+									<input type="text" placeholder="Nom" name="name">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<input type="email" class="email" placeholder="Email" name="email">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<input type="text" class="requiredField" placeholder="Sujet" name="subject">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<textarea rows="7"  placeholder="Message" name="message"></textarea>
+								</div>
+							</div>
+							<button type="submit" id="submit" class="btn-system btn-large">Envoyer</button><div id="success" style="color:#34495e;"></div>
+						</form>
+					</div>
+					<div class="col-md-4" id="infos">
+						<br>
+						<br>
+						<br>
+						<h4 class="classic-title"><span>Information</span></h4>
+						<img class="img" alt="Informations" src="/res/contact/02.jpg">
+						<br>
+						<br>
+						<ul>
+							<li>Mr Mustapha FAKHFAKH : Expert Comptable</li>
+							<li>Mr Faiez FAKHFAKH : Expert Comptable (<i><a href="mailto:faiez.fakhfakh@cabinet-fakhfakh.tn">faiez.fakhfakh@cabinet-fakhfakh.tn</a></i>)</li>
+						</ul>
+						<!-- Divider -->
+						<div class="hr1" style="margin-bottom:10px;"></div>
+						<!-- Info - Icons List -->
+						<ul class="icons-list">
+							<li><i class="fa fa-globe">  </i> <strong>Adresse:</strong> 16 Rue de Syrie - EPI Center Bloc C - 3 ème étage - 1002 Tunis Tunisie</li>
+							<li><i class="fa fa-envelope-o"></i> <strong>Email:</strong> acceuil@cabinet-fakhfakh.tn</li>
+							<li><i class="fa fa-phone"></i> <strong>Tel:</strong> + 216 71 835 144</li>
+							<li><i class="fa fa-fax"></i> <strong>Fax:</strong>  +216 71 835 312</li>
+						</ul>
+						<div class="hr1" style="margin-bottom:15px;"></div>
+						<h4 class="classic-title"><span>Heures de Travail</span></h4>
+						<ul class="list-unstyled">
+							<li><strong>Lundi - Vendredi</strong> - 8h à 18h</li>
+							<li><strong>Samedi</strong> - 8h à 12h</li>
+							<li><strong>Dimanche</strong> - Fermé</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="map0"></div>
+						<br>
+						<br>
+						<br>
+		<div id="map"></div>
+		{% endblock maincontainer %}
+
+
+
+
+		{% block footer %}
+		<!-- Start Footer Section -->
+		<footer>
+			<div class="container">
+				<div class="row footer-widgets">
+
+
+					<div class="col-md-2 col-xs-12">
+						<div class="footer-widget mail-subscribe-widget">
+							<h4>{{ 'menu.bottom.links'|trans }}<span class="head-line"></span></h4>
+							<ul>
+								<li>
+									<a href="{{ path('_front_homepage')}}#home">{{ 'menu.footer.home'|trans }}</a>
+								</li>
+								<li>
+									<a href="{{ path('_front_homepage')}}#cabinet">{{ 'menu.footer.cabinet'|trans }}</a>
+								</li>
+								<li>
+									<a href="{{ path('_front_homepage')}}#valeurs">{{ 'menu.footer.valeurs'|trans }}</a>
+								</li>
+								<li>
+									<a href="{{ path('_front_homepage')}}#metier">{{ 'menu.footer.metier'|trans }}</a>
+								</li>
+								<li>
+									<a href="{{ path('_front_homepage')}}#contact">{{ 'menu.footer.contact'|trans }}</a>
+								</li>
+								<li>
+									<a href="{{ path('_front_basedoc')}}">{{ 'menu.footer.basedoc'|trans }}</a>
+								</li>
+								{% if is_granted('ROLE_USER') %}
+								<li>
+									<a href="{{ path('_security_profile') }}">
+										{{ 'menu.footer.profile'|trans }}
+									</a>
+								</li>
+								<li>
+									<a href="{{ path('_security_logout') }}">
+										{{ 'menu.footer.logout'|trans }}
+									</a>
+								</li>
+								{% else %}
+								<li>
+									<a href="{{ path('_security_login') }}">
+										{{ 'menu.footer.login'|trans }}
+									</a>
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+
+
+					<!-- Start Contact Widget -->
+					<div class="col-md-6 col-xs-12">
+						<div class="footer-widget contact-widget">
+							<h3>{{ 'site.global.addr.title'|trans }}</h3>
+							<br>
+							<ul>
+								<li><i class="fa fa-map-marker"></i>&nbsp;&nbsp; {{ 'site.global.addr'|trans }}
+								</li>
+								<li><a href="{{ 'site.global.mailto'|trans }}"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp; {{ 'site.global.mail'|trans }}</a>
+								</li>
+								<li><a href="{{ 'site.global.phone1.call'|trans }}"><i class="fa fa-phone"></i>&nbsp;&nbsp; {{ 'site.global.phone1'|trans }}</a>
+								</li>
+								<li><a href="{{ 'site.global.fax.call'|trans }}"><i class="fa fa-fax"></i>&nbsp;&nbsp; {{ 'site.global.fax'|trans }}</a>
+								</li>
+							</ul>
+						</div>
+					</div><!-- .col-md-3 -->
+					<!-- End Contact Widget -->
+
+
+					<!-- Start Subscribe & Social Links Widget -->
+					<div class="col-md-4 col-xs-12">
+						<div class="footer-widget social-widget">
+							<h4><img alt="Acf" src="{{asset('bundles/acfres/images/logo_acf_footer.jpg')}}" class="img"></h4>
+							<br><br>
+							<h4>{{ 'bottom.followus'|trans }}<span class="head-line"></span></h4>
+							<ul class="social-icons">
+								<li>
+									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+								</li>
+								<li>
+									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a class="google itl-tooltip" data-placement="bottom" title="Google Plus" href="{{ 'googleplus.url'|trans }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+								</li>
+								<li>
+									<a class="skype itl-tooltip" data-placement="bottom" title="Skype" href="{{ 'skype.url'|trans }}" target="_blank"><i class="fa fa-skype"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div><!-- .col-md-3 -->
+					<!-- End Subscribe & Social Links Widget -->
+
+
+				</div><!-- .row -->
+
+				<!-- Start Copyright -->
+				<div class="copyright-section">
+					<div class="row">
+						<div class="col-md-12">
+							<p class="text-center"> {{ 'now'|date('Y') }} acf-expert.tn -  All Rights Reserved <a href="//acf-expert.tn">ACF <i style="font-size:xx-small;">Expert</i></a> </p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</footer>
+		{% endblock footer %}
+
+
+	</div>
+	<!-- End Full Body Container -->
+
+	<!-- Go To Top Link -->
+	<a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<div id="loader">
+		<div class="spinner">
+			<div class="dot1"></div>
+			<div class="dot2"></div>
+		</div>
+	</div>
+{%endblock html_body_content%}
+{%block end2_dynamic_jstxt%}
+	{{ parent() }}
+	function initialisation() {
+		var centreCarte = new google.maps.LatLng(36.809900, 10.183600);
+		var optionsCarte = {
+			zoom: 16,
+			center: centreCarte,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+		var maCarte = new google.maps.Map(document.getElementById("map"), optionsCarte);
+		var optionsMarqueur = {
+			position: new google.maps.LatLng(36.809900, 10.183600),
+			title: 'ACF Experts - 16 Rue de Syrie - EPI Center Bloc C - 3 ème étage - 1002 Tunis Tunisie',
+			map: maCarte
+		};
+		var marqueur = new google.maps.Marker(optionsMarqueur);
+	}
+	google.maps.event.addDomListener(window, 'load', initialisation);
+	$(document).ready(function() {
+		$('#layerslider').layerSlider({
+			navStartStop		: false,
+			thumbnailNavigation : 'hover',
+			hoverPrevNext : true,
+			responsive : true,
+			responsiveUnder : 1200,
+			thumbnailNavigation : false,
+			sublayerContainer : 1200
+		});
+	});
+{%endblock end2_dynamic_jstxt%}

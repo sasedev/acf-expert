@@ -1,0 +1,136 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/form/20130711.min.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$('#CompanyNewForm_clone').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#CompanyNewForm_type').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#CompanyNewForm_country').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect:true});
+
+	$('#CompanyNewForm_sectors').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+
+	$('#AddNewSector').click(function(e) {
+		e.preventDefault();
+		$('#newSector').modal('show');
+	});
+
+	$('#newSectorFormAjax').ajaxForm({
+		complete: function(xhr) {
+			$('#newSectorForm').html(xhr.responseText);
+		}
+	});
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_company_addGet') }}">{{glyphIco('plus')}} &nbsp; {{'breadcrumb.company.add'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_company_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'Company.tlabel.add'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(CompanyNewForm, {'method':'POST', 'action': path('_admin_company_addPost'), 'style': 'horizontal'})}}
+				{{form_row(CompanyNewForm.clone, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.type, {'label_col': 3, 'widget_col': 4})}}
+				{{form_row(CompanyNewForm.ref, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.corporateName, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.tribunal, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.fisc, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.physicaltype, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.commercialRegister, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(CompanyNewForm.commercialRegisterBureau, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(CompanyNewForm.customsCode, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(CompanyNewForm.cin, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(CompanyNewForm.passport, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(CompanyNewForm.cnss, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.cnssBureau, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.actionvn, {'label_col': 3, 'widget_col': 8, 'input_group':{'append':'TND'} })}}
+				<div class="form-group">
+					<div class="col-lg-offset-3 col-lg-2">
+						<a id="AddNewSector" class="btn btn-default" href="{{ path('_admin_sector_addGet') }}"> {{ glyphIco('plus') }} {{ 'menu.admin.sector.add'|trans|raw }}</a>
+					</div>
+				</div>
+				{{form_row(CompanyNewForm.sectors, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.phone, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.mobile, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.fax, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.email, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.streetNum, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.address, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.address2, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.town, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.zipCode, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.country, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(CompanyNewForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+				{{form_end(CompanyNewForm)}}
+
+			</div>
+		</div>
+	</div>
+</div>
+<div id="newSector" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Sector.tlabel.add'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body" id="newSectorForm">
+		{{form_start(SectorNewForm, {'method':'POST', 'action': path('_admin_sector_addPost'), 'style': 'horizontal', 'attr': {'id':'newSectorFormAjax'}})}}
+		{{form_row(SectorNewForm.label, {'label_col': 3, 'widget_col': 8})}}
+		<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+		{{form_end(SectorNewForm)}}
+	</div>
+</div>
+{%endblock content%}

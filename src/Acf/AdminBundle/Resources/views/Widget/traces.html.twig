@@ -1,0 +1,438 @@
+<ul class="timeline">
+	<li class="time-label">
+		<span class="bg-aqua">
+			{{ date()|localeDate('full')|capitalize }}
+		</span>
+	</li>
+	{% for trace in traces %}
+	<li>
+		<!-- timeline icon -->
+		{% if trace.actionEntity is constant('AE_USER', trace) %}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('users bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('users bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('users bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_JOB', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('leaf bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('leaf bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('leaf bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_TYPE', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('leaf bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('leaf bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('leaf bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_SECTOR', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('leaf bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('leaf bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('leaf bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_COMPANY', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('building bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('building bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('building bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_ADDRESS', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('map-marker bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('map-marker bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('map-marker bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_PHONE', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('phone bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('phone bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('phone bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_FRAME', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('user-secret bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('user-secret bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('user-secret bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_NATURE', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('pagelines bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('pagelines bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('pagelines bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_LABEL', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('tag bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('tag bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('tag bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_CUSTOMER', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('cart-plus  bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('cart-plus  bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('cart-plus  bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_SUPPLIER', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('truck bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('truck bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('truck bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_BANK', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('bank bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('bank bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('bank bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_FUND', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('bank bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('bank bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('bank bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_WHITHHOLDING', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('hand-scissors-o bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('hand-scissors-o bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('hand-scissors-o bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_MBPURCHASE', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('calendar bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('calendar bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('calendar bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_MBSALE', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('calendar bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('calendar bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('calendar bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_SALE', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('money bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('money bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('money bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_BUY', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('money bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('money bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('money bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_SECONDARYVAT', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('money bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('money bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('money bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_SHAREHOLDER', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('money bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('money bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('money bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_PILOT', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('rocket bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('rocket bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('rocket bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_CUSER', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('user-times bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('user-times bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('user-times bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_CADMIN', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('user-plus bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('user-plus bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('user-plus bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_DOC', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('file bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('file bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('file bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_DOCGROUPCOMPTABLE', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('briefcase bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('briefcase bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('briefcase bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_DOCGROUPBANK', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('briefcase bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('briefcase bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('briefcase bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_DOCGROUP', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('briefcase bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('briefcase bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('briefcase bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_DOCGROUPFISCAL', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('briefcase bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('briefcase bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('briefcase bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_DOCGROUPPERSO', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('briefcase bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('briefcase bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('briefcase bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_DOCGROUPSYST', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('briefcase bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('briefcase bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('briefcase bg-red')}}
+			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_DOCGROUPAUDIT', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('briefcase bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('briefcase bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('briefcase bg-red')}}
+			{% endif %}
+		{% else %}
+			{{faIco('question bg-purple')}}
+		{% endif %}
+		<div class="timeline-item">
+			<span class="time">{{faIco('clock-o')}} {{trace.dtCrea|localeDate('full')}} {{'_at'|trans}} {{ trace.dtCrea|localeDate('none', 'medium') }}</span>
+			<h3 class="timeline-header">
+			{%if trace.userId is not null%}
+				{%if is_granted('ROLE_SUPERADMIN')%}
+				<a href="{{ path('_admin_user_editGet', {'id': trace.userId}) }}">{{trace.userFullname}}</a>
+				{%else%}
+				{{trace.userFullname}}
+				{%endif%} :
+			{%else%}
+				<b>!!SYSTEM!!</b>
+			{%endif%}
+			</h3>
+			{% if trace.msg is not empty %}
+			<div class="timeline-body">
+				{{ trace.msg|raw }}
+			</div>
+			{% endif %}
+
+			<div class='timeline-footer'>
+				<div class="text-right">
+				{% if showlinks2 is defined and showlinks2 == true and trace.actionId2 is not null %}
+				{% if trace.actionEntity2 is constant('AE_COMPANY', trace) %}
+					<a class="btn btn-xs" href="{{ path('_admin_company_editGet', {'uid': trace.actionId2}) }}">Société {{faIco('building')}}</a>
+				{% endif %}
+				{% endif %}
+
+				{% if showlinks3 is defined and showlinks3 == true and trace.actionId3 is not null %}
+				{% if trace.actionEntity3 is constant('AE_MBSALE', trace) %}
+					<a class="btn btn-xs" href="{{ path('_admin_mbsale_editGet', {'uid': trace.actionId3}) }}">Mois {{faIco('calendar')}}</a>
+				{% elseif trace.actionEntity3 is constant('AE_MBPURCHASE', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_mbpurchase_editGet', {'uid': trace.actionId3}) }}">Mois {{faIco('calendar')}}</a>
+				{% elseif trace.actionEntity3 is constant('AE_DOCGROUPCOMPTABLE', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupcomptable_editGet', {'id': trace.actionId3}) }}">Mois {{faIco('briefcase')}}</a>
+				{% elseif trace.actionEntity3 is constant('AE_DOCGROUPBANK', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupbank_editGet', {'id': trace.actionId3}) }}">Mois {{faIco('briefcase')}}</a>
+				{% elseif trace.actionEntity3 is constant('AE_DOCGROUP', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroup_editGet', {'id': trace.actionId3}) }}">Mois {{faIco('briefcase')}}</a>
+				{% elseif trace.actionEntity3 is constant('AE_DOCGROUPFISCAL', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupfiscal_editGet', {'id': trace.actionId3}) }}">Mois {{faIco('briefcase')}}</a>
+				{% elseif trace.actionEntity3 is constant('AE_DOCGROUPPERSO', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupperso_editGet', {'id': trace.actionId3}) }}">Mois {{faIco('briefcase')}}</a>
+				{% elseif trace.actionEntity3 is constant('AE_DOCGROUPSYST', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupsyst_editGet', {'id': trace.actionId3}) }}">Mois {{faIco('briefcase')}}</a>
+				{% elseif trace.actionEntity3 is constant('AE_DOCGROUPAUDIT', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupaudit_editGet', {'id': trace.actionId3}) }}">Mois {{faIco('briefcase')}}</a>
+				{% endif %}
+				{% endif %}
+
+				{% if showlinks4 is defined and showlinks4 == true and trace.actionId4 is not null %}
+				{% if trace.actionEntity4 is constant('AE_SALE', trace) %}
+					<a class="btn btn-xs" href="{{ path('_admin_sale_editGet', {'uid': trace.actionId4}) }}">Vente {{faIco('money')}}</a>
+				{% endif %}
+				{% endif %}
+
+			{% if showlinks is defined and showlinks == true and trace.actionId is not null %}
+
+				{% if trace.actionEntity is constant('AE_USER', trace) %}
+					<a class="btn btn-xs" href="{{ path('_admin_user_editGet', {'id': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_JOB', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_job_editGet', {'id': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_TYPE', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_companyType_editGet', {'id': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_SECTOR', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_sector_editGet', {'id': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_COMPANY', trace)%}
+					{% if showCompany is defined and showCompany == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_company_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_ADDRESS', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_address_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_PHONE', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_phone_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_FRAME', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_companyFrame_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_NATURE', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_companyNature_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_LABEL', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_companyLabel_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_CUSTOMER', trace)%}
+					{% if showRelation is defined and showRelation == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_customer_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_SUPPLIER', trace)%}
+					{% if showRelation is defined and showRelation == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_supplier_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_BANK', trace)%}
+					{% if showAccount is defined and showAccount == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_bank_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_FUND', trace)%}
+					{% if showAccount is defined and showAccount == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_fund_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_WHITHHOLDING', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_withholding_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_MBSALE', trace)%}
+					{% if showMB is defined and showMB == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_mbsale_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_MBPURCHASE', trace)%}
+					{% if showMB is defined and showMB == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_mbpurchase_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_SALE', trace)%}
+					{% if showTR is defined and showTR == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_sale_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_BUY', trace)%}
+					{% if showTR is defined and showTR == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_buy_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_SECONDARYVAT', trace)%}
+					{% if showSV is defined and showSV == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_secondaryVat_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_SHAREHOLDER', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_shareholder_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_PILOT', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_pilot_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_CADMIN', trace)%}
+					&nbsp;
+				{% elseif trace.actionEntity is constant('AE_CUSER', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_companyUser_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_DOC', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_doc_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+				{% elseif trace.actionEntity is constant('AE_DOCGROUPCOMPTABLE', trace)%}
+					{% if showDG is defined and showDG == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupcomptable_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_DOCGROUPBANK', trace)%}
+					{% if showDG is defined and showDG == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupbank_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_DOCGROUP', trace)%}
+					{% if showDG is defined and showDG == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroup_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_DOCGROUPFISCAL', trace)%}
+					{% if showDG is defined and showDG == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupfiscal_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_DOCGROUPPERSO', trace)%}
+					{% if showDG is defined and showDG == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupperso_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_DOCGROUPSYST', trace)%}
+					{% if showDG is defined and showDG == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupsyst_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_DOCGROUPAUDIT', trace)%}
+					{% if showDG is defined and showDG == true %}
+					<a class="btn btn-xs" href="{{ path('_admin_docgroupaudit_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
+					{% endif %}
+				{% else %}
+					{{faIco('question')}}
+				{% endif %}
+
+			{% endif %}
+				</div>
+			</div>
+
+		</div>
+	</li>
+	{% endfor %}
+	<li>
+		{{faIco('clock-o')}}
+	</li>
+</ul>

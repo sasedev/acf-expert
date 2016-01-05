@@ -1,0 +1,4 @@
+services:
+#    acf_client.example:
+#        class: Acf\ClientBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,109 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_constantFloat_list') }}">{{faIco('gears')}} &nbsp; {{'breadcrumb.constantFloat.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_constantFloat_editGet', {'uid': constantFloat.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.constantFloat.edit'|trans({'%constantFloat%': constantFloat.name})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_constantFloat_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('_admin_constantFloat_addGet') }}" class="btn btn-primary">{{ glyphIco('plus') }} {{ 'action.add'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'ConstantFloat.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'ConstantFloat.tab.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'ConstantFloat.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'ConstantFloat.name'|trans|raw}} :</div>
+								<div class="col-lg-9">{{constantFloat.name}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'ConstantFloat.value'|trans|raw}} :</div>
+								<div class="col-lg-9">{{constantFloat.value}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'ConstantFloat.description'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if constantFloat.description is not empty%}{{constantFloat.description|raw}}{%else%}{{bsLabelWarning('_NA'|trans)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'ConstantFloat.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{constantFloat.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{constantFloat.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'ConstantFloat.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{constantFloat.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{constantFloat.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'ConstantFloat.tlabel.editValue'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(ConstantFloatUpdateValueForm, {'method':'POST', 'action': path('_admin_constantFloat_editPost', {'uid': constantFloat.id}), 'style': 'horizontal'})}}
+							{{form_row(ConstantFloatUpdateValueForm.value, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(ConstantFloatUpdateValueForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'ConstantFloat.tlabel.editDescription'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(ConstantFloatUpdateDescriptionForm, {'method':'POST', 'action': path('_admin_constantFloat_editPost', {'uid': constantFloat.id}), 'style': 'horizontal'})}}
+							{{form_row(ConstantFloatUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(ConstantFloatUpdateDescriptionForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'Company.tlabel.logs.list'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

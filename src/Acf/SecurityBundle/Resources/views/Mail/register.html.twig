@@ -1,0 +1,5 @@
+<html>
+<body>
+{{'_mail.register.body'|trans({'%fullname%':user.fullName, '%loginurl%': url('_security_login') ,'%username%':user.username,'%password%':user.clearPassword}, "messages")|raw}}
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('#LangNewForm_locale').chosen({width: "100%", disable_search_threshold: 10});
+	$('#LangNewForm_direction').chosen({width: "100%", disable_search_threshold: 10});
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_lang_list') }}">{{faIco('flag')}} &nbsp; {{'breadcrumb.lang.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_lang_addGet') }}">{{glyphIco('plus')}} &nbsp; {{'breadcrumb.lang.add'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_lang_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'Lang.tlabel.add'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(LangNewForm, {'method':'POST', 'action': path('_admin_lang_addPost'), 'style': 'horizontal'})}}
+				{{form_row(LangNewForm.locale, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(LangNewForm.direction, {'label_col': 3, 'widget_col': 3})}}
+				{{form_row(LangNewForm.status, {'label_col': 3, 'widget_col': 8 })}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+				{{form_end(LangNewForm)}}
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

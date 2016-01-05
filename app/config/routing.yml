@@ -1,0 +1,28 @@
+acf_security:
+    resource: "@AcfSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
+
+acf_res:
+    resource: "@AcfResBundle/Resources/config/routing.yml"
+    prefix:   /
+
+acf_front:
+    resource: "@AcfFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+
+acf_admin:
+    resource: "@AcfAdminBundle/Resources/config/routing.yml"
+    prefix:   /ACF-Admin
+
+acf_client:
+    resource: "@AcfClientBundle/Resources/config/routing.yml"
+    prefix:   /ACF-Cloud
+
+acf_info:
+    resource: "@AcfInfoBundle/Resources/config/routing.yml"
+    prefix:   /ACF-Info
+    
+acf_payroll:
+    resource: "@AcfPayrollBundle/Resources/config/routing.yml"
+    prefix:   /ACF-Payroll
+

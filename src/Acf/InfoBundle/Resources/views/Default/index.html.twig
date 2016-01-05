@@ -1,0 +1,78 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	{% if bulletinInfos|length != 0 %}
+	$('#bulletinInfoList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10
+	});
+	{% endif %}
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_info_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.info'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'BulletinInfo.tlabel.list'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive">
+				<table id="bulletinInfoList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>{{ 'info.BulletinInfo.num.label'|trans|raw }}</th>
+							<th>{{ 'info.BulletinInfo.dtStart.label'|trans|raw }}</th>
+							<th>{{ 'info.BulletinInfo.description.label'|trans|raw }}</th>
+							<th>{{ 'action'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% if bulletinInfos|length != 0 %}
+						{% for bulletinInfo in bulletinInfos %}
+						<tr>
+							<td>{{ bulletinInfo.num }}</td>
+							<td align="right">{{ bulletinInfo.dtStart|localeDate('medium') }}</td>
+							<td>{{ bulletinInfo.description|raw }}</td>
+							<td>
+								<a class="btn btn-sm btn-info" href="{{path('_info_bulletinInfo_editGet',{'uid':bulletinInfo.id})}}">{{ glyphIco('eye-open') }} {{ 'action.show'|trans }}</a>
+							</td>
+						</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan="4">{{ 'BulletinInfo.empty'|trans|raw }}</td>
+						</tr>
+					{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

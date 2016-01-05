@@ -1,0 +1,5 @@
+<html>
+<body>
+{{'_mail.newEvent.body'|trans({'%user%':user.fullName,'%iuser%':iuser.fullName, '%title%': event.title, '%dtStart%': event.dtStart|localeDate('medium'), '%tStart%': event.dtStart|localeDate('none', 'short'), '%dtEnd%': event.dtEnd|localeDate('medium'), '%tEnd%': event.dtEnd|localeDate('none', 'short'), '%comment%': event.comment|raw}, "messages")|raw}}
+</body>
+</html>

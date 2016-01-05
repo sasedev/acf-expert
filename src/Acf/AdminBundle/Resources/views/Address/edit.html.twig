@@ -1,0 +1,145 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$('#AddressUpdateForm_country').chosen({width: "100%", disable_search_threshold: 10});
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	{% if is_granted('ROLE_SUPERADMIN') %}
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	{% endif %}
+	<li><a href="{{ path('_admin_company_editGet', {'uid': address.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': address.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_address_editGet', {'uid': address.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.address.edit'|trans({'%address%': address.label})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_SUPERADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_company_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Address.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Address.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Address.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Address.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_company_editGet', {'uid': address.company.id}) }}">{{address.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.label'|trans|raw}} :</div>
+								<div class="col-lg-9">{{address.label}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.streetNum'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.streetNum is not empty%}{{address.streetNum}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.address'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.address is not empty%}{{address.address}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.address2'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.address2 is not empty%}{{address.address2}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.town'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.town is not empty%}{{address.town}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.zipCode'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.zipCode is not empty%}{{address.zipCode}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.country'|trans|raw}} :</div>
+								<div class="col-lg-9">{{address.country|country}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.phone'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.phone is not empty%}{{address.phone}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.mobile'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.mobile is not empty%}{{address.mobile}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.fax'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.fax is not empty%}{{address.fax}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.email'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.email is not empty%}{{address.email}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.otherInfos'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if address.otherInfos is not empty%}{{address.otherInfos|raw}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{address.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{address.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Address.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{address.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{address.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Address.tlabel.edit'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AddressUpdateForm, {'method':'POST', 'action': path('_admin_address_editPost', {'uid': address.id}), 'style': 'horizontal'})}}
+							{{form_row(AddressUpdateForm.label, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(AddressUpdateForm.streetNum, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.address, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.address2, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.town, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.zipCode, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.country, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.phone, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.mobile, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.fax, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.email, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(AddressUpdateForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AddressUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

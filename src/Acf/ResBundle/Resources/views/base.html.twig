@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+{%block html_head%}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="ACF-experts">
+	{%block dyn_meta%}{%if metas is defined%}{%for meta in metas%}
+		<meta name="{{meta.name}}" content="{{meta.content|raw}}">
+		{%endfor%}{%endif%}
+	{%endblock dyn_meta%}
+		<link rel="shortcut icon" href="/favicon.ico">
+	{%block static_css%}
+		<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/webfonts/fontawesome/4.4.0.min.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/theme/Bootstrap/3.3.4.css')}}">
+	{%endblock static_css%}
+	{%block dynamic_css%}
+		{%if stylesheets is defined%}{%for css in stylesheets%}
+		<link rel="stylesheet" type="text/css" href="/{{css|raw}}">
+		{%endfor%}{%endif%}
+	{%endblock dynamic_css%}
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+	{%block begin1_dynamic_js%}
+		<script type="text/javascript">
+		<!--
+	{%block begin1_dynamic_jstxt%}
+	{%endblock begin1_dynamic_jstxt%}
+		-->
+		</script>
+	{%endblock begin1_dynamic_js%}
+	{%block begin_static_js%}
+		<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/2.1.3.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/acfres/js/mnot/hinclude/0.9.5.js')}}"></script>
+	{%endblock begin_static_js%}
+	{%block begin_dynamic_js%}
+		{%if begin_javascripts is defined%}{%for js in begin_javascripts%}
+		<script type="text/javascript" src="/{{js|raw}}"></script>
+		{%endfor%}{%endif%}
+	{%endblock begin_dynamic_js%}
+		<script type="text/javascript">
+		<!--
+		window.setTimeout(function() { $(".alert").alert('close'); }, 10000);
+		{%block begin2_dynamic_jstxt%}
+		{%endblock begin2_dynamic_jstxt%}
+		-->
+		</script>
+	{%block headappend%}{%endblock headappend%}
+		<title>{%block title%}{%if pagetitle_txt is defined%}{{pagetitle_txt}} - {%endif%}{{sitename}}{%endblock title%}</title>
+	</head>
+{%endblock html_head%}
+{%block html_body%}
+<body>
+	{%block html_body_content%}
+	{%endblock html_body_content%}
+	<script type="text/javascript">
+	<!--
+	{%block end1_dynamic_jstxt%}
+	{%endblock end1_dynamic_jstxt%}
+	-->
+	</script>
+	{%block end_static_js%}
+	<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/migrate/1.2.1.js')}}"></script>
+	<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/Bootstrap/3.3.4.min.js')}}"></script>
+	{%endblock end_static_js%}
+	{%block end_dynamic_js%}
+		{%if end_javascripts is defined%}{%for js in end_javascripts%}
+	<script type="text/javascript" src="/{{js|raw}}"></script>
+		{%endfor%}{%endif%}
+	{%endblock end_dynamic_js%}
+	<script type="text/javascript">
+	<!--
+	{%block end2_dynamic_jstxt%}
+	{%endblock end2_dynamic_jstxt%}
+	-->
+	</script>
+	{%block endappend%}{%endblock endappend%}
+</body>
+{%endblock html_body%}
+</html>

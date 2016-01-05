@@ -1,0 +1,65 @@
+<div class="box-body table-responsive">
+	<div id="accordionDocgroupComptable{{ parent.id }}" class="box-group">
+		{% for docgroupcomptable in parent.childs %}
+		<div class="panel box box-warning">
+			<div class="box-header">
+				<h4 class="box-title"><a href="#collapse{{ docgroupcomptable.id }}" data-parent="#accordionDocgroupComptable{{ parent.id }}" data-toggle="collapse">{{ docgroupcomptable.label }}</a></h4>
+			</div>
+			<div id="collapse{{ docgroupcomptable.id }}" class="panel-collapse collapse">
+				<div class="row">
+					<div class="col-lg-9">&nbsp;</div>
+					<div class="col-lg-3">
+						<a class="btn btn-sm btn-info" href="{{path('_client_docgroupcomptable_editGet',{'uid':docgroupcomptable.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+					</div>
+					{% if docgroupcomptable.otherInfos is not empty %}
+					<div class="col-lg-12">{{ docgroupcomptable.otherInfos | raw }}</div>
+					{% endif %}
+				</div>
+				{% if docgroupcomptable.docs|length != 0 %}
+				<table class="table table-bordered table-hover docgroupcomptableDocs">
+					<thead>
+						<tr>
+							<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+							<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+							<th>{{ 'Doc.size.label'|trans|raw }}</th>
+							<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+							<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+							<th>{{ 'action'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for doc in docgroupcomptable.docs %}
+						<tr>
+							<td>{{ doc.originalName }}</td>
+							<td>{{ doc.mimeType }}</td>
+							<td>{%if doc.size<1024%}
+									{{doc.size}} o
+								{%elseif doc.size<(1024*1024)%}
+									{{'%.2f'|format(doc.size/1024)}} Ko
+								{%elseif doc.size<(1024*1024*1024)%}
+									{{'%.2f'|format(doc.size/1024/1024)}} Mo
+								{%else%}
+									{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+								{% endif %}
+							</td>
+							<td>{{ doc.nbrDownloads }}</td>
+							<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+							<td>
+								<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+								<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% else %}
+				<br><br><br>
+				{% endif %}
+				{% if docgroupcomptable.childs|length != 0 %}
+				{{ render(controller('AcfClientBundle:Docgroupcomptable:childs', {parent: docgroupcomptable.id})) }}
+				{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>

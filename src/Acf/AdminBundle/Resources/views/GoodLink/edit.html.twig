@@ -1,0 +1,67 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_goodLink_list') }}">{{faIco('newspaper-o')}} &nbsp; {{'breadcrumb.goodLink.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_goodLink_editGet', {'uid': goodLink.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.goodLink.edit'|trans({'%goodLink%': goodLink.url})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_goodLink_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('_admin_goodLink_addGet') }}" class="btn btn-primary">{{ glyphIco('plus') }} {{ 'action.add'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'GoodLink.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'GoodLink.tab.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'GoodLink.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'GoodLink.title'|trans|raw}} :</div>
+								<div class="col-lg-9">{{goodLink.title}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'GoodLink.url'|trans|raw}} :</div>
+								<div class="col-lg-9">{{goodLink.url}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'GoodLink.nbrClicks'|trans|raw}} :</div>
+								<div class="col-lg-9">{{goodLink.nbrClicks}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'GoodLink.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{goodLink.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{goodLink.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'GoodLink.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{goodLink.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{goodLink.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'GoodLink.tlabel.editUrl'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(GoodLinkUpdateUrlForm, {'method':'POST', 'action': path('_admin_goodLink_editPost', {'uid': goodLink.id}), 'style': 'horizontal'})}}
+							{{form_row(GoodLinkUpdateUrlForm.url, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(GoodLinkUpdateUrlForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'GoodLink.tlabel.editTitle'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(GoodLinkUpdateTitleForm, {'method':'POST', 'action': path('_admin_goodLink_editPost', {'uid': goodLink.id}), 'style': 'horizontal'})}}
+							{{form_row(GoodLinkUpdateTitleForm.title, {'label_col': 3, 'widget_col': 4 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(GoodLinkUpdateTitleForm)}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

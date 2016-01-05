@@ -1,0 +1,138 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_bulletinInfo_list') }}">{{faIco('exclamation-triangle')}} &nbsp; {{'breadcrumb.bulletinInfo.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_bulletinInfo_editGet', {'uid': bulletinInfoContent.bulletinInfoTitle.bulletinInfo.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.bulletinInfo.edit'|trans({'%bulletinInfo%': bulletinInfoContent.bulletinInfoTitle.bulletinInfo.num})|raw}}</a></li>
+	<li><a href="{{ path('_admin_bulletinInfoTitle_editGet', {'uid': bulletinInfoContent.bulletinInfoTitle.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.bulletinInfoTitle.edit'|trans({'%bulletinInfoTitle%': bulletinInfoContent.bulletinInfoTitle.title})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_bulletinInfoContent_editGet', {'uid': bulletinInfoContent.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.bulletinInfoContent.edit'|trans({'%bulletinInfoContent%': bulletinInfoContent.title})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_bulletinInfo_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		{% for flashMessage in app.session.flashbag.get('log') %}
+		<div class="callout callout-info">
+		{{ flashMessage|raw }}
+		</div>
+		{% endfor %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'BulletinInfo.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'BulletinInfo.tab.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'BulletinInfo.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'BulletinInfo.num'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_bulletinInfo_editGet', {'uid': bulletinInfoContent.bulletinInfoTitle.bulletinInfo.id}) }}">{{bulletinInfoContent.bulletinInfoTitle.bulletinInfo.num}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.bulletinInfoTitle'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_bulletinInfoTitle_editGet', {'uid': bulletinInfoContent.bulletinInfoTitle.id}) }}">{{bulletinInfoContent.bulletinInfoTitle.title}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.title'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.title}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.content'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.content|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.theme'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.theme}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.jort'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.jort}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.txtNum'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.txtNum}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.artTxt'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.artTxt}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.dtTxt'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.dtTxt}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.artCode'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.artCode}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.companyType'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.companyType}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.dtApplication'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.dtApplication}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{bulletinInfoContent.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'BulletinInfoContent.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{bulletinInfoContent.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{bulletinInfoContent.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'BulletinInfoContent.tlabel.editTitle'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(BulletinInfoContentUpdateTitleForm, {'method':'POST', 'action': path('_admin_bulletinInfoContent_editPost', {'uid': bulletinInfoContent.id}), 'style': 'horizontal'})}}
+							{{form_row(BulletinInfoContentUpdateTitleForm.title, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(BulletinInfoContentUpdateTitleForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'BulletinInfoContent.tlabel.editContent'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(BulletinInfoContentUpdateForm, {'method':'POST', 'action': path('_admin_bulletinInfoContent_editPost', {'uid': bulletinInfoContent.id}), 'style': 'horizontal'})}}
+							{{form_row(BulletinInfoContentUpdateForm.content, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							{{form_row(BulletinInfoContentUpdateForm.theme, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BulletinInfoContentUpdateForm.jort, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BulletinInfoContentUpdateForm.txtNum, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BulletinInfoContentUpdateForm.artTxt, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BulletinInfoContentUpdateForm.dtTxt, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BulletinInfoContentUpdateForm.artCode, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BulletinInfoContentUpdateForm.companyType, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(BulletinInfoContentUpdateForm.dtApplication, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(BulletinInfoContentUpdateForm)}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

@@ -1,0 +1,102 @@
+{% extends 'AcfFrontBundle::front.html.twig' %} {%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	{% if is_granted('ROLE_SUPERADMIN') %}
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	{% endif %}
+	<li><a href="{{ path('_admin_company_editGet', {'uid': shareholder.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%':
+			shareholder.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_shareholder_editGet', {'uid': shareholder.id}) }}">{{glyphIco('edit')}} &nbsp;
+			{{'breadcrumb.shareholder.edit'|trans({'%shareholder%': shareholder.name})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%} {%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_SUPERADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_company_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active" {%endif%}><a href="#overview" data-toggle="tab">{{'Shareholder.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active" {%endif%}><a href="#edit" data-toggle="tab">{{'Shareholder.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">{{'Shareholder.tlabel.overview'|trans}}</h3>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Shareholder.company'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									<a href="{{ path('_admin_company_editGet', {'uid': shareholder.company.id}) }}">{{shareholder.company.corporateName}}</a>&nbsp;
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Shareholder.name'|trans|raw}} :</div>
+								<div class="col-lg-9">{{shareholder.name}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Shareholder.cin'|trans|raw}} :</div>
+								<div class="col-lg-9">{{shareholder.cin}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Shareholder.quality'|trans|raw}} :</div>
+								<div class="col-lg-9">{{shareholder.quality}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Shareholder.address'|trans|raw}} :</div>
+								<div class="col-lg-9">{{shareholder.address|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Shareholder.trades'|trans|raw}} :</div>
+								<div class="col-lg-9">{{shareholder.trades}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Shareholder.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{shareholder.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{shareholder.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Shareholder.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{shareholder.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{shareholder.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header">
+							<h3 class="box-title">{{'Shareholder.tlabel.edit'|trans}}</h3>
+						</div>
+						<div class="box-body">
+							{{form_start(ShareholderUpdateForm, {'method':'POST', 'action': path('_admin_shareholder_editPost', {'uid': shareholder.id}), 'style': 'horizontal'})}}
+							{{form_row(ShareholderUpdateForm.name, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(ShareholderUpdateForm.cin, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(ShareholderUpdateForm.quality, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(ShareholderUpdateForm.address, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(ShareholderUpdateForm.trades, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group">
+								<div class="col-lg-offset-3 col-lg-2">
+									<button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button>
+								</div>
+							</div>
+							{{form_end(ShareholderUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

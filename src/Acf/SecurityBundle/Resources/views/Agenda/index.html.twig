@@ -1,0 +1,247 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/fullcalendar/fullcalendar.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/jquery/ui/jquery-ui-1.10.3.custom.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/ui/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.3.1.js')}}"></script>
+{%if app.request.locale != 'en'%}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.3.1.'~app.request.locale~'.js')}}"></script>
+{% endif %}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/fullcalendar/moment-with-locales.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/fullcalendar/fullcalendar.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/fullcalendar/gcal.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/fullcalendar/lang-all.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/form/20130711.min.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+
+	$('#ChooseDateForm_date').datetimepicker({
+		weekStart: 1,
+		startView: 4,
+		minView: 2,
+		autoclose: true,
+		todayHighlight: true,
+		language: "{{app.request.locale}}",
+		format: 'yyyy-mm-dd'
+	});
+
+	var calendar = $('#calendar').fullCalendar({
+		lang: 'fr',
+		timezone: 'local',
+		theme: false,
+		defaultView: 'agendaWeek',
+		header: {left: '',center: '', right: '' },
+		allDaySlot: false,
+		duration: '00:30:00',
+		slotDuration: '00:30:00',
+		slotMinutes : 15,
+		firstDay: 1,
+		columnFormat: {week: 'dddd DD/MM/YYYY'},
+		axisFormat: 'HH:mm',
+		height: 700,
+		scrollTime: '07:00:00',
+		{%if agendaEvents|length!=0 %}
+		events: [
+		{%for ev in agendaEvents%}
+			{
+				id: '{{ ev.id }}',
+				title:'{{ ev.title }}',
+				start:moment.unix({{ ev.evStart}}),
+				end:moment.unix({{ ev.evEnd}}),
+				allDay: false,
+				backgroundColor:'{% if ev.user.id == app.user.id %}#3c8dbc{% else %}red{% endif %}',
+				borderColor: '{% if ev.user.id == app.user.id %}#3c8dbc{% else %}red{% endif %}',
+				textColor : '{{ev.textColor}}',
+				editable: {% if ev.user.id == app.user.id %}true{% else %}false{% endif %},
+				url:'{{path('_security_agenda_event', {'uid':ev.id})}}'
+			}{%if loop.last==false%},{% endif%}
+		{%endfor%}
+		],
+		{% endif %}
+		defaultDate: moment('{{ weekdays[1]|date("Y-m-d") }}'),
+		selectable: true,
+		selectHelper: true,
+		select: function(start, end, allDay) {
+			$('form').find('input[type=text], input[type=password], input[type=number], input[type=email], textarea, select').val('');
+			var evStart = start.format();
+			var evEnd = end.format();
+			$('#EventAddForm_dtStart').val(evStart);
+			$('#EventAddForm_dtEnd').val(evEnd);
+			$("#newEvent").modal('show');
+		},
+		editable: true,
+		dragRevertDuration: 0,
+		eventDragStop: function( event, jsEvent, ui, view ) {
+			var candelete = false;
+			var trashEl = $('#calendarTrash');
+			var ofs = trashEl.offset();
+			var x1 = ofs.left;
+			var x2 = ofs.left + trashEl.outerWidth(true);
+			var y1 = ofs.top;
+			var y2 = ofs.top + trashEl.outerHeight(true);
+			if (jsEvent.pageX >= x1 && jsEvent.pageX<= x2 && jsEvent.pageY>= y1 && jsEvent.pageY <= y2) {
+				candelete = true;
+			}
+			if (candelete) {
+				var postdata = 'evId='+event.id;
+				$.ajax({
+					type: "POST",
+					url: "{{ path('_security_agenda_ajaxDelete') }}",
+					data: postdata,
+					cache: false,
+					success: function(data, textStatus, jqXHR) {
+						console.log(data);
+						$("#newEventRespData").html(data.msg);
+						$("#newEventResp").modal('show');
+					},
+					error: function(jqXHR, textStatus, errorThrown ) {
+						$("#newEventRespData").html(jqXHR.responseText);
+						$("#newEventResp").modal('show');
+						revertFunc();
+					}
+				});
+			}
+			calendar.fullCalendar('unselect');
+		},
+		eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ) {
+			var evStart = event.start.unix();
+			var evEnd = event.end.unix();
+			var postdata = 'evId='+event.id+'&start='+evStart+'&end='+evEnd;
+			$.ajax({
+				type: "POST",
+				url: "{{ path('_security_agenda_ajaxEdit')}}",
+				data: postdata,
+				cache: false,
+				success: function(data, textStatus, jqXHR) {
+					console.log(data);
+					$("#newEventRespData").html(data.msg);
+					$("#newEventResp").modal('show');
+				},
+				error: function(jqXHR, textStatus, errorThrown ) {
+					$("#newEventRespData").html(jqXHR.responseText);
+					$("#newEventResp").modal('show');
+					revertFunc();
+				}
+			});
+			calendar.fullCalendar('unselect');
+		},
+		eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
+			var evStart = event.start.unix();
+			var evEnd = event.end.unix();
+			var postdata = 'evId='+event.id+'&start='+evStart+'&end='+evEnd;
+			$.ajax({
+				type: "POST",
+				url: "{{ path('_security_agenda_ajaxEdit')}}",
+				data: postdata,
+				cache: false,
+				success: function(data, textStatus, jqXHR) {
+					console.log(data);
+					$("#newEventRespData").html(data.msg);
+					$("#newEventResp").modal('show');
+				},
+				error: function(jqXHR, textStatus, errorThrown ) {
+					$("#newEventRespData").html(jqXHR.responseText);
+					$("#newEventResp").modal('show');
+					revertFunc();
+				}
+			});
+			calendar.fullCalendar('unselect');
+		}
+	});
+	$('.fc-right').append('<div id="calendarTrash" class="calendar-trash"><img src="{{asset('bundles/acfres/images/cal-trash.png')}}" /></div>');
+
+	$('#newEventForm').ajaxForm({
+		url: "{{ path('_security_agenda_ajaxAdd') }}",
+		type: "POST",
+		cache: false,
+		success: function(data, textStatus, jqXHR) {
+			console.log(data);
+			$("#newEvent").modal('hide');
+			$("#newEventRespData").html(data.msg);
+			$("#newEventResp").modal('show');
+		},
+		error: function(jqXHR, textStatus, errorThrown ) {
+			$("#newEvent").modal('hide');
+			$("#newEventRespData").html(jqXHR.responseText);
+			$("#newEventResp").modal('show');
+			revertFunc();
+		}
+	});
+
+	$('#newEventResp').on('hide.bs.modal', function (e) {
+		location.reload();
+	});
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_front_homepage') }}">{{ faIco('home') }} &nbsp; {{'breadcrumb.home'|trans|raw}}</a></li>
+	<li><a href="{{ path('_security_agenda_index') }}">{{glyphIco('calendar')}} &nbsp; {{'breadcrumb.agenda'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_security_agenda_planning', {'year':currentYear,'week':currentWeek}) }}"> &nbsp; {{'breadcrumb.agenda.week'|trans({'%year%':currentYear,'%week%':currentWeek})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			{{form_start(ChooseDateForm, {'method':'POST', 'action': path('_security_agenda_ajaxGotoDate'), 'style': 'inline'})}}
+			{{form_row(ChooseDateForm.date, {'label_col': 3, 'widget_col': 3 })}}
+			<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('calendar')}} {{'action.show'|trans|raw}}</button></div></div>
+			{{form_end(ChooseDateForm)}}
+		</div>
+		<ul class="pager centred">
+			<li class="previous"><a href="{{ path('_security_agenda_planning', {'year':prevYear, 'week':prevWeek}) }}">&laquo;&nbsp;{{'_prev'|trans }}</a></li>
+			<li class="next"><a href="{{ path('_security_agenda_planning', {'year':nextYear,'week':nextWeek}) }}">{{'_next'|trans }}&nbsp;&raquo;</a></li>
+		</ul>
+		<div id='calendar'></div>
+		<ul class="pager centred">
+			<li class="previous"><a href="{{ path('_security_agenda_planning', {'year':prevYear, 'week':prevWeek}) }}">&laquo;&nbsp;{{'_prev'|trans }}</a></li>
+			<li class="next"><a href="{{ path('_security_agenda_planning', {'year':nextYear,'week':nextWeek}) }}">{{'_next'|trans }}&nbsp;&raquo;</a></li>
+		</ul>
+	</div>
+</div>
+<div id="newEvent" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">{{ 'Agenda.new.modal'|trans }}</h4>
+			</div>
+			<div class="modal-body">
+				{{form_start(EventAddForm, {'method':'POST', 'action': path('_security_agenda_ajaxAdd', {'uid': event.id}), 'style': 'horizontal', 'attr': {'id':'newEventForm'}})}}
+				{{form_row(EventAddForm.title, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(EventAddForm.comment, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(EventAddForm.dtStart, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(EventAddForm.dtEnd, {'label_col': 3, 'widget_col': 8 })}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+				{{form_end(EventAddForm)}}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="newEventResp" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">{{ 'Agenda.new.modal'|trans }}</h4>
+			</div>
+			<div class="modal-body">
+				<div id="newEventRespData"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{%endblock content%}

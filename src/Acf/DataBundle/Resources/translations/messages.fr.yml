@@ -1,0 +1,1396 @@
+# Autoinc
+Autoinc.name: Nom
+Autoinc.value: Valeur
+Autoinc.description: Description
+Autoinc.dtCrea: Date d'ajout
+Autoinc.dtUpdate: Date de modification
+
+Autoinc.name.label: "Nom :"
+Autoinc.value.label: "Valeur :"
+Autoinc.description.label: "Description :"
+
+# ConstantStr
+ConstantStr.name: Nom
+ConstantStr.value: Valeur
+ConstantStr.description: Description
+ConstantStr.dtCrea: Date d'ajout
+ConstantStr.dtUpdate: Date de modification
+
+ConstantStr.name.label: "Nom :"
+ConstantStr.value.label: "Valeur :"
+ConstantStr.description.label: "Description :"
+
+# ConstantInt
+ConstantInt.name: Nom
+ConstantInt.value: Valeur
+ConstantInt.description: Description
+ConstantInt.dtCrea: Date d'ajout
+ConstantInt.dtUpdate: Date de modification
+
+ConstantInt.name.label: "Nom :"
+ConstantInt.value.label: "Valeur :"
+ConstantInt.description.label: "Description :"
+
+# ConstantFloat
+ConstantFloat.name: Nom
+ConstantFloat.value: Valeur
+ConstantFloat.description: Description
+ConstantFloat.dtCrea: Date d'ajout
+ConstantFloat.dtUpdate: Date de modification
+
+ConstantFloat.name.label: "Nom :"
+ConstantFloat.value.label: "Valeur :"
+ConstantFloat.description.label: "Description :"
+
+# Lang
+Lang.locale: Locale
+Lang.direction: Direction
+Lang.direction.ltr: LTR
+Lang.direction.rtl: RTL
+Lang.status: Etat
+Lang.status.2: Désactivé
+Lang.status.1: Activé
+Lang.dtCrea: Date d'ajout
+Lang.dtUpdate: Date de modification
+
+Lang.locale.label: "Locale :"
+Lang.direction.label: "Direction :"
+Lang.direction.choice.ltr: LTR
+Lang.direction.choice.rtl: RTL
+Lang.status.label: "Etat :"
+Lang.status.choice.2: Désactivé
+Lang.status.choice.1: Activé
+
+# Role
+Role.name: Nom
+Role.description: Description
+Role.parents: Parents
+Role.childs: Enfants
+Role.users: Utilisateurs
+Role.dtCrea: Date d'ajout
+Role.dtUpdate: Date de modification
+
+Role.name.label: "Nom :"
+Role.description.label: "Description :"
+Role.parents.label: "Parents :"
+Role.childs.label: "Enfants :"
+Role.users.label: "Utilisateurs :"
+
+# User
+User.fullName: Nom Complet
+User.username: Identifiant
+User.email: Email
+User.logins: Nbr de Connexions
+User.lastLogin: Dernière Connexion
+User.avatar: Avatar
+User.lockout: Verrouillage
+User.lockout.1: Compte Actif
+User.lockout.2: Compte Verrouillé
+User.preferedLang: Paramètre de Langue
+User.sexe: Civilité
+User.sexe.1: Mlle
+User.sexe.2: Mme
+User.sexe.3: Mr
+User.firstName: Prénom
+User.lastName: Nom
+User.birthday: Date de Naissance
+User.streetNum: N° de Rue
+User.address: Adresse
+User.address2: Adresse (bis)
+User.town: Ville
+User.zipCode: Code Postal
+User.country: Pays
+User.phone: Tel Fixe
+User.mobile: Tel Mobile
+User.userRoles: Privilèges
+User.dtCrea: Date d'ajout
+User.dtUpdate: Date de modification
+
+User.password.label: "Mot de passe :"
+User.rememberme.label: "Se souvenir de moi"
+User.avatar.label: "Avatar :"
+User.fullName.label: "Nom Complet :"
+User.username.label: "Identifiant :"
+User.email.label: "Email :"
+User.clearPassword.label: "Mot de passe :"
+User.lockout.label: "Verrouillage :"
+User.lockout.choice.1: "Activer"
+User.lockout.choice.2: "Verrouiller"
+User.preferedLang.label: "Paramètre de Langue :"
+User.sexe.label: "Civilité :"
+User.sexe.choice.1: "Mlle"
+User.sexe.choice.2: "Mme"
+User.sexe.choice.3: "Mr"
+User.firstName.label: "Prénom :"
+User.lastName.label: "Nom :"
+User.birthday.label: "Date de Naissance :"
+User.streetNum.label: "N° de Rue :"
+User.address.label: "Adresse :"
+User.address2.label: "Adresse (bis) :"
+User.town.label: "Ville :"
+User.zipCode.label: "Code Postal :"
+User.country.label: "Pays :"
+User.phone.label: "Tel Fixe :"
+User.mobile.label: "Tel Mobile :"
+User.userRoles.label: "Privilèges :"
+User.oldPassword.label: "Ancien Mot de passe :"
+User.newPassword.first: "Nouveau Mot de passe :"
+User.newPassword.second: "Confirmation Mot de passe :"
+
+#Job
+Job.label: Libellé
+Job.dtCrea: Date d'ajout
+Job.dtUpdate: Date de modification
+
+Job.label.label: "Libellé :"
+
+#CompanyType
+CompanyType.label: Libellé
+CompanyType.dtCrea: Date d'ajout
+CompanyType.dtUpdate: Date de modification
+
+CompanyType.label.label: "Libellé :"
+
+#Sector
+Sector.label: Libellé
+Sector.dtCrea: Date d'ajout
+Sector.dtUpdate: Date de modification
+
+Sector.label.label: "Libellé :"
+
+#Company
+Company.ref: Référence
+Company.corporateName: Raison Sociale
+Company.type: Forme Juridique
+Company.sectors: 'Secteurs d''Activité'
+Company.capital: Capital
+Company.commercialRegister: RC
+Company.commercialRegisterBureau: Bureau Impots
+Company.fisc: Matricule Fiscal
+Company.tribunal: Tribunal
+Company.cnss: N° CNSS
+Company.cnssBureau: Bureau CNSS
+Company.physicaltype: Morale / Physique
+Company.physicaltype.1: Personne Morale
+Company.physicaltype.2: Personne Physique
+Company.cin: Carte d'identité
+Company.passport: Passport
+Company.customsCode: N° Code en Douane
+Company.phone: Tel
+Company.mobile: Mobile
+Company.fax: Fax
+Company.email: Mail
+Company.streetNum: N° de Rue (Siège)
+Company.address: Adresse (Siège)
+Company.address2: Adresse bis (Siège)
+Company.town: Ville (Siège)
+Company.zipCode: Code Postal (Siège)
+Company.country: Pays (Siège)
+Company.otherInfos: Autres Informations
+Company.actionvn: Valeur Nominale des Actions
+Company.actioncount: Nombre d'Actions
+Company.shareholders: Actionnaires
+Company.buys: Achats
+Company.sales: Ventes
+Company.docs: Documents
+Company.dtCrea: Date d'ajout
+Company.dtUpdate: Date de modification
+
+Company.actionvn.label: "Valeur Nominale des Actions :"
+Company.actioncount.label: "Nombre d'Actions :"
+Company.ref.label: "Référence :"
+Company.corporateName.label: "Raison Sociale :"
+Company.type.label: "Forme Juridique :"
+Company.sectors.label: 'Secteurs d''Activité :'
+Company.capital.label: "Capital :"
+Company.commercialRegister.label: "RC :"
+Company.commercialRegisterBureau.label: "Bureau Impots :"
+Company.fisc.label: "Matricule Fiscal :"
+Company.tribunal.label: "Tribunal :"
+Company.cnss.label: "N° CNSS :"
+Company.cnssBureau.label: "Bureau CNSS :"
+Company.physicaltype.label: "Morale / Physique :"
+Company.physicaltype.choice.1: "Personne Morale"
+Company.physicaltype.choice.2: "Personne Physique"
+Company.cin.label: "Carte d'identité :"
+Company.passport.label: "Passport :"
+Company.customsCode.label: "N° Code en Douane :"
+Company.phone.label: "Tel :"
+Company.mobile.label: "Mobile :"
+Company.fax.label: "Fax :"
+Company.email.label: "Mail :"
+Company.streetNum.label: "N° de Rue (Siège) :"
+Company.address.label: "Adresse (Siège) :"
+Company.address2.label: "Adresse bis (Siège) :"
+Company.town.label: "Ville (Siège) :"
+Company.zipCode.label: "Code Postal (Siège) :"
+Company.country.label: "Pays (Siège) :"
+Company.otherInfos.label: "Autres Informations :"
+Company.shareholders.label: "Actionnaires :"
+Company.buys.label: "Achats :"
+Company.sales.label: "Ventes :"
+Company.docs.label: "Documents :"
+Company.clone.label: "Clone de :"
+
+#Address
+Address.company: Société
+Address.label: Libellé
+Address.streetNum: N° de Rue
+Address.address: Adresse
+Address.address2: Adresse (bis)
+Address.town: Ville
+Address.zipCode: Code Postal
+Address.country: Pays
+Address.phone: Tel Fixe
+Address.mobile: Tel Mobile
+Address.fax: Fax
+Address.email: Email
+Address.otherInfos: Autres Informations
+Address.dtCrea: Date d'ajout
+Address.dtUpdate: Date de modification
+
+Address.company.label: "Société :"
+Address.label.label: "Libellé :"
+Address.streetNum.label: "N° de Rue :"
+Address.address.label: "Adresse :"
+Address.address2.label: "Adresse (bis) :"
+Address.town.label: "Ville :"
+Address.zipCode.label: "Code Postal :"
+Address.country.label: "Pays :"
+Address.email.label: "Email :"
+Address.phone.label: "Tel Fixe :"
+Address.mobile.label: "Tel Mobile :"
+Address.fax.label: "Fax :"
+Address.fullAddress.label: "Aperçu :"
+Address.otherInfos.label: "Autres Informations :"
+
+#Phone
+Phone.company: Société
+Phone.label: Libellé
+Phone.phone: N°
+Phone.contact: Contact
+Phone.dtCrea: Date d'ajout
+Phone.dtUpdate: Date de modification
+
+Phone.company.label: "Société :"
+Phone.label.label: "Libellé :"
+Phone.phone.label: "N° :"
+Phone.contact.label: "Contact :"
+
+#CompanyFrame
+CompanyFrame.company: Société
+CompanyFrame.fullName: Nom Complet
+CompanyFrame.email: Email
+CompanyFrame.sexe: Civilité
+CompanyFrame.sexe.1: Mlle
+CompanyFrame.sexe.2: Mme
+CompanyFrame.sexe.3: Mr
+CompanyFrame.firstName: Prénom
+CompanyFrame.lastName: Nom
+CompanyFrame.cin: CIN
+CompanyFrame.passport: Passport
+CompanyFrame.streetNum: N° de Rue
+CompanyFrame.address: Adresse
+CompanyFrame.address2: Adresse (bis)
+CompanyFrame.town: Ville
+CompanyFrame.zipCode: Code Postal
+CompanyFrame.country: Pays
+CompanyFrame.phone: Tel Fixe
+CompanyFrame.mobile: Tel Mobile
+CompanyFrame.job: Poste
+CompanyFrame.otherInfos: Autres Informations
+CompanyFrame.dtCrea: Date d'ajout
+CompanyFrame.dtUpdate: Date de modification
+
+CompanyFrame.company.label: "Société :"
+CompanyFrame.fullName.label: "Nom Complet :"
+CompanyFrame.cin.label: "CIN :"
+CompanyFrame.passport.label: "Passport :"
+CompanyFrame.email.label: "Email :"
+CompanyFrame.sexe.label: "Civilité :"
+CompanyFrame.sexe.choice.1: "Mlle"
+CompanyFrame.sexe.choice.2: "Mme"
+CompanyFrame.sexe.choice.3: "Mr"
+CompanyFrame.firstName.label: "Prénom :"
+CompanyFrame.lastName.label: "Nom :"
+CompanyFrame.job.label: "Poste :"
+CompanyFrame.streetNum.label: "N° de Rue :"
+CompanyFrame.address.label: "Adresse :"
+CompanyFrame.address2.label: "Adresse (bis) :"
+CompanyFrame.town.label: "Ville :"
+CompanyFrame.zipCode.label: "Code Postal :"
+CompanyFrame.country.label: "Pays :"
+CompanyFrame.phone.label: "Tel Fixe :"
+CompanyFrame.mobile.label: "Tel Mobile :"
+CompanyFrame.otherInfos.label: "Autres Informations :"
+
+#CompanyNature
+CompanyNature.company: Société
+CompanyNature.label: Libellé
+CompanyNature.color: Couleur
+CompanyNature.dtCrea: Date d'ajout
+CompanyNature.dtUpdate: Date de modification
+
+CompanyNature.company.label: "Société :"
+CompanyNature.label.label: "Libellé :"
+CompanyNature.color.label: "Couleur :"
+CompanyNature.excel.label: 'Natures d''Achat (Excel) :'
+
+#CompanyLabel
+CompanyLabel.company: Société
+CompanyLabel.name: Libellé Journal
+CompanyLabel.abrev: 'Code Journal'
+CompanyLabel.dtCrea: Date d'ajout
+CompanyLabel.dtUpdate: Date de modification
+
+CompanyLabel.company.label: "Société :"
+CompanyLabel.name.label: "Libellé Journal :"
+CompanyLabel.abrev.label: 'Code Journal :'
+CompanyLabel.excel.label: 'Codes Journaux (Excel) :'
+
+#Relation
+Relation.physicaltype: Morale / Physique
+Relation.physicaltype.1: Personne Morale
+Relation.physicaltype.2: Personne Physique
+Relation.physicaltype.label: "Morale / Physique :"
+Relation.physicaltype.choice.1: "Personne Morale"
+Relation.physicaltype.choice.2: "Personne Physique"
+
+#Customer
+Customer.company: Société
+Customer.label: Libellé
+Customer.number: 'Numéro'
+Customer.fisc: "Matricule Fiscal / CIN"
+Customer.commercialRegister: RC
+Customer.cin: CIN
+Customer.passport: Passport
+Customer.sectors: "Secteurs d''Activité"
+Customer.streetNum: N° de Rue
+Customer.address: Adresse
+Customer.address2: Adresse (bis)
+Customer.town: Ville
+Customer.zipCode: Code Postal
+Customer.country: Pays
+Customer.email: Email
+Customer.phone: Tel Fixe
+Customer.mobile: Tel Mobile
+Customer.fax: Fax
+Customer.physicaltype: Morale / Physique
+Customer.physicaltype.1: Personne Morale
+Customer.physicaltype.2: Personne Physique
+Customer.otherInfos: "Autres Informations"
+Customer.dtCrea: Date d'ajout
+Customer.dtUpdate: Date de modification
+
+Customer.excel.label: 'Clients (Excel) :'
+Customer.physicaltype.label: "Morale / Physique :"
+Customer.physicaltype.choice.1: "Personne Morale"
+Customer.physicaltype.choice.2: "Personne Physique"
+Customer.company.label: "Société :"
+Customer.label.label: "Libellé :"
+Customer.sectors.label: "Secteurs d'Activité :"
+Customer.number.label: 'Numéro :'
+Customer.fisc.label: 'Matricule Fiscal / CIN :'
+Customer.commercialRegister.label: 'RC :'
+Customer.cin.label: 'CIN :'
+Customer.passport.label: 'Passport :'
+Customer.firstName.label: "Prénom :"
+Customer.lastName.label: "Nom :"
+Customer.streetNum.label: "N° de Rue :"
+Customer.address.label: "Adresse :"
+Customer.address2.label: "Adresse (bis) :"
+Customer.town.label: "Ville :"
+Customer.zipCode.label: "Code Postal :"
+Customer.country.label: "Pays :"
+Customer.email.label: "Email :"
+Customer.phone.label: "Tel Fixe :"
+Customer.mobile.label: "Tel Mobile :"
+Customer.fax.label: "Fax :"
+Customer.otherInfos.label: "Autres Informations :"
+Customer.docs.label: "Documents Associés :"
+
+#Supplier
+Supplier.company: Société
+Supplier.label: Libellé
+Supplier.number: 'Numéro'
+Supplier.fisc: "Matricule Fiscal / CIN"
+Supplier.commercialRegister: RC
+Supplier.cin: CIN
+Supplier.passport: Passport
+Supplier.sectors: "Secteurs d''Activité"
+Supplier.streetNum: N° de Rue
+Supplier.address: Adresse
+Supplier.address2: Adresse (bis)
+Supplier.town: Ville
+Supplier.zipCode: Code Postal
+Supplier.country: Pays
+Supplier.email: Email
+Supplier.phone: Tel Fixe
+Supplier.mobile: Tel Mobile
+Supplier.fax: Fax
+Supplier.physicaltype: Morale / Physique
+Supplier.physicaltype.1: Personne Morale
+Supplier.physicaltype.2: Personne Physique
+Supplier.otherInfos: "Autres Informations"
+Supplier.dtCrea: Date d'ajout
+Supplier.dtUpdate: Date de modification
+
+Supplier.excel.label: 'Fournisseurs (Excel) :'
+Supplier.physicaltype.label: "Morale / Physique :"
+Supplier.physicaltype.choice.1: "Personne Morale"
+Supplier.physicaltype.choice.2: "Personne Physique"
+Supplier.company.label: "Société :"
+Supplier.label.label: "Libellé :"
+Supplier.sectors.label: "Secteurs d'Activité :"
+Supplier.number.label: 'Numéro :'
+Supplier.fisc.label: 'Matricule Fiscal / CIN :'
+Supplier.commercialRegister.label: 'RC :'
+Supplier.cin.label: 'CIN :'
+Supplier.passport.label: 'Passport :'
+Supplier.firstName.label: "Prénom :"
+Supplier.lastName.label: "Nom :"
+Supplier.streetNum.label: "N° de Rue :"
+Supplier.address.label: "Adresse :"
+Supplier.address2.label: "Adresse (bis) :"
+Supplier.town.label: "Ville :"
+Supplier.zipCode.label: "Code Postal :"
+Supplier.country.label: "Pays :"
+Supplier.email.label: "Email :"
+Supplier.phone.label: "Tel Fixe :"
+Supplier.mobile.label: "Tel Mobile :"
+Supplier.fax.label: "Fax :"
+Supplier.otherInfos.label: "Autres Informations :"
+Supplier.docs.label: "Documents Associés :"
+
+#Bank
+Bank.company: Société
+Bank.label: Libellé
+Bank.number: Numéro
+Bank.contact: Contact
+Bank.tel: Tel
+Bank.fax: Fax
+Bank.email: Email
+Bank.agency: Agence
+Bank.rib: RIB
+Bank.otherInfos: Autres Informations
+Bank.dtCrea: Date d'ajout
+Bank.dtUpdate: Date de modification
+
+Bank.excel.label: 'Banques (Excel) :'
+Bank.company.label: "Société :"
+Bank.label.label: "Libellé :"
+Bank.number.label: "Numéro :"
+Bank.contact.label: "Contact :"
+Bank.tel.label: "Tel :"
+Bank.fax.label: "Fax :"
+Bank.email.label: "Email :"
+Bank.agency.label: "Agence :"
+Bank.rib.label: "RIB :"
+Bank.otherInfos.label: "Autres Informations :"
+Bank.docs.label: "Documents Associés :"
+
+#Fund
+Fund.company: Société
+Fund.label: Libellé
+Fund.number: Numéro
+Fund.otherInfos: Autres Informations
+Fund.dtCrea: Date d'ajout
+Fund.dtUpdate: Date de modification
+
+Fund.excel.label: 'Caisses (Excel) :'
+Fund.company.label: "Société :"
+Fund.label.label: "Libellé :"
+Fund.number.label: "Numéro :"
+Fund.otherInfos.label: "Autres Informations :"
+Fund.docs.label: "Documents Associés :"
+
+#Withholding
+Withholding.company: Société
+Withholding.label: Libellé
+Withholding.number: Numéro
+Withholding.value: Taux
+Withholding.otherInfos: Autres Informations
+Withholding.dtCrea: Date d'ajout
+Withholding.dtUpdate: Date de modification
+
+Withholding.excel.label: 'Retenues (Excel) :'
+Withholding.company.label: "Société :"
+Withholding.label.label: "Libellé :"
+Withholding.number.label: "Numéro :"
+Withholding.value.label: "Taux :"
+Withholding.otherInfos.label: "Autres Informations :"
+
+#MonthlyBalance
+MonthlyBalance.month: Mois
+MonthlyBalance.month.1: Janvier
+MonthlyBalance.month.2: Février
+MonthlyBalance.month.3: Mars
+MonthlyBalance.month.4: Avril
+MonthlyBalance.month.5: Mai
+MonthlyBalance.month.6: Juin
+MonthlyBalance.month.7: Juillet
+MonthlyBalance.month.8: Août
+MonthlyBalance.month.9: Septembre
+MonthlyBalance.month.01: Janvier
+MonthlyBalance.month.02: Février
+MonthlyBalance.month.03: Mars
+MonthlyBalance.month.04: Avril
+MonthlyBalance.month.05: Mai
+MonthlyBalance.month.06: Juin
+MonthlyBalance.month.07: Juillet
+MonthlyBalance.month.08: Août
+MonthlyBalance.month.09: Septembre
+MonthlyBalance.month.10: Octobre
+MonthlyBalance.month.11: Novembre
+MonthlyBalance.month.12: Décembre
+MonthlyBalance.month.label: "Mois :"
+MonthlyBalance.month.choice.1: Janvier
+MonthlyBalance.month.choice.2: Février
+MonthlyBalance.month.choice.3: Mars
+MonthlyBalance.month.choice.4: Avril
+MonthlyBalance.month.choice.5: Mai
+MonthlyBalance.month.choice.6: Juin
+MonthlyBalance.month.choice.7: Juillet
+MonthlyBalance.month.choice.8: Août
+MonthlyBalance.month.choice.9: Septembre
+MonthlyBalance.month.choice.01: Janvier
+MonthlyBalance.month.choice.02: Février
+MonthlyBalance.month.choice.03: Mars
+MonthlyBalance.month.choice.04: Avril
+MonthlyBalance.month.choice.05: Mai
+MonthlyBalance.month.choice.06: Juin
+MonthlyBalance.month.choice.07: Juillet
+MonthlyBalance.month.choice.08: Août
+MonthlyBalance.month.choice.09: Septembre
+MonthlyBalance.month.choice.10: Octobre
+MonthlyBalance.month.choice.11: Novembre
+MonthlyBalance.month.choice.12: Décembre
+
+#MBSale
+MBSale.company: Société
+MBSale.ref: Référence
+MBSale.month: Mois
+MBSale.year: Année
+MBSale.type: Type
+MBSale.type.1: Achat
+MBSale.type.2: Vente
+MBSale.dtCrea: Date d'ajout
+MBSale.dtUpdate: Date de modification
+
+MBSale.company.label: "Société :"
+MBSale.ref.label: "Référence :"
+MBSale.month.label: "Mois :"
+MBSale.year.label: "Année :"
+MBSale.type.label: "Type :"
+MBSale.type.choice.1: Achat
+MBSale.type.choice.2: Vente
+MBSale.count.label: "Prochain Numéro :"
+MBSale.docs.label: "Documents Associés :"
+
+#MBPurchase
+MBPurchase.company: Société
+MBPurchase.ref: Référence
+MBPurchase.month: Mois
+MBPurchase.year: Année
+MBPurchase.type: Type
+MBPurchase.type.1: Achat
+MBPurchase.type.2: Vente
+MBPurchase.dtCrea: Date d'ajout
+MBPurchase.dtUpdate: Date de modification
+
+MBPurchase.company.label: "Société :"
+MBPurchase.ref.label: "Référence :"
+MBPurchase.month.label: "Mois :"
+MBPurchase.year.label: "Année :"
+MBPurchase.type.label: "Type :"
+MBPurchase.type.choice.1: Achat
+MBPurchase.type.choice.2: Vente
+MBPurchase.count.label: "Prochain Numéro :"
+MBPurchase.docs.label: "Documents Associés :"
+
+# Transaction
+Transaction.paymentType.choice.0: NA
+Transaction.paymentType.choice.1: Cheque
+Transaction.paymentType.choice.2: Virement
+Transaction.paymentType.choice.3: Caisse
+Transaction.paymentType.choice.4: Traite
+Transaction.paymentType.choice.5: Carte Bancaire
+
+Transaction.transactionStatus.choice.0: En attente
+Transaction.transactionStatus.choice.1: Effectué
+Transaction.transactionStatus.choice.10: Annulé
+
+Transaction.validated.choice.1: NON
+Transaction.validated.choice.2: OUI
+
+Transaction.paymentType.0: NA
+Transaction.paymentType.1: Cheque
+Transaction.paymentType.2: Virement
+Transaction.paymentType.3: Caisse
+Transaction.paymentType.4: Traite
+Transaction.paymentType.5: Carte Bancaire
+
+Transaction.transactionStatus.0: En attente
+Transaction.transactionStatus.1: Effectué
+Transaction.transactionStatus.10: Annulé
+
+Transaction.validated.1: NON
+Transaction.validated.2: OUI
+
+Transaction.vatInfo.0: '0 %'
+Transaction.vatInfo.6: '6 %'
+Transaction.vatInfo.12: '12 %'
+Transaction.vatInfo.18: '18 %'
+
+Transaction.vatInfo.choice.0: '0 %'
+Transaction.vatInfo.choice.6: '6 %'
+Transaction.vatInfo.choice.12: '12 %'
+Transaction.vatInfo.choice.18: '18 %'
+
+# Sale
+Sale.company: Société
+Sale.monthlyBalance: Mois
+Sale.number: 'N°'
+Sale.dtActivation: Date
+Sale.bill: Facture N°
+Sale.relation: Client
+Sale.relation.number: N° Client
+Sale.label: Intitulé Opération
+Sale.devise: Devise
+Sale.conversionRate: Taux de Conversion
+Sale.balanceHt: Montant Hors Taxes
+Sale.balanceHtDevise: Montant Hors Taxes (Devise)
+Sale.vat: Montant TVA
+Sale.vatDevise: Montant TVA (Devise)
+Sale.vatInfo: TVA PR Infos
+Sale.stamp: Montant Timbre Fiscal
+Sale.stampDevise: Montant Timbre Fiscal (Devise)
+Sale.balanceTtc: Montant TTC
+Sale.balanceTtcDevise: Montant TTC (Devise)
+Sale.withholding.value: Taux de Retenue (Info)
+Sale.withholding: Montant de Retenue
+Sale.withholdingDevise: Montant de Retenue (Devise)
+Sale.balanceNet: Montant Net à Encaisser
+Sale.balanceNetDevise: Montant Net à Encaisser (Devise)
+Sale.paymentType: 'Mode d''Encaissement'
+Sale.dtPayment: 'Date d''Encaissement'
+Sale.transactionStatus: 'Etat de l''Opération'
+Sale.validated: 'Validé'
+Sale.regime: 'Régime'
+Sale.regime.0: 'Ordinaire (par défaut)'
+Sale.regime.1: 'Export'
+Sale.regime.2: 'Suspension'
+Sale.regime.3: 'Exonéré'
+Sale.account: Banque/Caisse
+Sale.otherInfos: Remarques
+Sale.secondaryVats: Autre TVA
+Sale.dtCrea: Date d'Ajout
+Sale.dtUpdate: Date de Modification
+
+Sale.monthlyBalance.label: 'Mois :'
+Sale.number.label: 'N° :'
+Sale.dtActivation.label: 'Date :'
+Sale.bill.label: 'Fact N° :'
+Sale.relation.label: 'Client :'
+Sale.relation.number.label: 'Num Client :'
+Sale.label.label: 'Intitulé Opération :'
+Sale.balanceHt.label: 'MT HT :'
+Sale.vatInfo.label: 'TVA PR Infos :'
+Sale.devise.label: 'Monaie :'
+Sale.conversionRate.label: 'Taux de Conversion :'
+Sale.stampDevise.label: 'Timbre (Devise):'
+Sale.vatDevise.label: 'TVA (Devise):'
+Sale.balanceTtcDevise.label: 'TTC (Devise):'
+Sale.balanceNetDevise.label: 'Net à Encaisser (Devise):'
+Sale.stamp.label: 'Timbre :'
+Sale.vat.label: 'TVA :'
+Sale.balanceTtc.label: 'TTC :'
+Sale.balanceNet.label: 'Net à Encaisser :'
+Sale.withholding.label: 'MT Retenue :'
+Sale.withholding.value.label: 'Taux de Retenue (PR INFO) :'
+Sale.paymentType.label: 'Mode Encaissement :'
+Sale.dtPayment.label: 'Date Encaissement :'
+Sale.account.label: 'Banque / Caisse :'
+Sale.transactionStatus.label: 'Etat :'
+Sale.validated.label: 'Validé :'
+Sale.regime.label: 'Régime :'
+Sale.regime.choice.0: 'Ordinaire'
+Sale.regime.choice.1: 'Export'
+Sale.regime.choice.2: 'Suspension'
+Sale.regime.choice.3: 'Exonéré'
+Sale.otherInfos.label: 'Remarques :'
+Sale.excel.label: 'Ventes (Excel) :'
+Sale.docs.label: "Documents Associés :"
+Sale.secondaryVats.label: "Autre TVA :"
+
+# SecondaryVat
+SecondaryVat.sale: Vente
+SecondaryVat.monthlyBalance: Mois
+SecondaryVat.number: 'N°'
+SecondaryVat.vatInfo.0: '0 %'
+SecondaryVat.vatInfo.6: '6 %'
+SecondaryVat.vatInfo.12: '12 %'
+SecondaryVat.vatInfo.18: '18 %'
+SecondaryVat.balanceHt: Montant Hors Taxes
+SecondaryVat.vat: Montant TVA
+SecondaryVat.vatInfo: TVA PR Infos
+SecondaryVat.balanceTtc: Montant TTC
+SecondaryVat.balanceNet: Montant Net à Payer
+SecondaryVat.dtCrea: Date d'Ajout
+SecondaryVat.dtUpdate: Date de Modification
+
+SecondaryVat.sale.label: 'Vente :'
+SecondaryVat.monthlyBalance.label: 'Mois :'
+SecondaryVat.number.label: 'N° :'
+SecondaryVat.balanceHt.label: 'MT HT :'
+SecondaryVat.vatInfo.label: 'TVA PR Infos :'
+SecondaryVat.vatInfo.choice.0: '0 %'
+SecondaryVat.vatInfo.choice.6: '6 %'
+SecondaryVat.vatInfo.choice.12: '12 %'
+SecondaryVat.vatInfo.choice.18: '18 %'
+SecondaryVat.vat.label: 'TVA :'
+SecondaryVat.balanceTtc.label: 'TTC :'
+SecondaryVat.balanceNet.label: 'Net à Payer :'
+
+# Buy
+Buy.company: Société
+Buy.monthlyBalance: Mois
+Buy.number: 'N°'
+Buy.dtActivation: Date
+Buy.bill: Facture N°
+Buy.relation: Fournisseur
+Buy.relation.number: N° Fournisseur
+Buy.label: Intitulé Opération
+Buy.devise: Devise
+Buy.conversionRate: Taux de Conversion
+Buy.balanceHt: Montant Hors Taxes
+Buy.balanceHtDevise: Montant Hors Taxes (Devise)
+Buy.vat: Montant TVA
+Buy.vatDevise: Montant TVA (Devise)
+Buy.vatInfo: TVA PR Infos
+Buy.stamp: Montant Timbre Fiscal
+Buy.stampDevise: Montant Timbre Fiscal (Devise)
+Buy.balanceTtc: Montant TTC
+Buy.balanceTtcDevise: Montant TTC (Devise)
+Buy.withholding.value: Taux de Retenue (Info)
+Buy.withholding: Montant de Retenue
+Buy.withholdingDevise: Montant de Retenue (Devise)
+Buy.balanceNet: Montant Net à Encaisser
+Buy.balanceNetDevise: Montant Net à Encaisser (Devise)
+Buy.paymentType: Mode de Paiement
+Buy.dtPayment: Date de Paiement
+Buy.nature: Nature de l'Achat
+Buy.transactionStatus: 'Etat de l''Opération'
+Buy.validated: 'Validé'
+Buy.account: Banque/Caisse
+Buy.otherInfos: Remarques
+Buy.regime: 'Régime'
+Buy.regime.0: 'Ordinaire (par défaut)'
+Buy.regime.1: 'RS 50%'
+Buy.regime.2: 'RS 100%'
+Buy.regime.3: 'Suspension'
+Buy.regime.4: 'Exonéré'
+Buy.regime.5: 'Forfaitaire'
+Buy.dtCrea: Date d'Ajout
+Buy.dtUpdate: Date de Modification
+
+Buy.monthlyBalance.label: 'Mois :'
+Buy.number.label: 'N° :'
+Buy.dtActivation.label: 'Date :'
+Buy.bill.label: 'Fact N° :'
+Buy.relation.label: 'Fournisseur :'
+Buy.relation.number.label: 'Num FRS :'
+Buy.label.label: 'Intitulé Opération :'
+Buy.balanceHt.label: 'MT HT :'
+Buy.vatInfo.label: 'TVA PR Infos :'
+Buy.devise.label: 'Monaie :'
+Buy.conversionRate.label: 'Taux de Conversion :'
+Buy.vatDevise.label: 'TVA (Devise):'
+Buy.stampDevise.label: 'Timbre (Devise):'
+Buy.balanceTtcDevise.label: 'TTC (Devise):'
+Buy.balanceNetDevise.label: 'Net à Payer (Devise):'
+Buy.vat.label: 'TVA :'
+Buy.stamp.label: 'Timbre :'
+Buy.balanceTtc.label: 'TTC :'
+Buy.balanceNet.label: 'Net à Payer :'
+Buy.withholding.label: 'MT Retenue :'
+Buy.withholding.value.label: 'Taux de Retenue (PR INFO) :'
+Buy.paymentType.label: 'Mode Paiement :'
+Buy.dtPayment.label: 'Date Paiement :'
+Buy.account.label: 'Banque / Caisse :'
+Buy.nature.label: 'Nature de l''Achat :'
+Buy.transactionStatus.label: 'Etat :'
+Buy.validated.label: 'Validé :'
+Buy.otherInfos.label: 'Remarques :'
+Buy.regime.label: 'Régime :'
+Buy.regime.choice.0: 'Ordinaire'
+Buy.regime.choice.1: 'RS 50%'
+Buy.regime.choice.2: 'RS 100%'
+Buy.regime.choice.3: 'Suspension'
+Buy.regime.choice.4: 'Exonéré'
+Buy.regime.choice.5: 'Forfaitaire'
+Buy.docs.label: "Documents Associés :"
+
+#Shareholder
+Shareholder.company: Société
+Shareholder.name: Nom
+Shareholder.cin: CIN
+Shareholder.quality: Qualité / Fonction
+Shareholder.address: Adresse
+Shareholder.trades: Nombre d'Actions
+Shareholder.tradesv: Montant
+Shareholder.tradesp: Pourcentage
+Shareholder.dtCrea: Date d'ajout
+Shareholder.dtUpdate: Date de modification
+
+Shareholder.company.label: "Société :"
+Shareholder.name.label: "Nom :"
+Shareholder.cin.label: "CIN :"
+Shareholder.quality.label: "Qualité / Fonction :"
+Shareholder.address.label: "Adresse :"
+Shareholder.trades.label: "Nombre d'Actions :"
+Shareholder.tradesv.label: "Montant :"
+Shareholder.tradesp.label: "Pourcentage :"
+Shareholder.otherInfos.label: "Autres Informations :"
+
+#Pilot
+Pilot.company: Société
+Pilot.ref: Référence
+Pilot.mission: Mission
+Pilot.natureMission: Nature Mission
+Pilot.prestataire: Prestataire
+Pilot.recetteFinance: Recette des Finances
+Pilot.pinAnce: PIN ANCE 
+Pilot.expirationAnce: EXPIRATION ANCE
+Pilot.mpImpots: M.PASSE IMPOTS
+Pilot.idCnss: IDENTIF CNSS
+Pilot.mpCnss: M.PASSE CNSS
+Pilot.nomCac: Nom CAC
+Pilot.dureeMandat: Durée du Mandat
+Pilot.numMandat: N° Mandat
+Pilot.rapportCac: Rapport CAC
+Pilot.declEmpl: DECL EMPL
+Pilot.isDur: IS/DUR
+Pilot.pvCa: PV CA
+Pilot.rapportGerance: Rapport Gérance
+Pilot.pvAgo: PV AGO
+Pilot.pvAge: PV AGE
+Pilot.livresCotes: LIVRES COTES
+Pilot.honTeorAnn: HON THEOR ANN (HT)
+Pilot.modeFact: MODE FACT
+Pilot.nonFactMont: NON FACT (MONT)
+Pilot.nonFactDesc: NON FACT (DESCRIPT)
+Pilot.nonEncMont: NON ENC (MONT)
+Pilot.nonEncDesc: NON ENC (DESCRIPT)
+Pilot.commentQuit: COMMENT QUITT
+Pilot.mqQuitImpots: MQ QUIT IMPOTS
+Pilot.mqQuitCnss: MQ QUIT CNSS
+Pilot.comments: COMMENTAIRES
+Pilot.dtCrea: Date d'ajout
+Pilot.dtUpdate: Date de modification
+
+Pilot.company.label: "Société :"
+Pilot.ref.label: "Référence :"
+Pilot.mission.label: "Mission :"
+Pilot.natureMission.label: "Nature Mission :"
+Pilot.prestataire.label: "Prestataire :"
+Pilot.recetteFinance.label: "Recette des Finances :"
+Pilot.pinAnce.label: "PIN ANCE  :"
+Pilot.expirationAnce.label: "EXPIRATION ANCE :"
+Pilot.mpImpots.label: "M.PASSE IMPOTS :"
+Pilot.idCnss.label: "IDENTIF CNSS :"
+Pilot.mpCnss.label: "M.PASSE CNSS :"
+Pilot.nomCac.label: "Nom CAC :"
+Pilot.dureeMandat.label: "Durée du Mandat :"
+Pilot.numMandat.label: "N° Mandat :"
+Pilot.rapportCac.label: "Rapport CAC :"
+Pilot.declEmpl.label: "DECL EMPL :"
+Pilot.isDur.label: "IS/DUR :"
+Pilot.pvCa.label: "PV CA :"
+Pilot.rapportGerance.label: "Rapport Gérance :"
+Pilot.pvAgo.label: "PV AGO :"
+Pilot.pvAge.label: "PV AGE :"
+Pilot.livresCotes.label: "LIVRES COTES :"
+Pilot.honTeorAnn.label: "HON THEOR ANN (HT) :"
+Pilot.modeFact.label: "MODE FACT :"
+Pilot.nonFactMont.label: "NON FACT (MONT) :"
+Pilot.nonFactDesc.label: "NON FACT (DESCRIPT) :"
+Pilot.nonEncMont.label: "NON ENC (MONT) :"
+Pilot.nonEncDesc.label: "NON ENC (DESCRIPT) :"
+Pilot.commentQuit.label: "COMMENT QUITT :"
+Pilot.mqQuitImpots.label: "MQ QUIT IMPOTS :"
+Pilot.mqQuitCnss.label: "MQ QUIT CNSS :"
+Pilot.comments.label: "COMMENTAIRES :"
+
+#CompanyUser
+CompanyUser.company: Société
+CompanyUser.user: Utilisateur
+CompanyUser.tf.1: "Non"
+CompanyUser.tf.2: "Oui"
+CompanyUser.editCompanyinfos: Modif Infos Société
+CompanyUser.addAddresses: Ajouter Nouvelle Adresse
+CompanyUser.editAddresses: Modifier Adresse
+CompanyUser.deleteAddresses: Supprimer Adresse
+CompanyUser.addPhones: Ajouter Nouveau Téléphone
+CompanyUser.editPhones: Modifier Téléphone
+CompanyUser.deletePhones: Supprimer Téléphone
+CompanyUser.addFrames: Ajouter Nouveau Cadre
+CompanyUser.editFrames: Modifier Cadre
+CompanyUser.deleteFrames: Supprimer Cadre
+CompanyUser.addDocs: Ajouter Nouveau Document
+CompanyUser.editDocs: Modifier Document
+CompanyUser.deleteDocs: Supprimer Document
+CompanyUser.addSuppliers: Ajouter Nouveau Fournisseur
+CompanyUser.editSuppliers: Modifier Fournisseur
+CompanyUser.deleteSuppliers: Supprimer Fournisseur
+CompanyUser.addCustomers: Ajouter Nouveau Client
+CompanyUser.editCustomers: Modifier Client
+CompanyUser.deleteCustomers: Supprimer Client
+CompanyUser.addSales: Ajouter Nouvelle Vente
+CompanyUser.editSales: Modifier Vente
+CompanyUser.deleteSales: Supprimer Vente
+CompanyUser.addBuys: Ajouter Nouveau Achat
+CompanyUser.editBuys: Modifier Achat
+CompanyUser.deleteBuys: Supprimer Achat
+CompanyUser.addDocgroupComptables: Ajouter Nouveau Document Comptable
+CompanyUser.editDocgroupComptables: Modifier Documents Comptables
+CompanyUser.addDocgroupBanks: Ajouter Nouveau Document Bancaire
+CompanyUser.editDocgroupBanks: Modifier Documents Bancaires
+CompanyUser.addDocgroupJuridics: Ajouter Nouveau Document Juridique
+CompanyUser.editDocgroupJuridics: Modifier Documents Juridiques
+CompanyUser.addDocgroupFiscals: Ajouter Nouveau Document Fiscal
+CompanyUser.editDocgroupFiscals: Modifier Documents Fiscaux
+CompanyUser.addDocgroupPersos: Ajouter Nouveau Document Personnel
+CompanyUser.editDocgroupPersos: Modifier Documents Personnels
+CompanyUser.addDocgroupSysts: Ajouter Nouveau Document Système
+CompanyUser.editDocgroupSysts: Modifier Documents Systèmes
+CompanyUser.dtCrea: Date d'ajout
+CompanyUser.dtUpdate: Date de modification
+
+CompanyUser.company.label: "Société :"
+CompanyUser.user.label: "Utilisateur :"
+CompanyUser.tf.choice.1: "Non"
+CompanyUser.tf.choice.2: "Oui"
+CompanyUser.editCompanyinfos.label: "Modif Infos Société :"
+CompanyUser.addAddresses.label: "Ajouter Nouvelle Adresse :"
+CompanyUser.editAddresses.label: "Modifier Adresse :"
+CompanyUser.deleteAddresses.label: "Supprimer Adresse :"
+CompanyUser.addPhones.label: "Ajouter Nouveau Téléphone :"
+CompanyUser.editPhones.label: "Modifier Téléphone :"
+CompanyUser.deletePhones.label: "Supprimer Téléphone :"
+CompanyUser.addFrames.label: "Ajouter Nouveau Cadre :"
+CompanyUser.editFrames.label: "Modifier Cadre :"
+CompanyUser.deleteFrames.label: "Supprimer Cadre :"
+CompanyUser.addDocs.label: "Ajouter Nouveau Document :"
+CompanyUser.editDocs.label: "Modifier Document :"
+CompanyUser.deleteDocs.label: "Supprimer Document :"
+CompanyUser.addSuppliers.label: "Ajouter Nouveau Fournisseur :"
+CompanyUser.editSuppliers.label: "Modifier Fournisseur :"
+CompanyUser.deleteSuppliers.label: "Supprimer Fournisseur :"
+CompanyUser.addCustomers.label: "Ajouter Nouveau Client :"
+CompanyUser.editCustomers.label: "Modifier Client :"
+CompanyUser.deleteCustomers.label: "Supprimer Client :"
+CompanyUser.addSales.label: "Ajouter Nouvelle Vente :"
+CompanyUser.editSales.label: "Modifier Vente :"
+CompanyUser.deleteSales.label: "Supprimer Vente :"
+CompanyUser.addBuys.label: "Ajouter Nouveau Achat :"
+CompanyUser.editBuys.label: "Modifier Achat :"
+CompanyUser.deleteBuys.label: "Supprimer Achat :"
+CompanyUser.addDocgroupComptables.label: "Ajouter Nouveau Document Comptable :"
+CompanyUser.editDocgroupComptables.label: "Modifier Documents Comptables :"
+CompanyUser.addDocgroupBanks.label: "Ajouter Nouveau Document Bancaire :"
+CompanyUser.editDocgroupBanks.label: "Modifier Documents Bancaires :"
+CompanyUser.addDocgroupJuridics.label: "Ajouter Nouveau Document Juridique :"
+CompanyUser.editDocgroupJuridics.label: "Modifier Documents Juridiques :"
+CompanyUser.addDocgroupFiscals.label: "Ajouter Nouveau Document Fiscal :"
+CompanyUser.editDocgroupFiscals.label: "Modifier Documents Fiscaux :"
+CompanyUser.addDocgroupPersos.label: "Ajouter Nouveau Document Personnel :"
+CompanyUser.editDocgroupPersos.label: "Modifier Documents Personnels :"
+CompanyUser.addDocgroupSysts.label: "Ajouter Nouveau Document Système :"
+CompanyUser.editDocgroupSysts.label: "Modifier Documents Systèmes :"
+
+#CompanyAdmin
+CompanyAdmin.company: Société
+CompanyAdmin.user: Collaborateur
+CompanyAdmin.tf.1: "Non"
+CompanyAdmin.tf.2: "Oui"
+CompanyAdmin.editCompanyinfos: Modif Infos Société
+CompanyAdmin.addAddresses: Ajouter Nouvelle Adresse
+CompanyAdmin.editAddresses: Modifier Adresse
+CompanyAdmin.deleteAddresses: Supprimer Adresse
+CompanyAdmin.addPhones: Ajouter Nouveau Téléphone
+CompanyAdmin.editPhones: Modifier Téléphone
+CompanyAdmin.deletePhones: Supprimer Téléphone
+CompanyAdmin.addFrames: Ajouter Nouveau Cadre
+CompanyAdmin.editFrames: Modifier Cadre
+CompanyAdmin.deleteFrames: Supprimer Cadre
+CompanyAdmin.addDocs: Ajouter Nouveau Document
+CompanyAdmin.editDocs: Modifier Document
+CompanyAdmin.deleteDocs: Supprimer Document
+CompanyAdmin.addSuppliers: Ajouter Nouveau Fournisseur
+CompanyAdmin.editSuppliers: Modifier Fournisseur
+CompanyAdmin.deleteSuppliers: Supprimer Fournisseur
+CompanyAdmin.addCustomers: Ajouter Nouveau Client
+CompanyAdmin.editCustomers: Modifier Client
+CompanyAdmin.deleteCustomers: Supprimer Client
+CompanyAdmin.addSales: Ajouter Nouvelle Vente
+CompanyAdmin.editSales: Modifier Vente
+CompanyAdmin.deleteSales: Supprimer Vente
+CompanyAdmin.addBuys: Ajouter Nouveau Achat
+CompanyAdmin.editBuys: Modifier Achat
+CompanyAdmin.deleteBuys: Supprimer Achat
+CompanyAdmin.addDocgroupComptables: Ajouter Nouveau Document Comptable
+CompanyAdmin.editDocgroupComptables: Modifier Documents Comptables
+CompanyAdmin.addDocgroupBanks: Ajouter Nouveau Document Bancaire
+CompanyAdmin.editDocgroupBanks: Modifier Documents Bancaires
+CompanyAdmin.addDocgroupJuridics: Ajouter Nouveau Document Juridique
+CompanyAdmin.editDocgroupJuridics: Modifier Documents Juridiques
+CompanyAdmin.addDocgroupFiscals: Ajouter Nouveau Document Fiscal
+CompanyAdmin.editDocgroupFiscals: Modifier Documents Fiscaux
+CompanyAdmin.addDocgroupPersos: Ajouter Nouveau Document Personnel
+CompanyAdmin.editDocgroupPersos: Modifier Documents Personnels
+CompanyAdmin.addDocgroupSysts: Ajouter Nouveau Document Système
+CompanyAdmin.editDocgroupSysts: Modifier Documents Systèmes
+CompanyAdmin.dtCrea: Date d'ajout
+CompanyAdmin.dtUpdate: Date de modification
+
+CompanyAdmin.company.label: "Société :"
+CompanyAdmin.user.label: "Collaborateur :"
+CompanyAdmin.tf.choice.1: "Non"
+CompanyAdmin.tf.choice.2: "Oui"
+CompanyAdmin.editCompanyinfos.label: "Modif Infos Société :"
+CompanyAdmin.addAddresses.label: "Ajouter Nouvelle Adresse :"
+CompanyAdmin.editAddresses.label: "Modifier Adresse :"
+CompanyAdmin.deleteAddresses.label: "Supprimer Adresse :"
+CompanyAdmin.addPhones.label: "Ajouter Nouveau Téléphone :"
+CompanyAdmin.editPhones.label: "Modifier Téléphone :"
+CompanyAdmin.deletePhones.label: "Supprimer Téléphone :"
+CompanyAdmin.addFrames.label: "Ajouter Nouveau Cadre :"
+CompanyAdmin.editFrames.label: "Modifier Cadre :"
+CompanyAdmin.deleteFrames.label: "Supprimer Cadre :"
+CompanyAdmin.addDocs.label: "Ajouter Nouveau Document :"
+CompanyAdmin.editDocs.label: "Modifier Document :"
+CompanyAdmin.deleteDocs.label: "Supprimer Document :"
+CompanyAdmin.addSuppliers.label: "Ajouter Nouveau Fournisseur :"
+CompanyAdmin.editSuppliers.label: "Modifier Fournisseur :"
+CompanyAdmin.deleteSuppliers.label: "Supprimer Fournisseur :"
+CompanyAdmin.addCustomers.label: "Ajouter Nouveau Client :"
+CompanyAdmin.editCustomers.label: "Modifier Client :"
+CompanyAdmin.deleteCustomers.label: "Supprimer Client :"
+CompanyAdmin.addSales.label: "Ajouter Nouvelle Vente :"
+CompanyAdmin.editSales.label: "Modifier Vente :"
+CompanyAdmin.deleteSales.label: "Supprimer Vente :"
+CompanyAdmin.addBuys.label: "Ajouter Nouveau Achat :"
+CompanyAdmin.editBuys.label: "Modifier Achat :"
+CompanyAdmin.deleteBuys.label: "Supprimer Achat :"
+CompanyAdmin.addDocgroupComptables.label: "Ajouter Nouveau Document Comptable :"
+CompanyAdmin.editDocgroupComptables.label: "Modifier Documents Comptables :"
+CompanyAdmin.addDocgroupBanks.label: "Ajouter Nouveau Document Bancaire :"
+CompanyAdmin.editDocgroupBanks.label: "Modifier Documents Bancaires :"
+CompanyAdmin.addDocgroupJuridics.label: "Ajouter Nouveau Document Juridique :"
+CompanyAdmin.editDocgroupJuridics.label: "Modifier Documents Juridiques :"
+CompanyAdmin.addDocgroupFiscals.label: "Ajouter Nouveau Document Fiscal :"
+CompanyAdmin.editDocgroupFiscals.label: "Modifier Documents Fiscaux :"
+CompanyAdmin.addDocgroupPersos.label: "Ajouter Nouveau Document Personnel :"
+CompanyAdmin.editDocgroupPersos.label: "Modifier Documents Personnels :"
+CompanyAdmin.addDocgroupSysts.label: "Ajouter Nouveau Document Système :"
+CompanyAdmin.editDocgroupSysts.label: "Modifier Documents Systèmes :"
+
+# Doc
+Doc.company: Société
+Doc.fileName: Fichier
+Doc.size: Taille
+Doc.mimeType: MimeType
+Doc.md5: md5
+Doc.nbrDownloads: Nombre de Téléchargements
+Doc.originalName: Nom Original
+Doc.description: Description
+Doc.banks: Banques
+Doc.funds: Sociétés
+Doc.accounts: Comptes
+Doc.monthlyBalances: Mois
+Doc.transactions: Transactions
+Doc.rawMaterials: Matières Permières
+Doc.finishedMaterials: Matières Finies
+Doc.materialRequirements: Dépendances de Matières
+Doc.dtCrea: Date d'ajout
+Doc.dtUpdate: Date de modification
+
+Doc.company.label: "Société :"
+Doc.fileName.label: "Fichier :"
+Doc.description.label: "Description :"
+Doc.originalName.label: "Nom du Fichier :"
+Doc.mimeType.label: "Type :"
+Doc.size.label: "Taille :"
+Doc.md5.label: "md5 :"
+Doc.nbrDownloads.label: "Nbr Téléchargements :"
+Doc.banks.label: "Banques :"
+Doc.funds.label: "Comptes :"
+Doc.monthlyBalances.label: "Mois :"
+Doc.transactions.label: "Transactions :"
+Doc.rawMaterials.label: "Matières Permières :"
+Doc.finishedMaterials.label: "Matières Finies :"
+Doc.materialRequirements.label: "Dépendances de Matières :"
+
+#Docgroupcomptable
+Docgroupcomptable.company: Société
+Docgroupcomptable.label: Libellé
+Docgroupcomptable.otherInfos: Autres Informations
+Docgroupcomptable.parent: Groupe parent
+Docgroupcomptable.childs: Sous-groupes
+Docgroupcomptable.parent.label: "Groupe parent :"
+Docgroupcomptable.clone.label: "Clone de :"
+Docgroupcomptable.childs.label: "Sous-groupes :"
+Docgroupcomptable.dtCrea: Date d'ajout
+Docgroupcomptable.dtUpdate: Date de modification
+
+Docgroupcomptable.company.label: "Société :"
+Docgroupcomptable.label.label: "Libellé :"
+Docgroupcomptable.docs.label: "Documents Associés :"
+Docgroupcomptable.otherInfos.label: "Autres Informations :"
+
+#Docgroupbank
+Docgroupbank.company: Société
+Docgroupbank.label: Libellé
+Docgroupbank.otherInfos: Autres Informations
+Docgroupbank.parent: Groupe parent
+Docgroupbank.childs: Sous-groupes
+Docgroupbank.parent.label: "Groupe parent :"
+Docgroupbank.clone.label: "Clone de :"
+Docgroupbank.childs.label: "Sous-groupes :"
+Docgroupbank.dtCrea: Date d'ajout
+Docgroupbank.dtUpdate: Date de modification
+
+Docgroupbank.company.label: "Société :"
+Docgroupbank.label.label: "Libellé :"
+Docgroupbank.docs.label: "Documents Associés :"
+Docgroupbank.otherInfos.label: "Autres Informations :"
+
+#Docgroup
+Docgroup.company: Société
+Docgroup.label: Libellé
+Docgroup.otherInfos: Autres Informations
+Docgroup.parent: Groupe parent
+Docgroup.childs: Sous-groupes
+Docgroup.parent.label: "Groupe parent :"
+Docgroup.clone.label: "Clone de :"
+Docgroup.childs.label: "Sous-groupes :"
+Docgroup.dtCrea: Date d'ajout
+Docgroup.dtUpdate: Date de modification
+
+Docgroup.company.label: "Société :"
+Docgroup.label.label: "Libellé :"
+Docgroup.docs.label: "Documents Associés :"
+Docgroup.otherInfos.label: "Autres Informations :"
+
+#Docgroupfiscal
+Docgroupfiscal.company: Société
+Docgroupfiscal.label: Libellé
+Docgroupfiscal.otherInfos: Autres Informations
+Docgroupfiscal.parent: Groupe parent
+Docgroupfiscal.childs: Sous-groupes
+Docgroupfiscal.parent.label: "Groupe parent :"
+Docgroupfiscal.clone.label: "Clone de :"
+Docgroupfiscal.childs.label: "Sous-groupes :"
+Docgroupfiscal.dtCrea: Date d'ajout
+Docgroupfiscal.dtUpdate: Date de modification
+
+Docgroupfiscal.company.label: "Société :"
+Docgroupfiscal.label.label: "Libellé :"
+Docgroupfiscal.docs.label: "Documents Associés :"
+Docgroupfiscal.otherInfos.label: "Autres Informations :"
+
+#Docgroupperso
+Docgroupperso.company: Société
+Docgroupperso.label: Libellé
+Docgroupperso.otherInfos: Autres Informations
+Docgroupperso.parent: Groupe parent
+Docgroupperso.childs: Sous-groupes
+Docgroupperso.parent.label: "Groupe parent :"
+Docgroupperso.clone.label: "Clone de :"
+Docgroupperso.childs.label: "Sous-groupes :"
+Docgroupperso.dtCrea: Date d'ajout
+Docgroupperso.dtUpdate: Date de modification
+
+Docgroupperso.company.label: "Société :"
+Docgroupperso.label.label: "Libellé :"
+Docgroupperso.docs.label: "Documents Associés :"
+Docgroupperso.otherInfos.label: "Autres Informations :"
+
+#Docgroupsyst
+Docgroupsyst.company: Société
+Docgroupsyst.label: Libellé
+Docgroupsyst.otherInfos: Autres Informations
+Docgroupsyst.parent: Groupe parent
+Docgroupsyst.childs: Sous-groupes
+Docgroupsyst.parent.label: "Groupe parent :"
+Docgroupsyst.clone.label: "Clone de :"
+Docgroupsyst.childs.label: "Sous-groupes :"
+Docgroupsyst.dtCrea: Date d'ajout
+Docgroupsyst.dtUpdate: Date de modification
+
+Docgroupsyst.company.label: "Société :"
+Docgroupsyst.label.label: "Libellé :"
+Docgroupsyst.docs.label: "Documents Associés :"
+Docgroupsyst.otherInfos.label: "Autres Informations :"
+
+#Docgroupaudit
+Docgroupaudit.company: Société
+Docgroupaudit.label: Libellé
+Docgroupaudit.otherInfos: Autres Informations
+Docgroupaudit.parent: Groupe parent
+Docgroupaudit.childs: Sous-groupes
+Docgroupaudit.parent.label: "Groupe parent :"
+Docgroupaudit.clone.label: "Clone de :"
+Docgroupaudit.childs.label: "Sous-groupes :"
+Docgroupaudit.dtCrea: Date d'ajout
+Docgroupaudit.dtUpdate: Date de modification
+
+Docgroupaudit.company.label: "Société :"
+Docgroupaudit.label.label: "Libellé :"
+Docgroupaudit.docs.label: "Documents Associés :"
+Docgroupaudit.otherInfos.label: "Autres Informations :"
+
+#Agenda
+Agenda.title: Titre
+Agenda.comment: Commentaire
+Agenda.dtCrea: Date d'ajout
+Agenda.dtUpdate: Date de modification
+Agenda.dtStart: Date de Début
+Agenda.dtEnd: Date de Fin
+Agenda.user: Créateur de l'Evènement
+Agenda.users: Participants à l'Evènement
+
+Agenda.title.label: "Titre :"
+Agenda.comment.label: "Commentaire :"
+Agenda.users.label: "Participants (Clients) :"
+Agenda.admins.label: "Participants (Collaborateurs) :"
+Agenda.dtStart.label: "Date de Début :"
+Agenda.dtEnd.label: "Date de Fin :"
+
+# FeedRead
+FeedRead.url: Url
+FeedRead.nbrDays: 'Max de Jours à Afficher'
+FeedRead.nbrItems: 'Max d''éléments à Afficher'
+FeedRead.dtCrea: Date d'ajout
+FeedRead.dtUpdate: Date de modification
+
+FeedRead.url.label: "Url :"
+FeedRead.nbrDays.label: "Max de Jours à Afficher :"
+FeedRead.nbrItems.label: "Max d'éléments à Afficher :"
+
+# GoodDoc
+GoodDoc.fileName: Fichier
+GoodDoc.size: Taille
+GoodDoc.mimeType: MimeType
+GoodDoc.md5: md5
+GoodDoc.nbrDownloads: Nombre de Téléchargements
+GoodDoc.originalName: Nom Original
+GoodDoc.description: Description
+GoodDoc.title: Titre
+GoodDoc.dtCrea: Date d'ajout
+GoodDoc.dtUpdate: Date de modification
+
+GoodDoc.fileName.label: "Fichier :"
+GoodDoc.description.label: "Description :"
+GoodDoc.originalName.label: "Nom du Fichier :"
+GoodDoc.mimeType.label: "Type :"
+GoodDoc.size.label: "Taille :"
+GoodDoc.md5.label: "md5 :"
+GoodDoc.nbrDownloads.label: "Nbr Téléchargements :"
+GoodDoc.title.label: "Titre :"
+
+# GoodLink
+GoodLink.url: Url
+GoodLink.title: 'Titre'
+GoodLink.nbrClicks: 'Nombre de Clicks'
+GoodLink.dtCrea: Date d'ajout
+GoodLink.dtUpdate: Date de modification
+
+GoodLink.url.label: "Url :"
+GoodLink.title.label: "Titre :"
+GoodLink.nbrClicks.label: "Nombre de Clicks :"
+
+# BulletinInfo
+BulletinInfo.num: Numéro
+BulletinInfo.dtStart: 'Date de Début'
+BulletinInfo.description: 'Description'
+BulletinInfo.nbrClicks: 'Nombre de Clicks'
+BulletinInfo.titles: 'Titres'
+BulletinInfo.dtCrea: Date d'ajout
+BulletinInfo.dtUpdate: Date de modification
+
+BulletinInfo.num.label: "Numéro :"
+BulletinInfo.dtStart.label: "Date de Début :"
+BulletinInfo.description.label: "Description :"
+BulletinInfo.nbrClicks.label: "Nombre de Clicks :"
+BulletinInfo.titles.label: 'Titres :'
+BulletinInfo.excel.label: 'Fichier :'
+
+# BulletinInfoTitle
+BulletinInfoTitle.bulletinInfo: 'Bulletin d''informations'
+BulletinInfoTitle.title: 'Titre'
+BulletinInfoTitle.contents: 'Sous-Titres'
+BulletinInfoTitle.dtCrea: Date d'ajout
+BulletinInfoTitle.dtUpdate: Date de modification
+
+BulletinInfoTitle.bulletinInfo.label: "Bulletin d''informations :"
+BulletinInfoTitle.title.label: "Titre :"
+BulletinInfoTitle.dtCrea.label: "Date d'ajout :"
+BulletinInfoTitle.contents.label: 'Sous-Titres :'
+
+# BulletinInfoContent
+BulletinInfoContent.bulletinInfoTitle: 'Titre de Bulletin d''informations'
+BulletinInfoContent.title: 'Sous-Titre'
+BulletinInfoContent.content: 'Contenu'
+BulletinInfoContent.theme: 'Thème'
+BulletinInfoContent.jort: 'JORT'
+BulletinInfoContent.txtNum: 'Texte N°'
+BulletinInfoContent.artTxt: 'Article / Texte'
+BulletinInfoContent.dtTxt: 'Date / Texte'
+BulletinInfoContent.artCode: 'Article / code'
+BulletinInfoContent.companyType: 'Type société'
+BulletinInfoContent.dtApplication: 'Date application'
+BulletinInfoContent.dtCrea: Date d'ajout
+BulletinInfoContent.dtUpdate: Date de modification
+
+BulletinInfoContent.bulletinInfoTitle.label: "Bulletin d''informations :"
+BulletinInfoContent.title.label: "Sous-Titre :"
+BulletinInfoContent.content.label: 'Contenu :'
+BulletinInfoContent.theme.label: 'Thème :'
+BulletinInfoContent.jort.label: 'JORT :'
+BulletinInfoContent.txtNum.label: 'Texte N° :'
+BulletinInfoContent.artTxt.label: 'Article / Texte :'
+BulletinInfoContent.dtTxt.label: 'Date / Texte :'
+BulletinInfoContent.artCode.label: 'Article / code :'
+BulletinInfoContent.companyType.label: 'Type société :'
+BulletinInfoContent.dtApplication.label: 'Date application :'
+BulletinInfoContent.dtCrea.label: "Date d'ajout :"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

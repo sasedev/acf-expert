@@ -1,0 +1,322 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	{% if companyUser.editCustomers == constant('CAN', companyUser) %}
+	$('#CustomerUpdateForm_country').chosen({width: "100%", disable_search_threshold: 10});
+
+	var isCustomerMoralType = $('input[name="CustomerUpdateForm\\[physicaltype\\]"]:checked').val();
+
+	if (isCustomerMoralType == {{constant('PHTYPE_MORAL', customer)}}) {
+		$('#cinCustomer').hide();
+		$('#passportCustomer').hide();
+		$('#commercialRegisterCustomer').show();
+		$('#CustomerUpdateForm_cin').val('');
+		$('#CustomerUpdateForm_passport').val('');
+	} else {
+		$('#cinCustomer').show();
+		$('#passportCustomer').show();
+		$('#commercialRegisterCustomer').hide();
+		$('#CustomerUpdateForm_commercialRegister').val('');
+	}
+
+	$('input[name="CustomerUpdateForm\\[physicaltype\\]"]').change(function(){
+		if ($(this).is(':checked')) {
+			$('#cinCustomer').toggle(300);
+			$('#passportCustomer').toggle(300);
+			$('#commercialRegisterCustomer').toggle(300);
+			var pysicalTypeCustomer = $(this).val();
+			if (pysicalTypeCustomer == {{constant('PHTYPE_MORAL', customer)}}) {
+				$('#CustomerUpdateForm_cin').val('');
+				$('#CustomerUpdateForm_passport').val('');
+			} else {
+				$('#CustomerUpdateForm_commercialRegister').val('');
+			}
+		}
+	});
+
+	$('#CustomerUpdateForm_sectors').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+	{% endif %}
+
+	{% if companyUser.editDocs == constant('CAN', companyUser) %}
+	$('#CustomerUpdateDocsForm_docs').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+	{% endif %}
+
+	{% if companyUser.addDocs == constant('CAN', companyUser) %}
+	$("#DocNewForm_fileName").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	{% endif %}
+
+	{% if customer.docs|length != 0 %}
+	$('#docList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		]
+	});
+	{% endif %}
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_client_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.client'|trans|raw}}</a></li>
+	<li><a href="{{ path('_client_company_editGet', {'uid': customer.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': customer.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_client_customer_editGet', {'uid': customer.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.customer.edit'|trans({'%customer%': customer.label})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Customer.tab.overview'|trans|raw}}</a></li>
+				{% if companyUser.editCustomers == constant('CAN', companyUser) %}
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Customer.tab.edit'|trans|raw}}</a></li>
+				{% endif %}
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'Customer.tab.docs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Customer.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Customer.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_client_company_editGet', {'uid': customer.company.id}) }}">{{customer.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.label'|trans|raw}} :</div>
+								<div class="col-lg-9">{{customer.label}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.number'|trans|raw}} :</div>
+								<div class="col-lg-9">{{customersPrefix~customer.numberFormated}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.fisc'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.fisc is not empty%}{{customer.fisc}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.sectors'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.sectors|length !=0%}{% for sector in customer.sectors %}{{sector.label}}<br/>{% endfor %}{% else %}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								{% if customer.physicaltype == constant('PHTYPE_MORAL', customer) %}
+								<div class="col-lg-3 text-right">{{'Customer.commercialRegister'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.commercialRegister is not empty%}{{customer.commercialRegister}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								{% else %}
+								<div class="col-lg-3 text-right">{{'Customer.cin'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.cin is not empty%}{{customer.cin}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.passport'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.passport is not empty%}{{customer.passport}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								{% endif %}
+								<div class="col-lg-3 text-right">{{'Customer.streetNum'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.streetNum is not empty%}{{customer.streetNum}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.address'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.address is not empty%}{{customer.address}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.address2'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.address2 is not empty%}{{customer.address2}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.town'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.town is not empty%}{{customer.town}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.zipCode'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.zipCode is not empty%}{{customer.zipCode}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.country'|trans|raw}} :</div>
+								<div class="col-lg-9">{{customer.country|country}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.phone'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.phone is not empty%}{{customer.phone}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.mobile'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.mobile is not empty%}{{customer.mobile}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.fax'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.fax is not empty%}{{customer.fax}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.email'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.email is not empty%}{{customer.email}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.otherInfos'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if customer.otherInfos is not empty%}{{customer.otherInfos|raw}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{customer.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{customer.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Customer.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{customer.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{customer.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% if companyUser.editCustomers == constant('CAN', companyUser) %}
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Customer.tlabel.edit'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CustomerUpdateForm, {'method':'POST', 'action': path('_client_customer_editPost', {'uid': customer.id}), 'style': 'horizontal'})}}
+							{{form_row(CustomerUpdateForm.label, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.number, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.fisc, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.physicaltype, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.commercialRegister, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'commercialRegisterCustomer'} })}}
+							{{form_row(CustomerUpdateForm.cin, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'cinCustomer'} })}}
+							{{form_row(CustomerUpdateForm.passport, {'label_col': 3, 'widget_col': 8, 'attr':{'row_id':'passportCustomer'} })}}
+							{{form_row(CustomerUpdateForm.sectors, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.streetNum, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.address, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.address2, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.town, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.zipCode, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.country, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.email, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.phone, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.mobile, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.fax, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(CustomerUpdateForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CustomerUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="Docs">
+					<div id="accordion03" class="box-group">
+						{% if companyUser.addDocs == constant('CAN', companyUser) %}
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse31" data-parent="#accordion03" data-toggle="collapse">{{'Customer.tlabel.docs.add'|trans}}</a></h4>
+							</div>
+							<div id="collapse31" class="panel-collapse collapse{%if tabActive==3 and stabActive==1%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(DocNewForm, {'method':'POST', 'action': path('_client_customer_editGet', {'uid': customer.id}), 'style': 'horizontal'})}}
+									{{form_row(DocNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+									{{form_row(DocNewForm.fileName, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DocNewForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+									{{form_end(DocNewForm)}}
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						{% if companyUser.editDocs == constant('CAN', companyUser) %}
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse32" data-parent="#accordion03" data-toggle="collapse">{{'Customer.tlabel.docs.edit'|trans}}</a></h4>
+							</div>
+							<div id="collapse32" class="panel-collapse collapse{%if tabActive==3 and stabActive==2%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(CustomerUpdateDocsForm, {'method':'POST', 'action': path('_client_customer_editPost', {'uid': customer.id}), 'style': 'horizontal'})}}
+									{{form_row(CustomerUpdateDocsForm.docs, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+									{{form_end(CustomerUpdateDocsForm)}}
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						<div class="panel box">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse33" data-parent="#accordion03" data-toggle="collapse">{{'Customer.tlabel.docs.list'|trans}}</a></h4>
+							</div>
+							<div id="collapse33" class="panel-collapse collapse{%if (tabActive==3 and stabActive==3) or tabActive!=3%} in{%endif%}">
+								<div class="box-body table-responsive">
+									<table id="docList" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+												<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+												<th>{{ 'Doc.size.label'|trans|raw }}</th>
+												<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+												<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+												<th>{{ 'Doc.description.label'|trans|raw }}</th>
+												<th>{{ 'action'|trans|raw }}</th>
+											</tr>
+										</thead>
+										<tbody>
+										{% if customer.docs|length != 0 %}
+											{% for doc in customer.docs %}
+											<tr>
+												<td>{{ doc.originalName }}</td>
+												<td>{{ doc.mimeType }}</td>
+												<td>{%if doc.size<1024%}
+														{{doc.size}} o
+													{%elseif doc.size<(1024*1024)%}
+														{{'%.2f'|format(doc.size/1024)}} Ko
+													{%elseif doc.size<(1024*1024*1024)%}
+														{{'%.2f'|format(doc.size/1024/1024)}} Mo
+													{%else%}
+														{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+													{% endif %}
+												</td>
+												<td>{{ doc.nbrDownloads }}</td>
+												<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+												<td>{{ doc.description | raw }}</td>
+												<td>
+													<a class="btn btn-sm btn-primary" href="{{path('_client_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+													<a class="btn btn-sm btn-info" href="{{path('_client_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</td>
+											</tr>
+											{% endfor %}
+										{% else %}
+											<tr>
+												<td colspan="7">{{ 'Doc.empty'|trans|raw }}</td>
+											</tr>
+										{% endif %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

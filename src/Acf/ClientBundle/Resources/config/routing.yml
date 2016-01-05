@@ -1,0 +1,326 @@
+_client_homepage:
+    path:     /
+    defaults: { _controller: "AcfClientBundle:Default:index" }
+
+_client_doc_addGet:
+    path:     /doc/add
+    defaults: { _controller: "AcfClientBundle:Doc:addGet" }
+    methods: [GET]
+
+_client_doc_addPost:
+    path:     /doc/add
+    defaults: { _controller: "AcfClientBundle:Doc:addPost" }
+    methods: [POST]
+
+_client_doc_delete:
+    path:     /doc/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:Doc:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_doc_download:
+    path:     /doc/download/{uid}
+    defaults: { _controller: "AcfClientBundle:Doc:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_doc_editGet:
+    path:     /doc/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Doc:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_doc_editPost:
+    path:     /doc/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Doc:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_client_company_editGet:
+    path:     /company/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Company:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_company_editPost:
+    path:     /company/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Company:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_address_delete:
+    path:     /address/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:Address:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_address_editGet:
+    path:     /address/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Address:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_address_editPost:
+    path:     /address/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Address:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_phone_delete:
+    path:     /phone/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:Phone:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_phone_editGet:
+    path:     /phone/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Phone:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_phone_editPost:
+    path:     /phone/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Phone:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_companyFrame_delete:
+    path:     /companyFrame/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:CompanyFrame:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_companyFrame_editGet:
+    path:     /companyFrame/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:CompanyFrame:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_companyFrame_editPost:
+    path:     /companyFrame/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:CompanyFrame:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_customer_delete:
+    path:     /customer/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:Customer:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_customer_editGet:
+    path:     /customer/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Customer:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_customer_editPost:
+    path:     /customer/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Customer:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_supplier_delete:
+    path:     /supplier/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:Supplier:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_supplier_editGet:
+    path:     /supplier/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Supplier:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_supplier_editPost:
+    path:     /supplier/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Supplier:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_mbsale_editGet:
+    path:     /mbsale/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:MBSale:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_mbsale_editPost:
+    path:     /mbsale/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:MBSale:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_mbpurchase_editGet:
+    path:     /mbpurchase/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:MBPurchase:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_mbpurchase_editPost:
+    path:     /mbpurchase/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:MBPurchase:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_sale_delete:
+    path:     /sale/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:Sale:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_sale_editGet:
+    path:     /sale/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Sale:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_sale_editPost:
+    path:     /sale/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Sale:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_secondaryVat_delete:
+    path:     /secondaryVat/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:SecondaryVat:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_secondaryVat_editGet:
+    path:     /secondaryVat/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:SecondaryVat:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_secondaryVat_editPost:
+    path:     /secondaryVat/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:SecondaryVat:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_buy_delete:
+    path:     /buy/delete/{uid}
+    defaults: { _controller: "AcfClientBundle:Buy:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_buy_editGet:
+    path:     /buy/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Buy:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_buy_editPost:
+    path:     /buy/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Buy:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroup_editGet:
+    path:     /docgroup/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroup:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroup_editPost:
+    path:     /docgroup/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroup:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupcomptable_editGet:
+    path:     /docgroupcomptable/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupcomptable:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupcomptable_editPost:
+    path:     /docgroupcomptable/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupcomptable:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupfiscal_editGet:
+    path:     /docgroupfiscal/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupfiscal:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupfiscal_editPost:
+    path:     /docgroupfiscal/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupfiscal:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupperso_editGet:
+    path:     /docgroupperso/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupperso:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupperso_editPost:
+    path:     /docgroupperso/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupperso:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupsyst_editGet:
+    path:     /docgroupsyst/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupsyst:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupsyst_editPost:
+    path:     /docgroupsyst/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupsyst:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupbank_editGet:
+    path:     /docgroupbank/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupbank:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupbank_editPost:
+    path:     /docgroupbank/edit/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupbank:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

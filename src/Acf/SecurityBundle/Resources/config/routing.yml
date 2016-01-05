@@ -1,0 +1,89 @@
+_security_logout:
+    path:  /logout
+
+_security_login:
+    path:  /login
+    defaults: { _controller: "AcfSecurityBundle:Security:login" }
+
+_security_check:
+    path:  /login_check
+    methods: [POST]
+
+_security_lost_password:
+    path:  /lostPassword
+    defaults: { _controller: "AcfSecurityBundle:Security:lostPassword" }
+
+_security_lost_genpassword:
+    path:  /genNewPassword/{id}/{code}
+    defaults: { _controller: "AcfSecurityBundle:Security:genNewPassword" }
+
+_security_register:
+    path:  /register
+    defaults: { _controller: "AcfSecurityBundle:Security:register" }
+    methods: [GET]
+
+_security_register_post:
+    path:  /register
+    defaults: { _controller: "AcfSecurityBundle:Security:registerPost" }
+    methods: [POST]
+
+_security_profile:
+    path:  /myProfile
+    defaults: { _controller: "AcfSecurityBundle:Profile:myProfile" }
+    methods: [GET]
+
+_security_profile_post:
+    path:  /myProfile
+    defaults: { _controller: "AcfSecurityBundle:Profile:myProfilePost" }
+    methods: [POST]
+
+
+_security_profile_avatar:
+    path:  /myAvatar
+    defaults: { _controller: "AcfSecurityBundle:Profile:myAvatar" }
+
+
+_security_agenda_index:
+    path:  /Agenda
+    defaults: { _controller: "AcfSecurityBundle:Agenda:index" }
+    
+_security_agenda_ajaxGotoDate:
+    path: /Agenda/ajaxGotoDate
+    defaults: { _controller: "AcfSecurityBundle:Agenda:ajaxGotoDate"}
+    methods: [POST]
+    
+_security_agenda_ajaxAdd:
+    path: /Agenda/ajaxAdd
+    defaults: { _controller: "AcfSecurityBundle:Agenda:ajaxAdd"}
+    methods: [POST]
+
+_security_agenda_ajaxEdit:
+    path: /Agenda/ajaxEdit
+    defaults: { _controller: "AcfSecurityBundle:Agenda:ajaxEdit"}
+    methods: [POST]
+
+_security_agenda_ajaxDelete:
+    path: /Agenda/ajaxDelete
+    defaults: { _controller: "AcfSecurityBundle:Agenda:ajaxDelete"}
+    methods: [POST]
+
+_security_agenda_planning:
+    path:  /Agenda/{year}/{week}
+    defaults: { _controller: "AcfSecurityBundle:Agenda:planning" }
+    requirements:
+        year:  \d+
+        week:  \d+
+
+_security_agenda_event:
+    path:  /Agenda/event/{uid}
+    defaults: { _controller: "AcfSecurityBundle:Agenda:event" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_security_agenda_event_edit:
+    path:  /Agenda/event/{uid}
+    defaults: { _controller: "AcfSecurityBundle:Agenda:eventEdit" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

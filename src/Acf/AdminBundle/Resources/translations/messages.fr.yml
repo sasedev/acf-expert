@@ -1,0 +1,2040 @@
+'': ''
+action: Action
+action.list: Liste
+action.add: Ajouter
+action.edit: Editer
+action.show: Voir
+action.update: 'Mettre à jour'
+action.delete: Supprimer
+action.btnAdd: Ajouter
+action.btnEdit: Modifier
+action.btnUpload: Uploader
+action.btnDownload: Télécharger
+action.btnSelect: Selectionner
+action.btnCancel: Annuler
+action.btnSend: Envoyer
+action.btnLogin: Connexion
+action.btnRegister: Inscription
+action.btnLostpass: 'Mot de Passe Perdu'
+action.btnReset: Réinitialiser
+action.btnValidate: Valider
+action.btnOrder: Commander
+action.close: Fermer
+action.changeMonth: 'Aller Au Mois'
+action.excel: Export Excel
+action.btnExcel: Import Excel
+_at: à
+_yes: Oui
+_no: Non
+_na: 'Non Disponible'
+_NA: 'Non Disponible'
+_none: Aucun
+_NONE: Aucun
+_prev: Précédent
+_next: Suivant
+options.choose: 'Choisissez une option'
+Options.choose: 'Choisissez une option'
+
+tab.logs: Historique
+tlabel.logs: 'Historique'
+
+Entity.field: Champs
+Entity.oldVal: Ancienne Valeur
+Entity.newVal: Nouvelle Valeur
+
+menu.list: Liste
+menu.add: Ajouter
+menu.admin: ACF-Admin
+breadcrumb.admin: ACF-Admin
+
+# Autoinc
+menu.admin.autoinc: Incrémental
+breadcrumb.autoinc.list: Liste des Incrémentals
+breadcrumb.autoinc.add: Ajouter Incrémental
+breadcrumb.autoinc.edit: Incrémental <b>%autoinc%</b>
+
+pagetitle.autoinc.list: Liste des Incrémentals
+pagetitle.autoinc.list.txt: Liste des des Incrémentals
+pagetitle.autoinc.add: Ajouter Incrémental
+pagetitle.autoinc.add.txt: Ajouter Incrémental
+pagetitle.autoinc.edit: Edition Incrémental <b>%autoinc%</b>
+pagetitle.autoinc.edit.txt: Edition Incrémental "%autoinc%"
+
+Autoinc.tab.overview: Détails
+Autoinc.tab.edit: Edition
+
+Autoinc.tlabel.list: Liste des Incrémentals
+Autoinc.tlabel.add: Ajouter nouvel Incrémental
+Autoinc.tlabel.overview: Aperçu des détails de l'Incrémental
+Autoinc.tlabel.edit: Modification des détails de l'Incrémental
+
+Autoinc.empty: Aucun Incrémental trouvé dans la base de donnée
+
+Autoinc.add.success: Succès de l'ajout de l'Incrémental <b>%autoinc%</b>
+Autoinc.add.failure: Echec de l'ajout de l'Incrémental
+Autoinc.delete.confirm.title: Demande de Confirmation
+Autoinc.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Incrémental ?<br/> Cette action est irreversible!
+Autoinc.delete.notfound: Incrémental inconnu
+Autoinc.delete.success: Succès de la suppression de l'Incrémental <b>%autoinc%</b>
+Autoinc.delete.failure: Echec de la suppression de l'Incrémental
+Autoinc.edit.notfound: Incrémental inconnu
+Autoinc.edit.success: Succès de la modification de l'Incrémental <b>%autoinc%</b>
+Autoinc.edit.failure: Echec de la modification de l'Incrémental <b>%autoinc%</b>
+
+# ConstantStr
+menu.admin.constantStr: Constante (Texte)
+breadcrumb.constantStr.list: Liste des Constantes (Texte)
+breadcrumb.constantStr.add: Ajouter Constante (Texte)
+breadcrumb.constantStr.edit: Constante (Texte) <b>%constantStr%</b>
+
+pagetitle.constantStr.list: Liste des Constantes (Texte)
+pagetitle.constantStr.list.txt: Liste des des Constantes (Texte)
+pagetitle.constantStr.add: Ajouter Constante (Texte)
+pagetitle.constantStr.add.txt: Ajouter Constante (Texte)
+pagetitle.constantStr.edit: Edition Constante (Texte) <b>%constantStr%</b>
+pagetitle.constantStr.edit.txt: Edition Constante (Texte) "%constantStr%"
+
+ConstantStr.tab.overview: Détails
+ConstantStr.tab.edit: Edition
+
+ConstantStr.tlabel.list: Liste des Constantes (Texte)
+ConstantStr.tlabel.add: Ajouter nouvelle Constante (Texte)
+ConstantStr.tlabel.overview: Aperçu des détails de la Constante (Texte)
+ConstantStr.tlabel.editValue: Modification de la valeur de la Constante (Texte)
+ConstantStr.tlabel.editDescription: Modification de la déscription de la Constante (Texte)
+
+ConstantStr.empty: Aucune Constante (Texte) trouvée dans la base de donnée
+
+ConstantStr.add.success: Succès de l'ajout de la Constante (Texte) <b>%constantStr%</b>
+ConstantStr.add.failure: Echec de l'ajout de la Constante (Texte)
+ConstantStr.delete.confirm.title: Demande de Confirmation
+ConstantStr.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Constante (Texte) ?<br/> Cette action est irreversible!
+ConstantStr.delete.notfound: Constante (Texte) inconnu
+ConstantStr.delete.success: Succès de la suppression de la Constante (Texte) <b>%constantStr%</b>
+ConstantStr.delete.failure: Echec de la suppression de la Constante (Texte)
+ConstantStr.edit.notfound: Constante (Texte) inconnu
+ConstantStr.edit.success: Succès de la modification de la Constante (Texte) <b>%constantStr%</b>
+ConstantStr.edit.failure: Echec de la modification de la Constante (Texte) <b>%constantStr%</b>
+
+# ConstantInt
+menu.admin.constantInt: Constante (Entier)
+breadcrumb.constantInt.list: Liste des Constantes (Entier)
+breadcrumb.constantInt.add: Ajouter Constante (Entier)
+breadcrumb.constantInt.edit: Constante (Entier) <b>%constantInt%</b>
+
+pagetitle.constantInt.list: Liste des Constantes (Entier)
+pagetitle.constantInt.list.txt: Liste des des Constantes (Entier)
+pagetitle.constantInt.add: Ajouter Constante (Entier)
+pagetitle.constantInt.add.txt: Ajouter Constante (Entier)
+pagetitle.constantInt.edit: Edition Constante (Entier) <b>%constantInt%</b>
+pagetitle.constantInt.edit.txt: Edition Constante (Entier) "%constantInt%"
+
+ConstantInt.tab.overview: Détails
+ConstantInt.tab.edit: Edition
+
+ConstantInt.tlabel.list: Liste des Constantes (Entier)
+ConstantInt.tlabel.add: Ajouter nouvelle Constante (Entier)
+ConstantInt.tlabel.overview: Aperçu des détails de la Constante (Entier)
+ConstantInt.tlabel.editValue: Modification de la valeur de la Constante (Entier)
+ConstantInt.tlabel.editDescription: Modification de la déscription de la Constante (Entier)
+
+ConstantInt.empty: Aucune Constante (Entier) trouvée dans la base de donnée
+
+ConstantInt.add.success: Succès de l'ajout de la Constante (Entier) <b>%constantInt%</b>
+ConstantInt.add.failure: Echec de l'ajout de la Constante (Entier)
+ConstantInt.delete.confirm.title: Demande de Confirmation
+ConstantInt.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Constante (Entier) ?<br/> Cette action est irreversible!
+ConstantInt.delete.notfound: Constante (Entier) inconnu
+ConstantInt.delete.success: Succès de la suppression de la Constante (Entier) <b>%constantInt%</b>
+ConstantInt.delete.failure: Echec de la suppression de la Constante (Entier)
+ConstantInt.edit.notfound: Constante (Entier) inconnu
+ConstantInt.edit.success: Succès de la modification de la Constante (Entier) <b>%constantInt%</b>
+ConstantInt.edit.failure: Echec de la modification de la Constante (Entier) <b>%constantInt%</b>
+
+# ConstantFloat
+menu.admin.constantFloat: Constante (Réel)
+breadcrumb.constantFloat.list: Liste des Constantes (Réel)
+breadcrumb.constantFloat.add: Ajouter Constante (Réel)
+breadcrumb.constantFloat.edit: Constante (Réel) <b>%constantFloat%</b>
+
+pagetitle.constantFloat.list: Liste des Constantes (Réel)
+pagetitle.constantFloat.list.txt: Liste des des Constantes (Réel)
+pagetitle.constantFloat.add: Ajouter Constante (Réel)
+pagetitle.constantFloat.add.txt: Ajouter Constante (Réel)
+pagetitle.constantFloat.edit: Edition Constante (Réel) <b>%constantFloat%</b>
+pagetitle.constantFloat.edit.txt: Edition Constante (Réel) "%constantFloat%"
+
+ConstantFloat.tab.overview: Détails
+ConstantFloat.tab.edit: Edition
+
+ConstantFloat.tlabel.list: Liste des Constantes (Réel)
+ConstantFloat.tlabel.add: Ajouter nouvelle Constante (Réel)
+ConstantFloat.tlabel.overview: Aperçu des détails de la Constante (Réel)
+ConstantFloat.tlabel.editValue: Modification de la valeur de la Constante (Réel)
+ConstantFloat.tlabel.editDescription: Modification de la déscription de la Constante (Réel)
+
+ConstantFloat.empty: Aucune Constante (Réel) trouvée dans la base de donnée
+
+ConstantFloat.add.success: Succès de l'ajout de la Constante (Réel) <b>%constantFloat%</b>
+ConstantFloat.add.failure: Echec de l'ajout de la Constante (Réel)
+ConstantFloat.delete.confirm.title: Demande de Confirmation
+ConstantFloat.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Constante (Réel) ?<br/> Cette action est irreversible!
+ConstantFloat.delete.notfound: Constante (Réel) inconnu
+ConstantFloat.delete.success: Succès de la suppression de la Constante (Réel) <b>%constantFloat%</b>
+ConstantFloat.delete.failure: Echec de la suppression de la Constante (Réel)
+ConstantFloat.edit.notfound: Constante (Réel) inconnu
+ConstantFloat.edit.success: Succès de la modification de la Constante (Réel) <b>%constantFloat%</b>
+ConstantFloat.edit.failure: Echec de la modification de la Constante (Réel) <b>%constantFloat%</b>
+
+# Lang
+menu.admin.lang: Langue
+breadcrumb.lang.list: Liste des Langues
+breadcrumb.lang.add: Ajouter Langue
+breadcrumb.lang.edit: Langue <b>%lang%</b>
+
+pagetitle.lang.list: Liste des Langues
+pagetitle.lang.list.txt: Liste des des Langues
+pagetitle.lang.add: Ajouter Langue
+pagetitle.lang.add.txt: Ajouter Langue
+pagetitle.lang.edit: Edition Langue <b>%lang%</b>
+pagetitle.lang.edit.txt: Edition Langue "%lang%"
+
+Lang.tab.overview: Détails
+Lang.tab.edit: Edition
+
+Lang.tlabel.list: Liste des Langues
+Lang.tlabel.add: Ajouter nouvelle Langue
+Lang.tlabel.overview: Aperçu des détails de la Langue
+Lang.tlabel.editName: Modification du Nom de la Langue
+Lang.tlabel.editDirection: Modification de la Direction de la Langue
+Lang.tlabel.editStatus: Modification de l'Etat de la Langue
+
+Lang.empty: Aucune Langue trouvée dans la base de donnée
+
+Lang.add.success: Succès de l'ajout de la Langue <b>%lang%</b>
+Lang.add.failure: Echec de l'ajout de la Langue
+Lang.delete.confirm.title: Demande de Confirmation
+Lang.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Langue ?<br/> Cette action est irreversible!
+Lang.delete.notfound: Langue inconnu
+Lang.delete.success: Succès de la suppression de la Langue <b>%lang%</b>
+Lang.delete.failure: Echec de la suppression de la Langue
+Lang.edit.notfound: Langue inconnu
+Lang.edit.success: Succès de la modification de la Langue <b>%lang%</b>
+Lang.edit.failure: Echec de la modification de la Langue <b>%lang%</b>
+
+# Role
+menu.admin.role: Privilège
+breadcrumb.role.list: Liste des Privilèges
+breadcrumb.role.add: Ajouter Privilège
+breadcrumb.role.edit: Privilège <b>%role%</b>
+
+pagetitle.role.list: Liste des Privilèges
+pagetitle.role.list.txt: Liste des des Privilèges
+pagetitle.role.add: Ajouter Privilège
+pagetitle.role.add.txt: Ajouter Privilège
+pagetitle.role.edit: Edition Privilège <b>%role%</b>
+pagetitle.role.edit.txt: Edition Privilège "%role%"
+
+Role.tab.overview: Détails
+Role.tab.edit: Edition
+
+Role.tlabel.list: Liste des Privilèges
+Role.tlabel.add: Ajouter nouveau Privilège
+Role.tlabel.overview: Aperçu des détails du Privilège
+Role.tlabel.editDescription: Modification de la Description du Privilège
+Role.tlabel.editParents: Modification des parents du Privilège
+
+Role.empty: Aucune Privilège trouvé dans la base de donnée
+
+Role.add.success: Succès de l'ajout du Privilège <b>%role%</b>
+Role.add.failure: Echec de l'ajout du Privilège
+Role.delete.confirm.title: Demande de Confirmation
+Role.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Privilège ?<br/> Cette action est irreversible!
+Role.delete.notfound: Privilège inconnu
+Role.delete.success: Succès de la suppression du Privilège <b>%role%</b>
+Role.delete.failure: Echec de la suppression du Privilège
+Role.edit.notfound: Privilège inconnu
+Role.edit.success: Succès de la modification du Privilège <b>%role%</b>
+Role.edit.failure: Echec de la modification du Privilège <b>%role%</b>
+
+# User
+menu.admin.user: Utilisateur
+breadcrumb.user.list: Liste des Utilisateurs
+breadcrumb.user.add: Ajouter Utilisateur
+breadcrumb.user.edit: Utilisateur <b>%user%</b>
+
+pagetitle.user.list: Liste des Utilisateurs
+pagetitle.user.list.txt: Liste des des Utilisateurs
+pagetitle.user.add: Ajouter Utilisateur
+pagetitle.user.add.txt: Ajouter Utilisateur
+pagetitle.user.edit: Edition Utilisateur <b>%user%</b>
+pagetitle.user.edit.txt: Edition Utilisateur "%user%"
+
+User.tab.overview: Détails
+User.tab.edit: Edition
+
+User.tlabel.list: Liste des Utilisateurs
+User.tlabel.add: Ajouter nouvel Utilisateur
+User.tlabel.overview: Aperçu des détails de l'Utilisateur
+User.tlabel.editAvatar: Modification de l'Avatar de l'Utilisateur
+User.tlabel.editAvatar.crop: Selectionner la partie visible
+User.tlabel.editProfile: Modification du Profil de l'Utilisateurz
+User.tlabel.editPreferedLang: Modification du Paramètre de Langue de l'Utilisateur
+User.tlabel.editEmail: Modification de l'Email de l'Utilisateur
+User.tlabel.editPassword: Modification du Mot de passe de l'Utilisateur
+User.tlabel.editLockout: Modification du Verrouillage de compte de l'Utilisateur
+User.tlabel.editUserRoles: Modification des privilèges de l'Utilisateur
+
+User.empty: Aucun Utilisateur trouvé dans la base de donnée
+
+User.add.success: Succès de l'ajout de l'Utilisateur <b>%user%</b>
+User.add.failure: Echec de l'ajout de l'Utilisateur
+User.delete.confirm.title: Demande de Confirmation
+User.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Utilisateur ?<br/> Cette action est irreversible!
+User.delete.notfound: Utilisateur inconnu
+User.delete.success: Succès de la suppression de l'Utilisateur <b>%user%</b>
+User.delete.failure: Echec de la suppression de l'Utilisateur
+User.edit.notfound: Utilisateur inconnu
+User.edit.success: Succès de la modification de l'Utilisateur <b>%user%</b>
+User.edit.failure: Echec de la modification de l'Utilisateur <b>%user%</b>
+
+User.traceNew: Ajout nouvel Utilisateur <b>%user%</b>
+User.traceEdit: Modification Utilisateur <b>%user%</b>
+User.traceDel: Suppression Utilisateur <b>%user%</b>
+
+#Job
+menu.admin.job: Emploi
+breadcrumb.job.list: Liste des Emplois
+breadcrumb.job.add: Ajouter Emploi
+breadcrumb.job.edit: Emploi <b>%job%</b>
+
+pagetitle.job.list: Liste des Emplois
+pagetitle.job.list.txt: Liste des des Emplois
+pagetitle.job.add: Ajouter Emploi
+pagetitle.job.add.txt: Ajouter Emploi
+pagetitle.job.edit: Edition Emploi <b>%job%</b>
+pagetitle.job.edit.txt: Edition Emploi "%job%"
+
+Job.tab.overview: Détails
+Job.tab.edit: Edition
+
+Job.tlabel.list: Liste des Emplois
+Job.tlabel.add: Ajouter nouvel Emploi
+Job.tlabel.overview: 'Aperçu des détails de l''Emploi'
+Job.tlabel.edit: 'Modification de l''Emploi'
+
+Job.empty: Aucun Emploi trouvé dans la base de donnée
+
+Job.add.success: 'Succès de l''ajout de l''Emploi <b>%job%</b>'
+Job.add.failure: 'Echec de l''ajout de l''Emploi'
+Job.delete.confirm.title: Demande de Confirmation
+Job.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Emploi ?<br/> Cette action est irreversible!
+Job.delete.notfound: Emploi inconnu
+Job.delete.success: 'Succès de la suppression de l''Emploi <b>%job%</b>'
+Job.delete.failure: 'Echec de la suppression de l''Emploi'
+Job.edit.notfound: Emploi inconnu
+Job.edit.success: 'Succès de la modification de l''Emploi <b>%job%</b>'
+Job.edit.failure: 'Echec de la modification de l''Emploi <b>%job%</b>'
+
+Job.traceNew: Ajout Nouvel Emploi <b>%job%</b>
+Job.traceEdit: Modification Emploi <b>%job%</b>
+Job.traceDel: Suppression Emploi <b>%job%</b>
+
+#CompanyType
+menu.admin.companyType: Type de Société
+breadcrumb.companyType.list: Liste des Types de Sociétés
+breadcrumb.companyType.add: Ajouter Type de Société
+breadcrumb.companyType.edit: Type de Société <b>%companyType%</b>
+
+pagetitle.companyType.list: Liste des Types de Sociétés
+pagetitle.companyType.list.txt: Liste des Types de Société
+pagetitle.companyType.add: Ajouter Type de Société
+pagetitle.companyType.add.txt: Ajouter Type de Société
+pagetitle.companyType.edit: Edition Type de Société <b>%companyType%</b>
+pagetitle.companyType.edit.txt: Edition Type de Société "%companyType%"
+
+CompanyType.tab.overview: Détails
+CompanyType.tab.edit: Edition
+
+CompanyType.tlabel.list: Liste des Types de Sociétés
+CompanyType.tlabel.add: Ajouter nouveau Type de Société
+CompanyType.tlabel.overview: 'Aperçu des détails du Type de Société'
+CompanyType.tlabel.edit: 'Modification du Type de Société'
+
+CompanyType.empty: Aucun Type de Société trouvé dans la base de donnée
+
+CompanyType.add.success: 'Succès de l''ajout du Type de Société <b>%companyType%</b>'
+CompanyType.add.failure: 'Echec de l''ajout du Type de Société'
+CompanyType.delete.confirm.title: Demande de Confirmation
+CompanyType.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Type de Société ?<br/> Cette action est irreversible!
+CompanyType.delete.notfound: Type de Société inconnu
+CompanyType.delete.success: 'Succès de la suppression du Type de Société <b>%companyType%</b>'
+CompanyType.delete.failure: 'Echec de la suppression du Type de Société'
+CompanyType.edit.notfound: Type de Société inconnu
+CompanyType.edit.success: 'Succès de la modification du Type de Société <b>%companyType%</b>'
+CompanyType.edit.failure: 'Echec de la modification du Type de Société <b>%companyType%</b>'
+
+
+CompanyType.traceNew: Ajout Nouveau Type de Société <b>%companyType%</b>
+CompanyType.traceEdit: Modification du Type de Société <b>%companyType%</b>
+CompanyType.traceDel: Suppression du Type de Société <b>%companyType%</b>
+
+#Sector
+menu.admin.sector: Secteur d'Activité
+menu.admin.sector.add: Nouveau Secteur d'Activité
+breadcrumb.sector.list: Liste des Secteurs d'Activités
+breadcrumb.sector.add: Ajouter Secteur d'Activité
+breadcrumb.sector.edit: Secteur d'Activité <b>%sector%</b>
+
+pagetitle.sector.list: Liste des Secteurs d'Activités
+pagetitle.sector.list.txt: Liste des Secteurs d'Activités
+pagetitle.sector.add: Ajouter Secteur d'Activité
+pagetitle.sector.add.txt: Ajouter Secteur d'Activité
+pagetitle.sector.edit: Edition Secteur d'Activité <b>%sector%</b>
+pagetitle.sector.edit.txt: Edition Secteur d'Activité "%sector%"
+
+Sector.tab.overview: Détails
+Sector.tab.edit: Edition
+
+Sector.tlabel.list: Liste des Secteurs d'Activités
+Sector.tlabel.add: Ajouter nouveau Secteur d'Activité
+Sector.tlabel.overview: 'Aperçu des détails du Secteur d''Activité'
+Sector.tlabel.edit: 'Modification du Secteur d''Activité'
+
+Sector.empty: Aucun Secteur d'Activité trouvé dans la base de donnée
+
+Sector.add.success: 'Succès de l''ajout du Secteur d''Activité <b>%sector%</b>'
+Sector.add.failure: 'Echec de l''ajout du Secteur d''Activité'
+Sector.delete.confirm.title: Demande de Confirmation
+Sector.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Secteur d''Activité ?<br/> Cette action est irreversible!
+Sector.delete.notfound: 'Secteur d''Activité inconnu'
+Sector.delete.success: 'Succès de la suppression du Secteur d''Activité <b>%sector%</b>'
+Sector.delete.failure: 'Echec de la suppression du Secteur d''Activité'
+Sector.edit.notfound:  'Secteur d''Activité inconnu'
+Sector.edit.success: 'Succès de la modification du Secteur d''Activité <b>%sector%</b>'
+Sector.edit.failure: 'Echec de la modification du Secteur d''Activité <b>%sector%</b>'
+
+Sector.traceNew: 'Ajout Nouveau Secteur d''Activité <b>%sector%</b>'
+Sector.traceEdit: 'Modification du Secteur d''Activité <b>%sector%</b>'
+Sector.traceDel: 'Suppression du Secteur d''Activité <b>%sector%</b>'
+
+#Company
+menu.admin.company: Société
+breadcrumb.company.list: Liste des Sociétés
+breadcrumb.company.add: Ajouter Société
+breadcrumb.company.edit: Société <b>%company%</b>
+
+pagetitle.company.list: Liste des Sociétés
+pagetitle.company.list.txt: Liste des Sociétés
+pagetitle.company.add: Ajouter Société
+pagetitle.company.add.txt: Ajouter Société
+pagetitle.company.edit: Edition Société <b>%company%</b>
+pagetitle.company.edit.txt: Edition Société "%company%"
+
+Company.tab.tab1: Informations Générales
+Company.tab.overview: Détails
+Company.tab.edit: Edition
+Company.tab.addresses: Adresses
+Company.tab.phones: Téléphones
+Company.tab.frames: Cadres
+Company.tab.natures: Natures d'Achat
+Company.tab.docs: Documents
+Company.tab.pilots: Pilotages
+Company.tab.users: Utilisateurs/Clients
+Company.tab.admins: Collaborateurs/Admins
+Company.tab.trace: Historique
+Company.tab.tab2: Dossier Comptable
+Company.tab.labels: Journaux
+Company.tab.frames: Cadres
+Company.tab.customers: Clients
+Company.tab.suppliers: Fournisseurs
+Company.tab.banks: Banques
+Company.tab.funds: Caisses
+Company.tab.withholdings: Retenues
+Company.tab.sales: Ventes
+Company.tab.purchases: "Achats / Charges"
+Company.tab.docgroupcomptables: Documents Comptables
+Company.tab.docgroupbanks: Documents Bancaires
+Company.tab.tab3: Dossier Juridique
+Company.tab.docgroupjuridiques: Documents Juridiques
+Company.tab.Shareholders: Capital
+Company.tab.tab4: Dossier Fiscal
+Company.tab.tab5: "Dossier Social / Personnel"
+Company.tab.tab6: Dossier Système
+Company.tab.tab7: Dossier Audit
+Company.tab.docgroupaudits: Documents Audits
+
+Company.tlabel.list: Liste des Sociétés
+Company.tlabel.add: Ajouter nouvelle Société
+Company.tlabel.overview: 'Aperçu des détails de la Société'
+Company.tlabel.edit.type: 'Modification de la Forme Juridique'
+Company.tlabel.edit.ref: 'Modification de la Référence'
+Company.tlabel.edit.corporateName: 'Modification de la Raison Sociale'
+Company.tlabel.edit.fisc: 'Modification du Matricule Fiscal'
+Company.tlabel.edit.tribunal: 'Modification du Tribunal'
+Company.tlabel.edit.physicaltype: 'Modification du Type'
+Company.tlabel.edit.cnss: 'Modification du CNSS'
+Company.tlabel.edit.cnssBureau: 'Modification du Bureau CNSS'
+Company.tlabel.edit.sectors: 'Modification des Secteurs d''Activité'
+Company.tlabel.edit.physicaltype: 'Modification du Type'
+Company.tlabel.edit.phone: 'Modification du Téléphone'
+Company.tlabel.edit.mobile: 'Modification du Mobile'
+Company.tlabel.edit.fax: 'Modification du Fax'
+Company.tlabel.edit.email: 'Modification de l''Email'
+Company.tlabel.edit.adr: 'Modification de l''Adresse'
+Company.tlabel.edit.otherInfos: 'Modification des Autres Informations'
+Company.tlabel.edit.actionvn: 'Modification de la Valeure Nominale des Actions'
+Company.tlabel.addresses.add: 'Ajouter une Adresse'
+Company.tlabel.addresses.list: 'Liste des Adresses'
+Company.tlabel.phones.add: 'Ajouter un Téléphone'
+Company.tlabel.phones.list: 'Liste des Téléphones'
+Company.tlabel.frames.add: 'Ajouter un Cadre'
+Company.tlabel.frames.list: 'Liste des Cadres'
+Company.tlabel.users.add: 'Ajouter un Utilisateur/Client'
+Company.tlabel.users.list: 'Liste des Utilisateurs/Clients'
+Company.tlabel.admins.add: 'Ajouter un Collaborateur/Admin'
+Company.tlabel.admins.list: 'Liste des Collaborateurs/Admins'
+Company.tlabel.natures.add: 'Ajouter une Nature d''Achat'
+Company.tlabel.natures.list: 'Liste des Natures d''Achat'
+Company.tlabel.natures.excel: 'Import des Nature d''Achat depuis Excel'
+Company.tlabel.labels.add: 'Ajouter un Journal'
+Company.tlabel.labels.list: 'Liste des Journaux'
+Company.tlabel.labels.excel: 'Import des Journaux depuis Excel'
+Company.tlabel.customers.add: 'Ajouter un Client'
+Company.tlabel.customers.list: 'Liste des Clients'
+Company.tlabel.customers.excel: 'Import des Clients depuis Excel'
+Company.tlabel.suppliers.add: 'Ajouter un Fournisseur'
+Company.tlabel.suppliers.list: 'Liste des Fournisseurs'
+Company.tlabel.suppliers.excel: 'Import des Fournisseurs depuis Excel'
+Company.tlabel.banks.add: 'Ajouter un Compte Bancaire'
+Company.tlabel.banks.list: 'Liste des Comptes Bancaires'
+Company.tlabel.banks.excel: 'Import des Comptes Bancaires depuis Excel'
+Company.tlabel.funds.add: 'Ajouter un Compte Caisse'
+Company.tlabel.funds.list: 'Liste des Comptes Caisses'
+Company.tlabel.funds.excel: 'Import des Comptes Caisses depuis Excel'
+Company.tlabel.withholdings.add: 'Ajouter une Retenue'
+Company.tlabel.withholdings.list: 'Liste des Retenues'
+Company.tlabel.withholdings.excel: 'Import des Retenues depuis Excel'
+Company.tlabel.sales.add: 'Ajouter un Mois (Vente)'
+Company.tlabel.sales.addYear: 'Ajouter une Année (Vente)'
+Company.tlabel.sales.list: 'Gestion des Bordereaux - Vente'
+Company.tlabel.purchases.add: 'Ajouter un Mois (Achat)'
+Company.tlabel.purchases.addYear: 'Ajouter une Année (Achat)'
+Company.tlabel.purchases.list: 'Gestion des Bordereaux - Achat'
+Company.tlabel.docgroupcomptables.add: 'Ajouter un Groupe de Documents'
+Company.tlabel.docgroupcomptables.list: 'Liste des groupes de Documents'
+Company.tlabel.docgroups.add: 'Ajouter un Groupe de Documents'
+Company.tlabel.docgroups.list: 'Liste des groupes de Documents'
+Company.tlabel.shareholders.add: 'Ajouter un Actionnaire'
+Company.tlabel.shareholders.list: 'Liste des Actionnaires'
+Company.tlabel.pilots.add: 'Ajouter un Pilotage'
+Company.tlabel.pilots.list: 'Liste des Pilotages'
+Company.tlabel.docgroupfiscals.add: 'Ajouter un Groupe de Documents'
+Company.tlabel.docgroupfiscals.list: 'Liste des groupes de Documents'
+Company.tlabel.docgrouppersos.add: 'Ajouter un Groupe de Documents'
+Company.tlabel.docgrouppersos.list: 'Liste des groupes de Documents'
+Company.tlabel.docgroupsysts.add: 'Ajouter un Groupe de Documents'
+Company.tlabel.docgroupsysts.list: 'Liste des groupes de Documents'
+Company.tlabel.docgroupbanks.add: 'Ajouter un Groupe de Documents'
+Company.tlabel.docgroupbanks.list: 'Liste des groupes de Documents'
+Company.tlabel.docgroupaudits.add: 'Ajouter un Groupe de Documents'
+Company.tlabel.docgroupaudits.list: 'Liste des groupes de Documents'
+Company.tlabel.docs.add: 'Ajouter un Document'
+Company.tlabel.docs.list: 'Liste des Documents'
+
+Company.empty: Aucune Société trouvée dans la base de donnée
+
+Company.add.success: 'Succès de l''ajout de la Société <b>%company%</b>'
+Company.add.failure: 'Echec de l''ajout de la Société'
+Company.delete.confirm.title: Demande de Confirmation
+Company.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Société ?<br/> Cette action est irreversible!
+Company.delete.notfound: Société inconnue
+Company.delete.success: 'Succès de la suppression de la Société <b>%company%</b>'
+Company.delete.failure: 'Echec de la suppression de la Société'
+Company.edit.notfound: Société inconnue
+Company.edit.success: 'Succès de la modification de la Société <b>%company%</b>'
+Company.edit.failure: 'Echec de la modification de la Société <b>%company%</b>'
+
+Company.traceNew: Ajout Nouvelle Société <b>%company%</b>
+Company.traceEdit: Modification de la Société <b>%company%</b>
+Company.traceDel: Suppression de la Société <b>%company%</b>
+
+#Address
+menu.admin.address: Adresses
+breadcrumb.address.list: Liste des Adresses
+breadcrumb.address.add: Ajouter Adresse
+breadcrumb.address.edit: Adresse <b>%address%</b>
+
+pagetitle.address.list: Liste des Adresses
+pagetitle.address.list.txt: Liste des Adresses
+pagetitle.address.add: Ajouter Adresse
+pagetitle.address.add.txt: Ajouter Adresse
+pagetitle.address.edit: Edition Adresse <b>%address%</b>
+pagetitle.address.edit.txt: Edition Adresse "%address%"
+
+Address.tab.overview: Détails
+Address.tab.edit: Edition
+
+Address.tlabel.list: Liste des Adresses
+Address.tlabel.add: Ajouter nouvelle Adresse
+Address.tlabel.overview: 'Aperçu des détails de l''Adresse'
+Address.tlabel.edit: 'Modification de l''Adresse'
+
+Address.empty: Aucune Adresse trouvée dans la base de donnée
+
+Address.add.success: 'Succès de l''ajout de l''Adresse <b>%address%</b>'
+Address.add.failure: 'Echec de l''ajout de l''Adresse'
+Address.delete.confirm.title: Demande de Confirmation
+Address.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Cadre ?<br/> Cette action est irreversible!
+Address.delete.notfound: Adresse inconnue
+Address.delete.success: 'Succès de la suppression de l''Adresse <b>%address%</b>'
+Address.delete.failure: 'Echec de la suppression de l''Adresse'
+Address.edit.notfound: Adresse inconnue
+Address.edit.success: 'Succès de la modification de l''Adresse <b>%address%</b>'
+Address.edit.failure: 'Echec de la modification de l''Adresse <b>%address%</b>'
+
+
+Address.traceNew: 'Ajout Nouvelle l''Adresse <b>%address%</b><br/>Société <b>%company%</b>'
+Address.traceEdit: 'Modification de l''Adresse <b>%address%</b><br/>Société <b>%company%</b>'
+Address.traceDel: 'Suppression de l''Adresse <b>%address%</b><br/>Société <b>%company%</b>'
+
+#Phone
+menu.admin.phone: Cadres
+breadcrumb.phone.list: Liste des N° de Téléphone
+breadcrumb.phone.add: Ajouter N° de Téléphone
+breadcrumb.phone.edit: N° de Téléphone <b>%phone%</b>
+
+pagetitle.phone.list: Liste des N° de Téléphone
+pagetitle.phone.list.txt: Liste des N° de Téléphone
+pagetitle.phone.add: Ajouter N° de Téléphone
+pagetitle.phone.add.txt: Ajouter N° de Téléphone
+pagetitle.phone.edit: Edition N° de Téléphone <b>%phone%</b>
+pagetitle.phone.edit.txt: Edition N° de Téléphone "%phone%"
+
+Phone.tab.overview: Détails
+Phone.tab.edit: Edition
+
+Phone.tlabel.list: Liste des N° de Téléphone
+Phone.tlabel.add: Ajouter nouveeau N° de Téléphone
+Phone.tlabel.overview: 'Aperçu des détails du N° de Téléphone'
+Phone.tlabel.edit: 'Modification du N° de Téléphone'
+
+Phone.empty: Aucun N° de Téléphone trouvé dans la base de donnée
+
+Phone.add.success: 'Succès de l''ajout du N° de Téléphone <b>%phone%</b>'
+Phone.add.failure: 'Echec de l''ajout du N° de Téléphone'
+Phone.delete.confirm.title: Demande de Confirmation
+Phone.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce N° de Téléphone ?<br/> Cette action est irreversible!
+Phone.delete.notfound: N° de Téléphone inconnu
+Phone.delete.success: 'Succès de la suppression du N° de Téléphone <b>%phone%</b>'
+Phone.delete.failure: 'Echec de la suppression du N° de Téléphone'
+Phone.edit.notfound: N° de Téléphone inconnu
+Phone.edit.success: 'Succès de la modification du N° de Téléphone <b>%phone%</b>'
+Phone.edit.failure: 'Echec de la modification du N° de Téléphone <b>%phone%</b>'
+
+
+Phone.traceNew: 'Ajout Nouveau N° de Téléphone <b>%phone%</b><br/>Société <b>%company%</b>'
+Phone.traceEdit: 'Modification du N° de Téléphone <b>%phone%</b><br/>Société <b>%company%</b>'
+Phone.traceDel: 'Suppression du N° de Téléphone <b>%phone%</b><br/>Société <b>%company%</b>'
+
+#CompanyFrame
+menu.admin.companyFrame: Cadres
+breadcrumb.companyFrame.list: Liste des Cadres
+breadcrumb.companyFrame.add: Ajouter Cadre
+breadcrumb.companyFrame.edit: Cadre <b>%companyFrame%</b>
+
+pagetitle.companyFrame.list: Liste des Cadres
+pagetitle.companyFrame.list.txt: Liste des Cadres
+pagetitle.companyFrame.add: Ajouter Cadre
+pagetitle.companyFrame.add.txt: Ajouter Cadre
+pagetitle.companyFrame.edit: Edition Cadre <b>%companyFrame%</b>
+pagetitle.companyFrame.edit.txt: Edition Cadre "%companyFrame%"
+
+CompanyFrame.tab.overview: Détails
+CompanyFrame.tab.edit: Edition
+
+CompanyFrame.tlabel.list: Liste des Cadres
+CompanyFrame.tlabel.add: Ajouter nouvelle Cadre
+CompanyFrame.tlabel.overview: 'Aperçu des détails de la Cadre'
+CompanyFrame.tlabel.edit: 'Modification de la Cadre'
+
+CompanyFrame.empty: Aucun Cadre trouvé dans la base de donnée
+
+CompanyFrame.add.success: 'Succès de l''ajout du Cadre <b>%companyFrame%</b>'
+CompanyFrame.add.failure: 'Echec de l''ajout du Cadre'
+CompanyFrame.delete.confirm.title: Demande de Confirmation
+CompanyFrame.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Cadre ?<br/> Cette action est irreversible!
+CompanyFrame.delete.notfound: Cadre inconnu
+CompanyFrame.delete.success: 'Succès de la suppression du Cadre <b>%companyFrame%</b>'
+CompanyFrame.delete.failure: 'Echec de la suppression du Cadre'
+CompanyFrame.edit.notfound: Cadre inconnu
+CompanyFrame.edit.success: 'Succès de la modification du Cadre <b>%companyFrame%</b>'
+CompanyFrame.edit.failure: 'Echec de la modification du Cadre <b>%companyFrame%</b>'
+
+CompanyFrame.traceNew: 'Ajout Nouveau Cadre <b>%companyFrame%</b><br/>Société <b>%company%</b>'
+CompanyFrame.traceEdit: 'Modification du Cadre <b>%companyFrame%</b><br/>Société <b>%company%</b>'
+CompanyFrame.traceDel: 'Suppression du Cadre <b>%companyFrame%</b><br/>Société <b>%company%</b>'
+
+#CompanyNature
+menu.admin.companyNature: Nature
+breadcrumb.companyNature.list: Liste des Natures d'Achat
+breadcrumb.companyNature.add: Ajouter Nature d'Achat
+breadcrumb.companyNature.edit: Nature d'Achat <b>%companyNature%</b>
+
+pagetitle.companyNature.list: Liste des Natures d'Achat
+pagetitle.companyNature.listByCompany: Liste des Natures d'Achat de la société %company%
+pagetitle.companyNature.list.txt: Liste des Natures d'Achat
+pagetitle.companyNature.add: Ajouter Nature d'Achat
+pagetitle.companyNature.add.txt: Ajouter Nature d'Achat
+pagetitle.companyNature.edit: Edition Nature d'Achat <b>%companyNature%</b>
+pagetitle.companyNature.edit.txt: Edition Nature d'Achat "%companyNature%"
+
+CompanyNature.tab.overview: Détails
+CompanyNature.tab.edit: Edition
+
+CompanyNature.tlabel.list: Liste des Natures d'Achat
+CompanyNature.tlabel.add: Ajouter nouvelle Nature d'Achat
+CompanyNature.tlabel.overview: 'Aperçu des détails de la Nature d''Achat'
+CompanyNature.tlabel.edit: 'Modification de la Nature d''Achat'
+
+CompanyNature.empty: Aucune Nature d'Achat trouvée dans la base de donnée
+
+CompanyNature.import.success: 'Succès de l''import excel des Natures d''Achat'
+CompanyNature.import.failure: 'Echec de l''import excel des Natures d''Achat'
+CompanyNature.add.success: 'Succès de l''ajout de la Nature d''Achat <b>%companyNature%</b>'
+CompanyNature.add.failure: 'Echec de l''ajout de la Nature d''Achat'
+CompanyNature.delete.confirm.title: Demande de Confirmation
+CompanyNature.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Nature d''Achat ?<br/> Cette action est irreversible!
+CompanyNature.delete.notfound: Nature d'Achat inconnu
+CompanyNature.delete.success: 'Succès de la suppression de la Nature d''Achat <b>%companyNature%</b>'
+CompanyNature.delete.failure: 'Echec de la suppression de la Nature d''Achat'
+CompanyNature.edit.notfound: Nature d'Achat inconnue
+CompanyNature.edit.success: 'Succès de la modification de la Nature d''Achat <b>%companyNature%</b>'
+CompanyNature.edit.failure: 'Echec de la modification de la Nature d''Achat <b>%companyNature%</b>'
+
+CompanyNature.traceNew: 'Ajout Nouvelle Nature d''Achat <b>%companyNature%</b><br/>Société <b>%company%</b>'
+CompanyNature.traceEdit: 'Modification de la Nature d''Achat <b>%companyNature%</b><br/>Société <b>%company%</b>'
+CompanyNature.traceDel: 'Suppression de la Nature d''Achat <b>%companyNature%</b><br/>Société <b>%company%</b>'
+
+#CompanyLabel
+menu.admin.companyLabel: Journaux
+breadcrumb.companyLabel.list: Liste des Journaux
+breadcrumb.companyLabel.add: Ajouter Journal
+breadcrumb.companyLabel.edit: Journal <b>%companyLabel%</b>
+
+pagetitle.companyLabel.list: Liste des Journaux
+pagetitle.companyLabel.listByCompany: Liste des Journaux de la société %company%
+pagetitle.companyLabel.list.txt: Liste des Journaux
+pagetitle.companyLabel.add: Ajouter Journal
+pagetitle.companyLabel.add.txt: Ajouter Journal
+pagetitle.companyLabel.edit: Edition Journal <b>%companyLabel%</b>
+pagetitle.companyLabel.edit.txt: Edition Journal "%companyLabel%"
+
+CompanyLabel.tab.overview: Détails
+CompanyLabel.tab.edit: Edition
+
+CompanyLabel.tlabel.list: Liste des Journaux
+CompanyLabel.tlabel.add: Ajouter nouveau Journal
+CompanyLabel.tlabel.overview: 'Aperçu des détails du Journal'
+CompanyLabel.tlabel.edit: 'Modification du Journal'
+
+CompanyLabel.empty: Aucun Journal trouvé dans la base de donnée
+
+CompanyLabel.import.success: 'Succès de l''import excel des Journaux'
+CompanyLabel.import.failure: 'Echec de l''import excel des Journaux'
+CompanyLabel.add.success: 'Succès de l''ajout du Journal <b>%companyLabel%</b>'
+CompanyLabel.add.failure: 'Echec de l''ajout du Journal'
+CompanyLabel.delete.confirm.title: Demande de Confirmation
+CompanyLabel.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Journal ?<br/> Cette action est irreversible!
+CompanyLabel.delete.notfound: Journal inconnu
+CompanyLabel.delete.success: 'Succès de la suppression du Journal <b>%companyLabel%</b>'
+CompanyLabel.delete.failure: 'Echec de la suppression du Journal'
+CompanyLabel.edit.notfound: Journal inconnu
+CompanyLabel.edit.success: 'Succès de la modification du Journal <b>%companyLabel%</b>'
+CompanyLabel.edit.failure: 'Echec de la modification du Journal <b>%companyLabel%</b>'
+
+CompanyLabel.traceNew: 'Ajout Nouveau Journal <b>%companyLabel%</b><br/>Société <b>%company%</b>'
+CompanyLabel.traceEdit: 'Modification du Journal <b>%companyLabel%</b><br/>Société <b>%company%</b>'
+CompanyLabel.traceDel: 'Suppression du Journal <b>%companyLabel%</b><br/>Société <b>%company%</b>'
+
+#Customer
+menu.admin.customer: Client
+breadcrumb.customer.list: Liste des Clients
+breadcrumb.customer.add: Ajouter Client
+breadcrumb.customer.edit: Client <b>%customer%</b>
+
+pagetitle.customer.list: Liste des Clients
+pagetitle.customer.listByCompany: Liste des Clients de la Société %company%
+pagetitle.customer.list.txt: Liste des Clients
+pagetitle.customer.add: Ajouter Client
+pagetitle.customer.add.txt: Ajouter Client
+pagetitle.customer.edit: Edition Client <b>%customer%</b>
+pagetitle.customer.edit.txt: Edition Client "%customer%"
+
+Customer.tab.docs: Documents
+Customer.tab.overview: Détails
+Customer.tab.edit: Edition
+
+Customer.tlabel.list: Liste des Clients
+Customer.tlabel.add: Ajouter nouveau Client
+Customer.tlabel.overview: 'Aperçu des détails du Client'
+Customer.tlabel.edit: 'Modification du Client'
+Customer.tlabel.docs.add: 'Ajouter un Nouveau Document au Client'
+Customer.tlabel.docs.edit: 'Modifier la Liste des Documents du Client'
+Customer.tlabel.docs.list: 'Liste des Documents du Client'
+
+Customer.empty: Aucun Client trouvé dans la base de donnée
+
+Customer.import.success: 'Succès de l''import excel des Clients'
+Customer.import.failure: 'Echec de l''import excel des Clients'
+Customer.add.success: 'Succès de l''ajout du Client <b>%customer%</b>'
+Customer.add.failure: 'Echec de l''ajout du Client'
+Customer.delete.confirm.title: Demande de Confirmation
+Customer.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Client ?<br/> Cette action est irreversible!
+Customer.delete.notfound: Libellé inconnu
+Customer.delete.success: 'Succès de la suppression du Client <b>%customer%</b>'
+Customer.delete.failure: 'Echec de la suppression du Client'
+Customer.edit.notfound: Client inconnu
+Customer.edit.success: 'Succès de la modification du Client <b>%customer%</b>'
+Customer.edit.failure: 'Echec de la modification du Client <b>%customer%</b>'
+
+Customer.traceNew: 'Ajout Nouveau Client <b>%customer%</b><br/>Société <b>%company%</b>'
+Customer.traceEdit: 'Modification du Client <b>%customer%</b><br/>Société <b>%company%</b>'
+Customer.traceDel: 'Suppression du Client <b>%customer%</b><br/>Société <b>%company%</b>'
+
+#Supplier
+menu.admin.supplier: Fournisseur
+breadcrumb.supplier.list: Liste des Fournisseurs
+breadcrumb.supplier.add: Ajouter Fournisseur
+breadcrumb.supplier.edit: Fournisseur <b>%supplier%</b>
+
+pagetitle.supplier.list: Liste des Fournisseurs
+pagetitle.supplier.listByCompany: Liste des Fournisseurs de la Société %company%
+pagetitle.supplier.list.txt: Liste des Fournisseurs
+pagetitle.supplier.add: Ajouter Fournisseur
+pagetitle.supplier.add.txt: Ajouter Fournisseur
+pagetitle.supplier.edit: Edition Fournisseur <b>%supplier%</b>
+pagetitle.supplier.edit.txt: Edition Fournisseur "%supplier%"
+
+Supplier.tab.docs: Documents
+Supplier.tab.overview: Détails
+Supplier.tab.edit: Edition
+
+Supplier.tlabel.list: Liste des Fournisseurs
+Supplier.tlabel.add: Ajouter nouveau Fournisseur
+Supplier.tlabel.overview: 'Aperçu des détails du Fournisseur'
+Supplier.tlabel.edit: 'Modification du Fournisseur'
+
+Supplier.empty: Aucun Fournisseur trouvé dans la base de donnée
+
+Supplier.import.success: 'Succès de l''import excel des Fournisseurs'
+Supplier.import.failure: 'Echec de l''import excel des Fournisseurs'
+Supplier.add.success: 'Succès de l''ajout du Fournisseur <b>%supplier%</b>'
+Supplier.add.failure: 'Echec de l''ajout du Fournisseur'
+Supplier.delete.confirm.title: Demande de Confirmation
+Supplier.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Fournisseur ?<br/> Cette action est irreversible!
+Supplier.delete.notfound: Libellé inconnu
+Supplier.delete.success: 'Succès de la suppression du Fournisseur <b>%supplier%</b>'
+Supplier.delete.failure: 'Echec de la suppression du Fournisseur'
+Supplier.edit.notfound: Fournisseur inconnu
+Supplier.edit.success: 'Succès de la modification du Fournisseur <b>%supplier%</b>'
+Supplier.edit.failure: 'Echec de la modification du Fournisseur <b>%supplier%</b>'
+Supplier.tlabel.docs.add: 'Ajouter un Nouveau Document au Fournisseur'
+Supplier.tlabel.docs.edit: 'Modifier la Liste des Documents du Fournisseur'
+Supplier.tlabel.docs.list: 'Liste des Documents du Fournisseur'
+
+Supplier.traceNew: 'Ajout Nouveau Fournisseur <b>%supplier%</b><br/>Société <b>%company%</b>'
+Supplier.traceEdit: 'Modification du Fournisseur <b>%supplier%</b><br/>Société <b>%company%</b>'
+Supplier.traceDel: 'Suppression du Fournisseur <b>%supplier%</b><br/>Société <b>%company%</b>'
+
+#Bank
+menu.admin.bank: Banque
+breadcrumb.bank.list: Liste des Banques
+breadcrumb.bank.add: Ajouter Banque
+breadcrumb.bank.edit: Banque <b>%bank%</b>
+
+pagetitle.bank.list: Liste des Banques
+pagetitle.bank.listByCompany: Liste des Banques de la Société %company%
+pagetitle.bank.list.txt: Liste des Banques
+pagetitle.bank.add: Ajouter Banque
+pagetitle.bank.add.txt: Ajouter Banque
+pagetitle.bank.edit: Edition Banque <b>%bank%</b>
+pagetitle.bank.edit.txt: Edition Banque "%bank%"
+
+Bank.tab.docs: Documents
+Bank.tab.overview: Détails
+Bank.tab.edit: Edition
+
+Bank.tlabel.list: Liste des Banques
+Bank.tlabel.add: Ajouter nouvelle Banque
+Bank.tlabel.overview: 'Aperçu des détails de la Banque'
+Bank.tlabel.edit: 'Modifier les détails de la Banque'
+Bank.tlabel.editLabel: 'Modifier le Libellé de la Banque'
+Bank.tlabel.editNumber: 'Modifier le Numéro de la Banque'
+Bank.tlabel.editAgency: 'Modifier l''Agence de la Banque'
+Bank.tlabel.editRib: 'Modifier le RIB de la Banque'
+Bank.tlabel.editOtherInfos: 'Modifier les Autres Informations de la Banque'
+
+Bank.empty: Aucune Banque trouvée dans la base de donnée
+
+Bank.import.success: 'Succès de l''import excel des Banques'
+Bank.import.failure: 'Echec de l''import excel des Banques'
+Bank.add.success: 'Succès de l''ajout de la Banque <b>%bank%</b>'
+Bank.add.failure: 'Echec de l''ajout de la Banque'
+Bank.delete.confirm.title: Demande de Confirmation
+Bank.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Banque ?<br/> Cette action est irreversible!
+Bank.delete.notfound: Banque inconnue
+Bank.delete.success: 'Succès de la suppression de la Banque <b>%bank%</b>'
+Bank.delete.failure: 'Echec de la suppression de la Banque'
+Bank.edit.notfound: Banque inconnue
+Bank.edit.success: 'Succès de la modification de la Banque <b>%bank%</b>'
+Bank.edit.failure: 'Echec de la modification de la Banque <b>%bank%</b>'
+Bank.tlabel.docs.add: 'Ajouter un Nouveau Document à la Banque'
+Bank.tlabel.docs.edit: 'Modifier la Liste des Documents de la Banque'
+Bank.tlabel.docs.list: 'Liste des Documents de la Banque'
+
+Bank.traceNew: 'Ajout Nouvelle Banque <b>%bank%</b><br/>Société <b>%company%</b>'
+Bank.traceEdit: 'Modification de la Banque <b>%bank%</b><br/>Société <b>%company%</b>'
+Bank.traceDel: 'Suppression de la Banque <b>%bank%</b><br/>Société <b>%company%</b>'
+
+#Fund
+menu.admin.fund: Caisse
+breadcrumb.fund.list: Liste des Caisses
+breadcrumb.fund.add: Ajouter Caisse
+breadcrumb.fund.edit: Caisse <b>%fund%</b>
+
+pagetitle.fund.list: Liste des Caisses
+pagetitle.fund.listByCompany: Liste des Caisses de la Société %company%
+pagetitle.fund.list.txt: Liste des Caisses
+pagetitle.fund.add: Ajouter Caisse
+pagetitle.fund.add.txt: Ajouter Caisse
+pagetitle.fund.edit: Edition Caisse <b>%fund%</b>
+pagetitle.fund.edit.txt: Edition Caisse "%fund%"
+
+Fund.tab.docs: Documents
+Fund.tab.overview: Détails
+Fund.tab.edit: Edition
+
+Fund.tlabel.list: Liste des Caisses
+Fund.tlabel.add: Ajouter nouvelle Caisse
+Fund.tlabel.overview: 'Aperçu des détails de la Caisse'
+Fund.tlabel.edit: 'Modifier les détails de la Caisse'
+Fund.tlabel.editLabel: 'Modifier le Libellé de la Caisse'
+Fund.tlabel.editNumber: 'Modifier le Numéro de la Caisse'
+Fund.tlabel.editOtherInfos: 'Modifier les Autres Informations de la Caisse'
+Fund.tlabel.docs.add: 'Ajouter un Nouveau Document à la Caisse'
+Fund.tlabel.docs.edit: 'Modifier la Liste des Documents de la Caisse'
+Fund.tlabel.docs.list: 'Liste des Documents de la Caisse'
+
+Fund.empty: Aucune Caisse trouvée dans la base de donnée
+
+Fund.import.success: 'Succès de l''import excel des Caisses'
+Fund.import.failure: 'Echec de l''import excel des Caisses'
+Fund.add.success: 'Succès de l''ajout de la Caisse <b>%fund%</b>'
+Fund.add.failure: 'Echec de l''ajout de la Caisse'
+Fund.delete.confirm.title: Demande de Confirmation
+Fund.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Caisse ?<br/> Cette action est irreversible!
+Fund.delete.notfound: Caisse inconnue
+Fund.delete.success: 'Succès de la suppression de la Caisse <b>%fund%</b>'
+Fund.delete.failure: 'Echec de la suppression de la Caisse'
+Fund.edit.notfound: Caisse inconnue
+Fund.edit.success: 'Succès de la modification de la Caisse <b>%fund%</b>'
+Fund.edit.failure: 'Echec de la modification de la Caisse <b>%fund%</b>'
+
+Fund.traceNew: 'Ajout Nouvelle Caisse <b>%fund%</b><br/>Société <b>%company%</b>'
+Fund.traceEdit: 'Modification de la Caisse <b>%fund%</b><br/>Société <b>%company%</b>'
+Fund.traceDel: 'Suppression de la Caisse <b>%fund%</b><br/>Société <b>%company%</b>'
+
+#Withholding
+menu.admin.withholding: Retenue
+breadcrumb.withholding.list: Liste des Retenues
+breadcrumb.withholding.add: Ajouter Retenue
+breadcrumb.withholding.edit: Retenue <b>%withholding%</b>
+
+pagetitle.withholding.list: Liste des Retenues
+pagetitle.withholding.listByCompany: Liste des Retenues de la Société %company%
+pagetitle.withholding.list.txt: Liste des Retenues
+pagetitle.withholding.add: Ajouter Retenue
+pagetitle.withholding.add.txt: Ajouter Retenue
+pagetitle.withholding.edit: Edition Retenue <b>%withholding%</b>
+pagetitle.withholding.edit.txt: Edition Retenue "%withholding%"
+
+Withholding.tab.overview: Détails
+Withholding.tab.edit: Edition
+
+Withholding.tlabel.list: Liste des Retenues
+Withholding.tlabel.add: Ajouter nouvelle Retenue
+Withholding.tlabel.overview: 'Aperçu des détails de la Retenue'
+Withholding.tlabel.edit: 'Modifier les détails de la Retenue'
+Withholding.tlabel.editLabel: 'Modifier le Libellé de la Retenue'
+Withholding.tlabel.editNumber: 'Modifier le Numéro de la Retenue'
+Withholding.tlabel.editValue: 'Modifier le Taux de la Retenue'
+Withholding.tlabel.editOtherInfos: 'Modifier les Autres Informations de la Retenue'
+
+Withholding.empty: Aucune Retenue trouvée dans la base de donnée
+
+Withholding.import.success: 'Succès de l''import excel des Retenues'
+Withholding.import.failure: 'Echec de l''import excel des Retenues'
+Withholding.add.success: 'Succès de l''ajout de la Retenue <b>%withholding%</b>'
+Withholding.add.failure: 'Echec de l''ajout de la Retenue'
+Withholding.delete.confirm.title: Demande de Confirmation
+Withholding.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Retenue ?<br/> Cette action est irreversible!
+Withholding.delete.notfound: Retenue inconnue
+Withholding.delete.success: 'Succès de la suppression de la Retenue <b>%withholding%</b>'
+Withholding.delete.failure: 'Echec de la suppression de la Retenue'
+Withholding.edit.notfound: Retenue inconnue
+Withholding.edit.success: 'Succès de la modification de la Retenue <b>%withholding%</b>'
+Withholding.edit.failure: 'Echec de la modification de la Retenue <b>%withholding%</b>'
+
+Withholding.traceNew: 'Ajout Nouvelle Retenue <b>%withholding%</b><br/>Société <b>%company%</b>'
+Withholding.traceEdit: 'Modification de la Retenue <b>%withholding%</b><br/>Société <b>%company%</b>'
+Withholding.traceDel: 'Suppression de la Retenue <b>%withholding%</b><br/>Société <b>%company%</b>'
+
+#MBSale
+menu.admin.mbsale: Mois (vente)
+breadcrumb.mbsale.list: Liste des Mois (vente)
+breadcrumb.mbsale.add: Ajouter Mois (vente)
+breadcrumb.mbsale.edit: Mois (vente) <b>%mbsale%</b>
+
+pagetitle.mbsale.list: Liste des Mois (vente)
+pagetitle.mbsale.listByCompany: Liste des Mois (vente) de la Société %company%
+pagetitle.mbsale.list.txt: Liste des Mois (vente)
+pagetitle.mbsale.add: Ajouter Mois (vente)
+pagetitle.mbsale.add.txt: Ajouter Mois (vente)
+pagetitle.mbsale.edit: Edition Mois (vente) <b>%mbsale%</b>
+pagetitle.mbsale.edit.txt: Edition Mois (vente) "%mbsale%"
+
+MBSale.tab.docs: Documents
+MBSale.tab.overview: Détails
+MBSale.tab.edit: Edition
+MBSale.tab.addSale: Ajout Vente
+
+MBSale.tlabel.list: Liste des Mois (vente)
+MBSale.tlabel.add: Ajouter nouveau Mois (vente)
+MBSale.tlabel.overview: 'Aperçu des détails du Mois (vente)'
+MBSale.tlabel.edit: 'Modifier les détails du Mois (vente)'
+MBSale.tlabel.import: 'Importer depuis des Ventes depuis Excel'
+MBSale.tlabel.addSale: 'Ajouter une Vente'
+MBSale.tlabel.docs.add: 'Ajouter un Nouveau Document au Mois'
+MBSale.tlabel.docs.edit: 'Modifier la Liste des Documents du Mois'
+MBSale.tlabel.docs.list: 'Liste des Documents du Mois'
+
+MBSale.empty: Aucun Mois (vente) trouvé dans la base de donnée
+
+MBSale.add.success: 'Succès de l''ajout du Mois (vente) <b>%mbsale%</b>'
+MBSale.add.failure: 'Echec de l''ajout du Mois (vente)'
+MBSale.delete.confirm.title: Demande de Confirmation
+MBSale.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Mois (vente) ?<br/> Cette action est irreversible!
+MBSale.delete.notfound: Mois (vente) inconnu
+MBSale.delete.success: 'Succès de la suppression du Mois (vente) <b>%mbsale%</b>'
+MBSale.delete.failure: 'Echec de la suppression du Mois (vente)'
+MBSale.edit.notfound: Mois inconnu
+MBSale.edit.success: 'Succès de la modification du Mois <b>%mbsale%</b>'
+MBSale.edit.failure: 'Echec de la modification du Mois <b>%mbsale%</b>'
+
+MBSale.traceNew: 'Ajout Nouveau Mois de Vente <b>%mbsale%</b><br/>Société <b>%company%</b>'
+MBSale.traceEdit: 'Modification  Mois de Ventee <b>%mbsale%</b><br/>Société <b>%company%</b>'
+MBSale.traceDel: 'Suppression  Mois de Vente <b>%mbsale%</b><br/>Société <b>%company%</b>'
+
+#MBPurchase
+menu.admin.mbpurchase: Mois (achat)
+breadcrumb.mbpurchase.list: Liste des Mois (achat)
+breadcrumb.mbpurchase.add: Ajouter Mois (achat)
+breadcrumb.mbpurchase.edit: Mois (achat) <b>%mbpurchase%</b>
+
+pagetitle.mbpurchase.list: Liste des Mois (achat)
+pagetitle.mbpurchase.listByCompany: Liste des Mois (achat) de la Société %company%
+pagetitle.mbpurchase.list.txt: Liste des Mois (achat)
+pagetitle.mbpurchase.add: Ajouter Mois (achat)
+pagetitle.mbpurchase.add.txt: Ajouter Mois (achat)
+pagetitle.mbpurchase.edit: Edition Mois (achat) <b>%mbpurchase%</b>
+pagetitle.mbpurchase.edit.txt: Edition Mois (achat) "%mbpurchase%"
+
+MBPurchase.tab.docs: Documents
+MBPurchase.tab.overview: Détails
+MBPurchase.tab.edit: Edition
+MBPurchase.tab.addBuy: Nouvel Achat
+
+MBPurchase.tlabel.list: Liste des Mois (achat)
+MBPurchase.tlabel.add: Ajouter nouveau Mois (achat)
+MBPurchase.tlabel.overview: 'Aperçu des détails du Mois (achat)'
+MBPurchase.tlabel.edit: 'Modifier les détails du Mois (achat)'
+MBPurchase.tlabel.import: 'Importer des Achats depuis Excel'
+MBPurchase.tlabel.addBuy: 'Ajouter un Achat'
+MBPurchase.tlabel.docs.add: 'Ajouter un Nouveau Document du Mois'
+MBPurchase.tlabel.docs.edit: 'Modifier la Liste des Documents du Mois'
+MBPurchase.tlabel.docs.list: 'Liste des Documents du Mois'
+
+MBPurchase.empty: Aucun Mois (achat) trouvé dans la base de donnée
+
+MBPurchase.add.success: 'Succès de l''ajout du Mois (achat) <b>%mbpurchase%</b>'
+MBPurchase.add.failure: 'Echec de l''ajout du Mois (achat)'
+MBPurchase.delete.confirm.title: Demande de Confirmation
+MBPurchase.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Mois (achat) ?<br/> Cette action est irreversible!
+MBPurchase.delete.notfound: Mois (achat) inconnu
+MBPurchase.delete.success: 'Succès de la suppression du Mois (achat) <b>%mbpurchase%</b>'
+MBPurchase.delete.failure: 'Echec de la suppression du Mois (achat)'
+MBPurchase.edit.notfound: Mois inconnu
+MBPurchase.edit.success: 'Succès de la modification du Mois <b>%mbpurchase%</b>'
+MBPurchase.edit.failure: 'Echec de la modification du Mois <b>%mbpurchase%</b>'
+
+MBPurchase.traceNew: 'Ajout Nouveau Mois d''Achat <b>%mbpurchase%</b><br/>Société <b>%company%</b>'
+MBPurchase.traceEdit: 'Modification Mois d''Achat <b>%mbpurchase%</b><br/>Société <b>%company%</b>'
+MBPurchase.traceDel: 'Suppression Mois d''Achat <b>%mbpurchase%</b><br/>Société <b>%company%</b>'
+
+# Sale
+menu.admin.sale: Ventes
+breadcrumb.sale.list: Liste des Ventes
+breadcrumb.sale.add: Ajouter Vente
+breadcrumb.sale.edit: Vente <b>%sale%</b>
+
+pagetitle.sale.list: Liste des Ventes
+pagetitle.sale.listExcel: '%mbsale%'
+pagetitle.sale.listByMBSale: Liste des Ventes du Mois %mbsale% (%company%)
+pagetitle.sale.listByYear: 'Liste des Ventes de l''Année %year% (%company%)'
+pagetitle.sale.list.txt: Liste des Ventes
+pagetitle.sale.add: Ajouter Vente
+pagetitle.sale.add.txt: Ajouter Vente
+pagetitle.sale.edit: Edition Vente <b>%sale%</b>
+pagetitle.sale.edit.txt: Edition Vente "%sale%"
+
+Sale.docs.Add: "Nouveau Document"
+Sale.docs.Delete: "Annuler"
+Sale.secondaryVats.Add: "Nouvelle TVA Secondaire"
+Sale.secondaryVats.Delete: "Annuler"
+
+Sale.tab.docs: Documents
+Sale.tab.overview: Détails
+Sale.tab.edit: Edition
+Sale.tlabel.overview: 'Aperçu des détails de la Vente'
+Sale.tlabel.editNumber: 'Modifier le Numéro de la Vente'
+Sale.tlabel.editDtActivation: 'Modifier la Date de la Vente'
+Sale.tlabel.editBill: 'Modifier la Facture de la Vente'
+Sale.tlabel.editRelation: 'Modifier le Client de la Vente'
+Sale.tlabel.editLabel: 'Modifier l''Intitulé de la Vente'
+Sale.tlabel.editDevise: 'Modifier la Devise de la Vente'
+Sale.tlabel.editConversionRate: 'Modifier le Taux de Conversion de la Vente'
+Sale.tlabel.editVat: 'Modifier le Montant de la TVA de la Vente'
+Sale.tlabel.editVatDevise: 'Modifier le Montant de la TVA de la Vente (Devise)'
+Sale.tlabel.editVatInfo: 'Modifier la TVA Pour Infos de la Vente'
+Sale.tlabel.editStamp: 'Modifier le Montant du Timbre Fiscal de la Vente'
+Sale.tlabel.editStampDevise: 'Modifier le Montant du Timbre Fiscal de la Vente (Devise)'
+Sale.tlabel.editRegime: 'Modifier le Régime de la Vente'
+Sale.tlabel.editBalanceTtc: 'Modifier le Montant TTC de la Vente'
+Sale.tlabel.editBalanceTtcDevise: 'Modifier le Montant TTC de la Vente (Devise)'
+Sale.tlabel.editWithholding: 'Modifier le Taux de Retenue de la Vente'
+Sale.tlabel.editBalanceNet: 'Modifier le Montant Net de la Vente'
+Sale.tlabel.editBalanceNetDevise: 'Modifier le Montant Net de la Vente (Devise)'
+Sale.tlabel.editPaymentType: 'Modifier le Type de Paiement de la Vente'
+Sale.tlabel.editTransactionStatus: 'Modifier le Status et la Date de Paiement de la Vente'
+Sale.tlabel.editValidated: 'Modifier la Validation de la Vente'
+Sale.tlabel.editAccount: 'Modifier le Compte Bancaire/la Caisse de la Vente'
+Sale.tlabel.editOtherInfos: 'Modifier les remarques de la Vente'
+Sale.tlabel.addSecondaryVat: 'Ajouter une TVA Secondaire'
+
+Sale.tlabel.list: Liste des Ventes
+Sale.tlabel.add: Ajouter nouvelle Vente
+Sale.tlabel.overview: 'Aperçu des détails de la Vente'
+Sale.tlabel.edit: 'Modifier les détails de la Vente'
+Sale.tlabel.docs.add: 'Ajouter un Nouveau Document à la Vente'
+Sale.tlabel.docs.edit: 'Modifier la Liste des Documents de la Vente'
+Sale.tlabel.docs.list: 'Liste des Documents de la Vente'
+
+Sale.empty: Aucune Vente trouvée dans la base de donnée
+
+Sale.add.success: 'Succès de l''ajout de la Vente <b>%sale%</b>'
+Sale.add.failure: 'Echec de l''ajout de la Vente'
+Sale.delete.confirm.title: Demande de Confirmation
+Sale.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Vente ?<br/> Cette action est irreversible!
+Sale.delete.notfound: Vente inconnue
+Sale.delete.success: 'Succès de la suppression de la Vente <b>%sale%</b>'
+Sale.delete.failure: 'Echec de la suppression de la Vente'
+Sale.edit.notfound: Vente inconnu
+Sale.edit.success: 'Succès de la modification de la Vente <b>%sale%</b>'
+Sale.edit.failure: 'Echec de la modification de la Vente <b>%sale%</b>'
+Sale.import.success: 'Succès de l''import du fichier Excel Vente'
+Sale.import.failure: 'Echec de l''import du fichier Excel Vente'
+
+Sale.traceNew: 'Ajout Nouvelle Vente <b>%sale%</b><br/>Mois de Vente <b>%mbsale%</b><br/>Société <b>%company%</b>'
+Sale.traceEdit: 'Modification de la Vente <b>%sale%</b><br/>Mois de Vente <b>%mbsale%</b><br/>Société <b>%company%</b>'
+Sale.traceDel: 'Suppression de la Vente <b>%sale%</b><br/>Mois de Vente <b>%mbsale%</b><br/>Société <b>%company%</b>'
+
+# SecondaryVat
+menu.admin.secondaryVat: TVA Secondaires
+breadcrumb.secondaryVat.list: Liste des TVA Secondaires
+breadcrumb.secondaryVat.add: Ajouter TVA Secondaire
+breadcrumb.secondaryVat.edit: TVA Secondaire <b>%secondaryVat%</b> de la Vente <b>%sale%</b>
+
+pagetitle.secondaryVat.list: Liste des TVA Secondaires
+pagetitle.secondaryVat.list.txt: Liste des TVA Secondaires
+pagetitle.secondaryVat.add: Ajouter TVA Secondaire
+pagetitle.secondaryVat.add.txt: Ajouter TVA Secondaire
+pagetitle.secondaryVat.edit: Edition TVA Secondaire <b>%secondaryVat%</b> de la Vente <b>%sale%</b>
+pagetitle.secondaryVat.edit.txt: Edition TVA Secondaire "%secondaryVat%" de la Vente "%sale%"
+
+SecondaryVat.tab.overview: Détails
+SecondaryVat.tab.edit: Edition
+SecondaryVat.tlabel.overview: 'Aperçu des détails de la TVA Secondaire'
+SecondaryVat.tlabel.editVat: 'Modifier le Montant de la TVA de la TVA Secondaire'
+SecondaryVat.tlabel.editVatInfo: 'Modifier la TVA Pour Infos de la TVA Secondaire'
+SecondaryVat.tlabel.editBalanceTtc: 'Modifier le Montant TTC de la TVA Secondaire'
+SecondaryVat.tlabel.editBalanceNet: 'Modifier le Montant Net de la TVA Secondaire'
+
+SecondaryVat.tlabel.list: Liste des TVA Secondaires
+SecondaryVat.tlabel.add: Ajouter nouvelle TVA Secondaire
+SecondaryVat.tlabel.overview: 'Aperçu des détails de la TVA Secondaire'
+SecondaryVat.tlabel.edit: 'Modifier les détails de la TVA Secondaire'
+
+SecondaryVat.empty: Aucune TVA Secondaire trouvée dans la base de donnée
+
+SecondaryVat.add.success: 'Succès de l''ajout de la TVA Secondaire <b>%secondaryVat%</b> de la Vente <b>%sale%</b>'
+SecondaryVat.add.failure: 'Echec de l''ajout de la TVA Secondaire'
+SecondaryVat.delete.confirm.title: Demande de Confirmation
+SecondaryVat.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette TVA Secondaire ?<br/> Cette action est irreversible!
+SecondaryVat.delete.notfound: Vente inconnue
+SecondaryVat.delete.success: 'Succès de la suppression de la TVA Secondaire <b>%secondaryVat%</b> de la Vente <b>%sale%</b>'
+SecondaryVat.delete.failure: 'Echec de la suppression de la TVA Secondaire'
+SecondaryVat.edit.notfound: Vente inconnu
+SecondaryVat.edit.success: 'Succès de la modification de la TVA Secondaire <b>%secondaryVat%</b> de la Vente <b>%sale%</b>'
+SecondaryVat.edit.failure: 'Echec de la modification de la TVA Secondaire <b>%secondaryVat%</b> de la Vente <b>%sale%</b>'
+
+SecondaryVat.traceNew: 'Ajout Nouvelle TVA Secondaire <b>%secondaryVat%</b><br/>Vente <b>%sale%</b><br/>Mois de Vente <b>%mbsale%</b><br/>Société <b>%company%</b>'
+SecondaryVat.traceEdit: 'Modification de la TVA Secondaire <b>%secondaryVat%</b><br/>Vente <b>%sale%</b><br/>Mois de Vente <b>%mbsale%</b><br/>Société <b>%company%</b>'
+SecondaryVat.traceDel: 'Suppression de la TVA Secondaire <b>%secondaryVat%</b><br/>Vente <b>%sale%</b><br/>Mois de Vente <b>%mbsale%</b><br/>Société <b>%company%</b>'
+
+# Buy
+menu.admin.buy: Achats
+breadcrumb.buy.list: Liste des Achats
+breadcrumb.buy.add: Ajouter Achat
+breadcrumb.buy.edit: Achat <b>%buy%</b>
+
+pagetitle.buy.list: Liste des Achats
+pagetitle.buy.listExcel: '%mbpurchase%'
+pagetitle.buy.listByMBPurchase: Liste des Achats du Mois %mbpurchase% (%company%)
+pagetitle.buy.listByYear: 'Liste des Achats de l''Année %year% (%company%)'
+pagetitle.buy.list.txt: Liste des Achats
+pagetitle.buy.add: Ajouter Achat
+pagetitle.buy.add.txt: Ajouter Achat
+pagetitle.buy.edit: Edition Achat <b>%buy%</b>
+pagetitle.buy.edit.txt: Edition Achat "%buy%"
+
+Buy.tab.docs: Documents
+Buy.tab.overview: Détails
+Buy.tab.edit: Edition
+Buy.tlabel.overview: 'Aperçu des détails de l''Achat'
+Buy.tlabel.editNumber: 'Modifier le Numéro de l''Achat'
+Buy.tlabel.editDtActivation: 'Modifier la Date de l''Achat'
+Buy.tlabel.editBill: 'Modifier la Facture de l''Achat'
+Buy.tlabel.editRelation: 'Modifier le Client de l''Achat'
+Buy.tlabel.editLabel: 'Modifier l''Intitulé de l''Achat'
+Buy.tlabel.editNature: 'Modifier la Nature de l''Achat'
+Buy.tlabel.editDevise: 'Modifier la Devise de l''Achat'
+Buy.tlabel.editConversionRate: 'Modifier le Taux de Conversion de l''Achat'
+Buy.tlabel.editVat: 'Modifier le Montant de la TVA de l''Achat'
+Buy.tlabel.editVatDevise: 'Modifier le Montant de la TVA de l''Achat (Devise)'
+Buy.tlabel.editStamp: 'Modifier le Montant du Timbre Fiscal de l''Achat'
+Buy.tlabel.editStampDevise: 'Modifier le Montant du Timbre Fiscal de l''Achat (Devise)'
+Buy.tlabel.editRegime: 'Modifier le Régime de l''Achat'
+Buy.tlabel.editBalanceTtc: 'Modifier le Montant TTC de l''Achat'
+Buy.tlabel.editBalanceTtcDevise: 'Modifier le Montant TTC de l''Achat (Devise)'
+Buy.tlabel.editWithholding: 'Modifier le Taux de Retenue de l''Achat'
+Buy.tlabel.editBalanceNet: 'Modifier le Montant Net de l''Achat'
+Buy.tlabel.editBalanceNetDevise: 'Modifier le Montant Net de l''Achat (Devise)'
+Buy.tlabel.editPaymentType: 'Modifier le Type de Paiement de l''Achat'
+Buy.tlabel.editTransactionStatus: 'Modifier le Status et la Date de Paiement de l''Achat'
+Buy.tlabel.editValidated: 'Modifier la Validation de l''Achat'
+Buy.tlabel.editAccount: 'Modifier le Compte Bancaire/la Caisse de l''Achat'
+Buy.tlabel.editOtherInfos: 'Modifier les remarques de l''Achat'
+Buy.excel.label: 'Achats (Excel) :'
+
+Buy.docs.Add: "Nouveau Document"
+Buy.docs.Delete: "Annuler"
+
+Buy.tlabel.list: Liste des Achats
+Buy.tlabel.add: Ajouter nouvelle Achat
+Buy.tlabel.overview: 'Aperçu des détails de l''Achat'
+Buy.tlabel.edit: 'Modifier les détails de l''Achat'
+Buy.tlabel.docs.add: 'Ajouter un Nouveau Document à l''Achat'
+Buy.tlabel.docs.edit: 'Modifier la Liste des Documents de l''Achat'
+Buy.tlabel.docs.list: 'Liste des Documents de l''Achat'
+
+Buy.empty: Aucune Achat trouvée dans la base de donnée
+
+Buy.add.success: 'Succès de l''ajout de l''Achat <b>%buy%</b>'
+Buy.add.failure: 'Echec de l''ajout de l''Achat'
+Buy.delete.confirm.title: Demande de Confirmation
+Buy.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Achat ?<br/> Cette action est irreversible!
+Buy.delete.notfound: Achat inconnue
+Buy.delete.success: 'Succès de la suppression de l''Achat <b>%buy%</b>'
+Buy.delete.failure: 'Echec de la suppression de l''Achat'
+Buy.edit.notfound: Achat inconnu
+Buy.edit.success: 'Succès de la modification de l''Achat <b>%buy%</b>'
+Buy.edit.failure: 'Echec de la modification de l''Achat <b>%buy%</b>'
+Buy.import.success: 'Succès de l''import du fichier Excel Achat'
+Buy.import.failure: 'Echec de l''import du fichier Excel Achat'
+
+Buy.traceNew: 'Ajout Nouvel l''Achat <b>%buy%</b><br/>Mois d''Achat <b>%mbpurchase%</b><br/>Société <b>%company%</b>'
+Buy.traceEdit: 'Modification de l''Achat <b>%buy%</b><br/>Mois d''Achat <b>%mbpurchase%</b><br/>Société <b>%company%</b>'
+Buy.traceDel: 'Suppression de l''Achat <b>%buy%</b><br/>Mois d''Achat <b>%mbpurchase%</b><br/>Société <b>%company%</b>'
+
+#Shareholder
+menu.admin.shareholder: Actionnaires
+breadcrumb.shareholder.list: Liste des Actionnaires
+breadcrumb.shareholder.add: Ajouter Actionnaire
+breadcrumb.shareholder.edit: Actionnaire <b>%shareholder%</b>
+
+pagetitle.shareholder.list: Liste des Actionnaires
+pagetitle.shareholder.list.txt: Liste des Actionnaires
+pagetitle.shareholder.listByCompany: Capital %company%
+pagetitle.shareholder.add: Ajouter Actionnaire
+pagetitle.shareholder.add.txt: Ajouter Actionnaire
+pagetitle.shareholder.edit: Edition Actionnaire <b>%shareholder%</b>
+pagetitle.shareholder.edit.txt: Edition Actionnaire "%shareholder%"
+
+Shareholder.tab.overview: Détails
+Shareholder.tab.edit: Edition
+
+Shareholder.tlabel.list: Liste des Actionnaires
+Shareholder.tlabel.add: Ajouter nouvelle Actionnaire
+Shareholder.tlabel.overview: 'Aperçu des détails de l''Actionnaire'
+Shareholder.tlabel.edit: 'Modification de l''Actionnaire'
+
+Shareholder.empty: Aucune Actionnaire trouvée dans la base de donnée
+
+Shareholder.add.success: 'Succès de l''ajout de l''Actionnaire <b>%shareholder%</b>'
+Shareholder.add.failure: 'Echec de l''ajout de l''Actionnaire'
+Shareholder.delete.confirm.title: Demande de Confirmation
+Shareholder.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Actionnaire ?<br/> Cette action est irreversible!
+Shareholder.delete.notfound: Actionnaire inconnu
+Shareholder.delete.success: 'Succès de la suppression de l''Actionnaire <b>%shareholder%</b>'
+Shareholder.delete.failure: 'Echec de la suppression de l''Actionnaire'
+Shareholder.edit.notfound: Actionnaire inconnu
+Shareholder.edit.success: 'Succès de la modification de l''Actionnaire <b>%shareholder%</b>'
+Shareholder.edit.failure: 'Echec de la modification de l''Actionnaire <b>%shareholder%</b>'
+
+Shareholder.traceNew: 'Ajout Nouvel Actionnaire <b>%shareholder%</b><br/>Société <b>%company%</b>'
+Shareholder.traceEdit: 'Modification Actionnaire <b>%shareholder%</b><br/>Société <b>%company%</b>'
+Shareholder.traceDel: 'Suppression Actionnaire <b>%shareholder%</b><br/>Société <b>%company%</b>'
+
+#Pilot
+menu.admin.pilot: Pilotages
+breadcrumb.pilot.list: Liste des Pilotages
+breadcrumb.pilot.add: Ajouter Pilotage
+breadcrumb.pilot.edit: Pilotage <b>%pilot%</b>
+
+pagetitle.pilot.list: Liste des Pilotages
+pagetitle.pilot.list.txt: Liste des Pilotages
+pagetitle.pilot.listByCompany: Liste des Pilotages de la société %company%
+pagetitle.pilot.add: Ajouter Pilotage
+pagetitle.pilot.add.txt: Ajouter Pilotage
+pagetitle.pilot.edit: Edition Pilotage <b>%pilot%</b>
+pagetitle.pilot.edit.txt: Edition Pilotage "%pilot%"
+
+Pilot.tab.overview: Détails
+Pilot.tab.edit: Edition
+
+Pilot.tlabel.list: Liste des Pilotages
+Pilot.tlabel.add: Ajouter nouveau Pilotage
+Pilot.tlabel.overview: 'Aperçu des détails du Pilotage'
+Pilot.tlabel.edit: 'Modification du Pilotage'
+
+Pilot.empty: Aucun Pilotage trouvé dans la base de donnée
+
+Pilot.add.success: 'Succès de l''ajout du Pilotage <b>%pilot%</b>'
+Pilot.add.failure: 'Echec de l''ajout du Pilotage'
+Pilot.delete.confirm.title: Demande de Confirmation
+Pilot.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Pilotage ?<br/> Cette action est irreversible!
+Pilot.delete.notfound: Pilotage inconnu
+Pilot.delete.success: 'Succès de la suppression du Pilotage <b>%pilot%</b>'
+Pilot.delete.failure: 'Echec de la suppression du Pilotage'
+Pilot.edit.notfound: Pilotage inconnu
+Pilot.edit.success: 'Succès de la modification du Pilotage <b>%pilot%</b>'
+Pilot.edit.failure: 'Echec de la modification du Pilotage <b>%pilot%</b>'
+
+Pilot.traceNew: 'Ajout Nouveau Pilotage <b>%pilot%</b><br/>Société <b>%company%</b>'
+Pilot.traceEdit: 'Modification Pilotage <b>%pilot%</b><br/>Société <b>%company%</b>'
+Pilot.traceDel: 'Suppression Pilotage <b>%pilot%</b><br/>Société <b>%company%</b>'
+
+#CompanyUser
+menu.admin.companyUser: Privilèges Sociétés/Utilisateurs
+breadcrumb.companyUser.list: Liste des Privilèges Sociétés/Utilisateurs
+breadcrumb.companyUser.add: Ajouter  Privilège Société/Utilisateur
+breadcrumb.companyUser.edit:  Privilège Utilisateur  <b>%user%</b>
+
+pagetitle.companyUser.list: Liste des Privilèges Sociétés/Utilisateurs
+pagetitle.companyUser.list.txt: Liste des Privilèges Sociétés/Utilisateurs
+pagetitle.companyUser.listByCompany: Liste des Privilèges Sociétés/Utilisateurs  <b>%company%/%user%</b>
+pagetitle.companyUser.add: Ajouter Privilèges Société/Utilisateur
+pagetitle.companyUser.add.txt: Ajouter Privilèges Société/Utilisateur
+pagetitle.companyUser.edit: Edition Privilèges Société/Utilisateur <b>%company%/%user%</b>
+pagetitle.companyUser.edit.txt: Edition Privilèges Société/Utilisateur "%company%/%user%"
+
+CompanyUser.tab.overview: Détails
+CompanyUser.tab.edit: Edition
+
+CompanyUser.tlabel.list: Liste des Privilèges Sociétés/Utilisateurs
+CompanyUser.tlabel.add: Ajouter nouveau Privilège Société/Utilisateur
+CompanyUser.tlabel.overview: 'Aperçu des détails du Privilège Société/Utilisateur'
+CompanyUser.tlabel.edit: 'Modification du Privilège Société/Utilisateur'
+
+CompanyUser.empty: Aucun Privilège Société/Utilisateur trouvé dans la base de donnée
+
+CompanyUser.add.success: 'Succès de l''ajout du Privilège Société/Utilisateur <b>%company%/%user%</b>'
+CompanyUser.add.failure: 'Echec de l''ajout du Privilège Société/Utilisateur'
+CompanyUser.delete.confirm.title: Demande de Confirmation
+CompanyUser.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Privilège Société/Utilisateur ?<br/> Cette action est irreversible!
+CompanyUser.delete.notfound: Privilège Société/Utilisateur inconnu
+CompanyUser.delete.success: 'Succès de la suppression du Privilège Société/Utilisateur <b>%company%/%user%</b>'
+CompanyUser.delete.failure: 'Echec de la suppression du Privilège Société/Utilisateur'
+CompanyUser.edit.notfound: Privilège Société/Utilisateur inconnu
+CompanyUser.edit.success: 'Succès de la modification du Privilège Société/Utilisateur <b>%company%/%user%</b>'
+CompanyUser.edit.failure: 'Echec de la modification du Privilège Société/Utilisateur <b>%company%/%user%</b>'
+
+CompanyUser.traceNew: 'Ajout Nouveau Privilège Société/Utilisateur <b>%company%/%user%</b>'
+CompanyUser.traceEdit: 'Modification Privilège Société/Utilisateur <b>%company%/%user%</b>'
+CompanyUser.traceDel: 'Suppression Privilège Société/Utilisateur <b>%company%/%user%</b>'
+
+#CompanyAdmin
+menu.admin.companyAdmin: Privilèges Sociétés/Collaborateurs
+breadcrumb.companyAdmin.list: Liste des Privilèges Sociétés/Collaborateurs
+breadcrumb.companyAdmin.add: Ajouter  Privilège Société/Collaborateur
+breadcrumb.companyAdmin.edit:  Privilège Collaborateur  <b>%user%</b>
+
+pagetitle.companyAdmin.list: Liste des Privilèges Sociétés/Collaborateurs
+pagetitle.companyAdmin.list.txt: Liste des Privilèges Sociétés/Collaborateurs
+pagetitle.companyAdmin.listByCompany: Liste des Privilèges Sociétés/Collaborateurs  <b>%company%/%user%</b>
+pagetitle.companyAdmin.add: Ajouter Privilèges Société/Collaborateur
+pagetitle.companyAdmin.add.txt: Ajouter Privilèges Société/Collaborateur
+pagetitle.companyAdmin.edit: Edition Privilèges Société/Collaborateur <b>%company%/%user%</b>
+pagetitle.companyAdmin.edit.txt: Edition Privilèges Société/Collaborateur "%company%/%user%"
+
+CompanyAdmin.tab.overview: Détails
+CompanyAdmin.tab.edit: Edition
+
+CompanyAdmin.tlabel.list: Liste des Privilèges Sociétés/Collaborateurs
+CompanyAdmin.tlabel.add: Ajouter nouveau Privilège Société/Collaborateur
+CompanyAdmin.tlabel.overview: 'Aperçu des détails du Privilège Société/Collaborateur'
+CompanyAdmin.tlabel.edit: 'Modification du Privilège Société/Collaborateur'
+
+CompanyAdmin.empty: Aucun Privilège Société/Collaborateur trouvé dans la base de donnée
+
+CompanyAdmin.add.success: 'Succès de l''ajout du Privilège Société/Collaborateur <b>%company%/%user%</b>'
+CompanyAdmin.add.failure: 'Echec de l''ajout du Privilège Société/Collaborateur'
+CompanyAdmin.delete.confirm.title: Demande de Confirmation
+CompanyAdmin.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Privilège Société/Collaborateur ?<br/> Cette action est irreversible!
+CompanyAdmin.delete.notfound: Privilège Société/Collaborateur inconnu
+CompanyAdmin.delete.success: 'Succès de la suppression du Privilège Société/Collaborateur <b>%company%/%user%</b>'
+CompanyAdmin.delete.failure: 'Echec de la suppression du Privilège Société/Collaborateur'
+CompanyAdmin.edit.notfound: Privilège Société/Collaborateur inconnu
+CompanyAdmin.edit.success: 'Succès de la modification du Privilège Société/Collaborateur <b>%company%/%user%</b>'
+CompanyAdmin.edit.failure: 'Echec de la modification du Privilège Société/Collaborateur <b>%company%/%user%</b>'
+
+CompanyAdmin.traceNew: 'Ajout Nouveau Privilège Société/Collaborateur <b>%company%/%user%</b>'
+CompanyAdmin.traceEdit: 'Modification Privilège Société/Collaborateur <b>%company%/%user%</b>'
+CompanyAdmin.traceDel: 'Suppression Privilège Société/Collaborateur <b>%company%/%user%</b>'
+
+# Doc
+menu.doc: Document
+breadcrumb.doc.list: Liste des Documents
+breadcrumb.doc.add: Ajouter Document
+breadcrumb.doc.edit: Document <b>%doc%</b>
+
+pagetitle.doc.list: Liste des Documents
+pagetitle.doc.list.txt: Liste des Documents
+pagetitle.doc.edit: Edition Document <b>%doc%</b>
+pagetitle.doc.edit.txt: Edition Document "%doc%"
+
+Doc.tab.overview: Détails
+Doc.tab.edit: Edition
+Doc.tab.docgroups: Groupes de Documents
+Doc.tab.banks: Banques
+Doc.tab.funds: Comptes
+Doc.tab.monthlyBalances: Mois
+Doc.tab.transactions: Transactions
+
+Doc.tlabel.list: Liste des Documents
+Doc.tlabel.add: Ajouter nouveau Document
+Doc.tlabel.overview: Aperçu des détails du Document
+Doc.tlabel.editContent: Modification du Contenu du Document
+Doc.tlabel.editDescription: Modification de la Description du Document
+Doc.tlabel.editOriginalName: Modification du nom du Document
+Doc.tlabel.docgroups: Liste des Groupes de Documents associées
+Doc.tlabel.banks: Liste des Banques associées
+Doc.tlabel.accounts: Liste des Comptes associés
+Doc.tlabel.monthlyBalances: Liste des Mois associés
+Doc.tlabel.transactions: Liste des Transactions associées
+
+Doc.empty: Aucun Document trouvé dans la base de donnée
+
+Doc.add.success: Succès de l'ajout du Document <b>%doc%</b>
+Doc.add.failure: Echec de l'ajout du Document
+Doc.download.notfound: Echec de téléchargement du Document
+Doc.delete.confirm.title: Demande de Confirmation
+Doc.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Document ?<br/> Cette action est irreversible!
+Doc.delete.notfound: Document inconnu
+Doc.delete.success: Succès de la suppression du Document <b>%doc%</b>
+Doc.delete.failure: Echec de la suppression du Document <b>%doc%</b>
+Doc.edit.notfound: Document inconnu
+Doc.edit.success: Succès de la modification du Document <b>%doc%</b>
+Doc.edit.failure: Echec de la modification du Document <b>%doc%</b>
+
+Doc.traceNew: 'Ajout Nouveau Document <b>%doc%</b><br/>Société <b>%company%</b>'
+Doc.traceEdit: 'Modification du Document <b>%doc%</b><br/>Société <b>%company%</b>'
+Doc.traceDel: 'Suppression du Document <b>%doc%</b><br/>Société <b>%company%</b>'
+
+#Docgroupcomptable
+menu.admin.docgroupcomptable: Groupe de Documents Comptables
+breadcrumb.docgroupcomptable.list: Liste des Groupes de Documents Comptables
+breadcrumb.docgroupcomptable.add: Ajouter Groupe de Document Comptable
+breadcrumb.docgroupcomptable.edit: Groupe de Document <b>%docgroupcomptable%</b>
+
+pagetitle.docgroupcomptable.list: Liste des Groupes de Documents Comptables
+pagetitle.docgroupcomptable.listByCompany: Liste des Groupe de Documents Comptables de la Société %company%
+pagetitle.docgroupcomptable.list.txt: Liste des Groupe de Documents Comptables
+pagetitle.docgroupcomptable.add: Ajouter Groupe de Document Comptable
+pagetitle.docgroupcomptable.add.txt: Ajouter Groupe de Document Comptable
+pagetitle.docgroupcomptable.edit: Edition Groupe de Document Comptable <b>%docgroupcomptable%</b>
+pagetitle.docgroupcomptable.edit.txt: Edition Groupe de Document Comptable "%docgroupcomptable%"
+
+Docgroupcomptable.tab.overview: Détails
+Docgroupcomptable.tab.edit: Edition
+Docgroupcomptable.tab.docs: Documents
+
+Docgroupcomptable.tlabel.list: Liste des Groupe de Documents Comptables
+Docgroupcomptable.tlabel.add: Ajouter nouveau Groupe de Document Comptable
+Docgroupcomptable.tlabel.overview: 'Aperçu des détails du Groupe de Document Comptable'
+Docgroupcomptable.tlabel.edit: 'Modifier les détails du Groupe de Document Comptable'
+Docgroupcomptable.tlabel.editLabel: 'Modifier le Libellé du Groupe de Document Comptable'
+Docgroupcomptable.tlabel.editOtherInfos: 'Modifier les Autres Informations du Groupe de Document Comptable'
+Docgroupcomptable.tlabel.editParent: 'Modifier le Groupe père du Groupe de Document Comptable'
+Docgroupcomptable.tlabel.docs.add: 'Ajouter un Nouveau Document au Groupe Comptable'
+Docgroupcomptable.tlabel.docs.edit: 'Modifier la Liste des Documents du Groupe Comptable'
+Docgroupcomptable.tlabel.docs.list: 'Liste des Documents du GroupeComptable '
+
+Docgroupcomptable.empty: Aucun Groupe de Document Comptable trouvé dans la base de donnée
+
+Docgroupcomptable.add.success: 'Succès de l''ajout de la Groupe de Document Comptable <b>%docgroupcomptable%</b>'
+Docgroupcomptable.add.failure: 'Echec de l''ajout de la Groupe de Document Comptable'
+Docgroupcomptable.delete.confirm.title: Demande de Confirmation
+Docgroupcomptable.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Groupe de Document Comptable ?<br/> Cette action est irreversible!
+Docgroupcomptable.delete.notfound: Groupe de Document Comptable inconnu
+Docgroupcomptable.delete.success: 'Succès de la suppression du Groupe de Document Comptable <b>%docgroupcomptable%</b>'
+Docgroupcomptable.delete.failure: 'Echec de la suppression du Groupe de Document Comptable'
+Docgroupcomptable.edit.notfound: Groupe de Document Comptable inconnu
+Docgroupcomptable.edit.success: 'Succès de la modification du Groupe de Document Comptable <b>%docgroupcomptable%</b>'
+Docgroupcomptable.edit.failure: 'Echec de la modification du Groupe de Document Comptable <b>%docgroupcomptable%</b>'
+
+Docgroupcomptable.traceNew: 'Ajout Nouveau Groupe de Document Comptable <b>%docgroupcomptable%</b><br/>Société <b>%company%</b>'
+Docgroupcomptable.traceEdit: 'Modification du Groupe de Document Comptable <b>%docgroupcomptable%</b><br/>Société <b>%company%</b>'
+Docgroupcomptable.traceDel: 'Suppression du Groupe de Document Comptable <b>%docgroupcomptable%</b><br/>Société <b>%company%</b>'
+
+#Docgroupbank
+menu.admin.docgroupbank: Groupe de Document Bancaire
+breadcrumb.docgroupbank.list: Liste des Groupes de Documents Bancaire
+breadcrumb.docgroupbank.add: Ajouter Groupe de Document Bancaire
+breadcrumb.docgroupbank.edit: Groupe de Document Bancaire <b>%docgroupbank%</b>
+
+pagetitle.docgroupbank.list: Liste des Groupes de Documents Bancaire
+pagetitle.docgroupbank.listByCompany: Liste des Groupe de Documents Bancaire de la Société %company%
+pagetitle.docgroupbank.list.txt: Liste des Groupe de Documents Bancaire
+pagetitle.docgroupbank.add: Ajouter Groupe de Document Bancaire
+pagetitle.docgroupbank.add.txt: Ajouter Groupe de Document Bancaire
+pagetitle.docgroupbank.edit: Edition Groupe de Document Bancaire <b>%docgroupbank%</b>
+pagetitle.docgroupbank.edit.txt: Edition Groupe de Document Bancaire "%docgroupbank%"
+
+Docgroupbank.tab.overview: Détails
+Docgroupbank.tab.edit: Edition
+Docgroupbank.tab.docs: Documents
+
+Docgroupbank.tlabel.list: Liste des Groupe de Documents Bancaire
+Docgroupbank.tlabel.add: Ajouter nouveau Groupe de Document Bancaire
+Docgroupbank.tlabel.overview: 'Aperçu des détails du Groupe de Document Bancaire'
+Docgroupbank.tlabel.edit: 'Modifier les détails du Groupe de Document Bancaire'
+Docgroupbank.tlabel.editLabel: 'Modifier le Libellé du Groupe de Document Bancaire'
+Docgroupbank.tlabel.editOtherInfos: 'Modifier les Autres Informations du Groupe de Document Bancaire'
+Docgroupbank.tlabel.editParent: 'Modifier le Groupe père du Groupe de Document Bancaire'
+Docgroupbank.tlabel.docs.add: 'Ajouter un Nouveau Document au Groupe Bancaire'
+Docgroupbank.tlabel.docs.edit: 'Modifier la Liste des Documents du Groupe Bancaire'
+Docgroupbank.tlabel.docs.list: 'Liste des Documents du Groupe Bancaire'
+
+Docgroupbank.empty: Aucun Groupe de Document trouvé dans la base de donnée
+
+Docgroupbank.add.success: 'Succès de l''ajout de la Groupe de Document Bancaire <b>%docgroupbank%</b>'
+Docgroupbank.add.failure: 'Echec de l''ajout de la Groupe de Document Bancaire'
+Docgroupbank.delete.confirm.title: Demande de Confirmation
+Docgroupbank.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Groupe de Document Bancaire ?<br/> Cette action est irreversible!
+Docgroupbank.delete.notfound: Groupe de Document Bancaire inconnu
+Docgroupbank.delete.success: 'Succès de la suppression du Groupe de Document Bancaire <b>%docgroupbank%</b>'
+Docgroupbank.delete.failure: 'Echec de la suppression du Groupe de Documen Bancairet'
+Docgroupbank.edit.notfound: Groupe de Document Bancaire inconnu
+Docgroupbank.edit.success: 'Succès de la modification du Groupe de Document Bancaire <b>%docgroupbank%</b>'
+Docgroupbank.edit.failure: 'Echec de la modification du Groupe de Document Bancaire <b>%docgroupbank%</b>'
+
+Docgroupbank.traceNew: 'Ajout Nouveau Groupe de Document Bancaire <b>%docgroupbank%</b><br/>Société <b>%company%</b>'
+Docgroupbank.traceEdit: 'Modification du Groupe de Document Bancaire <b>%docgroupbank%</b><br/>Société <b>%company%</b>'
+Docgroupbank.traceDel: 'Suppression du Groupe de Document Bancaire <b>%docgroupbank%</b><br/>Société <b>%company%</b>'
+
+#Docgroup
+menu.admin.docgroup: Groupe de Documents Juridiques
+breadcrumb.docgroup.list: Liste des Groupes de Documents Juridiques
+breadcrumb.docgroup.add: Ajouter Groupe de Document Juridique
+breadcrumb.docgroup.edit: Groupe de Document Juridique <b>%docgroup%</b>
+
+pagetitle.docgroup.list: Liste des Groupes de Documents Juridiques
+pagetitle.docgroup.listByCompany: Liste des Groupe de Documents de la Société %company%
+pagetitle.docgroup.list.txt: Liste des Groupe de Documents Juridiques
+pagetitle.docgroup.add: Ajouter Groupe de Document Juridique
+pagetitle.docgroup.add.txt: Ajouter Groupe de Document Juridique
+pagetitle.docgroup.edit: Edition Groupe de Document Juridique <b>%docgroup%</b>
+pagetitle.docgroup.edit.txt: Edition Groupe de Document Juridique "%docgroup%"
+
+Docgroup.tab.overview: Détails
+Docgroup.tab.edit: Edition
+Docgroup.tab.docs: Documents
+
+Docgroup.tlabel.list: Liste des Groupe de Documents Juridiques
+Docgroup.tlabel.add: Ajouter nouveau Groupe de Document Juridique
+Docgroup.tlabel.overview: 'Aperçu des détails du Groupe de Document Juridique'
+Docgroup.tlabel.edit: 'Modifier les détails du Groupe de Document Juridique'
+Docgroup.tlabel.editLabel: 'Modifier le Libellé du Groupe de Document Juridique'
+Docgroup.tlabel.editOtherInfos: 'Modifier les Autres Informations du Groupe de Document Juridique'
+Docgroup.tlabel.editParent: 'Modifier le Groupe père du Groupe de Document Juridique'
+Docgroup.tlabel.docs.add: 'Ajouter un Nouveau Document Juridique au Groupe'
+Docgroup.tlabel.docs.edit: 'Modifier la Liste des Documents Juridiques du Groupe'
+Docgroup.tlabel.docs.list: 'Liste des Documents Juridique du Groupe'
+
+Docgroup.empty: Aucun Groupe de Document Juridique trouvé dans la base de donnée
+
+Docgroup.add.success: 'Succès de l''ajout de la Groupe de Document Juridique <b>%docgroup%</b>'
+Docgroup.add.failure: 'Echec de l''ajout de la Groupe de Document Juridique'
+Docgroup.delete.confirm.title: Demande de Confirmation
+Docgroup.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Groupe de Document Juridique ?<br/> Cette action est irreversible!
+Docgroup.delete.notfound: Groupe de Document Juridique inconnu
+Docgroup.delete.success: 'Succès de la suppression du Groupe de Document Juridique <b>%docgroup%</b>'
+Docgroup.delete.failure: 'Echec de la suppression du Groupe de Document Juridique'
+Docgroup.edit.notfound: Groupe de Document Juridique inconnu
+Docgroup.edit.success: 'Succès de la modification du Groupe de Document Juridique <b>%docgroup%</b>'
+Docgroup.edit.failure: 'Echec de la modification du Groupe de Document Juridique <b>%docgroup%</b>'
+
+Docgroup.traceNew: 'Ajout Nouveau Groupe de Document Juridique <b>%docgroup%</b><br/>Société <b>%company%</b>'
+Docgroup.traceEdit: 'Modification du Groupe de Document Juridique <b>%docgroup%</b><br/>Société <b>%company%</b>'
+Docgroup.traceDel: 'Suppression du Groupe de Document Juridique <b>%docgroup%</b><br/>Société <b>%company%</b>'
+
+#Docgroupfiscal
+menu.admin.docgroupfiscal: Groupe de Document Fiscal
+breadcrumb.docgroupfiscal.list: Liste des Groupes de Documents Fiscal
+breadcrumb.docgroupfiscal.add: Ajouter Groupe de Document Fiscal
+breadcrumb.docgroupfiscal.edit: Groupe de Document Fiscal <b>%docgroupfiscal%</b>
+
+pagetitle.docgroupfiscal.list: Liste des Groupes de Documents Fiscal
+pagetitle.docgroupfiscal.listByCompany: Liste des Groupe de Documents Fiscal de la Société %company%
+pagetitle.docgroupfiscal.list.txt: Liste des Groupe de Documents Fiscal
+pagetitle.docgroupfiscal.add: Ajouter Groupe de Document Fiscal
+pagetitle.docgroupfiscal.add.txt: Ajouter Groupe de Document Fiscal
+pagetitle.docgroupfiscal.edit: Edition Groupe de Document Fiscal <b>%docgroupfiscal%</b>
+pagetitle.docgroupfiscal.edit.txt: Edition Groupe de Document Fiscal "%docgroupfiscal%"
+
+Docgroupfiscal.tab.overview: Détails
+Docgroupfiscal.tab.edit: Edition
+Docgroupfiscal.tab.docs: Documents
+
+Docgroupfiscal.tlabel.list: Liste des Groupe de Documents Fiscal
+Docgroupfiscal.tlabel.add: Ajouter nouveau Groupe de Document Fiscal
+Docgroupfiscal.tlabel.overview: 'Aperçu des détails du Groupe de Document Fiscal'
+Docgroupfiscal.tlabel.edit: 'Modifier les détails du Groupe de Document Fiscal'
+Docgroupfiscal.tlabel.editLabel: 'Modifier le Libellé du Groupe de Document Fiscal'
+Docgroupfiscal.tlabel.editOtherInfos: 'Modifier les Autres Informations du Groupe de Document Fiscal'
+Docgroupfiscal.tlabel.editParent: 'Modifier le Groupe père du Groupe de Document Fiscal'
+Docgroupfiscal.tlabel.docs.add: 'Ajouter un Nouveau Document au Groupe Fiscal'
+Docgroupfiscal.tlabel.docs.edit: 'Modifier la Liste des Documents du Groupe Fiscal'
+Docgroupfiscal.tlabel.docs.list: 'Liste des Documents du Groupe Fiscal'
+
+Docgroupfiscal.empty: Aucun Groupe de Document Fiscal trouvé dans la base de donnée
+
+Docgroupfiscal.add.success: 'Succès de l''ajout de la Groupe de Document Fiscal <b>%docgroupfiscal%</b>'
+Docgroupfiscal.add.failure: 'Echec de l''ajout de la Groupe de Document Fiscal'
+Docgroupfiscal.delete.confirm.title: Demande de Confirmation
+Docgroupfiscal.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Groupe de Document Fiscal ?<br/> Cette action est irreversible!
+Docgroupfiscal.delete.notfound: Groupe de Document Fiscal inconnu
+Docgroupfiscal.delete.success: 'Succès de la suppression du Groupe de Document Fiscal <b>%docgroupfiscal%</b>'
+Docgroupfiscal.delete.failure: 'Echec de la suppression du Groupe de Document Fiscal'
+Docgroupfiscal.edit.notfound: Groupe de Document Fiscal inconnu
+Docgroupfiscal.edit.success: 'Succès de la modification du Groupe de Document Fiscal <b>%docgroupfiscal%</b>'
+Docgroupfiscal.edit.failure: 'Echec de la modification du Groupe de Document Fiscal <b>%docgroupfiscal%</b>'
+
+Docgroupfiscal.traceNew: 'Ajout Nouveau Groupe de Document Fiscal <b>%docgroupfiscal%</b><br/>Société <b>%company%</b>'
+Docgroupfiscal.traceEdit: 'Modification du Groupe de Document Fiscal <b>%docgroupfiscal%</b><br/>Société <b>%company%</b>'
+Docgroupfiscal.traceDel: 'Suppression du Groupe de Document Fiscal <b>%docgroupfiscal%</b><br/>Société <b>%company%</b>'
+
+#Docgroupperso
+menu.admin.docgroupperso: Groupe de Document Personnel
+breadcrumb.docgroupperso.list: Liste des Groupes de Documents Personnel
+breadcrumb.docgroupperso.add: Ajouter Groupe de Document Personnel
+breadcrumb.docgroupperso.edit: Groupe de Document Personnel <b>%docgroupperso%</b>
+
+pagetitle.docgroupperso.list: Liste des Groupes de Documents Personnel
+pagetitle.docgroupperso.listByCompany: Liste des Groupe de Documents Personnel de la Société %company%
+pagetitle.docgroupperso.list.txt: Liste des Groupe de Documents Personnel
+pagetitle.docgroupperso.add: Ajouter Groupe de Document Personnel
+pagetitle.docgroupperso.add.txt: Ajouter Groupe de Document Personnel
+pagetitle.docgroupperso.edit: Edition Groupe de Document Personnel <b>%docgroupperso%</b>
+pagetitle.docgroupperso.edit.txt: Edition Groupe de Document Personnel "%docgroupperso%"
+
+Docgroupperso.tab.overview: Détails
+Docgroupperso.tab.edit: Edition
+Docgroupperso.tab.docs: Documents
+
+Docgroupperso.tlabel.list: Liste des Groupe de Documents Personnel
+Docgroupperso.tlabel.add: Ajouter nouveau Groupe de Document Personnel
+Docgroupperso.tlabel.overview: 'Aperçu des détails du Groupe de Document Personnel'
+Docgroupperso.tlabel.edit: 'Modifier les détails du Groupe de Document Personnel'
+Docgroupperso.tlabel.editLabel: 'Modifier le Libellé du Groupe de Document Personnel'
+Docgroupperso.tlabel.editOtherInfos: 'Modifier les Autres Informations du Groupe de Document Personnel'
+Docgroupperso.tlabel.editParent: 'Modifier le Groupe père du Groupe de Document Personnel'
+Docgroupperso.tlabel.docs.add: 'Ajouter un Nouveau Document au Groupe Personnel'
+Docgroupperso.tlabel.docs.edit: 'Modifier la Liste des Documents du Groupe Personnel'
+Docgroupperso.tlabel.docs.list: 'Liste des Documents du Groupe Personnel'
+
+Docgroupperso.empty: Aucun Groupe de Document trouvé dans la base de donnée
+
+Docgroupperso.add.success: 'Succès de l''ajout de la Groupe de Document Personnel <b>%docgroupperso%</b>'
+Docgroupperso.add.failure: 'Echec de l''ajout de la Groupe de Document Personnel'
+Docgroupperso.delete.confirm.title: Demande de Confirmation
+Docgroupperso.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Groupe de Document Personnel ?<br/> Cette action est irreversible!
+Docgroupperso.delete.notfound: Groupe de Document Personnel inconnu
+Docgroupperso.delete.success: 'Succès de la suppression du Groupe de Document Personnel <b>%docgroupperso%</b>'
+Docgroupperso.delete.failure: 'Echec de la suppression du Groupe de Documen Personnelt'
+Docgroupperso.edit.notfound: Groupe de Document Personnel inconnu
+Docgroupperso.edit.success: 'Succès de la modification du Groupe de Document Personnel <b>%docgroupperso%</b>'
+Docgroupperso.edit.failure: 'Echec de la modification du Groupe de Document Personnel <b>%docgroupperso%</b>'
+
+Docgroupperso.traceNew: 'Ajout Nouveau Groupe de Document Personnel <b>%docgroupperso%</b><br/>Société <b>%company%</b>'
+Docgroupperso.traceEdit: 'Modification du Groupe de Document Personnel <b>%docgroupperso%</b><br/>Société <b>%company%</b>'
+Docgroupperso.traceDel: 'Suppression du Groupe de Document Personnel <b>%docgroupperso%</b><br/>Société <b>%company%</b>'
+
+#Docgroupsyst
+menu.admin.docgroupsyst: Groupe de Document System
+breadcrumb.docgroupsyst.list: Liste des Groupes de Documents System
+breadcrumb.docgroupsyst.add: Ajouter Groupe de Document System
+breadcrumb.docgroupsyst.edit: Groupe de Document System <b>%docgroupsyst%</b>
+
+pagetitle.docgroupsyst.list: Liste des Groupes de Documents System
+pagetitle.docgroupsyst.listByCompany: Liste des Groupe de Documents System de la Société %company%
+pagetitle.docgroupsyst.list.txt: Liste des Groupe de Documents System
+pagetitle.docgroupsyst.add: Ajouter Groupe de Document System
+pagetitle.docgroupsyst.add.txt: Ajouter Groupe de Document System
+pagetitle.docgroupsyst.edit: Edition Groupe de Document System <b>%docgroupsyst%</b>
+pagetitle.docgroupsyst.edit.txt: Edition Groupe de Document System "%docgroupsyst%"
+
+Docgroupsyst.tab.overview: Détails
+Docgroupsyst.tab.edit: Edition
+Docgroupsyst.tab.docs: Documents
+
+Docgroupsyst.tlabel.list: Liste des Groupe de Documents System
+Docgroupsyst.tlabel.add: Ajouter nouveau Groupe de Document System
+Docgroupsyst.tlabel.overview: 'Aperçu des détails du Groupe de Document System'
+Docgroupsyst.tlabel.edit: 'Modifier les détails du Groupe de Document System'
+Docgroupsyst.tlabel.editLabel: 'Modifier le Libellé du Groupe de Document System'
+Docgroupsyst.tlabel.editOtherInfos: 'Modifier les Autres Informations du Groupe de Document System'
+Docgroupsyst.tlabel.editParent: 'Modifier le Groupe père du Groupe de Document System'
+Docgroupsyst.tlabel.docs.add: 'Ajouter un Nouveau Document au Groupe System'
+Docgroupsyst.tlabel.docs.edit: 'Modifier la Liste des Documents du Groupe System'
+Docgroupsyst.tlabel.docs.list: 'Liste des Documents du Groupe System'
+
+Docgroupsyst.empty: Aucun Groupe de Document System trouvé dans la base de donnée
+
+Docgroupsyst.add.success: 'Succès de l''ajout de la Groupe de Document System <b>%docgroupsyst%</b>'
+Docgroupsyst.add.failure: 'Echec de l''ajout de la Groupe de Document System'
+Docgroupsyst.delete.confirm.title: Demande de Confirmation
+Docgroupsyst.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Groupe de Document System ?<br/> Cette action est irreversible!
+Docgroupsyst.delete.notfound: Groupe de Documen Systemt inconnu
+Docgroupsyst.delete.success: 'Succès de la suppression du Groupe de Document System <b>%docgroupsyst%</b>'
+Docgroupsyst.delete.failure: 'Echec de la suppression du Groupe de Document System'
+Docgroupsyst.edit.notfound: Groupe de Document System inconnu
+Docgroupsyst.edit.success: 'Succès de la modification du Groupe de Document System <b>%docgroupsyst%</b>'
+Docgroupsyst.edit.failure: 'Echec de la modification du Groupe de Document System <b>%docgroupsyst%</b>'
+
+Docgroupsyst.traceNew: 'Ajout Nouveau Groupe de Document System <b>%docgroupsyst%</b><br/>Société <b>%company%</b>'
+Docgroupsyst.traceEdit: 'Modification du Groupe de Document System <b>%docgroupsyst%</b><br/>Société <b>%company%</b>'
+Docgroupsyst.traceDel: 'Suppression du Groupe de Document System <b>%docgroupsyst%</b><br/>Société <b>%company%</b>'
+
+#Docgroupaudit
+menu.admin.docgroupaudit: Groupe de Document Audit
+breadcrumb.docgroupaudit.list: Liste des Groupes de Documents Audit
+breadcrumb.docgroupaudit.add: Ajouter Groupe de Document Audit
+breadcrumb.docgroupaudit.edit: Groupe de Document Audit <b>%docgroupaudit%</b>
+
+pagetitle.docgroupaudit.list: Liste des Groupes de Documents Audit
+pagetitle.docgroupaudit.listByCompany: Liste des Groupe de Documents Audit de la Société %company%
+pagetitle.docgroupaudit.list.txt: Liste des Groupe de Documents Audit
+pagetitle.docgroupaudit.add: Ajouter Groupe de Document Audit
+pagetitle.docgroupaudit.add.txt: Ajouter Groupe de Document Audit
+pagetitle.docgroupaudit.edit: Edition Groupe de Document Audit <b>%docgroupaudit%</b>
+pagetitle.docgroupaudit.edit.txt: Edition Groupe de Document Audit "%docgroupaudit%"
+
+Docgroupaudit.tab.overview: Détails
+Docgroupaudit.tab.edit: Edition
+Docgroupaudit.tab.docs: Documents
+
+Docgroupaudit.tlabel.list: Liste des Groupe de Documents Audit
+Docgroupaudit.tlabel.add: Ajouter nouveau Groupe de Document Audit
+Docgroupaudit.tlabel.overview: 'Aperçu des détails du Groupe de Document Audit'
+Docgroupaudit.tlabel.edit: 'Modifier les détails du Groupe de Document Audit'
+Docgroupaudit.tlabel.editLabel: 'Modifier le Libellé du Groupe de Document Audit'
+Docgroupaudit.tlabel.editOtherInfos: 'Modifier les Autres Informations du Groupe de Document Audit'
+Docgroupaudit.tlabel.editParent: 'Modifier le Groupe père du Groupe de Document Audit'
+Docgroupaudit.tlabel.docs.add: 'Ajouter un Nouveau Document au Groupe Audit'
+Docgroupaudit.tlabel.docs.edit: 'Modifier la Liste des Documents du Groupe Audit'
+Docgroupaudit.tlabel.docs.list: 'Liste des Documents du Groupe Audit'
+
+Docgroupaudit.empty: Aucun Groupe de Document trouvé dans la base de donnée
+
+Docgroupaudit.add.success: 'Succès de l''ajout de la Groupe de Document Audit <b>%docgroupaudit%</b>'
+Docgroupaudit.add.failure: 'Echec de l''ajout de la Groupe de Document Audit'
+Docgroupaudit.delete.confirm.title: Demande de Confirmation
+Docgroupaudit.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Groupe de Document Audit ?<br/> Cette action est irreversible!
+Docgroupaudit.delete.notfound: Groupe de Document Audit inconnu
+Docgroupaudit.delete.success: 'Succès de la suppression du Groupe de Document Audit <b>%docgroupaudit%</b>'
+Docgroupaudit.delete.failure: 'Echec de la suppression du Groupe de Documen Auditt'
+Docgroupaudit.edit.notfound: Groupe de Document Audit inconnu
+Docgroupaudit.edit.success: 'Succès de la modification du Groupe de Document Audit <b>%docgroupaudit%</b>'
+Docgroupaudit.edit.failure: 'Echec de la modification du Groupe de Document Audit <b>%docgroupaudit%</b>'
+
+Docgroupaudit.traceNew: 'Ajout Nouveau Groupe de Document Audit <b>%docgroupaudit%</b><br/>Société <b>%company%</b>'
+Docgroupaudit.traceEdit: 'Modification du Groupe de Document Audit <b>%docgroupaudit%</b><br/>Société <b>%company%</b>'
+Docgroupaudit.traceDel: 'Suppression du Groupe de Document Audit <b>%docgroupaudit%</b><br/>Société <b>%company%</b>'
+
+#Agenda
+breadcrumb.agenda: Agenda
+breadcrumb.agenda.week: 'Semaine <b>%week%</b> / Année <b>%year%</b>'
+breadcrumb.agenda.event: 'Evènement <b>%agenda%</b>'
+
+pagetitle.agenda.txt: Agenda
+pagetitle.agenda: Agenda
+pagetitle.agenda.edit: Edition Evènement <b>%agenda%</b>
+pagetitle.agenda.edit.txt: Edition Evènement "%agenda%"
+
+Agenda.tab.overview: Détails
+Agenda.tab.edit: Edition
+
+Agenda.tlabel.overview: 'Aperçu des détails de l''Evènement'
+Agenda.tlabel.edit: 'Modifier les détails de l''Evènement'
+Agenda.tlabel.editUsers: 'Modifier les participants (Clients) à l''Evènement'
+Agenda.tlabel.editAdmins: 'Modifier les participants (Collaborateurs) à l''Evènement'
+
+Agenda.new.modal: Nouvel Evènement.
+
+Agenda.add.success: 'Succès de l''ajout de l''Evènement <b>%agenda%</b>'
+Agenda.add.success.txt: 'Succès de l''ajout de l''Evènement %agenda%'
+Agenda.add.failure: 'Echec de l''ajout de l''Evènement'
+Agenda.delete.notfound: Evènement inconnu
+Agenda.delete.success: 'Succès de la suppression de l''Evènement <b>%agenda%</b>'
+Agenda.delete.success.txt: 'Succès de la suppression de l''Evènement %agenda%'
+Agenda.delete.failure: 'Echec de la suppression de l''Evènement'
+Agenda.edit.notfound: Evènement inconnu
+Agenda.edit.success: 'Succès de la modification de l''Evènement <b>%agenda%</b>'
+Agenda.edit.success.txt: 'Succès de la modification de l''Evènement %agenda%'
+Agenda.edit.failure: 'Echec de la modification de l''Evènement'
+
+_mail.newEvent.subject: '[Acf-expert.tn] Evènement/Agenda'
+_mail.newEvent.body: 'Bonjour <u><i>%user%</i></u>,<br><br>Vous avez une planification d''évènement [Acf-expert.tn] de la part de <b>%iuser%</b><br><br>Titre : <b>%title%</b><br>Date de début : <b>%dtStart%</b> à <b>%tStart%</b><br>Date de fin : <b>%dtEnd%</b> à <b>%tEnd%</b><br>Description : %comment%'
+
+# FeedRead
+menu.admin.feedRead: Flux RSS
+breadcrumb.feedRead.list: Liste des Flux RSS
+breadcrumb.feedRead.add: Ajouter Flux RSS
+breadcrumb.feedRead.edit: Flux RSS <b>%feedRead%</b>
+
+pagetitle.feedRead.list: Liste des Flux RSS
+pagetitle.feedRead.list.txt: Liste des des Flux RSS
+pagetitle.feedRead.add: Ajouter Flux RSS
+pagetitle.feedRead.add.txt: Ajouter Flux RSS
+pagetitle.feedRead.edit: Edition Flux RSS <b>%feedRead%</b>
+pagetitle.feedRead.edit.txt: Edition Flux RSS "%feedRead%"
+
+FeedRead.tab.overview: Détails
+FeedRead.tab.edit: Edition
+
+FeedRead.tlabel.list: Liste des Flux RSS
+FeedRead.tlabel.add: Ajouter nouvel Flux RSS
+FeedRead.tlabel.overview: Aperçu des détails du Flux RSS
+FeedRead.tlabel.editUrl: 'Modification de l''Url du Flux RSS'
+FeedRead.tlabel.editNbrDays: Modification du Nombre de jours de lecture du Flux RSS
+FeedRead.tlabel.editNbrItems: Modification du Nombre d'éléments à Afficher du Flux RSS
+
+FeedRead.empty: Aucun Flux RSS trouvé dans la base de donnée
+
+FeedRead.add.success: Succès de l'ajout du Flux RSS <b>%feedRead%</b>
+FeedRead.add.failure: Echec de l'ajout du Flux RSS
+FeedRead.delete.confirm.title: Demande de Confirmation
+FeedRead.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Flux RSS ?<br/> Cette action est irreversible!
+FeedRead.delete.notfound: Flux RSS inconnu
+FeedRead.delete.success: Succès de la suppression du Flux RSS <b>%feedRead%</b>
+FeedRead.delete.failure: Echec de la suppression du Flux RSS
+FeedRead.edit.notfound: Flux RSS inconnu
+FeedRead.edit.success: Succès de la modification du Flux RSS <b>%feedRead%</b>
+FeedRead.edit.failure: Echec de la modification du Flux RSS <b>%feedRead%</b>
+
+# GoodDoc
+menu.admin.goodDoc: Document Utile
+breadcrumb.goodDoc.list: Liste des Documents Utiles
+breadcrumb.goodDoc.add: Ajouter Document Utile
+breadcrumb.goodDoc.edit: Document Utile <b>%goodDoc%</b>
+
+pagetitle.goodDoc.list: Liste des Documents Utiles
+pagetitle.goodDoc.list.txt: Liste des Documents Utile
+pagetitle.goodDoc.edit: Edition Document Utile <b>%goodDoc%</b>
+pagetitle.goodDoc.edit.txt: Edition Document Utile "%goodDoc%"
+
+GoodDoc.tab.overview: Détails
+GoodDoc.tab.edit: Edition
+
+GoodDoc.tlabel.list: Liste des Documents Utiles
+GoodDoc.tlabel.add: Ajouter nouveau Document Utile
+GoodDoc.tlabel.overview: Aperçu des détails du Document Utile
+GoodDoc.tlabel.editContent: Modification du Contenu du Document Utile
+GoodDoc.tlabel.editDescription: Modification de la Description du Document Utile
+GoodDoc.tlabel.editOriginalName: Modification du nom du Document Utile
+GoodDoc.tlabel.editTitle: Modification du titre du Document Utile
+
+GoodDoc.empty: Aucun Document Utile trouvé dans la base de donnée
+
+GoodDoc.add.success: Succès de l'ajout du Document Utile <b>%goodDoc%</b>
+GoodDoc.add.failure: Echec de l'ajout du Document Utile
+GoodDoc.download.notfound: Echec de téléchargement du Document Utile
+GoodDoc.delete.confirm.title: Demande de Confirmation
+GoodDoc.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Document Utile ?<br/> Cette action est irreversible!
+GoodDoc.delete.notfound: Document Utile inconnu
+GoodDoc.delete.success: Succès de la suppression du Document Utile <b>%goodDoc%</b>
+GoodDoc.delete.failure: Echec de la suppression du Document Utile <b>%goodDoc%</b>
+GoodDoc.edit.notfound: Document Utile inconnu
+GoodDoc.edit.success: Succès de la modification du Document Utile <b>%goodDoc%</b>
+GoodDoc.edit.failure: Echec de la modification du Document Utile <b>%goodDoc%</b>
+
+# GoodLink
+menu.admin.goodLink: Lien Externe
+breadcrumb.goodLink.list: Liste des Lien Externe
+breadcrumb.goodLink.add: Ajouter Lien Externe
+breadcrumb.goodLink.edit: Lien Externe <b>%goodLink%</b>
+
+pagetitle.goodLink.list: Liste des Lien Externe
+pagetitle.goodLink.list.txt: Liste des Lien Externe
+pagetitle.goodLink.add: Ajouter Lien Externe
+pagetitle.goodLink.add.txt: Ajouter Lien Externe
+pagetitle.goodLink.edit: Edition Lien Externe <b>%goodLink%</b>
+pagetitle.goodLink.edit.txt: Edition Lien Externe "%goodLink%"
+
+GoodLink.tab.overview: Détails
+GoodLink.tab.edit: Edition
+
+GoodLink.tlabel.list: Liste des Liens Externes
+GoodLink.tlabel.add: Ajouter nouvel Lien Externe
+GoodLink.tlabel.overview: Aperçu des détails du Lien Externe
+GoodLink.tlabel.editUrl: 'Modification de l''Url du Lien Externe'
+GoodLink.tlabel.editTitle: Modification du Nombre de jours de lecture du Lien Externe
+
+GoodLink.empty: Aucun Lien Externe trouvé dans la base de donnée
+
+GoodLink.add.success: Succès de l'ajout du Lien Externe <b>%goodLink%</b>
+GoodLink.add.failure: Echec de l'ajout du Lien Externe
+GoodLink.delete.confirm.title: Demande de Confirmation
+GoodLink.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Lien Externe ?<br/> Cette action est irreversible!
+GoodLink.delete.notfound: Lien Externe inconnu
+GoodLink.delete.success: Succès de la suppression du Lien Externe <b>%goodLink%</b>
+GoodLink.delete.failure: Echec de la suppression du Lien Externe
+GoodLink.edit.notfound: Lien Externe inconnu
+GoodLink.edit.success: Succès de la modification du Lien Externe <b>%goodLink%</b>
+GoodLink.edit.failure: Echec de la modification du Lien Externe <b>%goodLink%</b>
+
+# BulletinInfo
+menu.admin.bulletinInfo: 'Bulletin d''informations'
+breadcrumb.bulletinInfo.list: 'Liste des Bulletins d''informations'
+breadcrumb.bulletinInfo.add: 'Ajouter Bulletin d''informations'
+breadcrumb.bulletinInfo.edit: 'Bulletin d''informations <b>%bulletinInfo%</b>'
+
+pagetitle.bulletinInfo.list: 'Liste des Bulletins d''informations'
+pagetitle.bulletinInfo.list.txt: 'Liste des Bulletins d''informations'
+pagetitle.bulletinInfo.add: 'Ajouter Bulletin d''informations'
+pagetitle.bulletinInfo.add.txt: 'Ajouter Bulletin d''informations'
+pagetitle.bulletinInfo.edit: 'Edition Bulletin d''informations <b>%bulletinInfo%</b>'
+pagetitle.bulletinInfo.edit.txt: 'Edition Bulletin d''informations "%bulletinInfo%"'
+
+BulletinInfo.tab.overview: Détails
+BulletinInfo.tab.edit: Edition
+BulletinInfo.tab.titles: Titres
+
+BulletinInfo.tlabel.list: 'Liste des Bulletins d''informations'
+BulletinInfo.tlabel.add: 'Ajouter nouveau Bulletin d''informations'
+BulletinInfo.tlabel.overview: 'Aperçu des détails du Bulletin d''informations'
+BulletinInfo.tlabel.editNum: 'Modification du Numéro du Bulletin d''informations'
+BulletinInfo.tlabel.editDtStart: 'Modification de la Date de Début du Bulletin d''informations'
+BulletinInfo.tlabel.editDescription: 'Modification de la Description du Bulletin d''informations'
+BulletinInfo.tlabel.titles.add: 'Ajouter un nouveau Titre au Bulletin d''informations'
+BulletinInfo.tlabel.titles.list: 'Liste des Titres du Bulletin d''informations'
+
+BulletinInfo.empty: 'Aucun Bulletin d''Informations trouvé dans la base de donnée'
+
+BulletinInfo.import.success: 'Succès de l''Import excel du Bulletin d''Informations <b>%bulletinInfo%</b>'
+BulletinInfo.import.failure: 'Echec de l''Import Excel du Bulletin d''Informations'
+BulletinInfo.delete.confirm.title: 'Demande de Confirmation'
+BulletinInfo.delete.confirm.txt: 'Etes-vous sûre de vouloir supprimer ce Bulletin d''Informations ?<br/> Cette action est irreversible!'
+BulletinInfo.delete.notfound: 'Bulletin d''Informations inconnu'
+BulletinInfo.delete.success: 'Succès de la suppression du Bulletin d''Informations <b>%bulletinInfo%</b>'
+BulletinInfo.delete.failure: 'Echec de la suppression du Bulletin d''Informations'
+BulletinInfo.edit.notfound: 'Bulletin d''Informations inconnu'
+BulletinInfo.edit.success: 'Succès de la modification du Bulletin d''Informations <b>%bulletinInfo%</b>'
+BulletinInfo.edit.failure: 'Echec de la modification du Bulletin d''Informations <b>%bulletinInfo%</b>'
+
+# BulletinInfoTitle
+breadcrumb.bulletinInfoTitle.edit: '<b>%bulletinInfoTitle%</b>'
+
+pagetitle.bulletinInfoTitle.edit: 'Edition de Title de Bulletin d''informations <b>%bulletinInfoTitle%</b>'
+pagetitle.bulletinInfoTitle.edit.txt: 'Edition de Title de Bulletin d''informations "%bulletinInfoTitle%"'
+
+BulletinInfoTitle.tab.overview: Détails
+BulletinInfoTitle.tab.edit: Edition
+BulletinInfoTitle.tab.contents: Sous-Titres
+
+BulletinInfoTitle.tlabel.overview: 'Aperçu des détails du Titre du Bulletin d''informations'
+BulletinInfoTitle.tlabel.edit: 'Modification du Titre du Bulletin d''informations'
+BulletinInfoTitle.tlabel.contents.add: 'Ajouter un nouveau Sous-Titre au Bulletin d''informations'
+BulletinInfoTitle.tlabel.contents.list: 'Liste des Sous-Titres du Titre du Bulletin d''informations'
+
+BulletinInfoTitle.empty: 'Aucun Titre de Bulletin d''Informations trouvé dans la base de donnée'
+
+BulletinInfoTitle.add.success: 'Succès de l''ajout du Titre du Bulletin d''Informations <b>%bulletinInfoTitle%</b>'
+BulletinInfoTitle.add.failure: 'Echec de l''ajout du Titre du Bulletin d''Informations'
+BulletinInfoTitle.delete.confirm.title: 'Demande de Confirmation'
+BulletinInfoTitle.delete.confirm.txt: 'Etes-vous sûre de vouloir supprimer ce Titre de Bulletin d''Informations ?<br/> Cette action est irreversible!'
+BulletinInfoTitle.delete.notfound: 'Titre de Bulletin d''Informations inconnu'
+BulletinInfoTitle.delete.success: 'Succès de la suppression du Titre du Bulletin d''Informations <b>%bulletinInfoTitle%</b>'
+BulletinInfoTitle.delete.failure: 'Echec de la suppression du Titre du Bulletin d''Informations'
+BulletinInfoTitle.edit.notfound: 'Titre de Bulletin d''Informations inconnu'
+BulletinInfoTitle.edit.success: 'Succès de la modification du Titre du Bulletin d''Informations <b>%bulletinInfoTitle%</b>'
+BulletinInfoTitle.edit.failure: 'Echec de la modification du Titre du Bulletin d''Informations <b>%bulletinInfoTitle%</b>'
+
+# BulletinInfoContent
+breadcrumb.bulletinInfoContent.edit: '<b>%bulletinInfoContent%</b>'
+
+pagetitle.bulletinInfoContent.edit: 'Edition de Sous-Titre de Bulletin d''informations <b>%bulletinInfoContent%</b>'
+pagetitle.bulletinInfoContent.edit.txt: 'Edition de Sous-Titre de Bulletin d''informations "%bulletinInfoContent%"'
+
+BulletinInfoContent.tab.overview: Détails
+BulletinInfoContent.tab.edit: Edition
+
+BulletinInfoContent.tlabel.overview: 'Aperçu des détails du Sous-Titre de Bulletin d''informations'
+BulletinInfoContent.tlabel.editTitle: 'Modification du Sous-Titre du Bulletin d''informations'
+BulletinInfoContent.tlabel.editContent: 'Modification du Contenu du Sous-Titre du Bulletin d''informations'
+
+BulletinInfoContent.empty: 'Aucun Sous-Titre de Bulletin d''Informations trouvé dans la base de donnée'
+
+BulletinInfoContent.add.success: 'Succès de l''ajout du Sous-Titre du Bulletin d''Informations <b>%bulletinInfoContent%</b>'
+BulletinInfoContent.add.failure: 'Echec de l''ajout du Sous-Titre du Bulletin d''Informations'
+BulletinInfoContent.delete.confirm.title: 'Demande de Confirmation'
+BulletinInfoContent.delete.confirm.txt: 'Etes-vous sûre de vouloir supprimer ce Sous-Titre de Bulletin d''Informations ?<br/> Cette action est irreversible!'
+BulletinInfoContent.delete.notfound: 'Sous-Titre de Bulletin d''Informations inconnu'
+BulletinInfoContent.delete.success: 'Succès de la suppression du Sous-Titre du Bulletin d''Informations <b>%bulletinInfoContent%</b>'
+BulletinInfoContent.delete.failure: 'Echec de la suppression du Sous-Titre du Bulletin d''Informations'
+BulletinInfoContent.edit.notfound: 'Sous-Titre de Bulletin d''Informations inconnu'
+BulletinInfoContent.edit.success: 'Succès de la modification du Sous-Titre du Bulletin d''Informations <b>%bulletinInfoContent%</b>'
+BulletinInfoContent.edit.failure: 'Echec de la modification du Sous-Titre du Bulletin d''Informations <b>%bulletinInfoContent%</b>'

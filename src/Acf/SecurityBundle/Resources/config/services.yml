@@ -1,0 +1,36 @@
+parameters:
+    Acf.role_hierarchy.role_manager.role_class: Acf\DataBundle\Entity\Role
+    Acf.role_hierarchy.role_manager.default.class: Acf\DataBundle\Security\RoleManager
+    Acf.role_hierarchy.class: Acf\DataBundle\Security\RoleHierarchy
+    Acf.login_success.class: Acf\DataBundle\Listener\LoginSuccess
+    Acf.activity.class: Acf\DataBundle\Listener\Activity
+#    lunetics_locale.allowed_locales_provider.class: Acf\DataBundle\Listener\AllowedLocalesProvider
+
+services:
+#    alluco_security.example:
+#        class: Acf\SecurityBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    
+#    lunetics_locale.allowed_locales_provider:
+#        class: "%lunetics_locale.allowed_locales_provider.class%"
+#        arguments: ['@doctrine']
+
+    Acf.role_hierarchy.role_manager.default:
+        class: "%Acf.role_hierarchy.role_manager.default.class%"
+        arguments: ['@doctrine', '%Acf.role_hierarchy.role_manager.role_class%']
+    
+    security.role_hierarchy:
+        class: "%Acf.role_hierarchy.class%"
+        arguments: ['@Acf.role_hierarchy.role_manager.default']
+
+    Acf.login_success:
+        class: "%Acf.login_success.class%"
+        arguments: ['@doctrine']
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
+
+    Acf.activity:
+        class: "%Acf.activity.class%"
+        arguments: ['@security.token_storage', '@doctrine']
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
