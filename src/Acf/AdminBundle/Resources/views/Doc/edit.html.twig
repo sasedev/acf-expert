@@ -111,6 +111,157 @@ $(function() {
 								<div class="col-lg-9">{{doc.nbrDownloads}}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
 
+								{% if doc.banks | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.banks'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for bank in doc.banks %}
+									- <a href="{{ path('_admin_bank_editGet', {'uid': bank.id}) }}">{{ bank.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.funds | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.funds'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for fund in doc.funds %}
+									- <a href="{{ path('_admin_bank_editGet', {'uid': fund.id}) }}">{{ fund.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.customers | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.customers'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for customer in doc.customers %}
+									- <a href="{{ path('_admin_customer_editGet', {'uid': customer.id}) }}">{{ customer.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.suppliers | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.suppliers'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for supplier in doc.suppliers %}
+									- <a href="{{ path('_admin_supplier_editGet', {'uid': supplier.id}) }}">{{ supplier.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.mbsales | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.mbsales'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for mbsale in doc.mbsales %}
+									- <a href="{{ path('_admin_mbsale_editGet', {'uid': mbsale.id}) }}">{{ mbsale.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.mbpurchases | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.mbpurchases'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for mbpurchase in doc.mbpurchases %}
+									- <a href="{{ path('_admin_mbpurchase_editGet', {'uid': mbpurchase.id}) }}">{{ mbpurchase.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.sales | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.sales'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for sale in doc.sales %}
+									- <a href="{{ path('_admin_sale_editGet', {'uid': sale.id}) }}">{{ sale.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.buys | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.buys'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for buy in doc.buys %}
+									- <a href="{{ path('_admin_buy_editGet', {'uid': buy.id}) }}">{{ buy.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.groups | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.groups'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for docgroup in doc.groups %}
+									- <a href="{{ path('_admin_docgroup_editGet', {'uid': docgroup.id}) }}">{{ docgroup.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.groupcomptables | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.groupcomptables'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for docgroupcomptable in doc.groupcomptables %}
+									- <a href="{{ path('_admin_docgroupcomptable_editGet', {'uid': docgroupcomptable.id}) }}">{{ docgroupcomptable.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.groupfiscals | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.groupfiscals'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for docgroupfiscal in doc.groupfiscals %}
+									- <a href="{{ path('_admin_docgroupfiscal_editGet', {'uid': docgroupfiscal.id}) }}">{{ docgroupfiscal.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.grouppersos | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.grouppersos'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for docgroupperso in doc.grouppersos %}
+									- <a href="{{ path('_admin_docgroupperso_editGet', {'uid': docgroupperso.id}) }}">{{ docgroupperso.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.groupsysts | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.groupsysts'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for docgroupsyst in doc.groupsysts %}
+									- <a href="{{ path('_admin_docgroupsyst_editGet', {'uid': docgroupsyst.id}) }}">{{ docgroupsyst.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.groupbanks | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.groupbanks'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for docgroupbank in doc.groupbanks %}
+									- <a href="{{ path('_admin_docgroupbank_editGet', {'uid': docgroupbank.id}) }}">{{ docgroupbank.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+								{% if doc.groupaudits | length != 0%}
+								<div class="col-lg-3 text-right">{{'Doc.groupaudits'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{% for docgroupaudit in doc.groupaudits %}
+									- <a href="{{ path('_admin_docgroupaudit_editGet', {'uid': docgroupaudit.id}) }}">{{ docgroupaudit.label }}</a><br>
+									{% endfor %}
+								&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								{% endif %}
+
+
 								<div class="col-lg-3 text-right">{{'Doc.dtCrea'|trans|raw}} :</div>
 								<div class="col-lg-9">{{doc.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{doc.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Doc.dtUpdate'|trans|raw}} :</div>

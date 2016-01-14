@@ -222,6 +222,7 @@ class SupplierController extends BaseController
 					$docNewForm->handleRequest($request);
 					if ($docNewForm->isValid()) {
 						$docFiles = $docNewForm['fileName']->getData();
+						$docs = array();
 
 						$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
 
@@ -245,8 +246,12 @@ class SupplierController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addRelation($supplier);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$supplier->addDoc($doc);
+
+							$docs[] = $doc;
 
 							$docNames .= $doc->getOriginalName() . " ";
 						}
@@ -254,7 +259,7 @@ class SupplierController extends BaseController
 						$em->persist($supplier);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Doc.add.success', array('%doc%' => $docNames)));
-						$this->newDocNotifyAdmin($supplier, $docNames);
+						$this->newDocNotifyAdmin($supplier, $docs);
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()->set('stabActive', 3);
 
@@ -322,7 +327,7 @@ class SupplierController extends BaseController
 		return $this->redirect($urlFrom);
 	}
 
-	protected function newDocNotifyAdmin(Supplier $supplier, $docNames)
+	protected function newDocNotifyAdmin(Supplier $supplier, $docs)
 	{
 		$from = $this->getParameter('mail_from');
 		$fromName = $this->getParameter('mail_from_name');
@@ -334,19 +339,22 @@ class SupplierController extends BaseController
 		$company = $supplier->getCompany();
 
 		$admins = $company->getAdmins();
-		foreach ($admins as $admin) {
+		if (\count($admins) != 0) {
 			$mvars = array();
-			$mvars['user'] = $user->getFullName();
-			$mvars['company'] = $company->getCorporateName();
-			$mvars['docNames'] = $docNames;
-
-			$message = \Swift_Message::newInstance()->setFrom($from, $fromName)
-				->setTo($admin->getEmail(), $admin->getFullname())
-				->setSubject($subject)
-				->setBody($this->renderView('AcfClientBundle:Mail:newdoc.html.twig', $mvars), 'text/html');
-
+			$mvars['supplier'] = $supplier;
+			$mvars['user'] = $user;
+			$mvars['company'] = $company;
+			$mvars['docs'] = $docs;
+			$message = \Swift_Message::newInstance();
+			$message->setFrom($from, $fromName);
+			foreach ($admins as $admin) {
+				$message->addTo($admin->getEmail(), $admin->getFullname());
+			}
+			$message->setSubject($subject);
+			$message->setBody($this->renderView('AcfClientBundle:Mail:Suppliernewdoc.html.twig', $mvars), 'text/html');
 			$this->sendmail($message);
 		}
+
 	}
 
 	protected function traceEntity(Supplier $cloneSupplier, Supplier $supplier)

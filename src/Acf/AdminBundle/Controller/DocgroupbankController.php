@@ -251,8 +251,10 @@ class DocgroupbankController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addGroupbank($docgroupbank);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$docgroupbank->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName()." ";
 						}

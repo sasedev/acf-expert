@@ -251,8 +251,10 @@ class DocgroupfiscalController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addGroupfiscal($docgroupfiscal);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$docgroupfiscal->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName()." ";
 						}

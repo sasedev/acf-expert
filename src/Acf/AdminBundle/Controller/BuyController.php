@@ -738,9 +738,9 @@ class BuyController extends BaseController
 						$this->flashMsgSession(
 							'success',
 							$this->translate('Buy.edit.success', array('%buy%' => $buy->getNumber())));
-						
+
 						$this->traceEntity($cloneBuy, $buy);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($buy);
@@ -798,8 +798,10 @@ class BuyController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addTransaction($buy);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$buy->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName()." ";
 						}

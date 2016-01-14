@@ -202,10 +202,10 @@ class SupplierController extends BaseController
 							$fileName = sha1(uniqid(mt_rand(), true)).'.'.strtolower($docFile->getClientOriginalExtension());
 							$mimeType = $docFile->getMimeType();
 							$docFile->move($docDir, $fileName);
-							
+
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = new Doc();
 							$doc->setCompany($supplier->getCompany());
 
@@ -214,8 +214,10 @@ class SupplierController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addRelation($supplier);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$supplier->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName()." ";
 						}

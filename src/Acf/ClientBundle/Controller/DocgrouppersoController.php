@@ -169,8 +169,10 @@ class DocgrouppersoController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addGroupperso($docgroupperso);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$docgroupperso->addDoc($doc);
 
 							$docs[] = $doc;
 

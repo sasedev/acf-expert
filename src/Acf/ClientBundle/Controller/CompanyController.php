@@ -73,25 +73,25 @@ class CompanyController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_client_homepage');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$company = $em->getRepository('AcfDataBundle:Company')->find($uid);
-			
+
 			if (null == $company) {
 				$this->flashMsgSession('warning', $this->translate('Company.edit.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()->getUser();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')->findOneBy(array('company' => $company, 'user' => $user));
 				if (null == $companyUser) {
 					return $this->redirect($this->generateUrl('_client_homepage'));
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$companyUpdateTypeForm = $this->createForm(CompanyUpdateTypeTForm::class, $company);
 				$companyUpdateCorporateNameForm = $this->createForm(CompanyUpdateCorporateNameTForm::class, $company);
 				$companyUpdateFiscForm = $this->createForm(CompanyUpdateFiscTForm::class, $company);
@@ -107,39 +107,39 @@ class CompanyController extends BaseController
 				$companyUpdateAdrForm = $this->createForm(CompanyUpdateAdrTForm::class, $company);
 				$companyUpdateOtherInfosForm = $this->createForm(CompanyUpdateOtherInfosTForm::class, $company);
 				$companyUpdateActionvnForm = $this->createForm(CompanyUpdateActionvnTForm::class, $company);
-				
+
 				$address = new Address();
 				$address->setCompany($company);
 				$addressNewForm = $this->createForm(AddressNewTForm::class, $address, array('company' => $company));
-				
+
 				$phone = new Phone();
 				$phone->setCompany($company);
 				$phoneNewForm = $this->createForm(PhoneNewTForm::class, $phone, array('company' => $company));
-				
+
 				$companyFrame = new CompanyFrame();
 				$companyFrame->setCompany($company);
 				$companyFrameNewForm = $this->createForm(CompanyFrameNewTForm::class, $companyFrame, array('company' => $company));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($company);
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array('company' => $company));
-				
+
 				$customer = new Customer();
 				$customer->setCompany($company);
 				$customerNewForm = $this->createForm(CustomerNewTForm::class, $customer, array('company' => $company));
-				
+
 				$supplier = new Supplier();
 				$supplier->setCompany($company);
 				$supplierNewForm = $this->createForm(SupplierNewTForm::class, $supplier, array('company' => $company));
-				
+
 				$mbsale = new MBSale();
 				$mbsale->setCompany($company);
 				$mbsaleNewForm = $this->createForm(MBSaleNewTForm::class, $mbsale, array('company' => $company));
-				
+
 				$mbpurchase = new MBPurchase();
 				$mbpurchase->setCompany($company);
 				$mbpurchaseNewForm = $this->createForm(MBPurchaseNewTForm::class, $mbpurchase, array('company' => $company));
-				
+
 				$this->gvars['company'] = $company;
 				$this->gvars['address'] = $address;
 				$this->gvars['phone'] = $phone;
@@ -154,7 +154,7 @@ class CompanyController extends BaseController
 				$this->gvars['docgroupsysts'] = $em->getRepository('AcfDataBundle:Docgroupsyst')->getRoots($company);
 				$this->gvars['docgroupbanks'] = $em->getRepository('AcfDataBundle:Docgroupbank')->getRoots($company);
 				$this->gvars['docgroupaudits'] = $em->getRepository('AcfDataBundle:Docgroupaudit')->getRoots($company);
-				
+
 				$this->gvars['CompanyUpdateTypeForm'] = $companyUpdateTypeForm->createView();
 				$this->gvars['CompanyUpdateCorporateNameForm'] = $companyUpdateCorporateNameForm->createView();
 				$this->gvars['CompanyUpdateFiscForm'] = $companyUpdateFiscForm->createView();
@@ -178,19 +178,19 @@ class CompanyController extends BaseController
 				$this->gvars['SupplierNewForm'] = $supplierNewForm->createView();
 				$this->gvars['MBSaleNewForm'] = $mbsaleNewForm->createView();
 				$this->gvars['MBPurchaseNewForm'] = $mbpurchaseNewForm->createView();
-				
+
 				$mbsaleYears = $em->getRepository('AcfDataBundle:MBSale')->getAllYearByCompany($company);
 				$mbpurchaseYears = $em->getRepository('AcfDataBundle:MBPurchase')->getAllYearByCompany($company);
-				
+
 				$this->gvars['mbsaleYears'] = $mbsaleYears;
 				$this->gvars['mbpurchaseYears'] = $mbpurchaseYears;
-				
+
 				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
 				$this->getSession()->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
 				$this->getSession()->remove('stabActive');
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'customersPrefix'));
 				if (null == $customersConstStr) {
 					$customersConstStr = new ConstantStr();
@@ -201,7 +201,7 @@ class CompanyController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'suppliersPrefix'));
 				if (null == $suppliersConstStr) {
 					$suppliersConstStr = new ConstantStr();
@@ -212,7 +212,7 @@ class CompanyController extends BaseController
 				}
 				$suppliersPrefix = $suppliersConstStr->getValue();
 				$this->gvars['suppliersPrefix'] = $suppliersPrefix;
-				
+
 				$banksConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'banksPrefix'));
 				if (null == $banksConstStr) {
 					$banksConstStr = new ConstantStr();
@@ -223,7 +223,7 @@ class CompanyController extends BaseController
 				}
 				$banksPrefix = $banksConstStr->getValue();
 				$this->gvars['banksPrefix'] = $banksPrefix;
-				
+
 				$fundsConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'fundsPrefix'));
 				if (null == $fundsConstStr) {
 					$fundsConstStr = new ConstantStr();
@@ -234,7 +234,7 @@ class CompanyController extends BaseController
 				}
 				$fundsPrefix = $fundsConstStr->getValue();
 				$this->gvars['fundsPrefix'] = $fundsPrefix;
-				
+
 				$withholdingsConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'withholdingsPrefix'));
 				if (null == $withholdingsConstStr) {
 					$withholdingsConstStr = new ConstantStr();
@@ -245,18 +245,18 @@ class CompanyController extends BaseController
 				}
 				$withholdingsPrefix = $withholdingsConstStr->getValue();
 				$this->gvars['withholdingsPrefix'] = $withholdingsPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.company.edit', array('%company%' => $company->getCorporateName()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.company.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.company.edit.txt',
 					array('%company%' => $company->getCorporateName()));
-				
+
 				return $this->renderResponse('AcfClientBundle:Company:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -266,25 +266,25 @@ class CompanyController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_client_homepage');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$company = $em->getRepository('AcfDataBundle:Company')->find($uid);
-			
+
 			if (null == $company) {
 				$this->flashMsgSession('warning', $this->translate('Company.edit.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()->getUser();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')->findOneBy(array('company' => $company, 'user' => $user));
 				if (null == $companyUser) {
 					return $this->redirect($this->generateUrl('_client_homepage'));
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$companyUpdateTypeForm = $this->createForm(CompanyUpdateTypeTForm::class, $company);
 				$companyUpdateCorporateNameForm = $this->createForm(CompanyUpdateCorporateNameTForm::class, $company);
 				$companyUpdateFiscForm = $this->createForm(CompanyUpdateFiscTForm::class, $company);
@@ -300,50 +300,50 @@ class CompanyController extends BaseController
 				$companyUpdateAdrForm = $this->createForm(CompanyUpdateAdrTForm::class, $company);
 				$companyUpdateOtherInfosForm = $this->createForm(CompanyUpdateOtherInfosTForm::class, $company);
 				$companyUpdateActionvnForm = $this->createForm(CompanyUpdateActionvnTForm::class, $company);
-				
+
 				$address = new Address();
 				$address->setCompany($company);
 				$addressNewForm = $this->createForm(AddressNewTForm::class, $address, array('company' => $company));
-				
+
 				$phone = new Phone();
 				$phone->setCompany($company);
 				$phoneNewForm = $this->createForm(PhoneNewTForm::class, $phone, array('company' => $company));
-				
+
 				$companyFrame = new CompanyFrame();
 				$companyFrame->setCompany($company);
 				$companyFrameNewForm = $this->createForm(CompanyFrameNewTForm::class, $companyFrame, array('company' => $company));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($company);
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array('company' => $company));
-				
+
 				$customer = new Customer();
 				$customer->setCompany($company);
 				$customerNewForm = $this->createForm(CustomerNewTForm::class, $customer, array('company' => $company));
-				
+
 				$supplier = new Supplier();
 				$supplier->setCompany($company);
 				$supplierNewForm = $this->createForm(SupplierNewTForm::class, $supplier, array('company' => $company));
-				
+
 				$mbsale = new MBSale();
 				$mbsale->setCompany($company);
 				$mbsaleNewForm = $this->createForm(MBSaleNewTForm::class, $mbsale, array('company' => $company));
-				
+
 				$mbpurchase = new MBPurchase();
 				$mbpurchase->setCompany($company);
 				$mbpurchaseNewForm = $this->createForm(MBPurchaseNewTForm::class, $mbpurchase, array('company' => $company));
-				
+
 				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
 				$this->getSession()->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
 				$this->getSession()->remove('stabActive');
-				
+
 				$request = $this->getRequest();
 				$reqData = $request->request->all();
-				
+
 				$cloneCompany = clone $company;
-				
+
 				if (isset($reqData['CompanyUpdateTypeForm'])) {
 					$this->gvars['tabActive'] = 2;
 					$this->getSession()->set('tabActive', 2);
@@ -351,16 +351,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateTypeForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateCorporateNameForm'])) {
@@ -370,16 +370,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateCorporateNameForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateFiscForm'])) {
@@ -389,16 +389,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateFiscForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateTribunalForm'])) {
@@ -408,16 +408,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateTribunalForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdatePhysicaltypeForm'])) {
@@ -427,16 +427,16 @@ class CompanyController extends BaseController
 					if ($companyUpdatePhysicaltypeForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateCnssForm'])) {
@@ -446,16 +446,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateCnssForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateCnssBureauForm'])) {
@@ -465,16 +465,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateCnssBureauForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateSectorsForm'])) {
@@ -484,16 +484,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateSectorsForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdatePhoneForm'])) {
@@ -503,16 +503,16 @@ class CompanyController extends BaseController
 					if ($companyUpdatePhoneForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateMobileForm'])) {
@@ -522,16 +522,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateMobileForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateFaxForm'])) {
@@ -541,16 +541,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateFaxForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateEmailForm'])) {
@@ -560,16 +560,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateEmailForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateAdrForm'])) {
@@ -579,16 +579,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateAdrForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateOtherInfosForm'])) {
@@ -598,16 +598,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateOtherInfosForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['CompanyUpdateActionvnForm'])) {
@@ -617,16 +617,16 @@ class CompanyController extends BaseController
 					if ($companyUpdateActionvnForm->isValid()) {
 						$em->persist($company);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Company.edit.success', array('%company%' => $company->getCorporateName())));
-						
+
 						$this->traceEntity($cloneCompany, $company);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
 				} elseif (isset($reqData['AddressNewForm'])) {
@@ -636,16 +636,16 @@ class CompanyController extends BaseController
 					if ($addressNewForm->isValid()) {
 						$em->persist($address);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Address.add.success', array('%address%' => $address->getLabel())));
-						
+
 						$this->gvars['stabActive'] = 2;
 						$this->getSession()->set('stabActive', 2);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
+
 						$this->flashMsgSession('error', $this->translate('Address.add.failure'));
 					}
 				} elseif (isset($reqData['PhoneNewForm'])) {
@@ -656,14 +656,14 @@ class CompanyController extends BaseController
 						$em->persist($phone);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Phone.add.success', array('%phone%' => $phone->getLabel())));
-						
+
 						$this->gvars['stabActive'] = 2;
 						$this->getSession()->set('stabActive', 2);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
+
 						$this->flashMsgSession('error', $this->translate('Phone.add.failure'));
 					}
 				} elseif (isset($reqData['CompanyFrameNewForm'])) {
@@ -673,16 +673,16 @@ class CompanyController extends BaseController
 					if ($companyFrameNewForm->isValid()) {
 						$em->persist($companyFrame);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('CompanyFrame.add.success', array('%companyFrame%' => $companyFrame->getFullName())));
-						
+
 						$this->gvars['stabActive'] = 2;
 						$this->getSession()->set('stabActive', 2);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
+
 						$this->flashMsgSession('error', $this->translate('CompanyFrame.add.failure'));
 					}
 				} elseif (isset($reqData['DocNewForm'])) {
@@ -691,20 +691,21 @@ class CompanyController extends BaseController
 					$docNewForm->handleRequest($request);
 					if ($docNewForm->isValid()) {
 						$docFiles = $docNewForm['fileName']->getData();
-						
+						$docs = array();
+
 						$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
-						
+
 						$docNames = "";
-						
+
 						foreach ($docFiles as $docFile) {
 							$originalName = $docFile->getClientOriginalName();
 							$fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($docFile->getClientOriginalExtension());
 							$mimeType = $docFile->getMimeType();
 							$docFile->move($docDir, $fileName);
-							
+
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = new Doc();
 							$doc->setCompany($company);
 							$doc->setFileName($fileName);
@@ -712,22 +713,25 @@ class CompanyController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
-							
+
+							$docs[] = $doc;
+
 							$docNames .= $doc->getOriginalName() . " ";
 						}
 						$em->flush();
-						
+
 						$this->flashMsgSession('success', $this->translate('Doc.add.success', array('%doc%' => $docNames)));
-						$this->newDocNotifyAdmin($company, $docNames);
-						
+						$this->newDocNotifyAdmin($company, $docs);
+
 						$this->gvars['stabActive'] = 2;
 						$this->getSession()->set('stabActive', 2);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
+
 						$this->flashMsgSession('error', $this->translate('Doc.add.failure'));
 					}
 				} elseif (isset($reqData['CustomerNewForm'])) {
@@ -739,16 +743,16 @@ class CompanyController extends BaseController
 					if ($customerNewForm->isValid()) {
 						$em->persist($customer);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Customer.add.success', array('%customer%' => $customer->getLabel())));
-						
+
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()->set('stabActive', 3);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
+
 						$this->flashMsgSession('error', $this->translate('Customer.add.failure'));
 					}
 				} elseif (isset($reqData['SupplierNewForm'])) {
@@ -760,16 +764,16 @@ class CompanyController extends BaseController
 					if ($supplierNewForm->isValid()) {
 						$em->persist($supplier);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Supplier.add.success', array('%supplier%' => $supplier->getLabel())));
-						
+
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()->set('stabActive', 3);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
+
 						$this->flashMsgSession('error', $this->translate('Supplier.add.failure'));
 					}
 				} elseif (isset($reqData['MBSaleNewForm'])) {
@@ -781,14 +785,14 @@ class CompanyController extends BaseController
 						$em->persist($mbsale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('MBSale.add.success', array('%mbsale%' => $mbsale->getRef())));
-						
+
 						$this->gvars['stabActive'] = 2;
 						$this->getSession()->set('stabActive', 2);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
+
 						$this->flashMsgSession('error', $this->translate('MBSale.add.failure'));
 					}
 				} elseif (isset($reqData['MBPurchaseNewForm'])) {
@@ -799,20 +803,20 @@ class CompanyController extends BaseController
 						$mbpurchase->generateRef();
 						$em->persist($mbpurchase);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('MBPurchase.add.success', array('%mbpurchase%' => $mbpurchase->getRef())));
-						
+
 						$this->gvars['stabActive'] = 2;
 						$this->getSession()->set('stabActive', 2);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($company);
-						
+
 						$this->flashMsgSession('error', $this->translate('MBPurchase.add.failure'));
 					}
 				}
-				
+
 				$this->gvars['company'] = $company;
 				$this->gvars['address'] = $address;
 				$this->gvars['phone'] = $phone;
@@ -827,7 +831,7 @@ class CompanyController extends BaseController
 				$this->gvars['docgroupsysts'] = $em->getRepository('AcfDataBundle:Docgroupsyst')->getRoots($company);
 				$this->gvars['docgroupbanks'] = $em->getRepository('AcfDataBundle:Docgroupbank')->getRoots($company);
 				$this->gvars['docgroupaudits'] = $em->getRepository('AcfDataBundle:Docgroupaudit')->getRoots($company);
-				
+
 				$this->gvars['CompanyUpdateTypeForm'] = $companyUpdateTypeForm->createView();
 				$this->gvars['CompanyUpdateCorporateNameForm'] = $companyUpdateCorporateNameForm->createView();
 				$this->gvars['CompanyUpdateFiscForm'] = $companyUpdateFiscForm->createView();
@@ -851,13 +855,13 @@ class CompanyController extends BaseController
 				$this->gvars['SupplierNewForm'] = $supplierNewForm->createView();
 				$this->gvars['MBSaleNewForm'] = $mbsaleNewForm->createView();
 				$this->gvars['MBPurchaseNewForm'] = $mbpurchaseNewForm->createView();
-				
+
 				$mbsaleYears = $em->getRepository('AcfDataBundle:MBSale')->getAllYearByCompany($company);
 				$mbpurchaseYears = $em->getRepository('AcfDataBundle:MBPurchase')->getAllYearByCompany($company);
-				
+
 				$this->gvars['mbsaleYears'] = $mbsaleYears;
 				$this->gvars['mbpurchaseYears'] = $mbpurchaseYears;
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'customersPrefix'));
 				if (null == $customersConstStr) {
 					$customersConstStr = new ConstantStr();
@@ -868,7 +872,7 @@ class CompanyController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'suppliersPrefix'));
 				if (null == $suppliersConstStr) {
 					$suppliersConstStr = new ConstantStr();
@@ -879,7 +883,7 @@ class CompanyController extends BaseController
 				}
 				$suppliersPrefix = $suppliersConstStr->getValue();
 				$this->gvars['suppliersPrefix'] = $suppliersPrefix;
-				
+
 				$banksConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'banksPrefix'));
 				if (null == $banksConstStr) {
 					$banksConstStr = new ConstantStr();
@@ -890,7 +894,7 @@ class CompanyController extends BaseController
 				}
 				$banksPrefix = $banksConstStr->getValue();
 				$this->gvars['banksPrefix'] = $banksPrefix;
-				
+
 				$fundsConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'fundsPrefix'));
 				if (null == $fundsConstStr) {
 					$fundsConstStr = new ConstantStr();
@@ -901,7 +905,7 @@ class CompanyController extends BaseController
 				}
 				$fundsPrefix = $fundsConstStr->getValue();
 				$this->gvars['fundsPrefix'] = $fundsPrefix;
-				
+
 				$withholdingsConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'withholdingsPrefix'));
 				if (null == $withholdingsConstStr) {
 					$withholdingsConstStr = new ConstantStr();
@@ -912,46 +916,47 @@ class CompanyController extends BaseController
 				}
 				$withholdingsPrefix = $withholdingsConstStr->getValue();
 				$this->gvars['withholdingsPrefix'] = $withholdingsPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.company.edit', array('%company%' => $company->getCorporateName()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.company.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.company.edit.txt',
 					array('%company%' => $company->getCorporateName()));
-				
+
 				return $this->renderResponse('AcfClientBundle:Company:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
-	protected function newDocNotifyAdmin(Company $company, $docNames)
+	protected function newDocNotifyAdmin(Company $company, $docs)
 	{
 		$from = $this->getParameter('mail_from');
 		$fromName = $this->getParameter('mail_from_name');
 		$subject = $this->translate('_mail.newdocs.subject', array(), 'messages');
-		
+
 		$user = $this->getSecurityTokenStorage()
 			->getToken()
 			->getUser();
-		// $company = $buy->getCompany();
-		
+
 		$admins = $company->getAdmins();
-		foreach ($admins as $admin) {
+		if (\count($admins) != 0) {
 			$mvars = array();
-			$mvars['user'] = $user->getFullName();
-			$mvars['company'] = $company->getCorporateName();
-			$mvars['docNames'] = $docNames;
-			
-			$message = \Swift_Message::newInstance()->setFrom($from, $fromName)
-				->setTo($admin->getEmail(), $admin->getFullname())
-				->setSubject($subject)
-				->setBody($this->renderView('AcfClientBundle:Mail:newdoc.html.twig', $mvars), 'text/html');
-			
+			$mvars['user'] = $user;
+			$mvars['company'] = $company;
+			$mvars['docs'] = $docs;
+			$message = \Swift_Message::newInstance();
+			$message->setFrom($from, $fromName);
+			foreach ($admins as $admin) {
+				$message->addTo($admin->getEmail(), $admin->getFullname());
+			}
+			$message->setSubject($subject);
+			$message->setBody($this->renderView('AcfClientBundle:Mail:Companynewdoc.html.twig', $mvars), 'text/html');
 			$this->sendmail($message);
 		}
+
 	}
 
 	protected function traceEntity(Company $cloneCompany, Company $company)
@@ -974,18 +979,18 @@ class CompanyController extends BaseController
 		} else {
 			$trace->setUserType(Trace::UT_SUPERADMIN);
 		}
-		
+
 		$table_begin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
 		$table_begin .= '<thead><tr><th class="text-left">' . $this->translate('Entity.field') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.oldVal') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.newVal') . '</th></tr></thead><tbody>';
-		
+
 		$table_end = '</tbody></table>';
-		
+
 		$trace->setActionEntity(Trace::AE_COMPANY);
-		
+
 		$msg = "";
-		
+
 		if ($cloneCompany->getRef() != $company->getRef()) {
 			$msg .= "<tr><td>" . $this->translate('Company.ref.label') . '</td><td>';
 			if ($cloneCompany->getRef() == null) {
@@ -1001,7 +1006,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getCorporateName() != $company->getCorporateName()) {
 			$msg .= "<tr><td>" . $this->translate('Company.corporateName.label') . '</td><td>';
 			if ($cloneCompany->getCorporateName() == null) {
@@ -1017,7 +1022,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getType() != $company->getType()) {
 			$msg .= "<tr><td>" . $this->translate('Company.type.label') . '</td><td>';
 			if ($cloneCompany->getType() == null) {
@@ -1033,7 +1038,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getTribunal() != $company->getTribunal()) {
 			$msg .= "<tr><td>" . $this->translate('Company.tribunal.label') . '</td><td>';
 			if ($cloneCompany->getTribunal() == null) {
@@ -1049,7 +1054,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getFisc() != $company->getFisc()) {
 			$msg .= "<tr><td>" . $this->translate('Company.fisc.label') . '</td><td>';
 			if ($cloneCompany->getFisc() == null) {
@@ -1065,7 +1070,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getCommercialRegister() != $company->getCommercialRegister()) {
 			$msg .= "<tr><td>" . $this->translate('Company.commercialRegister.label') . '</td><td>';
 			if ($cloneCompany->getCommercialRegister() == null) {
@@ -1081,7 +1086,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getCommercialRegisterBureau() != $company->getCommercialRegisterBureau()) {
 			$msg .= "<tr><td>" . $this->translate('Company.commercialRegisterBureau.label') . '</td><td>';
 			if ($cloneCompany->getCommercialRegisterBureau() == null) {
@@ -1097,7 +1102,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getCnss() != $company->getCnss()) {
 			$msg .= "<tr><td>" . $this->translate('Company.cnss.label') . '</td><td>';
 			if ($cloneCompany->getCnss() == null) {
@@ -1113,7 +1118,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getCnssBureau() != $company->getCnssBureau()) {
 			$msg .= "<tr><td>" . $this->translate('Company.cnssBureau.label') . '</td><td>';
 			if ($cloneCompany->getCnssBureau() == null) {
@@ -1129,7 +1134,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getPhysicalType() != $company->getPhysicalType()) {
 			$msg .= "<tr><td>" . $this->translate('Company.physicalType.label') . '</td><td>';
 			if ($cloneCompany->getPhysicalType() == null) {
@@ -1145,7 +1150,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getCin() != $company->getCin()) {
 			$msg .= "<tr><td>" . $this->translate('Company.cin.label') . '</td><td>';
 			if ($cloneCompany->getCin() == null) {
@@ -1161,7 +1166,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getPassport() != $company->getPassport()) {
 			$msg .= "<tr><td>" . $this->translate('Company.passport.label') . '</td><td>';
 			if ($cloneCompany->getPassport() == null) {
@@ -1177,7 +1182,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getCustomsCode() != $company->getCustomsCode()) {
 			$msg .= "<tr><td>" . $this->translate('Company.customsCode.label') . '</td><td>';
 			if ($cloneCompany->getCustomsCode() == null) {
@@ -1193,7 +1198,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getActionvn() != $company->getActionvn()) {
 			$msg .= "<tr><td>" . $this->translate('Company.actionvn.label') . '</td><td>';
 			if ($cloneCompany->getActionvn() == null) {
@@ -1209,7 +1214,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getStreetNum() != $company->getStreetNum()) {
 			$msg .= "<tr><td>" . $this->translate('Company.streetNum.label') . '</td><td>';
 			if ($cloneCompany->getStreetNum() == null) {
@@ -1225,7 +1230,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getAddress() != $company->getAddress()) {
 			$msg .= "<tr><td>" . $this->translate('Company.address.label') . '</td><td>';
 			if ($cloneCompany->getAddress() == null) {
@@ -1241,7 +1246,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getAddress2() != $company->getAddress2()) {
 			$msg .= "<tr><td>" . $this->translate('Company.address2.label') . '</td><td>';
 			if ($cloneCompany->getAddress2() == null) {
@@ -1257,7 +1262,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getTown() != $company->getTown()) {
 			$msg .= "<tr><td>" . $this->translate('Company.town.label') . '</td><td>';
 			if ($cloneCompany->getTown() == null) {
@@ -1273,7 +1278,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getZipCode() != $company->getZipCode()) {
 			$msg .= "<tr><td>" . $this->translate('Company.zipCode.label') . '</td><td>';
 			if ($cloneCompany->getZipCode() == null) {
@@ -1289,7 +1294,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getCountry() != $company->getCountry()) {
 			$msg .= "<tr><td>" . $this->translate('Company.country.label') . '</td><td>';
 			if ($cloneCompany->getCountry() == null) {
@@ -1305,7 +1310,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getPhone() != $company->getPhone()) {
 			$msg .= "<tr><td>" . $this->translate('Company.phone.label') . '</td><td>';
 			if ($cloneCompany->getPhone() == null) {
@@ -1321,7 +1326,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getMobile() != $company->getMobile()) {
 			$msg .= "<tr><td>" . $this->translate('Company.mobile.label') . '</td><td>';
 			if ($cloneCompany->getMobile() == null) {
@@ -1337,7 +1342,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getFax() != $company->getFax()) {
 			$msg .= "<tr><td>" . $this->translate('Company.fax.label') . '</td><td>';
 			if ($cloneCompany->getFax() == null) {
@@ -1353,7 +1358,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getEmail() != $company->getEmail()) {
 			$msg .= "<tr><td>" . $this->translate('Company.email.label') . '</td><td>';
 			if ($cloneCompany->getEmail() == null) {
@@ -1369,7 +1374,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCompany->getOtherInfos() != $company->getOtherInfos()) {
 			$msg .= "<tr><td>" . $this->translate('Company.otherInfos.label') . '</td><td>';
 			if ($cloneCompany->getOtherInfos() == null) {
@@ -1385,7 +1390,7 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if (\count(\array_diff($company->getSectors()->toArray(), $cloneCompany->getSectors()->toArray())) != 0 ||
 			 \count(\array_diff($cloneCompany->getSectors()->toArray(), $company->getSectors()->toArray())) != 0) {
 			$msg .= "<tr><td>" . $this->translate('Company.sectors.label') . '</td><td>';
@@ -1410,11 +1415,11 @@ class CompanyController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($msg != "") {
-			
+
 			$msg = $table_begin . $msg . $table_end;
-			
+
 			$trace->setMsg($this->translate('Company.traceEdit', array('%company%' => $company->getCorporateName())) . $msg);
 			$trace->setDtCrea(new \DateTime('now'));
 			$em = $this->getEntityManager();

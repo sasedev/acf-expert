@@ -262,8 +262,10 @@ class FundController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addAccount($fund);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$fund->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName()." ";
 						}

@@ -65,16 +65,16 @@ class SaleController extends BaseController
 		$em = $this->getEntityManager();
 		try {
 			$sale = $em->getRepository('AcfDataBundle:Sale')->find($uid);
-			
+
 			if (null == $sale) {
 				$this->flashMsgSession('warning', $this->translate('Sale.delete.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()->getUser();
-				
+
 				$company = $sale->getMonthlyBalance()->getCompany();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')->findOneBy(array('company' => $company, 'user' => $user));
 				if (null == $companyUser || $companyUser->getDeleteSales() == CompanyUser::CANT) {
 					$this->flashMsgSession('error', $this->translate('CompanyUser.accessForbidden'));
@@ -82,19 +82,19 @@ class SaleController extends BaseController
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$em->remove($sale);
 				$em->flush();
-				
+
 				$this->flashMsgSession('success', $this->translate('Sale.delete.success', array('%sale%' => $sale->getNumber())));
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
-			
+
 			$this->flashMsgSession('error', $this->translate('Sale.delete.failure'));
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -104,20 +104,20 @@ class SaleController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_client_homepage');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$sale = $em->getRepository('AcfDataBundle:Sale')->find($uid);
-			
+
 			if (null == $sale) {
 				$this->flashMsgSession('warning', $this->translate('Sale.edit.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()->getUser();
-				
+
 				$company = $sale->getMonthlyBalance()->getCompany();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')->findOneBy(array('company' => $company, 'user' => $user));
 				if (null == $companyUser) {
 					$this->flashMsgSession('error', $this->translate('CompanyUser.accessForbidden'));
@@ -125,11 +125,11 @@ class SaleController extends BaseController
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$saleUpdateNumberForm = $this->createForm(SaleUpdateNumberTForm::class, $sale);
 				$saleUpdateDtActivationForm = $this->createForm(SaleUpdateDtActivationTForm::class, $sale);
 				$saleUpdateBillForm = $this->createForm(SaleUpdateBillTForm::class, $sale);
-				$saleUpdateRelationForm = $this->createForm(SaleUpdateRelationTForm::class, $sale, 
+				$saleUpdateRelationForm = $this->createForm(SaleUpdateRelationTForm::class, $sale,
 					array('monthlybalance' => $sale->getMonthlyBalance()));
 				$saleUpdateLabelForm = $this->createForm(SaleUpdateLabelTForm::class, $sale);
 				$saleUpdateDeviseForm = $this->createForm(SaleUpdateDeviseTForm::class, $sale);
@@ -142,25 +142,25 @@ class SaleController extends BaseController
 				$saleUpdateBalanceTtcDeviseForm = $this->createForm(SaleUpdateBalanceTtcDeviseTForm::class, $sale);
 				$saleUpdateVatInfoForm = $this->createForm(SaleUpdateVatInfoTForm::class, $sale);
 				$saleUpdateRegimeForm = $this->createForm(SaleUpdateRegimeTForm::class, $sale);
-				$saleUpdateWithholdingForm = $this->createForm(SaleUpdateWithholdingTForm::class, $sale, 
+				$saleUpdateWithholdingForm = $this->createForm(SaleUpdateWithholdingTForm::class, $sale,
 					array('monthlybalance' => $sale->getMonthlyBalance()));
 				$saleUpdateBalanceNetForm = $this->createForm(SaleUpdateBalanceNetTForm::class, $sale);
 				$saleUpdateBalanceNetDeviseForm = $this->createForm(SaleUpdateBalanceNetDeviseTForm::class, $sale);
 				$saleUpdatePaymentTypeForm = $this->createForm(SaleUpdatePaymentTypeTForm::class, $sale);
 				$saleUpdateTransactionStatusForm = $this->createForm(SaleUpdateTransactionStatusTForm::class, $sale);
-				$saleUpdateAccountForm = $this->createForm(SaleUpdateAccountTForm::class, $sale, 
+				$saleUpdateAccountForm = $this->createForm(SaleUpdateAccountTForm::class, $sale,
 					array('monthlybalance' => $sale->getMonthlyBalance()));
 				$saleUpdateOtherInfosForm = $this->createForm(SaleUpdateOtherInfosTForm::class, $sale);
 				$saleUpdateDocsForm = $this->createForm(SaleUpdateDocsTForm::class, $sale, array('company' => $sale->getCompany()));
-				
+
 				$secondaryVat = new SecondaryVat();
 				$secondaryVat->setSale($sale);
 				$secondaryVatNewForm = $this->createForm(SecondaryVatNewTForm::class, $secondaryVat, array('sale' => $sale));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($sale->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array('company' => $sale->getCompany()));
-				
+
 				$this->gvars['sale'] = $sale;
 				$this->gvars['secondaryVat'] = $secondaryVat;
 				$this->gvars['doc'] = $doc;
@@ -189,13 +189,13 @@ class SaleController extends BaseController
 				$this->gvars['SaleUpdateDocsForm'] = $saleUpdateDocsForm->createView();
 				$this->gvars['SecondaryVatNewForm'] = $secondaryVatNewForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
 				$this->getSession()->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
 				$this->getSession()->remove('stabActive');
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'customersPrefix'));
 				if (null == $customersConstStr) {
 					$customersConstStr = new ConstantStr();
@@ -206,17 +206,17 @@ class SaleController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.sale.edit', array('%sale%' => $sale->getNumber()));
 				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.sale.edit.txt', array('%sale%' => $sale->getNumber()));
-				
+
 				return $this->renderResponse('AcfClientBundle:Sale:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -226,20 +226,20 @@ class SaleController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_client_homepage');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$sale = $em->getRepository('AcfDataBundle:Sale')->find($uid);
-			
+
 			if (null == $sale) {
 				$this->flashMsgSession('warning', $this->translate('Sale.edit.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()->getUser();
-				
+
 				$company = $sale->getMonthlyBalance()->getCompany();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')->findOneBy(array('company' => $company, 'user' => $user));
 				if (null == $companyUser || $companyUser->getEditSales() == CompanyUser::CANT) {
 					$this->flashMsgSession('error', $this->translate('CompanyUser.accessForbidden'));
@@ -247,11 +247,11 @@ class SaleController extends BaseController
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$saleUpdateNumberForm = $this->createForm(SaleUpdateNumberTForm::class, $sale);
 				$saleUpdateDtActivationForm = $this->createForm(SaleUpdateDtActivationTForm::class, $sale);
 				$saleUpdateBillForm = $this->createForm(SaleUpdateBillTForm::class, $sale);
-				$saleUpdateRelationForm = $this->createForm(SaleUpdateRelationTForm::class, $sale, 
+				$saleUpdateRelationForm = $this->createForm(SaleUpdateRelationTForm::class, $sale,
 					array('monthlybalance' => $sale->getMonthlyBalance()));
 				$saleUpdateLabelForm = $this->createForm(SaleUpdateLabelTForm::class, $sale);
 				$saleUpdateDeviseForm = $this->createForm(SaleUpdateDeviseTForm::class, $sale);
@@ -264,36 +264,36 @@ class SaleController extends BaseController
 				$saleUpdateBalanceTtcDeviseForm = $this->createForm(SaleUpdateBalanceTtcDeviseTForm::class, $sale);
 				$saleUpdateVatInfoForm = $this->createForm(SaleUpdateVatInfoTForm::class, $sale);
 				$saleUpdateRegimeForm = $this->createForm(SaleUpdateRegimeTForm::class, $sale);
-				$saleUpdateWithholdingForm = $this->createForm(SaleUpdateWithholdingTForm::class, $sale, 
+				$saleUpdateWithholdingForm = $this->createForm(SaleUpdateWithholdingTForm::class, $sale,
 					array('monthlybalance' => $sale->getMonthlyBalance()));
 				$saleUpdateBalanceNetForm = $this->createForm(SaleUpdateBalanceNetTForm::class, $sale);
 				$saleUpdateBalanceNetDeviseForm = $this->createForm(SaleUpdateBalanceNetDeviseTForm::class, $sale);
 				$saleUpdatePaymentTypeForm = $this->createForm(SaleUpdatePaymentTypeTForm::class, $sale);
 				$saleUpdateTransactionStatusForm = $this->createForm(SaleUpdateTransactionStatusTForm::class, $sale);
-				$saleUpdateAccountForm = $this->createForm(SaleUpdateAccountTForm::class, $sale, 
+				$saleUpdateAccountForm = $this->createForm(SaleUpdateAccountTForm::class, $sale,
 					array('monthlybalance' => $sale->getMonthlyBalance()));
 				$saleUpdateOtherInfosForm = $this->createForm(SaleUpdateOtherInfosTForm::class, $sale);
 				$saleUpdateDocsForm = $this->createForm(SaleUpdateDocsTForm::class, $sale, array('company' => $sale->getCompany()));
-				
+
 				$secondaryVat = new SecondaryVat();
 				$secondaryVat->setSale($sale);
 				$secondaryVatNewForm = $this->createForm(SecondaryVatNewTForm::class, $secondaryVat, array('sale' => $sale));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($sale->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array('company' => $sale->getCompany()));
-				
+
 				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
 				$this->getSession()->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
 				$this->getSession()->remove('stabActive');
-				
+
 				$request = $this->getRequest();
 				$reqData = $request->request->all();
-				
+
 				$cloneSale = clone $sale;
-				
+
 				if (isset($reqData['SaleUpdateNumberForm'])) {
 					$this->gvars['tabActive'] = 2;
 					$this->getSession()->set('tabActive', 2);
@@ -302,13 +302,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateDtActivationForm'])) {
@@ -319,13 +319,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateBillForm'])) {
@@ -336,13 +336,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateRelationForm'])) {
@@ -353,13 +353,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateLabelForm'])) {
@@ -370,13 +370,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateDeviseForm'])) {
@@ -399,13 +399,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateConversionRateForm'])) {
@@ -428,13 +428,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateVatForm'])) {
@@ -447,13 +447,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateVatDeviseForm'])) {
@@ -465,13 +465,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateStampForm'])) {
@@ -484,13 +484,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateStampDeviseForm'])) {
@@ -502,13 +502,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateBalanceTtcForm'])) {
@@ -521,13 +521,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateVatInfoForm'])) {
@@ -538,13 +538,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateRegimeForm'])) {
@@ -555,13 +555,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateWithholdingForm'])) {
@@ -572,13 +572,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateBalanceNetDeviseForm'])) {
@@ -590,13 +590,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateBalanceNetForm'])) {
@@ -609,13 +609,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdatePaymentTypeForm'])) {
@@ -626,13 +626,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateTransactionStatusForm'])) {
@@ -643,13 +643,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateAccountForm'])) {
@@ -660,13 +660,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SaleUpdateOtherInfosForm'])) {
@@ -677,13 +677,13 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				} elseif (isset($reqData['SecondaryVatNewForm'])) {
@@ -693,17 +693,17 @@ class SaleController extends BaseController
 					if ($secondaryVatNewForm->isValid()) {
 						$em->persist($secondaryVat);
 						$em->flush();
-						$this->flashMsgSession('success', 
-							$this->translate('SecondaryVat.add.success', 
-								array('%sale%' => $sale->getNumber(), 
+						$this->flashMsgSession('success',
+							$this->translate('SecondaryVat.add.success',
+								array('%sale%' => $sale->getNumber(),
 									'%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo()))));
 						$this->gvars['tabActive'] = 1;
 						$this->getSession()->set('tabActive', 1);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('SecondaryVat.add.failure'));
 					}
 				} elseif (isset($reqData['DocNewForm'])) {
@@ -714,48 +714,53 @@ class SaleController extends BaseController
 					$docNewForm->handleRequest($request);
 					if ($docNewForm->isValid()) {
 						$docFiles = $docNewForm['fileName']->getData();
-						
+						$docs = array();
+
 						$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
-						
+
 						$docNames = "";
-						
+
 						foreach ($docFiles as $docFile) {
-							
+
 							$originalName = $docFile->getClientOriginalName();
 							$fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($docFile->getClientOriginalExtension());
 							$mimeType = $docFile->getMimeType();
 							$docFile->move($docDir, $fileName);
-							
+
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = new Doc();
 							$doc->setCompany($sale->getCompany());
-							
+
 							$doc->setFileName($fileName);
 							$doc->setOriginalName($originalName);
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addTransaction($sale);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
-							
+
+							$sale->addDoc($doc);
+
+							$docs[] = $doc;
+
 							$docNames .= $doc->getOriginalName() . " ";
 						}
-						
+
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Doc.add.success', array('%doc%' => $docNames)));
-						$this->newDocNotifyAdmin($sale, $docNames);
+						$this->newDocNotifyAdmin($sale, $docs);
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Doc.add.failure'));
 					}
 				} elseif (isset($reqData['SaleUpdateDocsForm'])) {
@@ -770,17 +775,17 @@ class SaleController extends BaseController
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneSale, $sale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($sale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.edit.failure', array('%sale%' => $sale->getNumber())));
 					}
 				}
-				
+
 				$this->gvars['sale'] = $sale;
 				$this->gvars['secondaryVat'] = $secondaryVat;
 				$this->gvars['doc'] = $doc;
@@ -809,7 +814,7 @@ class SaleController extends BaseController
 				$this->gvars['SaleUpdateDocsForm'] = $saleUpdateDocsForm->createView();
 				$this->gvars['SecondaryVatNewForm'] = $secondaryVatNewForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'customersPrefix'));
 				if (null == $customersConstStr) {
 					$customersConstStr = new ConstantStr();
@@ -820,45 +825,48 @@ class SaleController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.sale.edit', array('%sale%' => $sale->getNumber()));
 				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.sale.edit.txt', array('%sale%' => $sale->getNumber()));
-				
+
 				return $this->renderResponse('AcfClientBundle:Sale:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
-	protected function newDocNotifyAdmin(Sale $sale, $docNames)
+	protected function newDocNotifyAdmin(Sale $sale, $docs)
 	{
 		$from = $this->getParameter('mail_from');
 		$fromName = $this->getParameter('mail_from_name');
 		$subject = $this->translate('_mail.newdocs.subject', array(), 'messages');
-		
+
 		$user = $this->getSecurityTokenStorage()
 			->getToken()
 			->getUser();
 		$company = $sale->getCompany();
-		
+
 		$admins = $company->getAdmins();
-		foreach ($admins as $admin) {
+		if (\count($admins) != 0) {
 			$mvars = array();
-			$mvars['user'] = $user->getFullName();
-			$mvars['company'] = $company->getCorporateName();
-			$mvars['docNames'] = $docNames;
-			
-			$message = \Swift_Message::newInstance()->setFrom($from, $fromName)
-				->setTo($admin->getEmail(), $admin->getFullname())
-				->setSubject($subject)
-				->setBody($this->renderView('AcfClientBundle:Mail:newdoc.html.twig', $mvars), 'text/html');
-			
+			$mvars['sale'] = $sale;
+			$mvars['user'] = $user;
+			$mvars['company'] = $company;
+			$mvars['docs'] = $docs;
+			$message = \Swift_Message::newInstance();
+			$message->setFrom($from, $fromName);
+			foreach ($admins as $admin) {
+				$message->addTo($admin->getEmail(), $admin->getFullname());
+			}
+			$message->setSubject($subject);
+			$message->setBody($this->renderView('AcfClientBundle:Mail:Salenewdoc.html.twig', $mvars), 'text/html');
 			$this->sendmail($message);
 		}
+
 	}
 
 	protected function traceEntity(Sale $cloneSale, Sale $sale)
@@ -882,14 +890,14 @@ class SaleController extends BaseController
 		} else {
 			$trace->setUserType(Trace::UT_SUPERADMIN);
 		}
-		
+
 		$table_begin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
 		$table_begin .= '<thead><tr><th class="text-left">' . $this->translate('Entity.field') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.oldVal') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.newVal') . '</th></tr></thead><tbody>';
-		
+
 		$table_end = '</tbody></table>';
-		
+
 		$trace->setActionEntity(Trace::AE_SALE);
 		$trace->setActionId2($sale->getMonthlyBalance()
 			->getCompany()
@@ -898,9 +906,9 @@ class SaleController extends BaseController
 		$trace->setActionId3($sale->getMonthlyBalance()
 			->getId());
 		$trace->setActionEntity2(Trace::AE_MBSALE);
-		
+
 		$msg = "";
-		
+
 		if ($cloneSale->getNumber() != $sale->getNumber()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.number.label') . '</td><td>';
 			if ($cloneSale->getNumber() == null) {
@@ -916,7 +924,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getDtActivation() != $sale->getDtActivation()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.dtActivation.label') . '</td><td>';
 			if ($cloneSale->getDtActivation() == null) {
@@ -932,7 +940,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getBill() != $sale->getBill()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.bill.label') . '</td><td>';
 			if ($cloneSale->getBill() == null) {
@@ -948,7 +956,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getRelation() != $sale->getRelation()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.relation.label') . '</td><td>';
 			if ($cloneSale->getRelation() == null) {
@@ -964,7 +972,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getLabel() != $sale->getLabel()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.label.label') . '</td><td>';
 			if ($cloneSale->getLabel() == null) {
@@ -980,7 +988,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getDevise() != $sale->getDevise()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.devise.label') . '</td><td>';
 			if ($cloneSale->getDevise() == null) {
@@ -996,7 +1004,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getConversionRate() != $sale->getConversionRate()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.conversionRate.label') . '</td><td>';
 			if ($cloneSale->getConversionRate() == null) {
@@ -1012,7 +1020,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getVat() != $sale->getVat()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.vat.label') . '</td><td>';
 			if ($cloneSale->getVat() == null) {
@@ -1028,7 +1036,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getStamp() != $sale->getStamp()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.stamp.label') . '</td><td>';
 			if ($cloneSale->getStamp() == null) {
@@ -1044,7 +1052,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getBalanceTtc() != $sale->getBalanceTtc()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.balanceTtc.label') . '</td><td>';
 			if ($cloneSale->getBalanceTtc() == null) {
@@ -1060,7 +1068,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getBalanceNet() != $sale->getBalanceNet()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.balanceNet.label') . '</td><td>';
 			if ($cloneSale->getBalanceNet() == null) {
@@ -1076,7 +1084,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getVatDevise() != $sale->getVatDevise()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.vatDevise.label') . '</td><td>';
 			if ($cloneSale->getVatDevise() == null) {
@@ -1092,7 +1100,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getStampDevise() != $sale->getStampDevise()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.stampDevise.label') . '</td><td>';
 			if ($cloneSale->getStampDevise() == null) {
@@ -1108,7 +1116,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getBalanceTtcDevise() != $sale->getBalanceTtcDevise()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.balanceTtcDevise.label') . '</td><td>';
 			if ($cloneSale->getBalanceTtcDevise() == null) {
@@ -1124,7 +1132,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getBalanceNetDevise() != $sale->getBalanceNetDevise()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.balanceNetDevise.label') . '</td><td>';
 			if ($cloneSale->getBalanceNetDevise() == null) {
@@ -1140,7 +1148,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getVatInfo() != $sale->getVatInfo()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.vatInfo.label') . '</td><td>';
 			if ($cloneSale->getVatInfo() == null) {
@@ -1156,7 +1164,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getRegime() != $sale->getRegime()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.regime.label') . '</td><td>';
 			if ($cloneSale->getRegime() == null) {
@@ -1172,7 +1180,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getWithholding() != $sale->getWithholding()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.withholding.label') . '</td><td>';
 			if ($cloneSale->getWithholding() == null) {
@@ -1188,7 +1196,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getPaymentType() != $sale->getPaymentType()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.paymentType.label') . '</td><td>';
 			if ($cloneSale->getPaymentType() == null) {
@@ -1204,7 +1212,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getDtPayment() != $sale->getDtPayment()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.dtPayment.label') . '</td><td>';
 			if ($cloneSale->getDtPayment() == null) {
@@ -1220,7 +1228,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getAccount() != $sale->getAccount()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.account.label') . '</td><td>';
 			if ($cloneSale->getAccount() == null) {
@@ -1236,7 +1244,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getNature() != $sale->getNature()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.nature.label') . '</td><td>';
 			if ($cloneSale->getNature() == null) {
@@ -1252,7 +1260,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getTransactionStatus() != $sale->getTransactionStatus()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.transactionStatus.label') . '</td><td>';
 			if ($cloneSale->getTransactionStatus() == null) {
@@ -1268,7 +1276,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getValidated() != $sale->getValidated()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.validated.label') . '</td><td>';
 			if ($cloneSale->getValidated() == null) {
@@ -1284,7 +1292,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneSale->getOtherInfos() != $sale->getOtherInfos()) {
 			$msg .= "<tr><td>" . $this->translate('Sale.otherInfos.label') . '</td><td>';
 			if ($cloneSale->getOtherInfos() == null) {
@@ -1300,7 +1308,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if (\count(\array_diff($sale->getDocs()->toArray(), $cloneSale->getDocs()->toArray())) != 0 ||
 			 \count(\array_diff($cloneSale->getDocs()->toArray(), $sale->getDocs()->toArray())) != 0) {
 			$msg .= "<tr><td>" . $this->translate('Sale.docs.label') . '</td><td>';
@@ -1327,7 +1335,7 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if (\count(\array_diff($sale->getSecondaryVats()->toArray(), $cloneSale->getSecondaryVats()->toArray())) != 0 ||
 			 \count(\array_diff($cloneSale->getSecondaryVats()->toArray(), $sale->getSecondaryVats()->toArray())) != 0) {
 			$msg .= "<tr><td>" . $this->translate('Sale.secondaryVats.label') . '</td><td>';
@@ -1336,7 +1344,7 @@ class SaleController extends BaseController
 			} else {
 				$msg .= "<ul>";
 				foreach ($cloneSale->getSecondaryVats() as $secondaryVat) {
-					$msg .= '<li><a href="' . $this->generateUrl('_admin_secondaryVat_editGet', array('uid' => $$secondaryVat->getId())) .
+					$msg .= '<li><a href="' . $this->generateUrl('_admin_secondaryVat_editGet', array('uid' => $secondaryVat->getId())) .
 						 '">' . $secondaryVat->getVat() . '</a></li>';
 				}
 				$msg .= "<ul>";
@@ -1354,13 +1362,13 @@ class SaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($msg != "") {
-			
+
 			$msg = $table_begin . $msg . $table_end;
-			
+
 			$trace->setMsg(
-				$this->translate('Sale.traceEdit', 
+				$this->translate('Sale.traceEdit',
 					array('%sale%' => $sale->getLabel(), '%mbsale%' => $sale->getMonthlyBalance()
 						->getRef(), '%company%' => $sale->getCompany()
 						->getCorporateName())) . $msg);

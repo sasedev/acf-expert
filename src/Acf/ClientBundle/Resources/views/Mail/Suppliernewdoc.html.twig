@@ -1,0 +1,8 @@
+<html>
+<body>
+{{'_mail.newdocs.bodySupplier'|trans({'%user%':user.fullName,'%companyurl%':url('_admin_company_editGet', {'uid': company.id}), '%company%':company.corporateName,'%supplierurl%': url('_admin_supplier_editGet', {'uid': supplier.id}), '%supplier%': supplier.label }, "messages")|raw}}<br>
+{% for doc in docs %}
+- <a href="{{ url('_admin_doc_editGet', {'uid': doc.id}) }}">{{ doc.originalName }}</a><br>
+{% endfor %}
+</body>
+</html>

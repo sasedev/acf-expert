@@ -1,10 +1,18 @@
 _mail.newdocs.subject: ACF-Cloud - Notification Nouveaux Documents
+_mail.newdocs.bodyCompany: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> le(s) document(s) Système(s) suivant(s) :'
 _mail.newdocs.bodyDgbank: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%dgurl%"><b>%dg%</b></a>) le(s) document(s) Bancaire(s) suivant(s) :'
 _mail.newdocs.bodyDgcomptable: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%dgurl%"><b>%dg%</b></a>) le(s) document(s) Comptable(s) suivant(s) :'
 _mail.newdocs.bodyDgfiscal: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%dgurl%"><b>%dg%</b></a>) le(s) document(s) Fiscal(s) suivant(s) :'
 _mail.newdocs.bodyDg: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%dgurl%"><b>%dg%</b></a>) le(s) document(s) Juridique(s) suivant(s) :'
 _mail.newdocs.bodyDgperso: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%dgurl%"><b>%dg%</b></a>) le(s) document(s) Personnels(s) suivant(s) :'
 _mail.newdocs.bodyDgsyst: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%dgurl%"><b>%dg%</b></a>) le(s) document(s) Système(s) suivant(s) :'
+_mail.newdocs.bodySupplier: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%supplierurl%"><b>%supplier%</b></a>) le(s) document(s) Système(s) suivant(s) :'
+_mail.newdocs.bodyCustomer: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%customerurl%"><b>%customer%</b></a>) le(s) document(s) Système(s) suivant(s) :'
+_mail.newdocs.bodyMBPurchase: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%mpurl%"><b>%mp%</b></a>) le(s) document(s) Système(s) suivant(s) :'
+_mail.newdocs.bodyMBSale: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%msurl%"><b>%ms%</b></a>) le(s) document(s) Système(s) suivant(s) :'
+_mail.newdocs.bodyBuy: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%buyurl%"><b>%buy%</b></a>) le(s) document(s) Système(s) suivant(s) :'
+_mail.newdocs.bodySale: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%saleurl%"><b>%sale%</b></a>) le(s) document(s) Système(s) suivant(s) :'
+
 
 menu.client: ACF-Cloud
 breadcrumb.client: ACF-Cloud

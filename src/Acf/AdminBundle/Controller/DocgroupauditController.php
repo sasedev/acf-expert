@@ -253,8 +253,10 @@ class DocgroupauditController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addGroupaudit($docgroupaudit);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$docgroupaudit->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName() . " ";
 						}

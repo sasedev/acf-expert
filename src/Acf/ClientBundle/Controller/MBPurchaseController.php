@@ -40,25 +40,25 @@ class MBPurchaseController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_client_homepage');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$mbpurchase = $em->getRepository('AcfDataBundle:MBPurchase')
 				->find($uid);
-			
+
 			if (null == $mbpurchase) {
 				$this->flashMsgSession('warning', $this->translate('MBPurchase.edit.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()
 					->getUser();
-				
+
 				$company = $mbpurchase->getCompany();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')
 					->findOneBy(array(
-					'company' => $company, 
+					'company' => $company,
 					'user' => $user
 				));
 				if (null == $companyUser) {
@@ -67,41 +67,41 @@ class MBPurchaseController extends BaseController
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$buy = new Buy();
 				$buy->setMonthlyBalance($mbpurchase);
 				$buyNewForm = $this->createForm(BuyNewTForm::class, $buy, array(
 					'monthlybalance' => $mbpurchase
 				));
-				
-				$mbpurchaseUpdateDocsForm = $this->createForm(MBPurchaseUpdateDocsTForm::class, $mbpurchase, 
+
+				$mbpurchaseUpdateDocsForm = $this->createForm(MBPurchaseUpdateDocsTForm::class, $mbpurchase,
 					array(
 						'company' => $mbpurchase->getCompany()
 					));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($mbpurchase->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array(
 					'company' => $mbpurchase->getCompany()
 				));
-				
+
 				$this->gvars['mbpurchase'] = $mbpurchase;
 				$this->gvars['buy'] = $buy;
 				$this->gvars['doc'] = $doc;
 				$this->gvars['BuyNewForm'] = $buyNewForm->createView();
 				$this->gvars['MBPurchaseUpdateDocsForm'] = $mbpurchaseUpdateDocsForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$this->gvars['tabActive'] = $this->getSession()
 					->get('tabActive', 1);
 				$this->getSession()
 					->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()
 					->get('stabActive', 1);
 				$this->getSession()
 					->remove('stabActive');
-				
+
 				$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 					->findOneBy(array(
 					'name' => 'suppliersPrefix'
@@ -115,22 +115,22 @@ class MBPurchaseController extends BaseController
 				}
 				$suppliersPrefix = $suppliersConstStr->getValue();
 				$this->gvars['suppliersPrefix'] = $suppliersPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.mbpurchase.edit', array(
 					'%mbpurchase%' => $mbpurchase->getRef()
 				));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbpurchase.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbpurchase.edit.txt',
 					array(
 						'%mbpurchase%' => $mbpurchase->getRef()
 					));
-				
+
 				return $this->renderResponse('AcfClientBundle:MBPurchase:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -140,25 +140,25 @@ class MBPurchaseController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_client_homepage');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$mbpurchase = $em->getRepository('AcfDataBundle:MBPurchase')
 				->find($uid);
-			
+
 			if (null == $mbpurchase) {
 				$this->flashMsgSession('warning', $this->translate('MBPurchase.edit.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()
 					->getUser();
-				
+
 				$company = $mbpurchase->getCompany();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')
 					->findOneBy(array(
-					'company' => $company, 
+					'company' => $company,
 					'user' => $user
 				));
 				if (null == $companyUser || $companyUser->getEditBuys() == CompanyUser::CANT) {
@@ -167,38 +167,38 @@ class MBPurchaseController extends BaseController
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$buy = new Buy();
 				$buy->setMonthlyBalance($mbpurchase);
 				$buyNewForm = $this->createForm(BuyNewTForm::class, $buy, array(
 					'monthlybalance' => $mbpurchase
 				));
-				$mbpurchaseUpdateDocsForm = $this->createForm(MBPurchaseUpdateDocsTForm::class, $mbpurchase, 
+				$mbpurchaseUpdateDocsForm = $this->createForm(MBPurchaseUpdateDocsTForm::class, $mbpurchase,
 					array(
 						'company' => $mbpurchase->getCompany()
 					));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($mbpurchase->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array(
 					'company' => $mbpurchase->getCompany()
 				));
-				
+
 				$this->gvars['tabActive'] = $this->getSession()
 					->get('tabActive', 2);
 				$this->getSession()
 					->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()
 					->get('stabActive', 1);
 				$this->getSession()
 					->remove('stabActive');
-				
+
 				$request = $this->getRequest();
 				$reqData = $request->request->all();
-				
+
 				$cloneMBPurchase = clone $mbpurchase;
-				
+
 				if (isset($reqData['BuyNewForm'])) {
 					$this->gvars['tabActive'] = 2;
 					$this->getSession()
@@ -221,7 +221,6 @@ class MBPurchaseController extends BaseController
 							$buy->setBalanceTtc($buy->getBalanceTtcDevise() * $buy->getConversionRate());
 							$buy->setBalanceNet($buy->getBalanceNetDevise() * $buy->getConversionRate());
 						}
-						$em->persist($buy);
 						foreach ($buyNewForm->get('docs') as $docNewForm) {
 							$docFile = $docNewForm['fileName']->getData();
 							$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
@@ -231,7 +230,7 @@ class MBPurchaseController extends BaseController
 							$docFile->move($docDir, $fileName);
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = $docNewForm->getData();
 							$doc->setCompany($mbpurchase->getCompany());
 							$doc->setFileName($fileName);
@@ -239,9 +238,12 @@ class MBPurchaseController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addTransaction($buy);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$buy->addDoc($doc);
 						}
+						$em->persist($buy);
 						$em->flush();
 						$mbpurchase->updateCount();
 						$em->persist($mbpurchase);
@@ -255,11 +257,11 @@ class MBPurchaseController extends BaseController
 						$this->gvars['stabActive'] = 1;
 						$this->getSession()
 							->set('stabActive', 1);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbpurchase);
-						
+
 						$this->flashMsgSession('error', $this->translate('Buy.add.failure'));
 					}
 				} elseif (isset($reqData['DocNewForm'])) {
@@ -272,51 +274,56 @@ class MBPurchaseController extends BaseController
 					$docNewForm->handleRequest($request);
 					if ($docNewForm->isValid()) {
 						$docFiles = $docNewForm['fileName']->getData();
-						
+						$docs = array();
+
 						$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
-						
+
 						$docNames = "";
-						
+
 						foreach ($docFiles as $docFile) {
-							
+
 							$originalName = $docFile->getClientOriginalName();
 							$fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($docFile->getClientOriginalExtension());
 							$mimeType = $docFile->getMimeType();
 							$docFile->move($docDir, $fileName);
-							
+
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = new Doc();
 							$doc->setCompany($mbpurchase->getCompany());
-							
+
 							$doc->setFileName($fileName);
 							$doc->setOriginalName($originalName);
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addMonthlyBalance($mbpurchase);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
-							
+
+							$mbpurchase->addDoc($doc);
+
+							$docs[] = $doc;
+
 							$docNames .= $doc->getOriginalName() . " ";
 						}
-						
+
 						$em->persist($mbpurchase);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Doc.add.success', array(
 							'%doc%' => $docNames
 						)));
-						$this->newDocNotifyAdmin($$mbpurchase, $docNames);
+						$this->newDocNotifyAdmin($mbpurchase, $docs);
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()
 							->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneMBPurchase, $mbpurchase);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbpurchase);
-						
+
 						$this->flashMsgSession('error', $this->translate('Doc.add.failure'));
 					}
 				} elseif (isset($reqData['MBPurchaseUpdateDocsForm'])) {
@@ -330,34 +337,34 @@ class MBPurchaseController extends BaseController
 					if ($mbpurchaseUpdateDocsForm->isValid()) {
 						$em->persist($mbpurchase);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('MBPurchase.edit.success', array(
 								'%mbpurchase%' => $mbpurchase->getRef()
 							)));
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()
 							->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneMBPurchase, $mbpurchase);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbpurchase);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('MBPurchase.edit.failure', array(
 								'%mbpurchase%' => $mbpurchase->getRef()
 							)));
 					}
 				}
-				
+
 				$this->gvars['mbpurchase'] = $mbpurchase;
 				$this->gvars['buy'] = $buy;
 				$this->gvars['doc'] = $doc;
 				$this->gvars['BuyNewForm'] = $buyNewForm->createView();
 				$this->gvars['MBPurchaseUpdateDocsForm'] = $mbpurchaseUpdateDocsForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 					->findOneBy(array(
 					'name' => 'suppliersPrefix'
@@ -371,50 +378,53 @@ class MBPurchaseController extends BaseController
 				}
 				$suppliersPrefix = $suppliersConstStr->getValue();
 				$this->gvars['suppliersPrefix'] = $suppliersPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.mbpurchase.edit', array(
 					'%mbpurchase%' => $mbpurchase->getRef()
 				));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbpurchase.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbpurchase.edit.txt',
 					array(
 						'%mbpurchase%' => $mbpurchase->getRef()
 					));
-				
+
 				return $this->renderResponse('AcfClientBundle:MBPurchase:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
-	protected function newDocNotifyAdmin(MBPurchase $mp, $docNames)
+	protected function newDocNotifyAdmin(MBPurchase $mp, $docs)
 	{
 		$from = $this->getParameter('mail_from');
 		$fromName = $this->getParameter('mail_from_name');
 		$subject = $this->translate('_mail.newdocs.subject', array(), 'messages');
-		
+
 		$user = $this->getSecurityTokenStorage()
 			->getToken()
 			->getUser();
 		$company = $mp->getCompany();
-		
+
 		$admins = $company->getAdmins();
-		foreach ($admins as $admin) {
+		if (\count($admins) != 0) {
 			$mvars = array();
-			$mvars['user'] = $user->getFullName();
-			$mvars['company'] = $company->getCorporateName();
-			$mvars['docNames'] = $docNames;
-			
-			$message = \Swift_Message::newInstance()->setFrom($from, $fromName)
-				->setTo($admin->getEmail(), $admin->getFullname())
-				->setSubject($subject)
-				->setBody($this->renderView('AcfClientBundle:Mail:newdoc.html.twig', $mvars), 'text/html');
-			
+			$mvars['mp'] = $mp;
+			$mvars['user'] = $user;
+			$mvars['company'] = $company;
+			$mvars['docs'] = $docs;
+			$message = \Swift_Message::newInstance();
+			$message->setFrom($from, $fromName);
+			foreach ($admins as $admin) {
+				$message->addTo($admin->getEmail(), $admin->getFullname());
+			}
+			$message->setSubject($subject);
+			$message->setBody($this->renderView('AcfClientBundle:Mail:MBPurchasenewdoc.html.twig', $mvars), 'text/html');
 			$this->sendmail($message);
 		}
+
 	}
 
 	protected function traceEntity(MBPurchase $cloneMBPurchase, MBPurchase $mbpurchase)
@@ -438,21 +448,21 @@ class MBPurchaseController extends BaseController
 		} else {
 			$trace->setUserType(Trace::UT_SUPERADMIN);
 		}
-		
+
 		$table_begin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
 		$table_begin .= '<thead><tr><th class="text-left">' . $this->translate('Entity.field') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.oldVal') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.newVal') . '</th></tr></thead><tbody>';
-		
+
 		$table_end = '</tbody></table>';
-		
+
 		$trace->setActionEntity(Trace::AE_MBPURCHASE);
 		$trace->setActionId2($mbpurchase->getCompany()
 			->getId());
 		$trace->setActionEntity2(Trace::AE_COMPANY);
-		
+
 		$msg = "";
-		
+
 		if ($cloneMBPurchase->getCount() != $mbpurchase->getCount()) {
 			$msg .= "<tr><td>" . $this->translate('MBPurchase.count.label') . '</td><td>';
 			if ($cloneMBPurchase->getCount() == null) {
@@ -468,7 +478,7 @@ class MBPurchaseController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if (\count(\array_diff($mbpurchase->getDocs()
 			->toArray(), $cloneMBPurchase->getDocs()
 			->toArray())) != 0 || \count(\array_diff($cloneMBPurchase->getDocs()
@@ -500,15 +510,15 @@ class MBPurchaseController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($msg != "") {
-			
+
 			$msg = $table_begin . $msg . $table_end;
-			
+
 			$trace->setMsg(
-				$this->translate('MBPurchase.traceEdit', 
+				$this->translate('MBPurchase.traceEdit',
 					array(
-						'%mbpurchase%' => $mbpurchase->getLabel(), 
+						'%mbpurchase%' => $mbpurchase->getLabel(),
 						'%company%' => $mbpurchase->getCompany()
 							->getCorporateName()
 					)) . $msg);

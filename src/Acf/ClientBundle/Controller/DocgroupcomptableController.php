@@ -170,8 +170,10 @@ class DocgroupcomptableController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addGroupcomptable($docgroupcomptable);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$docgroupcomptable->addDoc($doc);
 
 							$docs[] = $doc;
 

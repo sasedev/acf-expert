@@ -912,6 +912,38 @@ class Doc
 	}
 
 	/**
+	 * Get banks
+	 *
+	 * @return ArrayCollection
+	 */
+	public function getBanks()
+	{
+		$banks = new ArrayCollection();
+		foreach ($this->accounts as $account) {
+			if ($account instanceof Bank) {
+				$banks->add($account);
+			}
+		}
+		return $banks;
+	}
+
+	/**
+	 * Get funds
+	 *
+	 * @return ArrayCollection
+	 */
+	public function getFunds()
+	{
+		$funds = new ArrayCollection();
+		foreach ($this->accounts as $account) {
+			if ($account instanceof Fund) {
+				$funds->add($account);
+			}
+		}
+		return $funds;
+	}
+
+	/**
 	 *
 	 * @param Collection $accounts
 	 *
@@ -960,6 +992,38 @@ class Doc
 	public function getRelations()
 	{
 		return $this->relations;
+	}
+
+	/**
+	 * Get customers
+	 *
+	 * @return ArrayCollection
+	 */
+	public function getCustomers()
+	{
+		$customers = new ArrayCollection();
+		foreach ($this->relations as $relation) {
+			if ($relation instanceof Customer) {
+				$customers->add($relation);
+			}
+		}
+		return $customers;
+	}
+
+	/**
+	 * Get suppliers
+	 *
+	 * @return ArrayCollection
+	 */
+	public function getSuppliers()
+	{
+		$suppliers = new ArrayCollection();
+		foreach ($this->relations as $relation) {
+			if ($relation instanceof Supplier) {
+				$suppliers->add($relation);
+			}
+		}
+		return $suppliers;
 	}
 
 	/**
@@ -1014,6 +1078,38 @@ class Doc
 	}
 
 	/**
+	 * Get Mbpurchases
+	 *
+	 * @return ArrayCollection
+	 */
+	public function getMbpurchases()
+	{
+		$mbpurchases = new ArrayCollection();
+		foreach ($this->monthlyBalances as $monthlyBalance) {
+			if ($monthlyBalance instanceof MBPurchase) {
+				$mbpurchases->add($monthlyBalance);
+			}
+		}
+		return $mbpurchases;
+	}
+
+	/**
+	 * Get Mmbales
+	 *
+	 * @return ArrayCollection
+	 */
+	public function getMbsales()
+	{
+		$mbsales = new ArrayCollection();
+		foreach ($this->monthlyBalances as $monthlyBalance) {
+			if ($monthlyBalance instanceof MBSale) {
+				$mbsales->add($monthlyBalance);
+			}
+		}
+		return $mbsales;
+	}
+
+	/**
 	 *
 	 * @param Collection $monthlyBalances
 	 *
@@ -1062,6 +1158,38 @@ class Doc
 	public function getTransactions()
 	{
 		return $this->transactions;
+	}
+
+	/**
+	 * Get Sales
+	 *
+	 * @return ArrayCollection
+	 */
+	public function getSales()
+	{
+		$sales = new ArrayCollection();
+		foreach ($this->transactions as $transaction) {
+			if ($transaction instanceof Sale) {
+				$sales->add($transaction);
+			}
+		}
+		return $sales;
+	}
+
+	/**
+	 * Get Buys
+	 *
+	 * @return ArrayCollection
+	 */
+	public function getBuys()
+	{
+		$buys = new ArrayCollection();
+		foreach ($this->transactions as $transaction) {
+			if ($transaction instanceof Buy) {
+				$buys->add($transaction);
+			}
+		}
+		return $buys;
 	}
 
 	/**

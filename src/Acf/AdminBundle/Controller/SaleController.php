@@ -727,7 +727,7 @@ class SaleController extends BaseController
 						$em->persist($sale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Sale.edit.success', array('%sale%' => $sale->getNumber())));
-						
+
 						$this->traceEntity($cloneSale, $sale);
 
 						return $this->redirect($urlFrom);
@@ -787,8 +787,10 @@ class SaleController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addTransaction($sale);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$sale->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName()." ";
 						}
@@ -1362,7 +1364,7 @@ class SaleController extends BaseController
 			} else {
 				$msg .= "<ul>";
 				foreach ($cloneSale->getSecondaryVats() as $secondaryVat) {
-					$msg .= '<li><a href="'.$this->generateUrl('_admin_secondaryVat_editGet', array('uid' => $$secondaryVat->getId())).'">'.$secondaryVat->getVat().'</a></li>';
+					$msg .= '<li><a href="'.$this->generateUrl('_admin_secondaryVat_editGet', array('uid' => $secondaryVat->getId())).'">'.$secondaryVat->getVat().'</a></li>';
 				}
 				$msg .= "<ul>";
 			}

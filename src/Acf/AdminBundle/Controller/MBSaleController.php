@@ -43,12 +43,12 @@ class MBSaleController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_admin_company_list');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$mbsale = $em->getRepository('AcfDataBundle:MBSale')
 				->find($uid);
-			
+
 			if (null == $mbsale) {
 				$this->flashMsgSession('warning', $this->translate('MBSale.edit.notfound'));
 			} else {
@@ -62,17 +62,17 @@ class MBSaleController extends BaseController
 					'monthlybalance' => $mbsale
 				));
 				$saleImportForm = $this->createForm(SaleImportTForm::class);
-				$mbsaleUpdateDocsForm = $this->createForm(MBSaleUpdateDocsTForm::class, $mbsale, 
+				$mbsaleUpdateDocsForm = $this->createForm(MBSaleUpdateDocsTForm::class, $mbsale,
 					array(
 						'company' => $mbsale->getCompany()
 					));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($mbsale->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array(
 					'company' => $mbsale->getCompany()
 				));
-				
+
 				$this->gvars['mbsale'] = $mbsale;
 				$this->gvars['sale'] = $sale;
 				$this->gvars['doc'] = $doc;
@@ -81,17 +81,17 @@ class MBSaleController extends BaseController
 				$this->gvars['MBSaleUpdateCountForm'] = $mbsaleUpdateCountForm->createView();
 				$this->gvars['MBSaleUpdateDocsForm'] = $mbsaleUpdateDocsForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$this->gvars['tabActive'] = $this->getSession()
 					->get('tabActive', 1);
 				$this->getSession()
 					->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()
 					->get('stabActive', 1);
 				$this->getSession()
 					->remove('stabActive');
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 					->findOneBy(array(
 					'name' => 'customersPrefix'
@@ -105,22 +105,22 @@ class MBSaleController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.mbsale.edit', array(
 					'%mbsale%' => $mbsale->getRef()
 				));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbsale.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbsale.edit.txt',
 					array(
 						'%mbsale%' => $mbsale->getRef()
 					));
-				
+
 				return $this->renderResponse('AcfAdminBundle:MBSale:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -130,12 +130,12 @@ class MBSaleController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_admin_company_list');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$mbsale = $em->getRepository('AcfDataBundle:MBSale')
 				->find($uid);
-			
+
 			if (null == $mbsale) {
 				$this->flashMsgSession('warning', $this->translate('MBSale.edit.notfound'));
 			} else {
@@ -149,32 +149,32 @@ class MBSaleController extends BaseController
 					'monthlybalance' => $mbsale
 				));
 				$saleImportForm = $this->createForm(SaleImportTForm::class);
-				$mbsaleUpdateDocsForm = $this->createForm(MBSaleUpdateDocsTForm::class, $mbsale, 
+				$mbsaleUpdateDocsForm = $this->createForm(MBSaleUpdateDocsTForm::class, $mbsale,
 					array(
 						'company' => $mbsale->getCompany()
 					));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($mbsale->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array(
 					'company' => $mbsale->getCompany()
 				));
-				
+
 				$this->gvars['tabActive'] = $this->getSession()
 					->get('tabActive', 2);
 				$this->getSession()
 					->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()
 					->get('stabActive', 1);
 				$this->getSession()
 					->remove('stabActive');
-				
+
 				$request = $this->getRequest();
 				$reqData = $request->request->all();
-				
+
 				$cloneMBSale = clone $mbsale;
-				
+
 				if (isset($reqData['SaleImportForm'])) {
 					$this->gvars['tabActive'] = 2;
 					$this->getSession()
@@ -184,7 +184,7 @@ class MBSaleController extends BaseController
 						->set('stabActive', 1);
 					$saleImportForm->handleRequest($request);
 					if ($saleImportForm->isValid()) {
-						
+
 						ini_set('memory_limit', '4096M');
 						ini_set('max_execution_time', '0');
 						$extension = $saleImportForm['excel']->getData()
@@ -192,29 +192,29 @@ class MBSaleController extends BaseController
 						if ($extension == 'zip') {
 							$extension = 'xlsx';
 						}
-						
+
 						$filename = uniqid() . '.' . $extension;
 						$saleImportForm['excel']->getData()
 							->move($this->getParameter('adapter_files'), $filename);
 						$fullfilename = $this->getParameter('adapter_files');
 						$fullfilename .= '/' . $filename;
-						
+
 						$excelObj = $this->get('phpexcel')
 							->createPHPExcelObject($fullfilename);
-						
+
 						$log = "";
-						
+
 						$iterator = $excelObj->getWorksheetIterator();
-						
+
 						$activeSheetIndex = -1;
 						$i = 0;
-						
+
 						foreach ($iterator as $worksheet) {
 							$worksheetTitle = $worksheet->getTitle();
 							$highestRow = $worksheet->getHighestRow(); // e.g. 10
 							$highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
 							$highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);
-							
+
 							$log .= "Feuille : '" . $worksheetTitle . "' trouvée contenant " . $highestRow . " lignes et " .
 								 $highestColumnIndex . " colonnes avec comme plus grand index " . $highestColumn . " <br>";
 							if (\trim($worksheetTitle) == 'Sage') {
@@ -226,9 +226,9 @@ class MBSaleController extends BaseController
 							$log .= "Aucune Feuille de Titre 'Sage' trouvée tentative d'import depuis le première Feuille<br>";
 							$activeSheetIndex = 0;
 						}
-						
+
 						$excelObj->setActiveSheetIndex($activeSheetIndex);
-						
+
 						$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 							->findOneBy(array(
 							'name' => 'customersPrefix'
@@ -242,29 +242,29 @@ class MBSaleController extends BaseController
 						}
 						$customersPrefix = $customersConstStr->getValue();
 						$customersPrefixNum = \intval($customersPrefix) * 1000000000;
-						
+
 						$worksheet = $excelObj->getActiveSheet();
 						$highestRow = $worksheet->getHighestRow();
 						$lineRead = 0;
 						$salesNew = 0;
 						$lineUnprocessed = 0;
 						$lineError = 0;
-						
+
 						$company = $mbsale->getCompany();
-						
+
 						$accounts = $em->getRepository('AcfDataBundle:Account')
 							->getAllByCompany($company);
 						$customers = $em->getRepository('AcfDataBundle:Customer')
 							->getAllByCompany($company);
 						$withholdings = $em->getRepository('AcfDataBundle:Withholding')
 							->getAllByCompany($company);
-						
+
 						$prevbill = null;
 						$haspreverror = false;
-						
+
 						for ($row = 1; $row <= $highestRow; $row ++) {
 							$lineRead ++;
-							
+
 							$dtActivation = \PHPExcel_Shared_Date::ExcelToPHPObject(
 								$worksheet->getCellByColumnAndRow(1, $row)
 									->getValue());
@@ -299,23 +299,23 @@ class MBSaleController extends BaseController
 								->getValue()));
 							$otherInfos = \trim(\strval($worksheet->getCellByColumnAndRow(19, $row)
 								->getValue()));
-							
+
 							if ($customerNum != "" && \is_numeric($customerNum)) {
 								$customerNum = \intval($customerNum) - $customersPrefixNum;
 							}
-							
+
 							$haserror = false;
-							
+
 							if (null == $dtActivation) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Date d'activation<br>";
 							}
-							
+
 							if ($bill == "") {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Numéro Facture<br>";
 							}
-							
+
 							if ($customerNum == "" || $customerNum <= 0) {
 								$haserror = true;
 								$oldcustomnum = $worksheet->getCellByColumnAndRow(4, $row)
@@ -330,33 +330,33 @@ class MBSaleController extends BaseController
 										$customer = $s;
 									}
 								}
-								
+
 								if ($knownCustomer == false) {
 									$haserror = true;
 									$log .= "ligne " . $lineRead . ", erreur : Client Inconnu<br>";
 								}
 							}
-							
+
 							if ($label == "") {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Libélé<br>";
 							}
-							
+
 							if ($vat < 0) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : TVA<br>";
 							}
-							
+
 							if ($stamp < 0) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Timbre<br>";
 							}
-							
+
 							if ($balanceTtc < 0) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : TTC<br>";
 							}
-							
+
 							if ($vatInfo == $this->translate('Transaction.vatInfo.0')) {
 								$vatInfo = 0;
 							} elseif ($vatInfo == $this->translate('Transaction.vatInfo.6')) {
@@ -370,7 +370,7 @@ class MBSaleController extends BaseController
 								$log .= "ligne " . $lineRead . ", erreur (ignorée) : TVA PR INFO inconnu => " .
 									 $this->translate('Transaction.vatInfo.0') . "<br>";
 							}
-							
+
 							if ($regime == $this->translate('Sale.regime.0')) {
 								$regime = 0;
 							} elseif ($regime == $this->translate('Sale.regime.1')) {
@@ -384,7 +384,7 @@ class MBSaleController extends BaseController
 								$log .= "ligne " . $lineRead . ", erreur (ignorée) : Régime inconnu => " . $this->translate('Sale.regime.0') .
 									 "<br>";
 							}
-							
+
 							$withholding = null;
 							$knownWithholding = false;
 							foreach ($withholdings as $w) {
@@ -393,17 +393,17 @@ class MBSaleController extends BaseController
 									$withholding = $w;
 								}
 							}
-							
+
 							if ($knownWithholding == false) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Retenue Inconnue $withholdingValue<br>";
 							}
-							
+
 							if ($balanceNet < 0) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Net à Encaisser<br>";
 							}
-							
+
 							if ($paymentType == $this->translate('Transaction.paymentType.0')) {
 								$paymentType = 0;
 							} elseif ($paymentType == $this->translate('Transaction.paymentType.1')) {
@@ -419,12 +419,12 @@ class MBSaleController extends BaseController
 								$log .= "ligne " . $lineRead . ", erreur (ignorée) : Type d'Encaissement inconnu => " .
 									 $this->translate('Transaction.paymentType.0') . "<br>";
 							}
-							
+
 							if (null == $dtPayment) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Date d'Encaissement<br>";
 							}
-							
+
 							$account = null;
 							$knownAccount = false;
 							foreach ($accounts as $a) {
@@ -433,12 +433,12 @@ class MBSaleController extends BaseController
 									$account = $a;
 								}
 							}
-							
+
 							if ($knownAccount == false) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Banque/Caisse Inconnue<br>";
 							}
-							
+
 							if ($status == $this->translate('Transaction.transactionStatus.0')) {
 								$status = 0;
 							} elseif ($status == $this->translate('Transaction.transactionStatus.1')) {
@@ -450,21 +450,21 @@ class MBSaleController extends BaseController
 								$log .= "ligne " . $lineRead . ", erreur (ignorée) : Etat inconnu => " .
 									 $this->translate('Transaction.transactionStatus.0') . "<br>";
 							}
-							
+
 							if ($haserror == false) {
-								
+
 								if ($bill != $prevbill) {
 									$sale = $em->getRepository('AcfDataBundle:Sale')
 										->findOneBy(array(
-										'monthlyBalance' => $mbsale, 
+										'monthlyBalance' => $mbsale,
 										'bill' => $bill
 									));
 									if (null == $sale) {
 										$salesNew ++;
-										
+
 										$sale = new Sale();
 										$sale->setMonthlyBalance($mbsale);
-										
+
 										$sale->setNumber($mbsale->getCount());
 										$sale->setDtActivation($dtActivation);
 										$sale->setBill($bill);
@@ -486,7 +486,7 @@ class MBSaleController extends BaseController
 										$sale->setAccount($account);
 										$sale->setTransactionStatus($status);
 										$sale->setOtherInfos($otherInfos);
-										
+
 										$em->persist($sale);
 										$mbsale->updateCount();
 										$em->persist($mbsale);
@@ -515,28 +515,28 @@ class MBSaleController extends BaseController
 								$lineError ++;
 								$log .= "la ligne " . $lineRead . " contient des erreurs<br>";
 							}
-							
+
 							$prevbill = $bill;
 						}
 						$em->flush();
-						
+
 						$log .= $lineRead . " lignes lues<br>";
 						$log .= $salesNew . " nouvelles Ventes<br>";
 						$log .= $lineUnprocessed . " Ventes déjà dans la base<br>";
 						$log .= $lineError . " lignes contenant des erreurs<br>"; // */
-						
+
 						$this->flashMsgSession('log', $log);
-						
+
 						$this->flashMsgSession('success', $this->translate('Sale.import.success'));
-						
+
 						$this->gvars['tabActive'] = 1;
 						$this->getSession()
 							->set('tabActive', 1);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbsale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.import.failure'));
 					}
 				} elseif (isset($reqData['SaleNewForm'])) {
@@ -561,7 +561,6 @@ class MBSaleController extends BaseController
 							$sale->setBalanceTtc($sale->getBalanceTtcDevise() * $sale->getConversionRate());
 							$sale->setBalanceNet($sale->getBalanceNetDevise() * $sale->getConversionRate());
 						}
-						$em->persist($sale);
 						foreach ($saleNewForm->get('docs') as $docNewForm) {
 							$docFile = $docNewForm['fileName']->getData();
 							$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
@@ -571,7 +570,7 @@ class MBSaleController extends BaseController
 							$docFile->move($docDir, $fileName);
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = $docNewForm->getData();
 							$doc->setCompany($mbsale->getCompany());
 							$doc->setFileName($fileName);
@@ -579,9 +578,12 @@ class MBSaleController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addTransaction($sale);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$sale->addDoc($doc);
 						}
+						$em->persist($sale);
 						foreach ($saleNewForm->get('secondaryVats') as $secondaryVatNewForm) {
 							$secondaryVat = $secondaryVatNewForm->getData();
 							$secondaryVat->setSale($sale);
@@ -593,7 +595,7 @@ class MBSaleController extends BaseController
 						$mbsale->updateCount();
 						$em->persist($mbsale);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Sale.add.success', array(
 								'%sale%' => $sale->getNumber()
 							)));
@@ -603,11 +605,11 @@ class MBSaleController extends BaseController
 						$this->gvars['stabActive'] = 1;
 						$this->getSession()
 							->set('stabActive', 1);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbsale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Sale.add.failure'));
 					}
 				} elseif (isset($reqData['MBSaleUpdateCountForm'])) {
@@ -618,18 +620,18 @@ class MBSaleController extends BaseController
 					if ($mbsaleUpdateCountForm->isValid()) {
 						$em->persist($mbsale);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('MBSale.edit.success', array(
 								'%mbsale%' => $mbsale->getRef()
 							)));
-						
+
 						$this->traceEntity($cloneMBSale, $mbsale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbsale);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('MBSale.edit.failure', array(
 								'%mbsale%' => $mbsale->getRef()
 							)));
@@ -644,34 +646,36 @@ class MBSaleController extends BaseController
 					$docNewForm->handleRequest($request);
 					if ($docNewForm->isValid()) {
 						$docFiles = $docNewForm['fileName']->getData();
-						
+
 						$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
-						
+
 						$docNames = "";
-						
+
 						foreach ($docFiles as $docFile) {
 							$originalName = $docFile->getClientOriginalName();
 							$fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($docFile->getClientOriginalExtension());
 							$mimeType = $docFile->getMimeType();
 							$docFile->move($docDir, $fileName);
-							
+
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = new Doc();
 							$doc->setCompany($mbsale->getCompany());
-							
+
 							$doc->setFileName($fileName);
 							$doc->setOriginalName($originalName);
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addMonthlyBalance($mbsale);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
-							
+
+							$mbsale->addDoc($doc);
+
 							$docNames .= $doc->getOriginalName() . " ";
 						}
-						
+
 						$em->persist($mbsale);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Doc.add.success', array(
@@ -680,13 +684,13 @@ class MBSaleController extends BaseController
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()
 							->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneMBSale, $mbsale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbsale);
-						
+
 						$this->flashMsgSession('error', $this->translate('Doc.add.failure'));
 					}
 				} elseif (isset($reqData['MBSaleUpdateDocsForm'])) {
@@ -700,27 +704,27 @@ class MBSaleController extends BaseController
 					if ($mbsaleUpdateDocsForm->isValid()) {
 						$em->persist($mbsale);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('MBSale.edit.success', array(
 								'%mbsale%' => $mbsale->getRef()
 							)));
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()
 							->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneMBSale, $mbsale);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbsale);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('MBSale.edit.failure', array(
 								'%mbsale%' => $mbsale->getRef()
 							)));
 					}
 				}
-				
+
 				$this->gvars['mbsale'] = $mbsale;
 				$this->gvars['sale'] = $sale;
 				$this->gvars['doc'] = $doc;
@@ -729,7 +733,7 @@ class MBSaleController extends BaseController
 				$this->gvars['MBSaleUpdateCountForm'] = $mbsaleUpdateCountForm->createView();
 				$this->gvars['MBSaleUpdateDocsForm'] = $mbsaleUpdateDocsForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 					->findOneBy(array(
 					'name' => 'customersPrefix'
@@ -743,22 +747,22 @@ class MBSaleController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.mbsale.edit', array(
 					'%mbsale%' => $mbsale->getRef()
 				));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbsale.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbsale.edit.txt',
 					array(
 						'%mbsale%' => $mbsale->getRef()
 					));
-				
+
 				return $this->renderResponse('AcfAdminBundle:MBSale:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -768,16 +772,16 @@ class MBSaleController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_admin_company_list');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$mbsale = $em->getRepository('AcfDataBundle:MBSale')
 				->find($uid);
 			$sales = $mbsale->getTransactions();
-			
+
 			$phpExcelObject = $this->get('phpexcel')
 				->createPHPExcelObject();
-			
+
 			$phpExcelObject->getProperties()
 				->setCreator("Salah Abdelkader Seif Eddine")
 				->setLastModifiedBy($this->getSecurityTokenStorage()
@@ -789,14 +793,14 @@ class MBSaleController extends BaseController
 				->setDescription($this->translate('pagetitle.sale.list'))
 				->setKeywords($this->translate('pagetitle.sale.list'))
 				->setCategory("ACF sale");
-			
+
 			$phpExcelObject->setActiveSheetIndex(0);
-			
+
 			$workSheet = $phpExcelObject->getActiveSheet();
 			$workSheet->setTitle($this->translate('pagetitle.sale.listExcel', array(
 				'%mbsale%' => $mbsale->getRef()
 			)));
-			
+
 			$workSheet->setCellValue('A1', $this->translate('Sale.number.label'));
 			$workSheet->getStyle('A1')
 				->getFont()
@@ -877,18 +881,18 @@ class MBSaleController extends BaseController
 			$workSheet->getStyle('T1')
 				->getFont()
 				->setBold(true);
-			
+
 			$workSheet->getStyle('A1:T1')
 				->applyFromArray(
 				array(
 					'fill' => array(
-						'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+						'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 						'color' => array(
 							'rgb' => '94ccdf'
 						)
 					)
 				));
-			
+
 			$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 				->findOneBy(array(
 				'name' => 'customersPrefix'
@@ -902,17 +906,17 @@ class MBSaleController extends BaseController
 			}
 			$customersPrefix = $customersConstStr->getValue();
 			$this->gvars['customersPrefix'] = $customersPrefix;
-			
+
 			$i = 1;
-			
+
 			// $currencyFormatter = new \NumberFormatter($this->getRequest()->getLocale(), \NumberFormatter::CURRENCY);
 			// $balance = $currencyFormatter->formatCurrency($balance, 'TND');
-			
+
 			foreach ($sales as $sale) {
 				$i ++;
-				
+
 				$workSheet->setCellValue('A' . $i, $sale->getNumber(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-				$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtActivation()), 
+				$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtActivation()),
 					\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 				$workSheet->getStyle('B' . $i)
 					->getNumberFormat()
@@ -925,7 +929,7 @@ class MBSaleController extends BaseController
 					->getNumberFormated();
 				$workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
 				$workSheet->setCellValue('F' . $i, $sale->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-				
+
 				$balanceHt = $sale->getBalanceTtc() - $sale->getStamp() - $sale->getVat();
 				// $balanceHt = $currencyFormatter->formatCurrency($balanceHt, 'TND');
 				$workSheet->setCellValue('G' . $i, $balanceHt);
@@ -944,9 +948,9 @@ class MBSaleController extends BaseController
 				$workSheet->getStyle('J' . $i)
 					->getNumberFormat()
 					->setFormatCode('#,##0.000');
-				$workSheet->setCellValue('K' . $i, $this->translate('Transaction.vatInfo.' . $sale->getVatInfo()), 
+				$workSheet->setCellValue('K' . $i, $this->translate('Transaction.vatInfo.' . $sale->getVatInfo()),
 					\PHPExcel_Cell_DataType::TYPE_STRING2);
-				$workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()), 
+				$workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()),
 					\PHPExcel_Cell_DataType::TYPE_STRING2);
 				$withholding = $sale->getBalanceTtc() - $sale->getBalanceNet();
 				$workSheet->setCellValue('M' . $i, $withholding);
@@ -962,25 +966,25 @@ class MBSaleController extends BaseController
 				$workSheet->getStyle('O' . $i)
 					->getNumberFormat()
 					->setFormatCode('#,##0.000');
-				$workSheet->setCellValue('P' . $i, $this->translate('Transaction.paymentType.' . $sale->getPaymentType()), 
+				$workSheet->setCellValue('P' . $i, $this->translate('Transaction.paymentType.' . $sale->getPaymentType()),
 					\PHPExcel_Cell_DataType::TYPE_STRING2);
-				$workSheet->setCellValue('Q' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtPayment()), 
+				$workSheet->setCellValue('Q' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtPayment()),
 					\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 				$workSheet->getStyle('Q' . $i)
 					->getNumberFormat()
 					->setFormatCode('dd/mm/yyyy');
 				$workSheet->setCellValue('R' . $i, $sale->getAccount()
 					->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-				$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()), 
+				$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()),
 					\PHPExcel_Cell_DataType::TYPE_STRING2);
 				$workSheet->setCellValue('T' . $i, $sale->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-				
+
 				if ($i % 2 == 1) {
 					$workSheet->getStyle('A' . $i . ':T' . $i)
 						->applyFromArray(
 						array(
 							'fill' => array(
-								'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+								'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 								'color' => array(
 									'rgb' => 'd8f1f5'
 								)
@@ -991,19 +995,19 @@ class MBSaleController extends BaseController
 						->applyFromArray(
 						array(
 							'fill' => array(
-								'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+								'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 								'color' => array(
 									'rgb' => 'bfbfbf'
 								)
 							)
 						));
 				}
-				
+
 				foreach ($sale->getSecondaryVats() as $secondaryVat) {
 					$i ++;
-					
+
 					$workSheet->setCellValue('A' . $i, $sale->getNumber(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtActivation()), 
+					$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtActivation()),
 						\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 					$workSheet->getStyle('B' . $i)
 						->getNumberFormat()
@@ -1015,7 +1019,7 @@ class MBSaleController extends BaseController
 					// $numb = $customersPrefix . $sale->getRelation()->getNumberFormated();
 					$workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
 					$workSheet->setCellValue('F' . $i, $sale->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					
+
 					$balanceHt = $secondaryVat->getBalanceTtc() - $secondaryVat->getVat();
 					// $balanceHt = $currencyFormatter->formatCurrency($balanceHt, 'TND');
 					$workSheet->setCellValue('G' . $i, $balanceHt);
@@ -1032,9 +1036,9 @@ class MBSaleController extends BaseController
 					$workSheet->getStyle('J' . $i)
 						->getNumberFormat()
 						->setFormatCode('#,##0.000');
-					$workSheet->setCellValue('K' . $i, $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo()), 
+					$workSheet->setCellValue('K' . $i, $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()), 
+					$workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
 					$withholding = $secondaryVat->getBalanceTtc() - $secondaryVat->getBalanceNet();
 					$workSheet->setCellValue('M' . $i, $withholding);
@@ -1050,25 +1054,25 @@ class MBSaleController extends BaseController
 					$workSheet->getStyle('O' . $i)
 						->getNumberFormat()
 						->setFormatCode('#,##0.000');
-					$workSheet->setCellValue('P' . $i, $this->translate('Transaction.paymentType.' . $sale->getPaymentType()), 
+					$workSheet->setCellValue('P' . $i, $this->translate('Transaction.paymentType.' . $sale->getPaymentType()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('Q' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtPayment()), 
+					$workSheet->setCellValue('Q' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtPayment()),
 						\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 					$workSheet->getStyle('Q' . $i)
 						->getNumberFormat()
 						->setFormatCode('dd/mm/yyyy');
 					$workSheet->setCellValue('R' . $i, $sale->getAccount()
 						->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()), 
+					$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
 					$workSheet->setCellValue('T' . $i, $sale->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					
+
 					if ($i % 2 == 1) {
 						$workSheet->getStyle('A' . $i . ':T' . $i)
 							->applyFromArray(
 							array(
 								'fill' => array(
-									'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+									'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 									'color' => array(
 										'rgb' => 'd8f1f5'
 									)
@@ -1079,7 +1083,7 @@ class MBSaleController extends BaseController
 							->applyFromArray(
 							array(
 								'fill' => array(
-									'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+									'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 									'color' => array(
 										'rgb' => 'bfbfbf'
 									)
@@ -1088,7 +1092,7 @@ class MBSaleController extends BaseController
 					}
 				}
 			}
-			
+
 			$workSheet->getColumnDimension('A')
 				->setAutoSize(true);
 			$workSheet->getColumnDimension('B')
@@ -1129,34 +1133,34 @@ class MBSaleController extends BaseController
 				->setAutoSize(true);
 			$workSheet->getColumnDimension('T')
 				->setAutoSize(true);
-			
+
 			$writer = $this->get('phpexcel')
 				->createWriter($phpExcelObject, 'Excel2007');
 			$response = $this->get('phpexcel')
 				->createStreamedResponse($writer);
-			
+
 			$response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
-			
+
 			$filename = $this->normalize(
-				$this->translate('pagetitle.sale.listByMBSale', 
+				$this->translate('pagetitle.sale.listByMBSale',
 					array(
-						'%mbsale%' => $mbsale->getRef(), 
+						'%mbsale%' => $mbsale->getRef(),
 						'%company%' => $mbsale->getCompany()
 							->getCorporateName()
 					)));
 			$filename = str_ireplace('"', '|', $filename);
 			$filename = str_ireplace(' ', '_', $filename);
-			
+
 			$response->headers->set('Content-Disposition', 'attachment;filename=' . $filename . '.xlsx');
 			$response->headers->set('Pragma', 'public');
 			$response->headers->set('Cache-Control', 'maxage=1');
-			
+
 			return $response;
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -1166,16 +1170,16 @@ class MBSaleController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_admin_company_list');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$company = $em->getRepository('AcfDataBundle:Company')
 				->find($uid);
-			
+
 			if (null == $company) {
 				$this->flashMsgSession('warning', $this->translate('Company.edit.notfound'));
 			} else {
-				
+
 				$mbsales = $em->getRepository('AcfDataBundle:MBSale')
 					->getAllByYearCompany($year, $company);
 				$sales = array();
@@ -1183,10 +1187,10 @@ class MBSaleController extends BaseController
 					$sales = array_merge($sales, $mbsale->getTransactions()
 						->toArray());
 				}
-				
+
 				$phpExcelObject = $this->get('phpexcel')
 					->createPHPExcelObject();
-				
+
 				$phpExcelObject->getProperties()
 					->setCreator("Salah Abdelkader Seif Eddine")
 					->setLastModifiedBy($this->getSecurityTokenStorage()
@@ -1198,14 +1202,14 @@ class MBSaleController extends BaseController
 					->setDescription($this->translate('pagetitle.sale.list'))
 					->setKeywords($this->translate('pagetitle.sale.list'))
 					->setCategory("ACF sale");
-				
+
 				$phpExcelObject->setActiveSheetIndex(0);
-				
+
 				$workSheet = $phpExcelObject->getActiveSheet();
 				$workSheet->setTitle($this->translate('pagetitle.sale.listExcel', array(
 					'%mbsale%' => $year
 				)));
-				
+
 				$workSheet->setCellValue('A1', $this->translate('Sale.number.label'));
 				$workSheet->getStyle('A1')
 					->getFont()
@@ -1286,18 +1290,18 @@ class MBSaleController extends BaseController
 				$workSheet->getStyle('T1')
 					->getFont()
 					->setBold(true);
-				
+
 				$workSheet->getStyle('A1:T1')
 					->applyFromArray(
 					array(
 						'fill' => array(
-							'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+							'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 							'color' => array(
 								'rgb' => '94ccdf'
 							)
 						)
 					));
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 					->findOneBy(array(
 					'name' => 'customersPrefix'
@@ -1311,17 +1315,17 @@ class MBSaleController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$i = 1;
-				
+
 				// $currencyFormatter = new \NumberFormatter($this->getRequest()->getLocale(), \NumberFormatter::CURRENCY);
 				// $balance = $currencyFormatter->formatCurrency($balance, 'TND');
-				
+
 				foreach ($sales as $sale) {
 					$i ++;
-					
+
 					$workSheet->setCellValue('A' . $i, $sale->getNumber(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtActivation()), 
+					$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtActivation()),
 						\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 					$workSheet->getStyle('B' . $i)
 						->getNumberFormat()
@@ -1334,7 +1338,7 @@ class MBSaleController extends BaseController
 						->getNumberFormated();
 					$workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
 					$workSheet->setCellValue('F' . $i, $sale->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					
+
 					$balanceHt = $sale->getBalanceTtc() - $sale->getStamp() - $sale->getVat();
 					// $balanceHt = $currencyFormatter->formatCurrency($balanceHt, 'TND');
 					$workSheet->setCellValue('G' . $i, $balanceHt);
@@ -1353,9 +1357,9 @@ class MBSaleController extends BaseController
 					$workSheet->getStyle('J' . $i)
 						->getNumberFormat()
 						->setFormatCode('#,##0.000');
-					$workSheet->setCellValue('K' . $i, $this->translate('Transaction.vatInfo.' . $sale->getVatInfo()), 
+					$workSheet->setCellValue('K' . $i, $this->translate('Transaction.vatInfo.' . $sale->getVatInfo()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()), 
+					$workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
 					$withholding = $sale->getBalanceTtc() - $sale->getBalanceNet();
 					$workSheet->setCellValue('M' . $i, $withholding);
@@ -1371,25 +1375,25 @@ class MBSaleController extends BaseController
 					$workSheet->getStyle('O' . $i)
 						->getNumberFormat()
 						->setFormatCode('#,##0.000');
-					$workSheet->setCellValue('P' . $i, $this->translate('Transaction.paymentType.' . $sale->getPaymentType()), 
+					$workSheet->setCellValue('P' . $i, $this->translate('Transaction.paymentType.' . $sale->getPaymentType()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('Q' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtPayment()), 
+					$workSheet->setCellValue('Q' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtPayment()),
 						\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 					$workSheet->getStyle('Q' . $i)
 						->getNumberFormat()
 						->setFormatCode('dd/mm/yyyy');
 					$workSheet->setCellValue('R' . $i, $sale->getAccount()
 						->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()), 
+					$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
 					$workSheet->setCellValue('T' . $i, $sale->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					
+
 					if ($i % 2 == 1) {
 						$workSheet->getStyle('A' . $i . ':T' . $i)
 							->applyFromArray(
 							array(
 								'fill' => array(
-									'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+									'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 									'color' => array(
 										'rgb' => 'd8f1f5'
 									)
@@ -1400,19 +1404,19 @@ class MBSaleController extends BaseController
 							->applyFromArray(
 							array(
 								'fill' => array(
-									'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+									'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 									'color' => array(
 										'rgb' => 'bfbfbf'
 									)
 								)
 							));
 					}
-					
+
 					foreach ($sale->getSecondaryVats() as $secondaryVat) {
 						$i ++;
-						
+
 						$workSheet->setCellValue('A' . $i, $sale->getNumber(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-						$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtActivation()), 
+						$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtActivation()),
 							\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 						$workSheet->getStyle('B' . $i)
 							->getNumberFormat()
@@ -1424,7 +1428,7 @@ class MBSaleController extends BaseController
 						// $numb = $customersPrefix . $sale->getRelation()->getNumberFormated();
 						$workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
 						$workSheet->setCellValue('F' . $i, $sale->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-						
+
 						$balanceHt = $secondaryVat->getBalanceTtc() - $secondaryVat->getVat();
 						// $balanceHt = $currencyFormatter->formatCurrency($balanceHt, 'TND');
 						$workSheet->setCellValue('G' . $i, $balanceHt);
@@ -1441,9 +1445,9 @@ class MBSaleController extends BaseController
 						$workSheet->getStyle('J' . $i)
 							->getNumberFormat()
 							->setFormatCode('#,##0.000');
-						$workSheet->setCellValue('K' . $i, $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo()), 
+						$workSheet->setCellValue('K' . $i, $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo()),
 							\PHPExcel_Cell_DataType::TYPE_STRING2);
-						$workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()), 
+						$workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()),
 							\PHPExcel_Cell_DataType::TYPE_STRING2);
 						$withholding = $secondaryVat->getBalanceTtc() - $secondaryVat->getBalanceNet();
 						$workSheet->setCellValue('M' . $i, $withholding);
@@ -1459,26 +1463,26 @@ class MBSaleController extends BaseController
 						$workSheet->getStyle('O' . $i)
 							->getNumberFormat()
 							->setFormatCode('#,##0.000');
-						$workSheet->setCellValue('P' . $i, $this->translate('Transaction.paymentType.' . $sale->getPaymentType()), 
+						$workSheet->setCellValue('P' . $i, $this->translate('Transaction.paymentType.' . $sale->getPaymentType()),
 							\PHPExcel_Cell_DataType::TYPE_STRING2);
-						$workSheet->setCellValue('Q' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtPayment()), 
+						$workSheet->setCellValue('Q' . $i, \PHPExcel_Shared_Date::PHPToExcel($sale->getDtPayment()),
 							\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 						$workSheet->getStyle('Q' . $i)
 							->getNumberFormat()
 							->setFormatCode('dd/mm/yyyy');
 						$workSheet->setCellValue('R' . $i, $sale->getAccount()
 							->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-						$workSheet->setCellValue('S' . $i, 
-							$this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()), 
+						$workSheet->setCellValue('S' . $i,
+							$this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()),
 							\PHPExcel_Cell_DataType::TYPE_STRING2);
 						$workSheet->setCellValue('T' . $i, $sale->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-						
+
 						if ($i % 2 == 1) {
 							$workSheet->getStyle('A' . $i . ':T' . $i)
 								->applyFromArray(
 								array(
 									'fill' => array(
-										'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+										'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 										'color' => array(
 											'rgb' => 'd8f1f5'
 										)
@@ -1489,7 +1493,7 @@ class MBSaleController extends BaseController
 								->applyFromArray(
 								array(
 									'fill' => array(
-										'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+										'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 										'color' => array(
 											'rgb' => 'bfbfbf'
 										)
@@ -1498,7 +1502,7 @@ class MBSaleController extends BaseController
 						}
 					}
 				}
-				
+
 				$workSheet->getColumnDimension('A')
 					->setAutoSize(true);
 				$workSheet->getColumnDimension('B')
@@ -1539,35 +1543,35 @@ class MBSaleController extends BaseController
 					->setAutoSize(true);
 				$workSheet->getColumnDimension('T')
 					->setAutoSize(true);
-				
+
 				$writer = $this->get('phpexcel')
 					->createWriter($phpExcelObject, 'Excel2007');
 				$response = $this->get('phpexcel')
 					->createStreamedResponse($writer);
-				
+
 				$response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
-				
+
 				$filename = $this->normalize(
-					$this->translate('pagetitle.sale.listByYear', 
+					$this->translate('pagetitle.sale.listByYear',
 						array(
-							'%year%' => $year, 
+							'%year%' => $year,
 							'%company%' => $mbsale->getCompany()
 								->getCorporateName()
 						)));
 				$filename = str_ireplace('"', '|', $filename);
 				$filename = str_ireplace(' ', '_', $filename);
-				
+
 				$response->headers->set('Content-Disposition', 'attachment;filename=' . $filename . '.xlsx');
 				$response->headers->set('Pragma', 'public');
 				$response->headers->set('Cache-Control', 'maxage=1');
-				
+
 				return $response;
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -1592,21 +1596,21 @@ class MBSaleController extends BaseController
 		} else {
 			$trace->setUserType(Trace::UT_SUPERADMIN);
 		}
-		
+
 		$table_begin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
 		$table_begin .= '<thead><tr><th class="text-left">' . $this->translate('Entity.field') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.oldVal') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.newVal') . '</th></tr></thead><tbody>';
-		
+
 		$table_end = '</tbody></table>';
-		
+
 		$trace->setActionEntity(Trace::AE_MBSALE);
 		$trace->setActionId2($mbsale->getCompany()
 			->getId());
 		$trace->setActionEntity2(Trace::AE_COMPANY);
-		
+
 		$msg = "";
-		
+
 		if ($cloneMBSale->getCount() != $mbsale->getCount()) {
 			$msg .= "<tr><td>" . $this->translate('MBSale.count.label') . '</td><td>';
 			if ($cloneMBSale->getCount() == null) {
@@ -1622,7 +1626,7 @@ class MBSaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if (\count(\array_diff($mbsale->getDocs()
 			->toArray(), $cloneMBSale->getDocs()
 			->toArray())) != 0 || \count(\array_diff($cloneMBSale->getDocs()
@@ -1654,15 +1658,15 @@ class MBSaleController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($msg != "") {
-			
+
 			$msg = $table_begin . $msg . $table_end;
-			
+
 			$trace->setMsg(
-				$this->translate('MBSale.traceEdit', 
+				$this->translate('MBSale.traceEdit',
 					array(
-						'%mbsale%' => $mbsale->getLabel(), 
+						'%mbsale%' => $mbsale->getLabel(),
 						'%company%' => $mbsale->getCompany()
 							->getCorporateName()
 					)) . $msg);

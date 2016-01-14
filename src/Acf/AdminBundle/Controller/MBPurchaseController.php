@@ -42,12 +42,12 @@ class MBPurchaseController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_admin_company_list');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$mbpurchase = $em->getRepository('AcfDataBundle:MBPurchase')
 				->find($uid);
-			
+
 			if (null == $mbpurchase) {
 				$this->flashMsgSession('warning', $this->translate('MBPurchase.edit.notfound'));
 			} else {
@@ -61,17 +61,17 @@ class MBPurchaseController extends BaseController
 					'monthlybalance' => $mbpurchase
 				));
 				$buyImportForm = $this->createForm(BuyImportTForm::class);
-				$mbpurchaseUpdateDocsForm = $this->createForm(MBPurchaseUpdateDocsTForm::class, $mbpurchase, 
+				$mbpurchaseUpdateDocsForm = $this->createForm(MBPurchaseUpdateDocsTForm::class, $mbpurchase,
 					array(
 						'company' => $mbpurchase->getCompany()
 					));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($mbpurchase->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array(
 					'company' => $mbpurchase->getCompany()
 				));
-				
+
 				$this->gvars['mbpurchase'] = $mbpurchase;
 				$this->gvars['buy'] = $buy;
 				$this->gvars['doc'] = $doc;
@@ -80,17 +80,17 @@ class MBPurchaseController extends BaseController
 				$this->gvars['MBPurchaseUpdateCountForm'] = $mbpurchaseUpdateCountForm->createView();
 				$this->gvars['MBPurchaseUpdateDocsForm'] = $mbpurchaseUpdateDocsForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$this->gvars['tabActive'] = $this->getSession()
 					->get('tabActive', 1);
 				$this->getSession()
 					->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()
 					->get('stabActive', 1);
 				$this->getSession()
 					->remove('stabActive');
-				
+
 				$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 					->findOneBy(array(
 					'name' => 'suppliersPrefix'
@@ -104,23 +104,23 @@ class MBPurchaseController extends BaseController
 				}
 				$suppliersPrefix = $suppliersConstStr->getValue();
 				$this->gvars['suppliersPrefix'] = $suppliersPrefix;
-				
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.mbpurchase.edit', 
+
+				$this->gvars['pagetitle'] = $this->translate('pagetitle.mbpurchase.edit',
 					array(
 						'%mbpurchase%' => $mbpurchase->getRef()
 					));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbpurchase.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbpurchase.edit.txt',
 					array(
 						'%mbpurchase%' => $mbpurchase->getRef()
 					));
-				
+
 				return $this->renderResponse('AcfAdminBundle:MBPurchase:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -130,12 +130,12 @@ class MBPurchaseController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_admin_company_list');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$mbpurchase = $em->getRepository('AcfDataBundle:MBPurchase')
 				->find($uid);
-			
+
 			if (null == $mbpurchase) {
 				$this->flashMsgSession('warning', $this->translate('MBPurchase.edit.notfound'));
 			} else {
@@ -149,32 +149,32 @@ class MBPurchaseController extends BaseController
 					'monthlybalance' => $mbpurchase
 				));
 				$buyImportForm = $this->createForm(BuyImportTForm::class);
-				$mbpurchaseUpdateDocsForm = $this->createForm(MBPurchaseUpdateDocsTForm::class, $mbpurchase, 
+				$mbpurchaseUpdateDocsForm = $this->createForm(MBPurchaseUpdateDocsTForm::class, $mbpurchase,
 					array(
 						'company' => $mbpurchase->getCompany()
 					));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($mbpurchase->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array(
 					'company' => $mbpurchase->getCompany()
 				));
-				
+
 				$this->gvars['tabActive'] = $this->getSession()
 					->get('tabActive', 2);
 				$this->getSession()
 					->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()
 					->get('stabActive', 1);
 				$this->getSession()
 					->remove('stabActive');
-				
+
 				$request = $this->getRequest();
 				$reqData = $request->request->all();
-				
+
 				$cloneMBPurchase = clone $mbpurchase;
-				
+
 				if (isset($reqData['BuyImportForm'])) {
 					$this->gvars['tabActive'] = 2;
 					$this->getSession()
@@ -184,7 +184,7 @@ class MBPurchaseController extends BaseController
 						->set('stabActive', 1);
 					$buyImportForm->handleRequest($request);
 					if ($buyImportForm->isValid()) {
-						
+
 						ini_set('memory_limit', '4096M');
 						ini_set('max_execution_time', '0');
 						$extension = $buyImportForm['excel']->getData()
@@ -192,29 +192,29 @@ class MBPurchaseController extends BaseController
 						if ($extension == 'zip') {
 							$extension = 'xlsx';
 						}
-						
+
 						$filename = uniqid() . '.' . $extension;
 						$buyImportForm['excel']->getData()
 							->move($this->getParameter('adapter_files'), $filename);
 						$fullfilename = $this->getParameter('adapter_files');
 						$fullfilename .= '/' . $filename;
-						
+
 						$excelObj = $this->get('phpexcel')
 							->createPHPExcelObject($fullfilename);
-						
+
 						$log = "";
-						
+
 						$iterator = $excelObj->getWorksheetIterator();
-						
+
 						$activeSheetIndex = -1;
 						$i = 0;
-						
+
 						foreach ($iterator as $worksheet) {
 							$worksheetTitle = $worksheet->getTitle();
 							$highestRow = $worksheet->getHighestRow(); // e.g. 10
 							$highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
 							$highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);
-							
+
 							$log .= "Feuille : '" . $worksheetTitle . "' trouvée contenant " . $highestRow . " lignes et " .
 								 $highestColumnIndex . " colonnes avec comme plus grand index " . $highestColumn . " <br>";
 							if (\trim($worksheetTitle) == 'Sage') {
@@ -226,9 +226,9 @@ class MBPurchaseController extends BaseController
 							$log .= "Aucune Feuille de Titre 'Sage' trouvée tentative d'import depuis le première Feuille<br>";
 							$activeSheetIndex = 0;
 						}
-						
+
 						$excelObj->setActiveSheetIndex($activeSheetIndex);
-						
+
 						$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 							->findOneBy(array(
 							'name' => 'suppliersPrefix'
@@ -242,16 +242,16 @@ class MBPurchaseController extends BaseController
 						}
 						$suppliersPrefix = $suppliersConstStr->getValue();
 						$suppliersPrefixNum = \intval($suppliersPrefix) * 1000000000;
-						
+
 						$worksheet = $excelObj->getActiveSheet();
 						$highestRow = $worksheet->getHighestRow();
 						$lineRead = 0;
 						$buysNew = 0;
 						$lineUnprocessed = 0;
 						$lineError = 0;
-						
+
 						$company = $mbpurchase->getCompany();
-						
+
 						$accounts = $em->getRepository('AcfDataBundle:Account')
 							->getAllByCompany($company);
 						$suppliers = $em->getRepository('AcfDataBundle:Supplier')
@@ -260,10 +260,10 @@ class MBPurchaseController extends BaseController
 							->getAllByCompany($company);
 						$withholdings = $em->getRepository('AcfDataBundle:Withholding')
 							->getAllByCompany($company);
-						
+
 						for ($row = 1; $row <= $highestRow; $row ++) {
 							$lineRead ++;
-							
+
 							$dtActivation = \PHPExcel_Shared_Date::ExcelToPHPObject(
 								$worksheet->getCellByColumnAndRow(1, $row)
 									->getValue());
@@ -298,23 +298,23 @@ class MBPurchaseController extends BaseController
 								->getValue()));
 							$otherInfos = \trim(\strval($worksheet->getCellByColumnAndRow(19, $row)
 								->getValue()));
-							
+
 							if ($supplierNum != "" && \is_numeric($supplierNum)) {
 								$supplierNum = \intval($supplierNum) - $suppliersPrefixNum;
 							}
-							
+
 							$haserror = false;
-							
+
 							if (null == $dtActivation) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Date d'activation<br>";
 							}
-							
+
 							if ($bill == "") {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Numéro Facture<br>";
 							}
-							
+
 							if ($supplierNum == "" || $supplierNum <= 0) {
 								$haserror = true;
 								$oldsuppnum = $worksheet->getCellByColumnAndRow(4, $row)
@@ -329,33 +329,33 @@ class MBPurchaseController extends BaseController
 										$supplier = $s;
 									}
 								}
-								
+
 								if ($knownSupplier == false) {
 									$haserror = true;
 									$log .= "ligne " . $lineRead . ", erreur : Fournisseur Inconnu<br>";
 								}
 							}
-							
+
 							if ($label == "") {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Libélé<br>";
 							}
-							
+
 							if ($vat < 0) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : TVA<br>";
 							}
-							
+
 							if ($stamp < 0) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Timbre<br>";
 							}
-							
+
 							if ($balanceTtc < 0) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : TTC<br>";
 							}
-							
+
 							if ($regime == $this->translate('Buy.regime.0')) {
 								$regime = 0;
 							} elseif ($regime == $this->translate('Buy.regime.1')) {
@@ -373,7 +373,7 @@ class MBPurchaseController extends BaseController
 								$log .= "ligne " . $lineRead . ", erreur (ignorée) : Régime inconnu => " . $this->translate('Buy.regime.0') .
 									 "<br>";
 							}
-							
+
 							$withholding = null;
 							$knownWithholding = false;
 							foreach ($withholdings as $w) {
@@ -382,17 +382,17 @@ class MBPurchaseController extends BaseController
 									$withholding = $w;
 								}
 							}
-							
+
 							if ($knownWithholding == false) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Retenue Inconnue $withholdingValue<br>";
 							}
-							
+
 							if ($balanceNet < 0) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Net à Payer<br>";
 							}
-							
+
 							if ($paymentType == $this->translate('Transaction.paymentType.0')) {
 								$paymentType = 0;
 							} elseif ($paymentType == $this->translate('Transaction.paymentType.1')) {
@@ -408,12 +408,12 @@ class MBPurchaseController extends BaseController
 								$log .= "ligne " . $lineRead . ", erreur (ignorée) : Type de Paiement inconnu => " .
 									 $this->translate('Transaction.paymentType.0') . "<br>";
 							}
-							
+
 							if (null == $dtPayment) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Date de paiement<br>";
 							}
-							
+
 							$account = null;
 							$knownAccount = false;
 							foreach ($accounts as $a) {
@@ -422,19 +422,19 @@ class MBPurchaseController extends BaseController
 									$account = $a;
 								}
 							}
-							
+
 							if ($knownAccount == false) {
 								$haserror = true;
 								$log .= "ligne " . $lineRead . ", erreur : Banque/Caisse Inconnue<br>";
 							}
-							
+
 							$nature = null;
 							foreach ($companyNatures as $n) {
 								if ($n->getLabel() == $natureLabel) {
 									$nature = $n;
 								}
 							}
-							
+
 							if ($status == $this->translate('Transaction.transactionStatus.0')) {
 								$status = 0;
 							} elseif ($status == $this->translate('Transaction.transactionStatus.1')) {
@@ -446,20 +446,20 @@ class MBPurchaseController extends BaseController
 								$log .= "ligne " . $lineRead . ", erreur (ignorée) : Etat inconnu => " .
 									 $this->translate('Transaction.transactionStatus.0') . "<br>";
 							}
-							
+
 							if ($haserror == false) {
-								
+
 								$buy = $em->getRepository('AcfDataBundle:Buy')
 									->findOneBy(array(
-									'monthlyBalance' => $mbpurchase, 
+									'monthlyBalance' => $mbpurchase,
 									'bill' => $bill
 								));
 								if (null == $buy) {
 									$buysNew ++;
-									
+
 									$buy = new Buy();
 									$buy->setMonthlyBalance($mbpurchase);
-									
+
 									$buy->setNumber($mbpurchase->getCount());
 									$buy->setDtActivation($dtActivation);
 									$buy->setBill($bill);
@@ -481,7 +481,7 @@ class MBPurchaseController extends BaseController
 									$buy->setNature($nature);
 									$buy->setTransactionStatus($status);
 									$buy->setOtherInfos($otherInfos);
-									
+
 									$em->persist($buy);
 									$mbpurchase->updateCount();
 									$em->persist($mbpurchase);
@@ -495,24 +495,24 @@ class MBPurchaseController extends BaseController
 							}
 						}
 						$em->flush();
-						
+
 						$log .= $lineRead . " lignes lues<br>";
 						$log .= $buysNew . " nouveaux Achat<br>";
 						$log .= $lineUnprocessed . " Achats déjà dans la base<br>";
 						$log .= $lineError . " lignes contenant des erreurs<br>"; // */
-						
+
 						$this->flashMsgSession('log', $log);
-						
+
 						$this->flashMsgSession('success', $this->translate('Buy.import.success'));
-						
+
 						$this->gvars['tabActive'] = 1;
 						$this->getSession()
 							->set('tabActive', 1);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbpurchase);
-						
+
 						$this->flashMsgSession('error', $this->translate('Buy.import.failure'));
 					}
 				} elseif (isset($reqData['BuyNewForm'])) {
@@ -537,7 +537,6 @@ class MBPurchaseController extends BaseController
 							$buy->setBalanceTtc($buy->getBalanceTtcDevise() * $buy->getConversionRate());
 							$buy->setBalanceNet($buy->getBalanceNetDevise() * $buy->getConversionRate());
 						}
-						$em->persist($buy);
 						foreach ($buyNewForm->get('docs') as $docNewForm) {
 							$docFile = $docNewForm['fileName']->getData();
 							$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
@@ -547,7 +546,7 @@ class MBPurchaseController extends BaseController
 							$docFile->move($docDir, $fileName);
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = $docNewForm->getData();
 							$doc->setCompany($mbpurchase->getCompany());
 							$doc->setFileName($fileName);
@@ -555,14 +554,17 @@ class MBPurchaseController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addTransaction($buy);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$buy->addDoc($doc);
 						}
+						$em->persist($buy);
 						$em->flush();
 						$mbpurchase->updateCount();
 						$em->persist($mbpurchase);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Buy.add.success', array(
 								'%buy%' => $buy->getNumber()
 							)));
@@ -572,11 +574,11 @@ class MBPurchaseController extends BaseController
 						$this->gvars['stabActive'] = 1;
 						$this->getSession()
 							->set('stabActive', 1);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbpurchase);
-						
+
 						$this->flashMsgSession('error', $this->translate('Buy.add.failure'));
 					}
 				} elseif (isset($reqData['MBPurchaseUpdateCountForm'])) {
@@ -587,18 +589,18 @@ class MBPurchaseController extends BaseController
 					if ($mbpurchaseUpdateCountForm->isValid()) {
 						$em->persist($mbpurchase);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('MBPurchase.edit.success', array(
 								'%mbpurchase%' => $mbpurchase->getRef()
 							)));
-						
+
 						$this->traceEntity($cloneMBPurchase, $mbpurchase);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbpurchase);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('MBPurchase.edit.failure', array(
 								'%mbpurchase%' => $mbpurchase->getRef()
 							)));
@@ -613,35 +615,37 @@ class MBPurchaseController extends BaseController
 					$docNewForm->handleRequest($request);
 					if ($docNewForm->isValid()) {
 						$docFiles = $docNewForm['fileName']->getData();
-						
+
 						$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
-						
+
 						$docNames = "";
-						
+
 						foreach ($docFiles as $docFile) {
-							
+
 							$originalName = $docFile->getClientOriginalName();
 							$fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($docFile->getClientOriginalExtension());
 							$mimeType = $docFile->getMimeType();
 							$docFile->move($docDir, $fileName);
-							
+
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = new Doc();
 							$doc->setCompany($mbpurchase->getCompany());
-							
+
 							$doc->setFileName($fileName);
 							$doc->setOriginalName($originalName);
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addMonthlyBalance($mbpurchase);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
-							
+
+							$mbpurchase->addDoc($doc);
+
 							$docNames .= $doc->getOriginalName() . " ";
 						}
-						
+
 						$em->persist($mbpurchase);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Doc.add.success', array(
@@ -650,13 +654,13 @@ class MBPurchaseController extends BaseController
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()
 							->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneMBPurchase, $mbpurchase);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbpurchase);
-						
+
 						$this->flashMsgSession('error', $this->translate('Doc.add.failure'));
 					}
 				} elseif (isset($reqData['MBPurchaseUpdateDocsForm'])) {
@@ -670,27 +674,27 @@ class MBPurchaseController extends BaseController
 					if ($mbpurchaseUpdateDocsForm->isValid()) {
 						$em->persist($mbpurchase);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('MBPurchase.edit.success', array(
 								'%mbpurchase%' => $mbpurchase->getRef()
 							)));
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()
 							->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneMBPurchase, $mbpurchase);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($mbpurchase);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('MBPurchase.edit.failure', array(
 								'%mbpurchase%' => $mbpurchase->getRef()
 							)));
 					}
 				}
-				
+
 				$this->gvars['mbpurchase'] = $mbpurchase;
 				$this->gvars['buy'] = $buy;
 				$this->gvars['doc'] = $doc;
@@ -699,7 +703,7 @@ class MBPurchaseController extends BaseController
 				$this->gvars['MBPurchaseUpdateCountForm'] = $mbpurchaseUpdateCountForm->createView();
 				$this->gvars['MBPurchaseUpdateDocsForm'] = $mbpurchaseUpdateDocsForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 					->findOneBy(array(
 					'name' => 'suppliersPrefix'
@@ -713,23 +717,23 @@ class MBPurchaseController extends BaseController
 				}
 				$suppliersPrefix = $suppliersConstStr->getValue();
 				$this->gvars['suppliersPrefix'] = $suppliersPrefix;
-				
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.mbpurchase.edit', 
+
+				$this->gvars['pagetitle'] = $this->translate('pagetitle.mbpurchase.edit',
 					array(
 						'%mbpurchase%' => $mbpurchase->getRef()
 					));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbpurchase.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.mbpurchase.edit.txt',
 					array(
 						'%mbpurchase%' => $mbpurchase->getRef()
 					));
-				
+
 				return $this->renderResponse('AcfAdminBundle:MBPurchase:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -739,16 +743,16 @@ class MBPurchaseController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_admin_company_list');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$mbpurchase = $em->getRepository('AcfDataBundle:MBPurchase')
 				->find($uid);
 			$buys = $mbpurchase->getTransactions();
-			
+
 			$phpExcelObject = $this->get('phpexcel')
 				->createPHPExcelObject();
-			
+
 			$phpExcelObject->getProperties()
 				->setCreator("Salah Abdelkader Seif Eddine")
 				->setLastModifiedBy($this->getSecurityTokenStorage()
@@ -760,14 +764,14 @@ class MBPurchaseController extends BaseController
 				->setDescription($this->translate('pagetitle.buy.list'))
 				->setKeywords($this->translate('pagetitle.buy.list'))
 				->setCategory("ACF buy");
-			
+
 			$phpExcelObject->setActiveSheetIndex(0);
-			
+
 			$workSheet = $phpExcelObject->getActiveSheet();
 			$workSheet->setTitle($this->translate('pagetitle.buy.listExcel', array(
 				'%mbpurchase%' => $mbpurchase->getRef()
 			)));
-			
+
 			$workSheet->setCellValue('A1', $this->translate('Buy.number.label'));
 			$workSheet->getStyle('A1')
 				->getFont()
@@ -848,18 +852,18 @@ class MBPurchaseController extends BaseController
 			$workSheet->getStyle('T1')
 				->getFont()
 				->setBold(true);
-			
+
 			$workSheet->getStyle('A1:T1')
 				->applyFromArray(
 				array(
 					'fill' => array(
-						'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+						'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 						'color' => array(
 							'rgb' => '94ccdf'
 						)
 					)
 				));
-			
+
 			$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 				->findOneBy(array(
 				'name' => 'suppliersPrefix'
@@ -873,17 +877,17 @@ class MBPurchaseController extends BaseController
 			}
 			$suppliersPrefix = $suppliersConstStr->getValue();
 			$this->gvars['suppliersPrefix'] = $suppliersPrefix;
-			
+
 			$i = 1;
-			
+
 			// $currencyFormatter = new \NumberFormatter($this->getRequest()->getLocale(), \NumberFormatter::CURRENCY);
 			// $balance = $currencyFormatter->formatCurrency($balance, 'TND');
-			
+
 			foreach ($buys as $buy) {
 				$i ++;
-				
+
 				$workSheet->setCellValue('A' . $i, $buy->getNumber(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-				$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtActivation()), 
+				$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtActivation()),
 					\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 				// $workSheet->getStyle('B'.$i)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 				$workSheet->getStyle('B' . $i)
@@ -896,7 +900,7 @@ class MBPurchaseController extends BaseController
 					->getNumberFormated();
 				$workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
 				$workSheet->setCellValue('F' . $i, $buy->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-				
+
 				$balanceHt = $buy->getBalanceTtc() - $buy->getStamp() - $buy->getVat();
 				// $balanceHt = $currencyFormatter->formatCurrency($balanceHt, 'TND');
 				$workSheet->setCellValue('G' . $i, $balanceHt);
@@ -915,7 +919,7 @@ class MBPurchaseController extends BaseController
 				$workSheet->getStyle('J' . $i)
 					->getNumberFormat()
 					->setFormatCode('#,##0.000');
-				$workSheet->setCellValue('K' . $i, $this->translate('Buy.regime.' . $buy->getRegime()), 
+				$workSheet->setCellValue('K' . $i, $this->translate('Buy.regime.' . $buy->getRegime()),
 					\PHPExcel_Cell_DataType::TYPE_STRING2);
 				$withholding = $buy->getBalanceTtc() - $buy->getBalanceNet();
 				$workSheet->setCellValue('L' . $i, $withholding);
@@ -931,9 +935,9 @@ class MBPurchaseController extends BaseController
 				$workSheet->getStyle('N' . $i)
 					->getNumberFormat()
 					->setFormatCode('#,##0.000');
-				$workSheet->setCellValue('O' . $i, $this->translate('Transaction.paymentType.' . $buy->getPaymentType()), 
+				$workSheet->setCellValue('O' . $i, $this->translate('Transaction.paymentType.' . $buy->getPaymentType()),
 					\PHPExcel_Cell_DataType::TYPE_STRING2);
-				$workSheet->setCellValue('P' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtPayment()), 
+				$workSheet->setCellValue('P' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtPayment()),
 					\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 				$workSheet->getStyle('P' . $i)
 					->getNumberFormat()
@@ -946,16 +950,16 @@ class MBPurchaseController extends BaseController
 					$workSheet->setCellValue('R' . $i, $buy->getNature()
 						->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 				}
-				$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $buy->getTransactionStatus()), 
+				$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $buy->getTransactionStatus()),
 					\PHPExcel_Cell_DataType::TYPE_STRING2);
 				$workSheet->setCellValue('T' . $i, $buy->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-				
+
 				if ($i % 2 == 1) {
 					$workSheet->getStyle('A' . $i . ':T' . $i)
 						->applyFromArray(
 						array(
 							'fill' => array(
-								'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+								'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 								'color' => array(
 									'rgb' => 'd8f1f5'
 								)
@@ -966,7 +970,7 @@ class MBPurchaseController extends BaseController
 						->applyFromArray(
 						array(
 							'fill' => array(
-								'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+								'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 								'color' => array(
 									'rgb' => 'bfbfbf'
 								)
@@ -974,7 +978,7 @@ class MBPurchaseController extends BaseController
 						));
 				}
 			}
-			
+
 			$workSheet->getColumnDimension('A')
 				->setAutoSize(true);
 			$workSheet->getColumnDimension('B')
@@ -1015,34 +1019,34 @@ class MBPurchaseController extends BaseController
 				->setAutoSize(true);
 			$workSheet->getColumnDimension('T')
 				->setAutoSize(true);
-			
+
 			$writer = $this->get('phpexcel')
 				->createWriter($phpExcelObject, 'Excel2007');
 			$response = $this->get('phpexcel')
 				->createStreamedResponse($writer);
-			
+
 			$response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
-			
+
 			$filename = $this->normalize(
-				$this->translate('pagetitle.buy.listByMBPurchase', 
+				$this->translate('pagetitle.buy.listByMBPurchase',
 					array(
-						'%mbpurchase%' => $mbpurchase->getRef(), 
+						'%mbpurchase%' => $mbpurchase->getRef(),
 						'%company%' => $mbpurchase->getCompany()
 							->getCorporateName()
 					)));
 			$filename = str_ireplace('"', '|', $filename);
 			$filename = str_ireplace(' ', '_', $filename);
-			
+
 			$response->headers->set('Content-Disposition', 'attachment;filename=' . $filename . '.xlsx');
 			$response->headers->set('Pragma', 'public');
 			$response->headers->set('Cache-Control', 'maxage=1');
-			
+
 			return $response;
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -1052,16 +1056,16 @@ class MBPurchaseController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_admin_company_list');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$company = $em->getRepository('AcfDataBundle:Company')
 				->find($uid);
-			
+
 			if (null == $company) {
 				$this->flashMsgSession('warning', $this->translate('Company.edit.notfound'));
 			} else {
-				
+
 				$mbpurchases = $em->getRepository('AcfDataBundle:MBPurchase')
 					->getAllByYearCompany($year, $company);
 				$buys = array();
@@ -1069,10 +1073,10 @@ class MBPurchaseController extends BaseController
 					$buys = array_merge($buys, $mbpurchase->getTransactions()
 						->toArray());
 				}
-				
+
 				$phpExcelObject = $this->get('phpexcel')
 					->createPHPExcelObject();
-				
+
 				$phpExcelObject->getProperties()
 					->setCreator("Salah Abdelkader Seif Eddine")
 					->setLastModifiedBy($this->getSecurityTokenStorage()
@@ -1084,14 +1088,14 @@ class MBPurchaseController extends BaseController
 					->setDescription($this->translate('pagetitle.buy.list'))
 					->setKeywords($this->translate('pagetitle.buy.list'))
 					->setCategory("ACF buy");
-				
+
 				$phpExcelObject->setActiveSheetIndex(0);
-				
+
 				$workSheet = $phpExcelObject->getActiveSheet();
 				$workSheet->setTitle($this->translate('pagetitle.buy.listExcel', array(
 					'%mbpurchase%' => $year
 				)));
-				
+
 				$workSheet->setCellValue('A1', $this->translate('Buy.number.label'));
 				$workSheet->getStyle('A1')
 					->getFont()
@@ -1172,18 +1176,18 @@ class MBPurchaseController extends BaseController
 				$workSheet->getStyle('T1')
 					->getFont()
 					->setBold(true);
-				
+
 				$workSheet->getStyle('A1:T1')
 					->applyFromArray(
 					array(
 						'fill' => array(
-							'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+							'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 							'color' => array(
 								'rgb' => '94ccdf'
 							)
 						)
 					));
-				
+
 				$suppliersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')
 					->findOneBy(array(
 					'name' => 'suppliersPrefix'
@@ -1197,17 +1201,17 @@ class MBPurchaseController extends BaseController
 				}
 				$suppliersPrefix = $suppliersConstStr->getValue();
 				$this->gvars['suppliersPrefix'] = $suppliersPrefix;
-				
+
 				$i = 1;
-				
+
 				// $currencyFormatter = new \NumberFormatter($this->getRequest()->getLocale(), \NumberFormatter::CURRENCY);
 				// $balance = $currencyFormatter->formatCurrency($balance, 'TND');
-				
+
 				foreach ($buys as $buy) {
 					$i ++;
-					
+
 					$workSheet->setCellValue('A' . $i, $buy->getNumber(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtActivation()), 
+					$workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtActivation()),
 						\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 					// $workSheet->getStyle('B'.$i)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 					$workSheet->getStyle('B' . $i)
@@ -1220,7 +1224,7 @@ class MBPurchaseController extends BaseController
 						->getNumberFormated();
 					$workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
 					$workSheet->setCellValue('F' . $i, $buy->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					
+
 					$balanceHt = $buy->getBalanceTtc() - $buy->getStamp() - $buy->getVat();
 					// $balanceHt = $currencyFormatter->formatCurrency($balanceHt, 'TND');
 					$workSheet->setCellValue('G' . $i, $balanceHt);
@@ -1239,7 +1243,7 @@ class MBPurchaseController extends BaseController
 					$workSheet->getStyle('J' . $i)
 						->getNumberFormat()
 						->setFormatCode('#,##0.000');
-					$workSheet->setCellValue('K' . $i, $this->translate('Buy.regime.' . $buy->getRegime()), 
+					$workSheet->setCellValue('K' . $i, $this->translate('Buy.regime.' . $buy->getRegime()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
 					$withholding = $buy->getBalanceTtc() - $buy->getBalanceNet();
 					$workSheet->setCellValue('L' . $i, $withholding);
@@ -1255,9 +1259,9 @@ class MBPurchaseController extends BaseController
 					$workSheet->getStyle('N' . $i)
 						->getNumberFormat()
 						->setFormatCode('#,##0.000');
-					$workSheet->setCellValue('O' . $i, $this->translate('Transaction.paymentType.' . $buy->getPaymentType()), 
+					$workSheet->setCellValue('O' . $i, $this->translate('Transaction.paymentType.' . $buy->getPaymentType()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
-					$workSheet->setCellValue('P' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtPayment()), 
+					$workSheet->setCellValue('P' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtPayment()),
 						\PHPExcel_Cell_DataType::TYPE_NUMERIC);
 					$workSheet->getStyle('P' . $i)
 						->getNumberFormat()
@@ -1270,16 +1274,16 @@ class MBPurchaseController extends BaseController
 						$workSheet->setCellValue('R' . $i, $buy->getNature()
 							->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 					}
-					$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $buy->getTransactionStatus()), 
+					$workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $buy->getTransactionStatus()),
 						\PHPExcel_Cell_DataType::TYPE_STRING2);
 					$workSheet->setCellValue('T' . $i, $buy->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-					
+
 					if ($i % 2 == 1) {
 						$workSheet->getStyle('A' . $i . ':T' . $i)
 							->applyFromArray(
 							array(
 								'fill' => array(
-									'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+									'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 									'color' => array(
 										'rgb' => 'd8f1f5'
 									)
@@ -1290,7 +1294,7 @@ class MBPurchaseController extends BaseController
 							->applyFromArray(
 							array(
 								'fill' => array(
-									'type' => \PHPExcel_Style_Fill::FILL_SOLID, 
+									'type' => \PHPExcel_Style_Fill::FILL_SOLID,
 									'color' => array(
 										'rgb' => 'bfbfbf'
 									)
@@ -1298,7 +1302,7 @@ class MBPurchaseController extends BaseController
 							));
 					}
 				}
-				
+
 				$workSheet->getColumnDimension('A')
 					->setAutoSize(true);
 				$workSheet->getColumnDimension('B')
@@ -1339,35 +1343,35 @@ class MBPurchaseController extends BaseController
 					->setAutoSize(true);
 				$workSheet->getColumnDimension('T')
 					->setAutoSize(true);
-				
+
 				$writer = $this->get('phpexcel')
 					->createWriter($phpExcelObject, 'Excel2007');
 				$response = $this->get('phpexcel')
 					->createStreamedResponse($writer);
-				
+
 				$response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
-				
+
 				$filename = $this->normalize(
-					$this->translate('pagetitle.buy.listByYear', 
+					$this->translate('pagetitle.buy.listByYear',
 						array(
-							'%year%' => $year, 
+							'%year%' => $year,
 							'%company%' => $mbpurchase->getCompany()
 								->getCorporateName()
 						)));
 				$filename = str_ireplace('"', '|', $filename);
 				$filename = str_ireplace(' ', '_', $filename);
-				
+
 				$response->headers->set('Content-Disposition', 'attachment;filename=' . $filename . '.xlsx');
 				$response->headers->set('Pragma', 'public');
 				$response->headers->set('Cache-Control', 'maxage=1');
-				
+
 				return $response;
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -1392,21 +1396,21 @@ class MBPurchaseController extends BaseController
 		} else {
 			$trace->setUserType(Trace::UT_SUPERADMIN);
 		}
-		
+
 		$table_begin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
 		$table_begin .= '<thead><tr><th class="text-left">' . $this->translate('Entity.field') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.oldVal') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.newVal') . '</th></tr></thead><tbody>';
-		
+
 		$table_end = '</tbody></table>';
-		
+
 		$trace->setActionEntity(Trace::AE_MBPURCHASE);
 		$trace->setActionId2($mbpurchase->getCompany()
 			->getId());
 		$trace->setActionEntity2(Trace::AE_COMPANY);
-		
+
 		$msg = "";
-		
+
 		if ($cloneMBPurchase->getCount() != $mbpurchase->getCount()) {
 			$msg .= "<tr><td>" . $this->translate('MBPurchase.count.label') . '</td><td>';
 			if ($cloneMBPurchase->getCount() == null) {
@@ -1422,7 +1426,7 @@ class MBPurchaseController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if (\count(\array_diff($mbpurchase->getDocs()
 			->toArray(), $cloneMBPurchase->getDocs()
 			->toArray())) != 0 || \count(\array_diff($cloneMBPurchase->getDocs()
@@ -1454,15 +1458,15 @@ class MBPurchaseController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($msg != "") {
-			
+
 			$msg = $table_begin . $msg . $table_end;
-			
+
 			$trace->setMsg(
-				$this->translate('MBPurchase.traceEdit', 
+				$this->translate('MBPurchase.traceEdit',
 					array(
-						'%mbpurchase%' => $mbpurchase->getLabel(), 
+						'%mbpurchase%' => $mbpurchase->getLabel(),
 						'%company%' => $mbpurchase->getCompany()
 							->getCorporateName()
 					)) . $msg);

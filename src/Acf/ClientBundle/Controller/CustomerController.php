@@ -42,16 +42,16 @@ class CustomerController extends BaseController
 		$em = $this->getEntityManager();
 		try {
 			$customer = $em->getRepository('AcfDataBundle:Customer')->find($uid);
-			
+
 			if (null == $customer) {
 				$this->flashMsgSession('warning', $this->translate('Customer.delete.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()->getUser();
-				
+
 				$company = $customer->getCompany();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')->findOneBy(array('company' => $company, 'user' => $user));
 				if (null == $companyUser || $companyUser->getDeleteCustomers() == CompanyUser::CANT) {
 					$this->flashMsgSession('error', $this->translate('CompanyUser.accessForbidden'));
@@ -59,19 +59,19 @@ class CustomerController extends BaseController
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$em->remove($customer);
 				$em->flush();
-				
+
 				$this->flashMsgSession('success', $this->translate('Customer.delete.success', array('%customer%' => $customer->getLabel())));
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
-			
+
 			$this->flashMsgSession('error', $this->translate('Customer.delete.failure'));
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -81,20 +81,20 @@ class CustomerController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_client_homepage');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$customer = $em->getRepository('AcfDataBundle:Customer')->find($uid);
-			
+
 			if (null == $customer) {
 				$this->flashMsgSession('warning', $this->translate('Customer.edit.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()->getUser();
-				
+
 				$company = $customer->getCompany();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')->findOneBy(array('company' => $company, 'user' => $user));
 				if (null == $companyUser) {
 					$this->flashMsgSession('error', $this->translate('CompanyUser.accessForbidden'));
@@ -102,27 +102,27 @@ class CustomerController extends BaseController
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$customerUpdateForm = $this->createForm(CustomerUpdateTForm::class, $customer);
-				$customerUpdateDocsForm = $this->createForm(CustomerUpdateDocsTForm::class, $customer, 
+				$customerUpdateDocsForm = $this->createForm(CustomerUpdateDocsTForm::class, $customer,
 					array('company' => $customer->getCompany()));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($customer->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array('company' => $customer->getCompany()));
-				
+
 				$this->gvars['customer'] = $customer;
 				$this->gvars['doc'] = $doc;
 				$this->gvars['CustomerUpdateForm'] = $customerUpdateForm->createView();
 				$this->gvars['CustomerUpdateDocsForm'] = $customerUpdateDocsForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
 				$this->getSession()->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
 				$this->getSession()->remove('stabActive');
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'customersPrefix'));
 				if (null == $customersConstStr) {
 					$customersConstStr = new ConstantStr();
@@ -133,18 +133,18 @@ class CustomerController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.customer.edit', array('%customer%' => $customer->getLabel()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.customer.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.customer.edit.txt',
 					array('%customer%' => $customer->getLabel()));
-				
+
 				return $this->renderResponse('AcfClientBundle:Customer:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
@@ -154,20 +154,20 @@ class CustomerController extends BaseController
 		if (null == $urlFrom || trim($urlFrom) == '') {
 			$urlFrom = $this->generateUrl('_client_homepage');
 		}
-		
+
 		$em = $this->getEntityManager();
 		try {
 			$customer = $em->getRepository('AcfDataBundle:Customer')->find($uid);
-			
+
 			if (null == $customer) {
 				$this->flashMsgSession('warning', $this->translate('Customer.edit.notfound'));
 			} else {
-				
+
 				$sc = $this->getSecurityTokenStorage();
 				$user = $sc->getToken()->getUser();
-				
+
 				$company = $customer->getCompany();
-				
+
 				$companyUser = $em->getRepository('AcfDataBundle:CompanyUser')->findOneBy(array('company' => $company, 'user' => $user));
 				if (null == $companyUser || $companyUser->getEditCustomers() == CompanyUser::CANT) {
 					$this->flashMsgSession('error', $this->translate('CompanyUser.accessForbidden'));
@@ -175,26 +175,26 @@ class CustomerController extends BaseController
 				}
 				$this->gvars['companyUser'] = $companyUser;
 				$this->gvars['menu_active'] = 'client' . $company->getId();
-				
+
 				$customerUpdateForm = $this->createForm(CustomerUpdateTForm::class, $customer);
-				$customerUpdateDocsForm = $this->createForm(CustomerUpdateDocsTForm::class, $customer, 
+				$customerUpdateDocsForm = $this->createForm(CustomerUpdateDocsTForm::class, $customer,
 					array('company' => $customer->getCompany()));
-				
+
 				$doc = new Doc();
 				$doc->setCompany($customer->getCompany());
 				$docNewForm = $this->createForm(DocNewTForm::class, $doc, array('company' => $customer->getCompany()));
-				
+
 				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
 				$this->getSession()->remove('tabActive');
-				
+
 				$this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
 				$this->getSession()->remove('stabActive');
-				
+
 				$request = $this->getRequest();
 				$reqData = $request->request->all();
-				
+
 				$cloneCustomer = clone $customer;
-				
+
 				if (isset($reqData['CustomerUpdateForm'])) {
 					$this->gvars['tabActive'] = 2;
 					$this->getSession()->set('tabActive', 2);
@@ -202,16 +202,16 @@ class CustomerController extends BaseController
 					if ($customerUpdateForm->isValid()) {
 						$em->persist($customer);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Customer.edit.success', array('%customer%' => $customer->getLabel())));
-						
+
 						$this->traceEntity($cloneCustomer, $customer);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($customer);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Customer.edit.failure', array('%customer%' => $customer->getLabel())));
 					}
 				} elseif (isset($reqData['DocNewForm'])) {
@@ -222,48 +222,53 @@ class CustomerController extends BaseController
 					$docNewForm->handleRequest($request);
 					if ($docNewForm->isValid()) {
 						$docFiles = $docNewForm['fileName']->getData();
-						
+						$docs = array();
+
 						$docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
-						
+
 						$docNames = "";
-						
+
 						foreach ($docFiles as $docFile) {
-							
+
 							$originalName = $docFile->getClientOriginalName();
 							$fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($docFile->getClientOriginalExtension());
 							$mimeType = $docFile->getMimeType();
 							$docFile->move($docDir, $fileName);
-							
+
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = new Doc();
 							$doc->setCompany($customer->getCompany());
-							
+
 							$doc->setFileName($fileName);
 							$doc->setOriginalName($originalName);
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addRelation($customer);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
-							
+
+							$customer->addDoc($doc);
+
+							$docs[] = $doc;
+
 							$docNames .= $doc->getOriginalName() . " ";
 						}
-						
+
 						$em->persist($customer);
 						$em->flush();
 						$this->flashMsgSession('success', $this->translate('Doc.add.success', array('%doc%' => $docNames)));
-						$this->newDocNotifyAdmin($customer, $docNames);
+						$this->newDocNotifyAdmin($customer, $docs);
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneCustomer, $customer);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($customer);
-						
+
 						$this->flashMsgSession('error', $this->translate('Doc.add.failure'));
 					}
 				} elseif (isset($reqData['CustomerUpdateDocsForm'])) {
@@ -275,28 +280,28 @@ class CustomerController extends BaseController
 					if ($customerUpdateDocsForm->isValid()) {
 						$em->persist($customer);
 						$em->flush();
-						$this->flashMsgSession('success', 
+						$this->flashMsgSession('success',
 							$this->translate('Customer.edit.success', array('%customer%' => $customer->getLabel())));
 						$this->gvars['stabActive'] = 3;
 						$this->getSession()->set('stabActive', 3);
-						
+
 						$this->traceEntity($cloneCustomer, $customer);
-						
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($customer);
-						
-						$this->flashMsgSession('error', 
+
+						$this->flashMsgSession('error',
 							$this->translate('Customer.edit.failure', array('%customer%' => $customer->getLabel())));
 					}
 				}
-				
+
 				$this->gvars['customer'] = $customer;
 				$this->gvars['doc'] = $doc;
 				$this->gvars['CustomerUpdateForm'] = $customerUpdateForm->createView();
 				$this->gvars['CustomerUpdateDocsForm'] = $customerUpdateDocsForm->createView();
 				$this->gvars['DocNewForm'] = $docNewForm->createView();
-				
+
 				$customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array('name' => 'customersPrefix'));
 				if (null == $customersConstStr) {
 					$customersConstStr = new ConstantStr();
@@ -307,46 +312,49 @@ class CustomerController extends BaseController
 				}
 				$customersPrefix = $customersConstStr->getValue();
 				$this->gvars['customersPrefix'] = $customersPrefix;
-				
+
 				$this->gvars['pagetitle'] = $this->translate('pagetitle.customer.edit', array('%customer%' => $customer->getLabel()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.customer.edit.txt', 
+				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.customer.edit.txt',
 					array('%customer%' => $customer->getLabel()));
-				
+
 				return $this->renderResponse('AcfClientBundle:Customer:edit.html.twig', $this->gvars);
 			}
 		} catch (\Exception $e) {
 			$logger = $this->getLogger();
 			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 		}
-		
+
 		return $this->redirect($urlFrom);
 	}
 
-	protected function newDocNotifyAdmin(Customer $customer, $docNames)
+	protected function newDocNotifyAdmin(Customer $customer, $docs)
 	{
 		$from = $this->getParameter('mail_from');
 		$fromName = $this->getParameter('mail_from_name');
 		$subject = $this->translate('_mail.newdocs.subject', array(), 'messages');
-		
+
 		$user = $this->getSecurityTokenStorage()
 			->getToken()
 			->getUser();
 		$company = $customer->getCompany();
-		
+
 		$admins = $company->getAdmins();
-		foreach ($admins as $admin) {
+		if (\count($admins) != 0) {
 			$mvars = array();
-			$mvars['user'] = $user->getFullName();
-			$mvars['company'] = $company->getCorporateName();
-			$mvars['docNames'] = $docNames;
-			
-			$message = \Swift_Message::newInstance()->setFrom($from, $fromName)
-				->setTo($admin->getEmail(), $admin->getFullname())
-				->setSubject($subject)
-				->setBody($this->renderView('AcfClientBundle:Mail:newdoc.html.twig', $mvars), 'text/html');
-			
+			$mvars['customer'] = $customer;
+			$mvars['user'] = $user;
+			$mvars['company'] = $company;
+			$mvars['docs'] = $docs;
+			$message = \Swift_Message::newInstance();
+			$message->setFrom($from, $fromName);
+			foreach ($admins as $admin) {
+				$message->addTo($admin->getEmail(), $admin->getFullname());
+			}
+			$message->setSubject($subject);
+			$message->setBody($this->renderView('AcfClientBundle:Mail:Customernewdoc.html.twig', $mvars), 'text/html');
 			$this->sendmail($message);
 		}
+
 	}
 
 	protected function traceEntity(Customer $cloneCustomer, Customer $customer)
@@ -370,21 +378,21 @@ class CustomerController extends BaseController
 		} else {
 			$trace->setUserType(Trace::UT_SUPERADMIN);
 		}
-		
+
 		$table_begin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
 		$table_begin .= '<thead><tr><th class="text-left">' . $this->translate('Entity.field') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.oldVal') . '</th>';
 		$table_begin .= '<th class="text-left">' . $this->translate('Entity.newVal') . '</th></tr></thead><tbody>';
-		
+
 		$table_end = '</tbody></table>';
-		
+
 		$trace->setActionEntity(Trace::AE_CUSTOMER);
 		$trace->setActionId2($customer->getCompany()
 			->getId());
 		$trace->setActionEntity2(Trace::AE_COMPANY);
-		
+
 		$msg = "";
-		
+
 		if ($cloneCustomer->getLabel() != $customer->getLabel()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.label.label') . '</td><td>';
 			if ($cloneCustomer->getLabel() == null) {
@@ -400,7 +408,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getNumber() != $customer->getNumber()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.number.label') . '</td><td>';
 			if ($cloneCustomer->getNumber() == null) {
@@ -416,7 +424,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getFisc() != $customer->getFisc()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.fisc.label') . '</td><td>';
 			if ($cloneCustomer->getFisc() == null) {
@@ -432,7 +440,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getPhysicaltype() != $customer->getPhysicaltype()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.physicaltype.label') . '</td><td>';
 			if ($cloneCustomer->getPhysicaltype() == null) {
@@ -448,7 +456,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getCin() != $customer->getCin()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.cin.label') . '</td><td>';
 			if ($cloneCustomer->getCin() == null) {
@@ -464,7 +472,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getPassport() != $customer->getPassport()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.passport.label') . '</td><td>';
 			if ($cloneCustomer->getPassport() == null) {
@@ -480,7 +488,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getCommercialRegister() != $customer->getCommercialRegister()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.commercialRegister.label') . '</td><td>';
 			if ($cloneCustomer->getCommercialRegister() == null) {
@@ -496,7 +504,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getStreetNum() != $customer->getStreetNum()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.streetNum.label') . '</td><td>';
 			if ($cloneCustomer->getStreetNum() == null) {
@@ -512,7 +520,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getAddress() != $customer->getAddress()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.address.label') . '</td><td>';
 			if ($cloneCustomer->getAddress() == null) {
@@ -528,7 +536,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getAddress2() != $customer->getAddress2()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.address2.label') . '</td><td>';
 			if ($cloneCustomer->getAddress2() == null) {
@@ -544,7 +552,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getTown() != $customer->getTown()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.town.label') . '</td><td>';
 			if ($cloneCustomer->getTown() == null) {
@@ -560,7 +568,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getZipCode() != $customer->getZipCode()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.zipCode.label') . '</td><td>';
 			if ($cloneCustomer->getZipCode() == null) {
@@ -576,7 +584,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getCountry() != $customer->getCountry()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.country.label') . '</td><td>';
 			if ($cloneCustomer->getCountry() == null) {
@@ -592,7 +600,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getPhone() != $customer->getPhone()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.phone.label') . '</td><td>';
 			if ($cloneCustomer->getPhone() == null) {
@@ -608,7 +616,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getMobile() != $customer->getMobile()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.mobile.label') . '</td><td>';
 			if ($cloneCustomer->getMobile() == null) {
@@ -624,7 +632,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getFax() != $customer->getFax()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.fax.label') . '</td><td>';
 			if ($cloneCustomer->getFax() == null) {
@@ -640,7 +648,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getEmail() != $customer->getEmail()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.email.label') . '</td><td>';
 			if ($cloneCustomer->getEmail() == null) {
@@ -656,7 +664,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($cloneCustomer->getOtherInfos() != $customer->getOtherInfos()) {
 			$msg .= "<tr><td>" . $this->translate('Customer.otherInfos.label') . '</td><td>';
 			if ($cloneCustomer->getOtherInfos() == null) {
@@ -672,7 +680,7 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if (\count(\array_diff($customer->getDocs()->toArray(), $cloneCustomer->getDocs()->toArray())) != 0 ||
 			 \count(\array_diff($cloneCustomer->getDocs()->toArray(), $customer->getDocs()->toArray())) != 0) {
 			$msg .= "<tr><td>" . $this->translate('Customer.docs.label') . '</td><td>';
@@ -699,13 +707,13 @@ class CustomerController extends BaseController
 			}
 			$msg .= "</td></tr>";
 		}
-		
+
 		if ($msg != "") {
-			
+
 			$msg = $table_begin . $msg . $table_end;
-			
+
 			$trace->setMsg(
-				$this->translate('Customer.traceEdit', 
+				$this->translate('Customer.traceEdit',
 					array('%customer%' => $customer->getLabel(), '%company%' => $customer->getCompany()
 						->getCorporateName())) . $msg);
 			$trace->setDtCrea(new \DateTime('now'));

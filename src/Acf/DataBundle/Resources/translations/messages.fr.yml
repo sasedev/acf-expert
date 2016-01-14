@@ -1105,14 +1105,25 @@ Doc.md5: md5
 Doc.nbrDownloads: Nombre de Téléchargements
 Doc.originalName: Nom Original
 Doc.description: Description
-Doc.banks: Banques
-Doc.funds: Sociétés
-Doc.accounts: Comptes
+Doc.accounts: Comptes Monaitaires
+Doc.banks: Comptes Bancaires
+Doc.funds: Caisses
+Doc.relations: Relations
+Doc.customers: Acheteurs
+Doc.supplier: Vendeurs
 Doc.monthlyBalances: Mois
+Doc.mbpurchases: Mois (Achat)
+Doc.mbsales: Mois (Vente)
 Doc.transactions: Transactions
-Doc.rawMaterials: Matières Permières
-Doc.finishedMaterials: Matières Finies
-Doc.materialRequirements: Dépendances de Matières
+Doc.buys: Achats
+Doc.sales: Ventes
+Doc.groups: Groupes Juridiques
+Doc.groupcomptables: Groupes Comptables
+Doc.groupfiscals: Groupes Fiscals
+Doc.grouppersos: Groupes Personnels
+Doc.groupsysts: Groupes Systèmes
+Doc.groupbanks: Groupes Bancaires
+Doc.groupaudits: Groupes Audits
 Doc.dtCrea: Date d'ajout
 Doc.dtUpdate: Date de modification
 
@@ -1124,13 +1135,25 @@ Doc.mimeType.label: "Type :"
 Doc.size.label: "Taille :"
 Doc.md5.label: "md5 :"
 Doc.nbrDownloads.label: "Nbr Téléchargements :"
-Doc.banks.label: "Banques :"
-Doc.funds.label: "Comptes :"
+Doc.accounts.label: "Comptes Monaitaires :"
+Doc.banks.label: "Comptes Bancaires :"
+Doc.funds.label: "Caisses :"
+Doc.relations.label: "Relations :"
+Doc.customers.label: "Acheteurs :"
+Doc.supplier.label: "Vendeurs :"
 Doc.monthlyBalances.label: "Mois :"
+Doc.mbpurchases.label: "Mois (Achat) :"
+Doc.mbsales.label: "Mois (Vente) :"
 Doc.transactions.label: "Transactions :"
-Doc.rawMaterials.label: "Matières Permières :"
-Doc.finishedMaterials.label: "Matières Finies :"
-Doc.materialRequirements.label: "Dépendances de Matières :"
+Doc.buys.label: "Achats :"
+Doc.sales.label: "Ventes :"
+Doc.groups.label: "Groupes Juridiques :"
+Doc.groupcomptables.label: "Groupes Comptables :"
+Doc.groupfiscals.label: "Groupes Fiscals :"
+Doc.grouppersos.label: "Groupes Personnels :"
+Doc.groupsysts.label: "Groupes Systèmes :"
+Doc.groupbanks.label: "Groupes Bancaires :"
+Doc.groupaudits.label: "Groupes Audits :"
 
 #Docgroupcomptable
 Docgroupcomptable.company: Société

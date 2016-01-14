@@ -202,10 +202,10 @@ class CustomerController extends BaseController
 							$fileName = sha1(uniqid(mt_rand(), true)).'.'.strtolower($docFile->getClientOriginalExtension());
 							$mimeType = $docFile->getMimeType();
 							$docFile->move($docDir, $fileName);
-							
+
 							$size = filesize($docDir . '/' . $fileName);
 							$md5 = md5_file($docDir . '/' . $fileName);
-							
+
 							$doc = new Doc();
 							$doc->setCompany($customer->getCompany());
 
@@ -214,8 +214,10 @@ class CustomerController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addRelation($customer);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$customer->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName()." ";
 						}

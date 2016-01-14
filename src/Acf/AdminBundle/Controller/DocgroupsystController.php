@@ -258,8 +258,10 @@ class DocgroupsystController extends BaseController
 							$doc->setSize($size);
 							$doc->setMimeType($mimeType);
 							$doc->setMd5($md5);
-							$doc->addGroupsyst($docgroupsyst);
+							$doc->setDescription($docNewForm['description']->getData());
 							$em->persist($doc);
+
+							$docgroupsyst->addDoc($doc);
 
 							$docNames .= $doc->getOriginalName()." ";
 						}
