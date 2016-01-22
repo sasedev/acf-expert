@@ -17,7 +17,7 @@
 					{% endif %}
 				</div>
 				{% if docgroup.docs|length != 0 %}
-				<table class="table table-bordered table-hover docgroupDocs">
+				<table class="table table-bordered table-hover dgDocs">
 					<thead>
 						<tr>
 							<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
@@ -25,6 +25,7 @@
 							<th>{{ 'Doc.size.label'|trans|raw }}</th>
 							<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 							<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+							<th>{{ 'Doc.description.label'|trans|raw }}</th>
 							<th>{{ 'action'|trans|raw }}</th>
 						</tr>
 					</thead>
@@ -45,6 +46,7 @@
 							</td>
 							<td>{{ doc.nbrDownloads }}</td>
 							<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+							<td>{{ doc.description | raw }}</td>
 							<td>
 								<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 								<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>

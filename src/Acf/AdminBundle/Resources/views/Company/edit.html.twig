@@ -238,6 +238,7 @@ $(function() {
 			null,
 			null,
 			null,
+			null,
 			{ "searchable": false, "sortable": false }
 		],
 		"pageLength": 10,
@@ -612,11 +613,12 @@ $(function() {
 	});
 	{% endif %}
 {% endif %}
-	$('.docgroupDocs').dataTable({
+	$('.dgDocs').dataTable({
 		{%if app.request.locale != 'en'%}
 		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
 		{% endif %}
 		"columns": [
+			null,
 			null,
 			null,
 			null,
@@ -1308,6 +1310,7 @@ $(function() {
 																<th>{{ 'Doc.size.label'|trans|raw }}</th>
 																<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 																<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																<th>{{ 'Doc.description.label'|trans|raw }}</th>
 																<th>{{ 'action'|trans|raw }}</th>
 															</tr>
 														</thead>
@@ -1329,6 +1332,7 @@ $(function() {
 																</td>
 																<td>{{ doc.nbrDownloads }}</td>
 																<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																<td>{{ doc.description | raw }}</td>
 																<td>
 																	<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 																	<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -1338,7 +1342,7 @@ $(function() {
 															{% endfor %}
 														{% else %}
 															<tr>
-																<td colspan="6">{{ 'Doc.empty'|trans|raw }}</td>
+																<td colspan="7">{{ 'Doc.empty'|trans|raw }}</td>
 															</tr>
 														{% endif %}
 														</tbody>
@@ -2546,7 +2550,7 @@ $(function() {
 																	{% endif %}
 																</div>
 																{% if docgroupcomptable.docs|length != 0 %}
-																<table class="table table-bordered table-hover docgroupcomptableDocs">
+																<table class="table table-bordered table-hover dgDocs">
 																	<thead>
 																		<tr>
 																			<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
@@ -2554,6 +2558,7 @@ $(function() {
 																			<th>{{ 'Doc.size.label'|trans|raw }}</th>
 																			<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 																			<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																			<th>{{ 'Doc.description.label'|trans|raw }}</th>
 																			<th>{{ 'action'|trans|raw }}</th>
 																		</tr>
 																	</thead>
@@ -2574,6 +2579,7 @@ $(function() {
 																			</td>
 																			<td>{{ doc.nbrDownloads }}</td>
 																			<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																			<td>{{ doc.description | raw }}</td>
 																			<td>
 																				<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 																				<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -2648,7 +2654,7 @@ $(function() {
 																	{% endif %}
 																</div>
 																{% if docgroupbank.docs|length != 0 %}
-																<table class="table table-bordered table-hover docgroupbankDocs">
+																<table class="table table-bordered table-hover dgDocs">
 																	<thead>
 																		<tr>
 																			<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
@@ -2656,6 +2662,7 @@ $(function() {
 																			<th>{{ 'Doc.size.label'|trans|raw }}</th>
 																			<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 																			<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																			<th>{{ 'Doc.description.label'|trans|raw }}</th>
 																			<th>{{ 'action'|trans|raw }}</th>
 																		</tr>
 																	</thead>
@@ -2676,6 +2683,7 @@ $(function() {
 																			</td>
 																			<td>{{ doc.nbrDownloads }}</td>
 																			<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																			<td>{{ doc.description | raw }}</td>
 																			<td>
 																				<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 																				<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -2765,7 +2773,7 @@ $(function() {
 																</div>
 
 																{% if docgroup.docs|length != 0 %}
-																<table class="table table-bordered table-hover docgroupDocs">
+																<table class="table table-bordered table-hover dgDocs">
 																	<thead>
 																		<tr>
 																			<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
@@ -2773,6 +2781,7 @@ $(function() {
 																			<th>{{ 'Doc.size.label'|trans|raw }}</th>
 																			<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 																			<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																			<th>{{ 'Doc.description.label'|trans|raw }}</th>
 																			<th>{{ 'action'|trans|raw }}</th>
 																		</tr>
 																	</thead>
@@ -2793,6 +2802,7 @@ $(function() {
 																			</td>
 																			<td>{{ doc.nbrDownloads }}</td>
 																			<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																			<td>{{ doc.description | raw }}</td>
 																			<td>
 																				<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 																				<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -2955,7 +2965,7 @@ $(function() {
 														{% endif %}
 													</div>
 													{% if docgroupfiscal.docs|length != 0 %}
-													<table class="table table-bordered table-hover docgroupfiscalDocs">
+													<table class="table table-bordered table-hover dgDocs">
 														<thead>
 															<tr>
 																<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
@@ -2963,6 +2973,7 @@ $(function() {
 																<th>{{ 'Doc.size.label'|trans|raw }}</th>
 																<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 																<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																<th>{{ 'Doc.description.label'|trans|raw }}</th>
 																<th>{{ 'action'|trans|raw }}</th>
 															</tr>
 														</thead>
@@ -2983,6 +2994,7 @@ $(function() {
 																</td>
 																<td>{{ doc.nbrDownloads }}</td>
 																<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																<td>{{ doc.description | raw }}</td>
 																<td>
 																	<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 																	<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -3057,7 +3069,7 @@ $(function() {
 														{% endif %}
 													</div>
 													{% if docgroupperso.docs|length != 0 %}
-													<table class="table table-bordered table-hover docgrouppersoDocs">
+													<table class="table table-bordered table-hover dgDocs">
 														<thead>
 															<tr>
 																<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
@@ -3065,6 +3077,7 @@ $(function() {
 																<th>{{ 'Doc.size.label'|trans|raw }}</th>
 																<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 																<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																<th>{{ 'Doc.description.label'|trans|raw }}</th>
 																<th>{{ 'action'|trans|raw }}</th>
 															</tr>
 														</thead>
@@ -3085,6 +3098,7 @@ $(function() {
 																</td>
 																<td>{{ doc.nbrDownloads }}</td>
 																<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																<td>{{ doc.description | raw }}</td>
 																<td>
 																	<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 																	<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -3160,7 +3174,7 @@ $(function() {
 														{% endif %}
 													</div>
 													{% if docgroupsyst.docs|length != 0 %}
-													<table class="table table-bordered table-hover docgroupsystDocs">
+													<table class="table table-bordered table-hover dgDocs">
 														<thead>
 															<tr>
 																<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
@@ -3168,6 +3182,7 @@ $(function() {
 																<th>{{ 'Doc.size.label'|trans|raw }}</th>
 																<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 																<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																<th>{{ 'Doc.description.label'|trans|raw }}</th>
 																<th>{{ 'action'|trans|raw }}</th>
 															</tr>
 														</thead>
@@ -3188,6 +3203,7 @@ $(function() {
 																</td>
 																<td>{{ doc.nbrDownloads }}</td>
 																<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																<td>{{ doc.description | raw }}</td>
 																<td>
 																	<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 																	<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -3263,7 +3279,7 @@ $(function() {
 														{% endif %}
 													</div>
 													{% if docgroupaudit.docs|length != 0 %}
-													<table class="table table-bordered table-hover docgroupauditDocs">
+													<table class="table table-bordered table-hover dgDocs">
 														<thead>
 															<tr>
 																<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
@@ -3271,6 +3287,7 @@ $(function() {
 																<th>{{ 'Doc.size.label'|trans|raw }}</th>
 																<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
 																<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+																<th>{{ 'Doc.description.label'|trans|raw }}</th>
 																<th>{{ 'action'|trans|raw }}</th>
 															</tr>
 														</thead>
@@ -3291,6 +3308,7 @@ $(function() {
 																</td>
 																<td>{{ doc.nbrDownloads }}</td>
 																<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+																<td>{{ doc.description | raw }}</td>
 																<td>
 																	<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 																	<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
