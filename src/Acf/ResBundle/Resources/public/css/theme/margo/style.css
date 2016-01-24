@@ -9599,3 +9599,43 @@ ul.post-meta li a:hover {
 	color: black;
 	font-weight: bold;
 }
+
+.button {
+	border-radius: 3px;
+	border-color: white;
+	border-width: 2px;
+	background: #00afd1 none repeat scroll 0 0;
+	font-size: 20px;
+	font-weight: 400;
+	cursor: pointer;
+	width: auto;
+	height: auto;
+	color: white;
+}
+.button:HOVER {
+	border-width: 3px;
+	font-size: 22px;
+	border-color: #00afd1;
+	color: #00afd1;
+	background: transparent none repeat scroll 0 0;
+}
+
+.gray {
+	border-radius: 3px;
+	border-color: white;
+	border-width: 2px;
+	background: gray none repeat scroll 0 0;
+	font-size: 20px;
+	font-weight: 400;
+	cursor: pointer;
+	width: auto;
+	height: auto;
+	color: white;
+}
+.gray:HOVER {
+	border-width: 4px;
+	font-size: 22px;
+	border-color: gray;
+	color: gray;
+	background: transparent none repeat scroll 0 0 !important;
+}

@@ -2,13 +2,35 @@
 {%if menu_active is not defined%}{%set menu_active=''%}{%endif%}
 {%if smenu_active is not defined%}{%set smenu_active=''%}{%endif%}
 {%if tabActive is not defined%}{%set tabActive=1%}{%endif%}
+
 {%block static_css%} {{ parent() }}
 <link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/theme/margo/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css')}}">
 {%endblock static_css%}
-{%block end_static_js%} {{ parent() }}
+{%block end_static_js%}
+{{ parent() }}
 <script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/jquery.nicescroll.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/script.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.3.1.js')}}"></script>
+{%if app.request.locale != 'en'%}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.3.1.'~app.request.locale~'.js')}}"></script>
+{% endif %}
 {%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('#DevisNewForm_dtActivation').datetimepicker({
+		weekStart: 1,
+		startView: 4,
+		minView: 2,
+		autoclose: true,
+		todayHighlight: true,
+		language: "{{app.request.locale}}",
+		format: 'yyyy-mm-dd'
+	});
+
+
+});
+{%endblock end2_dynamic_jstxt%}
 {%block html_body_content%}
 <div id="container">
 
@@ -122,7 +144,7 @@
 						<ul class="breadcrumbs">
 							{%block breadcrumbcnt%}
 							<li><a href="{{ path('_front_homepage') }}">{{ faIco('home') }} &nbsp; <i>Cabinet FAKHFAKH d'Expertise Comptable</i></a></li>
-							<li class="active"><a href="{{ path('_front_basedoc') }}">{{ faIco('newspaper-o ') }} &nbsp; <i>Base Documentaire</i></a></li>
+							<li class="active"><a href="{{ path('_front_devis') }}">{{ faIco('shopping-cart') }} &nbsp; <i>Demande de Devis</i></a></li>
 							{%endblock breadcrumbcnt%}
 						</ul>
 					</div>
@@ -138,95 +160,58 @@
 						<br>
 						<br>
 						<br>
-						<h4 class="classic-title"><span>FILS D'ACTUALITÉS</span></h4>
-						{% if feeds| length != 0 %}
+						<h4 class="classic-title"><span>Demande de Devis</span></h4>
 						<br>
 						<br>
 						<br>
 						<div class="container">
 							<div class="row">
-								{% for feed in feeds %}
 								<div class="col-md-12">
-									<h5><a href="{{ feed.link }}">{{feed.title}}</a></h5>
-									{%if feed.lastModified is not null %}<h6>{{ faIco('clock-o') }} {{ feed.lastModified|localeDate('short', 'short') }}</h6>{% endif %}
-									<br>
-									<br>
-									{% if feed.hasMedia %}
-									{% for media in feed.medias %}
-									<img alt="{{feed.title}}" src="{{ media.url }}" class="img-responsive"><br><br>
-									{% endfor %}
-									{% endif %}
-									{{ feed.description | raw}}
-									<br>
+									<h5>Devis personnalisé</h5>
+									<p class="text-justify">Plus besoin de vous déplacer ! Fini les soucis d’acheminement de vos documents au cabinet de votre expert-comptable ! L’application « ACF Cloud » vous assure un service confortable et de très haute qualité. Ainsi, tous vos documents seront acheminés à notre cabinet via votre espace client privé.</p>
+									<h4>VOS ENGAGEMENTS :</h4>
+									<ul>
+										<li>Scannez vos documents comptables (factures, tickets, relevés bancaires, etc. …).</li>
+										<li>Télécharger ces pièces via votre espace privé dédié (vous assurant ainsi une sauvegarde type GED de vos pièces justificatives et consultation 24h/24h et 7j/7j).</li>
+										<li>Souscrire un abonnement de télédéclaration fiscale et sociale via internet auprès de l’ANCE</li>
+									</ul>
+									<br/>
+									<h4>NOS ENGAGEMENTS :</h4>
+									<ul>
+										<li>Traitons votre comptabilité dans le respect des règles déontologiques en vigueur (secret professionnel, etc. …).</li>
+										<li>Etablissons les déclarations fiscales et sociales obligatoires .</li>
+									</ul>
+									<br/>
+									<p class="text-justify">
+									Pour recevoir votre devis gratuit personnalisé, complétez le formulaire ci-dessous :
+									</p>
+									{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': false }%}
+									{{form_start(DevisNewForm, {'method':'POST', 'action': path('_front_devis_post'), 'style': 'vertical'})}}
+									{{form_row(DevisNewForm.lastname, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.firstname, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.email, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.phone, {'label_col': 3, 'widget_col': 8})}}
+									<p class="text-justify">
+									Pour nous permettre de mieux personnaliser votre devis, merci de renseigner les demandes d'informations suivantes :
+									</p>
+									{{form_row(DevisNewForm.entreprise, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.entrepriseForm, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.activity, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.dtActivation, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DevisNewForm.address, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DevisNewForm.zipCode, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DevisNewForm.town, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DevisNewForm.caYear, {'label_col': 3, 'widget_col': 8, 'input_group':{'append':'TND'} })}}
+									{{form_row(DevisNewForm.nbrInvoicesBuy, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.nbrInvoicesSale, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.nbrSalaries, {'label_col': 3, 'widget_col': 8})}}
+									{{form_row(DevisNewForm.hasexpert, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DevisNewForm.otherInfos, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-4 col-lg-8"><button class="btn-primary btn" type="submit">{{glyphIco('envelope')}} Valider et Envoyer</button></div></div>
+									{{form_end(DevisNewForm)}}
 								</div>
-								<div class="col-md-12">
-									<br>
-									<hr>
-								</div>
-								{% endfor %}
 							</div>
 						</div>
-						{% else %}
-						<p>Aucune Actualité disponible pour le moment</p>
-						<br>
-						<br>
-						<br>
-						{% endif %}
-					</div>
-					<div class="col-md-12 page-content" id="links">
-						<br>
-						<br>
-						<br>
-						<h4 class="classic-title"><span>LIENS UTILES / BASE DOCUMENTAIRE</span></h4>
-						<div id="links1"></div>
-						<br>
-						<br>
-						<br>
-						<h5 class="classic-title"><span>LIENS UTILES</span></h5>
-						{% if links|length != 0 %}
-						{% for link in links %}
-						<ul>
-							<li>{{ link.title }} - <a href="{{ path('_front_extlnk', {'uid': link.id}) }}"> {{ link.url }} </a> </li>
-						</ul>
-						{% endfor %}
-						{% endif %}
-						<div id="links2"></div>
-						<br>
-						<br>
-						<br>
-						<h5 class="classic-title"><span>INFORMATIONS UTILES</span></h5>
-						{% if docs|length != 0 %}
-						{% for doc in docs %}
-						<ul>
-							<li>{{ doc.title }} - <a href="{{ path('_front_gooddoc', {'uid': doc.id}) }}" class="btn btn-primary"> Télécharger </a> </li>
-						</ul>
-						{% endfor %}
-						{% endif %}
-					</div>
-					<div class="col-md-12 page-content" id="bulltin">
-						<br>
-						<br>
-						<br>
-						<h4 class="classic-title"><span>Bulletin ACF Info</span></h4>
-						<div id="bulltin1"></div>
-						<br>
-						<br>
-						<br>
-						<h5 class="classic-title"><span>Présentation du bulletin d'information</span></h5>
-						<p>
-							ACF Info est un bulletin d'information en ligne qui regroupe des informations sur l'actualité comptable, juridique, fiscale et sociale.
-						</p>
-						<div id="bulltin2"></div>
-						<br>
-						<br>
-						<br>
-						<h5 class="classic-title"><span>Abonnement d'accès</span></h5>
-						<p>
-							Abonnez-vous au bulletin d'information ACF Info et soyez informé de toutes les actualiltés touchant votre entreprise.
-						</p>
-						<p>
-							Pour vous inscrire à ACF Info, il suffit de remplir le formulaire <a href="{{ path('_security_register')}}">suivant</a>.
-						</p>
 					</div>
 				</div>
 			</div>
@@ -264,6 +249,9 @@
 								</li>
 								<li>
 									<a href="{{ path('_front_basedoc')}}">{{ 'menu.footer.basedoc'|trans }}</a>
+								</li>
+								<li>
+									<a href="{{ path('_front_devis')}}">{{ 'menu.footer.devis'|trans }}</a>
 								</li>
 								{% if is_granted('ROLE_USER') %}
 								<li>

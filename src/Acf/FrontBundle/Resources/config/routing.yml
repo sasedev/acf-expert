@@ -2,6 +2,16 @@ _front_homepage:
     path:     /
     defaults: { _controller: "AcfFrontBundle:Default:index" }
 
+_front_devis:
+    path:     /devis
+    defaults: { _controller: "AcfFrontBundle:Devis:index" }
+    methods: [GET]
+
+_front_devis_post:
+    path:     /devis
+    defaults: { _controller: "AcfFrontBundle:Devis:post" }
+    methods: [POST]
+
 _front_basedoc:
     path:     /base_documentaire
     defaults: { _controller: "AcfFrontBundle:BaseDoc:index" }

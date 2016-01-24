@@ -31,6 +31,7 @@ menu.top.client1: 'ACF Cloud'
 menu.top.client2: 'ACF Info'
 menu.top.client3: 'ACF Paie'
 menu.top.logout: 'Déconnexion'
+menu.top.devis: 'Devis'
 
 menu.bottom.links: Liens
 menu.footer.home: Accueil
@@ -42,6 +43,7 @@ menu.footer.basedoc: 'Base documentaire'
 menu.footer.login: 'Espace Client'
 menu.footer.profile: 'Mon Profile'
 menu.footer.logout: 'Déconnexion'
+menu.footer.devis: 'Demande de Devis'
 
 bottom.followus: 'Suivez-nous'
 bottom.contactus: 'Contactez-nous'
@@ -61,3 +63,27 @@ twitter.url: 'https://twitter.com'
 googleplus.url: 'https://plus.google.com'
 skype.url: 'https://www.skype.com'
 
+
+Devis.lastname.label: 'Nom :'
+Devis.firstname.label: 'Prénom :'
+Devis.email.label: 'Email :'
+Devis.phone.label: 'Téléphone :'
+Devis.entreprise.label: 'Quelle est votre entreprise ?'
+Devis.entrepriseForm.label: 'Quelle est la forme de votre entreprise ? (Personne physique, SARL, SUARL, SA…)'
+Devis.activity.label: 'Votre activité :'
+Devis.dtActivation.label: 'Date de début d’activité :'
+Devis.address.label: 'Adresse professionnelle :'
+Devis.zipCode.label: 'Code Postal :'
+Devis.town.label: 'Ville :'
+Devis.caYear.label: 'Quel est le montant de votre chiffre d’affaires annuel ?'
+Devis.nbrInvoicesBuy.label: 'Nombre moyen mensuel de vos factures de d’achats ?'
+Devis.nbrInvoicesSale.label: 'Nombre moyen mensuel de vos factures de de vente ?'
+Devis.nbrSalaries.label: 'Nombre de salariés ?'
+Devis.hasexpert.label: 'Faites vous actuellement appel à un expert-comptable ?'
+Devis.hasexpert.1: 'Oui'
+Devis.hasexpert.2: 'Non'
+Devis.otherInfos.label: 'Indiquez-nous ci-dessous toute information complémentaire que vous jugez utile :'
+
+_mail.devis.subject: Demande de Devis
+_front.devis.error: 'Une erreur s''est produite lors de la tentative de sauvegrarde de votre devis'
+_front.devis.success: 'Votre demande de Devis a été sauvegardée avec succès'
