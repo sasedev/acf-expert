@@ -35,22 +35,66 @@ $(function() {
 {%block content%}
 {{form_start(NewUserForm, {'method':'POST', 'action': path('_security_register_post'), 'style': 'horizontal'})}}
 <div class="login-box-body">
-	<img class="img" src="{{asset('bundles/acfres/images/logo_acf_footer.jpg')}}" alt="{{ sitename }}" style="height: 100px;">
-	{%if pagetitle is defined%}<hr><h1 class="text-center">{{pagetitle|raw}}</h1><hr>{%endif%}
+	<a href="{{ path('_front_homepage')}}"><img class="img img-responsive center-block" src="{{asset('bundles/acfres/images/logo_acf_footer.jpg')}}" alt="{{ sitename }}" style="height: 100px;"></a>
+	{%if pagetitle is defined%}<hr><h1 class="text-center">{{pagetitle|raw}}</h1>{%endif%}
+	<hr>
+	<h5><u>Présentation du bulletin d'information ACF Info (bulletin d’information en ligne 24h/24h</u></h5>
+	<p class="text-justify">
+		<b>ACF Info</b> est un bulletin d'information en ligne accessible via le site web : www.acf-expert.tn , qui regroupe des informations sur l'actualité comptable, juridique, fiscale et sociale. Une source d'information spécialisée et mise à jour quotidiennement.
+	</p>
+	<p class="text-justify">
+		<b>ACF Info</b> est destiné aux services comptables et financiers des entreprises, professionnels (Experts comptables, Comptables, Avocats, Conseillers...), aux différentes entreprises, aux cadres, aux étudiants...
+	</p>
+	<p class="text-justify">
+		Abonnez-vous au bulletin d'information ACF Info et soyez informé de toutes les actualités touchant votre entreprise.
+	</p>
+	<br/>
+	<h5><u>Comment devenir abonné ACF Info ?</u></h5>
+	<p class="text-justify">
+		Pour vous inscrire sur la liste des abonnés de la base ACF Info, veuillez remplir le formulaire en ligne disponible ci-dessous
+	</p>
+	<p class="text-justify">
+		Après validation de votre inscription, l’administrateur activera votre compte et une facture vous sera automatiquement envoyée à la réception du règlement.
+	</p>
+	<br/>
+	<h5><u>Conditions générales d'utilisation</u></h5>
+	<p class="text-justify">
+		Le site acf-expert.tn informe ses utilisateurs que les bulletins d’information ACF Info ont fait l'objet d'une sélection et par conséquent ACF Info n'est pas exhaustive.
+	</p>
+	<p class="text-justify">
+		L’utilisateur du bulletin d’information ACF Info est appelé à procéder aux investigations et recherches qu'il juge nécessaires et utiliser les résultats de sa recherche sous sa propre et entière responsabilité.
+	</p>
+	<p class="text-justify">
+		En conséquence, les données qui figurent dans le bulletin d’information ACF Info sont soumises à une clause de non-responsabilité et sont protégées par un copyright.
+	</p>
+	<p class="text-justify">
+		Nous attirons l’attention de l’utilisateur sur la nécessité de prendre en considération les dates des textes ainsi que des éventuels changements de législation postérieurs.
+	</p>
+	<p class="text-justify">
+		En vous inscrivant, vous acceptez les conditions générales d’utilisation.
+	</p>
+	<br/>
+	<br/>
+
 	{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': false }%}
-	{{form_row(NewUserForm.username, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.username.placeholder'}, 'input_group': {'append': faIco('user')} })}}
-	{{form_row(NewUserForm.email, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.email.placeholder'}, 'input_group': {'append': faIco('envelope')} })}}
+	{{form_row(NewUserForm.username, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': 'NewUser.username.placeholder'}, 'input_group': {'append': faIco('user')} })}}
+	{{form_row(NewUserForm.email, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': 'NewUser.email.placeholder'}, 'input_group': {'append': faIco('envelope')} })}}
+	<hr>
+	{{form_row(NewUserForm.preferedLang, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('language')} })}}
 	<hr>
 	{{form_row(NewUserForm.sexe, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('male')~'/'~faIco('female')} })}}
 	{{form_row(NewUserForm.lastName, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('info-circle')} })}}
 	{{form_row(NewUserForm.firstName, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('info-circle')} })}}
 	<hr>
-	{{form_row(NewUserForm.preferedLang, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('language')} })}}
-	<hr>
-	{{form_row(NewUserForm.phone, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.tel.placeholder'}, 'input_group': {'append': faIco('phone')} })}}
-	{{form_row(NewUserForm.mobile, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': '_security.tel.placeholder'}, 'input_group': {'append': faIco('mobile')} })}}
-	<hr>
 	{{form_row(NewUserForm.birthday, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('calendar')} })}}
+	<hr>
+	{{form_row(NewUserForm.corporateName, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('building')} })}}
+	{{form_row(NewUserForm.type, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('building')} })}}
+	{{form_row(NewUserForm.fisc, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('building')} })}}
+	{{form_row(NewUserForm.commercialRegister, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('building')} })}}
+	<hr>
+	{{form_row(NewUserForm.phone, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': 'NewUser.tel.placeholder'}, 'input_group': {'append': faIco('phone')} })}}
+	{{form_row(NewUserForm.mobile, {'label_col': 4, 'widget_col': 8, 'attr': {'placeholder': 'NewUser.tel.placeholder'}, 'input_group': {'append': faIco('mobile')} })}}
 	<hr>
 	{{form_row(NewUserForm.streetNum, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('map-marker')} })}}
 	{{form_row(NewUserForm.address, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('street-view')} })}}
@@ -58,6 +102,31 @@ $(function() {
 	{{form_row(NewUserForm.town, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('map-pin')} })}}
 	{{form_row(NewUserForm.zipCode, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('location-arrow')} })}}
 	{{form_row(NewUserForm.country, {'label_col': 4, 'widget_col': 8, 'input_group': {'append': faIco('globe')} })}}
+	<hr>
+	{{form_row(NewUserForm.oneYear, {'label_col': 11, 'widget_col': 1 })}}
+	{{form_row(NewUserForm.autoRenew, {'label_col': 11, 'widget_col': 1 })}}
+	<hr>
+	<p class="text-justify">
+	Bulletin d’information « ACF Info » au tarif annuel Hors TVA : 300 TND (TVA 18%)
+	</p>
+	<hr>
+	{{form_row(NewUserForm.paymentType, {'label_col': 4, 'widget_col': 8 })}}
+	<hr>
+	<p class="text-justify">
+		Pour vous inscrire à notre bulletin d’information "ACF INFO", nous vous invitons à suivre cette procédure :
+	</p>
+	<p class="text-justify">
+		<ul>
+			<li class="text-justify">Envoyer votre règlement par chèque libellé au nom de Faiez Fakhfakh, à l'adresse suivante : 16 Rue de Syrie EPI Center Bloc « C » - 1002 -Tunis -TUNISIE. Tél. 00 216 71 835 144 ou 98 427 049</li>
+		</ul>
+		ou
+		<ul>
+			<li class="text-justify">Envoyer votre règlement par Virement bancaire au compte : 08308000581000515955</li>
+		</ul>
+	</p>
+	<p class="text-justify">
+		Dès réception de votre règlement, nous activerons votre compte qui deviendra définitif, et donc fonctionnel, et nous vous envoyons une facture.
+	</p>
 	<hr>
 	<div class="form-group">
 		<div class="col-lg-offset-4 col-lg-2">
@@ -68,9 +137,9 @@ $(function() {
 		</div>
 	</div>
 	<hr>
-	<p><a href="{{path('_security_login')}}">{{faIco('user')}} {{ 'menu.login'|trans }}</a></p>
-	<p><a href="{{path('_security_lost_password')}}">{{faIco('envelope')}} {{ 'menu.lostpassword'|trans }}</a></p>
-	<p><a href="{{path('_front_homepage')}}">{{faIco('home')}} {{ 'menu.home'|trans }}</a></p>
+	<p class="text-justify"><a href="{{path('_security_login')}}">{{faIco('user')}} {{ 'menu.login'|trans }}</a></p>
+	<p class="text-justify"><a href="{{path('_security_lost_password')}}">{{faIco('envelope')}} {{ 'menu.lostpassword'|trans }}</a></p>
+	<p class="text-justify"><a href="{{path('_front_homepage')}}">{{faIco('home')}} {{ 'menu.home'|trans }}</a></p>
 </div>
 {{form_end(NewUserForm)}}
 {%endblock content%}

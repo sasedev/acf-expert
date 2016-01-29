@@ -1,5 +1,13 @@
 <html>
 <body>
-{{'_mail.register.body.admin'|trans({'%useradminurl%': url('_admin_user_editGet', {'id': user.id} ) ,'%login%':user.username}, "messages")|raw}}
+{{'_mail.register.body.admin'|trans({'%useradminurl%': url('_admin_user_editGet', {'id': user.id} ) ,'%login%':user.username}, "messages")|raw}}<br><br>
+{% if corporateName is not empty %}+ {{'NewUser.corporateName.label'|trans}} {{ corporateName }}<br/><br/>{% endif %}
+{% if type is not empty %}+ {{'NewUser.type.label'|trans}} {{ type }}<br/><br/>{% endif %}
+{% if fisc is not empty %}+ {{'NewUser.fisc.label'|trans}} {{ fisc }}<br/><br/>{% endif %}
+{% if commercialRegister is not empty %}+ {{'NewUser.commercialRegister.label'|trans}} {{ commercialRegister }}<br/><br/>{% endif %}
+{% if oneYear is not empty %}+ {{'NewUser.oneYear.label'|trans}} {{ ('NewUser.oneYear.'~oneYear)|trans }}<br/><br/>{% endif %}
+{% if autoRenew is not null and autoRenew == true %}+ {{'NewUser.autoRenew.label'|trans}} {{ ('NewUser.autoRenew.1')|trans }}<br/><br/>{% endif %}
+{% if autoRenew is not null and autoRenew == false %}+ {{'NewUser.autoRenew.label'|trans}} {{ ('NewUser.autoRenew.2')|trans }}<br/><br/>{% endif %}
+{% if paymentType is not empty %}+ {{'NewUser.paymentType.label'|trans}} {{ ('NewUser.paymentType.choice.'~paymentType)|trans }}<br/><br/>{% endif %}
 </body>
 </html>

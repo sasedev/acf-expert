@@ -1666,7 +1666,7 @@ class MBSaleController extends BaseController
 			$trace->setMsg(
 				$this->translate('MBSale.traceEdit',
 					array(
-						'%mbsale%' => $mbsale->getLabel(),
+						'%mbsale%' => $mbsale->getRef(),
 						'%company%' => $mbsale->getCompany()
 							->getCorporateName()
 					)) . $msg);

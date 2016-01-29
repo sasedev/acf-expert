@@ -448,7 +448,7 @@ class MBSaleController extends BaseController
 
 			$trace->setMsg(
 				$this->translate('MBSale.traceEdit',
-					array('%mbsale%' => $mbsale->getLabel(), '%company%' => $mbsale->getCompany()
+					array('%mbsale%' => $mbsale->getRef(), '%company%' => $mbsale->getCompany()
 						->getCorporateName())) . $msg);
 			$trace->setDtCrea(new \DateTime('now'));
 			$em = $this->getEntityManager();
