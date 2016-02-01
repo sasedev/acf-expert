@@ -136,6 +136,10 @@ User.userRoles.label: "Privilèges :"
 User.oldPassword.label: "Ancien Mot de passe :"
 User.newPassword.first: "Nouveau Mot de passe :"
 User.newPassword.second: "Confirmation Mot de passe :"
+User.dtCrea.label: 'Date d''ajout :'
+User.dtUpdate.label: 'Date de modification :'
+User.companies.label: 'Sociétés :'
+User.admCompanies.label: 'Sociétés (Admin) :'
 
 #Job
 Job.label: Libellé
@@ -860,7 +864,7 @@ Pilot.mission: Mission
 Pilot.natureMission: Nature Mission
 Pilot.prestataire: Prestataire
 Pilot.recetteFinance: Recette des Finances
-Pilot.pinAnce: PIN ANCE 
+Pilot.pinAnce: PIN ANCE
 Pilot.expirationAnce: EXPIRATION ANCE
 Pilot.mpImpots: M.PASSE IMPOTS
 Pilot.idCnss: IDENTIF CNSS

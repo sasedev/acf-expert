@@ -210,6 +210,10 @@ _admin_user_list:
     path:     /users
     defaults: { _controller: "AcfAdminBundle:User:list" }
 
+_admin_user_excel:
+    path:     /users/excel
+    defaults: { _controller: "AcfAdminBundle:User:excel" }
+
 _admin_user_addGet:
     path:     /user/add
     defaults: { _controller: "AcfAdminBundle:User:addGet" }

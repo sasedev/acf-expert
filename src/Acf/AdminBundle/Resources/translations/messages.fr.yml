@@ -54,7 +54,7 @@ breadcrumb.autoinc.add: Ajouter Incrémental
 breadcrumb.autoinc.edit: Incrémental <b>%autoinc%</b>
 
 pagetitle.autoinc.list: Liste des Incrémentals
-pagetitle.autoinc.list.txt: Liste des des Incrémentals
+pagetitle.autoinc.list.txt: Liste des Incrémentals
 pagetitle.autoinc.add: Ajouter Incrémental
 pagetitle.autoinc.add.txt: Ajouter Incrémental
 pagetitle.autoinc.edit: Edition Incrémental <b>%autoinc%</b>
@@ -88,7 +88,7 @@ breadcrumb.constantStr.add: Ajouter Constante (Texte)
 breadcrumb.constantStr.edit: Constante (Texte) <b>%constantStr%</b>
 
 pagetitle.constantStr.list: Liste des Constantes (Texte)
-pagetitle.constantStr.list.txt: Liste des des Constantes (Texte)
+pagetitle.constantStr.list.txt: Liste des Constantes (Texte)
 pagetitle.constantStr.add: Ajouter Constante (Texte)
 pagetitle.constantStr.add.txt: Ajouter Constante (Texte)
 pagetitle.constantStr.edit: Edition Constante (Texte) <b>%constantStr%</b>
@@ -123,7 +123,7 @@ breadcrumb.constantInt.add: Ajouter Constante (Entier)
 breadcrumb.constantInt.edit: Constante (Entier) <b>%constantInt%</b>
 
 pagetitle.constantInt.list: Liste des Constantes (Entier)
-pagetitle.constantInt.list.txt: Liste des des Constantes (Entier)
+pagetitle.constantInt.list.txt: Liste des Constantes (Entier)
 pagetitle.constantInt.add: Ajouter Constante (Entier)
 pagetitle.constantInt.add.txt: Ajouter Constante (Entier)
 pagetitle.constantInt.edit: Edition Constante (Entier) <b>%constantInt%</b>
@@ -158,7 +158,7 @@ breadcrumb.constantFloat.add: Ajouter Constante (Réel)
 breadcrumb.constantFloat.edit: Constante (Réel) <b>%constantFloat%</b>
 
 pagetitle.constantFloat.list: Liste des Constantes (Réel)
-pagetitle.constantFloat.list.txt: Liste des des Constantes (Réel)
+pagetitle.constantFloat.list.txt: Liste des Constantes (Réel)
 pagetitle.constantFloat.add: Ajouter Constante (Réel)
 pagetitle.constantFloat.add.txt: Ajouter Constante (Réel)
 pagetitle.constantFloat.edit: Edition Constante (Réel) <b>%constantFloat%</b>
@@ -193,7 +193,7 @@ breadcrumb.lang.add: Ajouter Langue
 breadcrumb.lang.edit: Langue <b>%lang%</b>
 
 pagetitle.lang.list: Liste des Langues
-pagetitle.lang.list.txt: Liste des des Langues
+pagetitle.lang.list.txt: Liste des Langues
 pagetitle.lang.add: Ajouter Langue
 pagetitle.lang.add.txt: Ajouter Langue
 pagetitle.lang.edit: Edition Langue <b>%lang%</b>
@@ -229,7 +229,7 @@ breadcrumb.role.add: Ajouter Privilège
 breadcrumb.role.edit: Privilège <b>%role%</b>
 
 pagetitle.role.list: Liste des Privilèges
-pagetitle.role.list.txt: Liste des des Privilèges
+pagetitle.role.list.txt: Liste des Privilèges
 pagetitle.role.add: Ajouter Privilège
 pagetitle.role.add.txt: Ajouter Privilège
 pagetitle.role.edit: Edition Privilège <b>%role%</b>
@@ -264,7 +264,7 @@ breadcrumb.user.add: Ajouter Utilisateur
 breadcrumb.user.edit: Utilisateur <b>%user%</b>
 
 pagetitle.user.list: Liste des Utilisateurs
-pagetitle.user.list.txt: Liste des des Utilisateurs
+pagetitle.user.list.txt: Liste des Utilisateurs
 pagetitle.user.add: Ajouter Utilisateur
 pagetitle.user.add.txt: Ajouter Utilisateur
 pagetitle.user.edit: Edition Utilisateur <b>%user%</b>
@@ -309,7 +309,7 @@ breadcrumb.job.add: Ajouter Emploi
 breadcrumb.job.edit: Emploi <b>%job%</b>
 
 pagetitle.job.list: Liste des Emplois
-pagetitle.job.list.txt: Liste des des Emplois
+pagetitle.job.list.txt: Liste des Emplois
 pagetitle.job.add: Ajouter Emploi
 pagetitle.job.add.txt: Ajouter Emploi
 pagetitle.job.edit: Edition Emploi <b>%job%</b>
@@ -1846,7 +1846,7 @@ breadcrumb.feedRead.add: Ajouter Flux RSS
 breadcrumb.feedRead.edit: Flux RSS <b>%feedRead%</b>
 
 pagetitle.feedRead.list: Liste des Flux RSS
-pagetitle.feedRead.list.txt: Liste des des Flux RSS
+pagetitle.feedRead.list.txt: Liste des Flux RSS
 pagetitle.feedRead.add: Ajouter Flux RSS
 pagetitle.feedRead.add.txt: Ajouter Flux RSS
 pagetitle.feedRead.edit: Edition Flux RSS <b>%feedRead%</b>
