@@ -24,6 +24,8 @@
 /web/res/docs/*
 !/web/res/goodDocs/
 /web/res/goodDocs/*
+!/web/res/biDocs/
+/web/res/biDocs/*
 /phpunit.xml
 /composer.phar
 /composer.lock

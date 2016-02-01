@@ -1185,3 +1185,44 @@ _admin_bulletinInfoContent_editPost:
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_admin_biDoc_list:
+    path:     /biDoc/list
+    defaults: { _controller: "AcfAdminBundle:BiDoc:list" }
+
+_admin_biDoc_addGet:
+    path:     /biDoc/add
+    defaults: { _controller: "AcfAdminBundle:BiDoc:addGet" }
+    methods: [GET]
+
+_admin_biDoc_addPost:
+    path:     /biDoc/add
+    defaults: { _controller: "AcfAdminBundle:BiDoc:addPost" }
+    methods: [POST]
+
+_admin_biDoc_delete:
+    path:     /biDoc/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:BiDoc:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_biDoc_download:
+    path:     /biDoc/download/{uid}
+    defaults: { _controller: "AcfAdminBundle:BiDoc:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_biDoc_editGet:
+    path:     /biDoc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BiDoc:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_biDoc_editPost:
+    path:     /biDoc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BiDoc:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

@@ -9,3 +9,10 @@ _info_bulletinInfo_editGet:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+
+_info_biDoc_download:
+    path:     /biDoc/download/{uid}
+    defaults: { _controller: "AcfInfoBundle:BiDoc:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+

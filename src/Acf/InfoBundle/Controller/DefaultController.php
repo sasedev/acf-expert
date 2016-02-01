@@ -28,6 +28,8 @@ class DefaultController extends BaseController
 		$em = $this->getEntityManager();
 		$bulletinInfos = $em->getRepository('AcfDataBundle:BulletinInfo')->getAll();
 		$this->gvars['bulletinInfos'] = $bulletinInfos;
+		$biDocs = $em->getRepository('AcfDataBundle:BiDoc')->getAll();
+		$this->gvars['biDocs'] = $biDocs;
 
 		$this->gvars['smenu_active'] = 'list';
 		$this->gvars['pagetitle'] = $this->translate('pagetitle.info.bulletinInfo.list');

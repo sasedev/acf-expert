@@ -1395,6 +1395,26 @@ BulletinInfoContent.dtApplication.label: 'Date application :'
 BulletinInfoContent.dtCrea.label: "Date d'ajout :"
 
 
+# BiDoc
+BiDoc.fileName: Fichier
+BiDoc.size: Taille
+BiDoc.mimeType: MimeType
+BiDoc.md5: md5
+BiDoc.nbrDownloads: Nombre de Téléchargements
+BiDoc.originalName: Nom Original
+BiDoc.description: Description
+BiDoc.title: Titre
+BiDoc.dtCrea: Date d'ajout
+BiDoc.dtUpdate: Date de modification
+
+BiDoc.fileName.label: "Fichier :"
+BiDoc.description.label: "Description :"
+BiDoc.originalName.label: "Nom du Fichier :"
+BiDoc.mimeType.label: "Type :"
+BiDoc.size.label: "Taille :"
+BiDoc.md5.label: "md5 :"
+BiDoc.nbrDownloads.label: "Nbr Téléchargements :"
+BiDoc.title.label: "Titre :"
 
 
 

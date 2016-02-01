@@ -865,3 +865,18 @@ CREATE TABLE "acf_bi_contents" (
 	CONSTRAINT "pk_acf_bi_contents" PRIMARY KEY ("id"),
 	CONSTRAINT "fk_acf_bi_contents_bt" FOREIGN KEY ("bt_id") REFERENCES "acf_bi_titles" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE "acf_bifiles" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"title"                                                             TEXT NOT NULL,
+	"filename"                                                          TEXT NOT NULL,
+	"filesize"                                                          INT8 NOT NULL DEFAULT 0,
+	"filemimetype"                                                      TEXT NOT NULL,
+	"fileoname"                                                         TEXT NOT NULL,
+	"filemd5"                                                           TEXT NOT NULL,
+	"filedesc"                                                          TEXT NULL,
+	"filedls"                                                           INT8 NOT NULL DEFAULT 0,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_bifiles" PRIMARY KEY ("id")
+);

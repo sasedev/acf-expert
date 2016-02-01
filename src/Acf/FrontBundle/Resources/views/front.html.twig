@@ -146,6 +146,13 @@
 							<li{% if smenu_active=='add'%} class="active"{% endif %}><a href="{{ path('_admin_bulletinInfo_importGet') }}">{{ faIco('angle-double-right') }} {{ 'menu.add'|trans }}</a></li>
 						</ul>
 					</li>
+					<li class="treeview{% if menu_active=='biDoc'%} active{% endif %}">
+						<a href="#"> {{ faIco('exclamation-triangle') }} <span>{{ 'menu.admin.biDoc'|trans }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+							<li{% if smenu_active=='list'%} class="active"{% endif %}><a href="{{ path('_admin_biDoc_list') }}">{{ faIco('angle-double-right') }} {{ 'menu.list'|trans }}</a></li>
+							<li{% if smenu_active=='add'%} class="active"{% endif %}><a href="{{ path('_admin_biDoc_addGet') }}">{{ faIco('angle-double-right') }} {{ 'menu.add'|trans }}</a></li>
+						</ul>
+					</li>
 					<li class="treeview{% if menu_active=='user'%} active{% endif %}">
 						<a href="#"> {{ faIco('users') }} <span>{{ 'menu.admin.user'|trans }}</span> <i class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">

@@ -1883,6 +1883,8 @@ breadcrumb.goodDoc.edit: Document Utile <b>%goodDoc%</b>
 
 pagetitle.goodDoc.list: Liste des Documents Utiles
 pagetitle.goodDoc.list.txt: Liste des Documents Utile
+pagetitle.goodDoc.add: Ajouter Document Utile
+pagetitle.goodDoc.add.txt: Ajouter Document Utile
 pagetitle.goodDoc.edit: Edition Document Utile <b>%goodDoc%</b>
 pagetitle.goodDoc.edit.txt: Edition Document Utile "%goodDoc%"
 
@@ -2038,3 +2040,42 @@ BulletinInfoContent.delete.failure: 'Echec de la suppression du Sous-Titre du Bu
 BulletinInfoContent.edit.notfound: 'Sous-Titre de Bulletin d''Informations inconnu'
 BulletinInfoContent.edit.success: 'Succès de la modification du Sous-Titre du Bulletin d''Informations <b>%bulletinInfoContent%</b>'
 BulletinInfoContent.edit.failure: 'Echec de la modification du Sous-Titre du Bulletin d''Informations <b>%bulletinInfoContent%</b>'
+
+
+# BiDoc
+menu.admin.biDoc: Document Bulletin Info
+breadcrumb.biDoc.list: Liste des Documents Bulletin Infos
+breadcrumb.biDoc.add: Ajouter Document Bulletin Info
+breadcrumb.biDoc.edit: Document Bulletin Info <b>%biDoc%</b>
+
+pagetitle.biDoc.list: Liste des Documents Bulletin Infos
+pagetitle.biDoc.list.txt: Liste des Documents Bulletin Info
+pagetitle.biDoc.add: Ajouter Document Bulletin Infos
+pagetitle.biDoc.add.txt: Ajouter Document Bulletin Info
+pagetitle.biDoc.edit: Edition Document Bulletin Info <b>%biDoc%</b>
+pagetitle.biDoc.edit.txt: Edition Document Bulletin Info "%biDoc%"
+
+BiDoc.tab.overview: Détails
+BiDoc.tab.edit: Edition
+
+BiDoc.tlabel.list: Liste des Documents Bulletin Infos
+BiDoc.tlabel.add: Ajouter nouveau Document Bulletin Info
+BiDoc.tlabel.overview: Aperçu des détails du Document Bulletin Info
+BiDoc.tlabel.editContent: Modification du Contenu du Document Bulletin Info
+BiDoc.tlabel.editDescription: Modification de la Description du Document Bulletin Info
+BiDoc.tlabel.editOriginalName: Modification du nom du Document Bulletin Info
+BiDoc.tlabel.editTitle: Modification du titre du Document Bulletin Info
+
+BiDoc.empty: Aucun Document Bulletin Info trouvé dans la base de donnée
+
+BiDoc.add.success: Succès de l'ajout du Document Bulletin Info <b>%biDoc%</b>
+BiDoc.add.failure: Echec de l'ajout du Document Bulletin Info
+BiDoc.download.notfound: Echec de téléchargement du Document Bulletin Info
+BiDoc.delete.confirm.title: Demande de Confirmation
+BiDoc.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Document Bulletin Info ?<br/> Cette action est irreversible!
+BiDoc.delete.notfound: Document Bulletin Info inconnu
+BiDoc.delete.success: Succès de la suppression du Document Bulletin Info <b>%biDoc%</b>
+BiDoc.delete.failure: Echec de la suppression du Document Bulletin Info <b>%biDoc%</b>
+BiDoc.edit.notfound: Document Bulletin Info inconnu
+BiDoc.edit.success: Succès de la modification du Document Bulletin Info <b>%biDoc%</b>
+BiDoc.edit.failure: Echec de la modification du Document Bulletin Info <b>%biDoc%</b>
