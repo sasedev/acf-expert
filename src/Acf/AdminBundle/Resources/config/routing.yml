@@ -1187,19 +1187,40 @@ _admin_bulletinInfoContent_editPost:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
 
-_admin_biDoc_list:
-    path:     /biDoc/list
-    defaults: { _controller: "AcfAdminBundle:BiDoc:list" }
+_admin_biFolder_list:
+    path:     /biFolder/list
+    defaults: { _controller: "AcfAdminBundle:BiFolder:list" }
 
-_admin_biDoc_addGet:
-    path:     /biDoc/add
-    defaults: { _controller: "AcfAdminBundle:BiDoc:addGet" }
+_admin_biFolder_addGet:
+    path:     /biFolder/add
+    defaults: { _controller: "AcfAdminBundle:BiFolder:addGet" }
     methods: [GET]
 
-_admin_biDoc_addPost:
-    path:     /biDoc/add
-    defaults: { _controller: "AcfAdminBundle:BiDoc:addPost" }
+_admin_biFolder_addPost:
+    path:     /biFolder/add
+    defaults: { _controller: "AcfAdminBundle:BiFolder:addPost" }
     methods: [POST]
+
+_admin_biFolder_delete:
+    path:     /biFolder/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:BiFolder:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_biFolder_editGet:
+    path:     /biFolder/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BiFolder:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_biFolder_editPost:
+    path:     /biFolder/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:BiFolder:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 
 _admin_biDoc_delete:
     path:     /biDoc/delete/{uid}

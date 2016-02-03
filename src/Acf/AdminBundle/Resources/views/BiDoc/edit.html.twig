@@ -48,7 +48,8 @@ $(function() {
 {%block breadcrumb%}
 <ol class="breadcrumb">
 	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
-	<li><a href="{{ path('_admin_biDoc_list') }}">{{faIco('exclamation-triangle')}} &nbsp; {{'breadcrumb.biDoc.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_biFolder_list') }}">{{faIco('exclamation-triangle')}} &nbsp; {{'breadcrumb.biFolder.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_biFolder_editGet', {'uid': biDoc.folder.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.biFolder.edit'|trans({'%biFolder%': biDoc.folder.title})|raw}}</a></li>
 	<li class="active"><a href="{{ path('_admin_biDoc_editGet', {'uid': biDoc.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.biDoc.edit'|trans({'%biDoc%': biDoc.title})|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}
@@ -56,8 +57,7 @@ $(function() {
 <div class="row">
 	<div class="col-lg-12">
 		<div class="well well-sm text-right">
-			<a href="{{ path('_admin_biDoc_addGet') }}" class="btn btn-primary">{{ glyphIco('plus') }} {{ 'action.add'|trans }}</a>
-			<a href="{{ path('_admin_biDoc_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('_admin_biFolder_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
 			<a href="{{ path('_admin_biDoc_download',{'uid':biDoc.id})}}" class="btn btn-success">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 		</div>
 		<div class="nav-tabs-custom">
@@ -71,6 +71,9 @@ $(function() {
 						<div class="box-header"><h3 class="box-title">{{'BiDoc.tlabel.overview'|trans}}</h3></div>
 						<div class="box-body">
 							<div class="row">
+								<div class="col-lg-3 text-right">{{'BiDoc.folder'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_biFolder_editGet', {'uid': biDoc.folder.id}) }}">{{biDoc.folder.title}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'BiDoc.title'|trans|raw}} :</div>
 								<div class="col-lg-9">{{biDoc.title}}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>

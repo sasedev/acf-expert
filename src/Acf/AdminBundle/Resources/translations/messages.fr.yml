@@ -2042,6 +2042,44 @@ BulletinInfoContent.edit.success: 'Succès de la modification du Sous-Titre du B
 BulletinInfoContent.edit.failure: 'Echec de la modification du Sous-Titre du Bulletin d''Informations <b>%bulletinInfoContent%</b>'
 
 
+# BiFolder
+menu.admin.biFolder: Dossier Bulletin Info
+breadcrumb.biFolder.list: Liste des Dossiers Bulletin Infos
+breadcrumb.biFolder.add: Ajouter Dossier Bulletin Info
+breadcrumb.biFolder.edit: Dossier Bulletin Info <b>%biFolder%</b>
+
+pagetitle.biFolder.list: Liste des Dossiers Bulletin Infos
+pagetitle.biFolder.list.txt: Liste des Dossiers Bulletin Info
+pagetitle.biFolder.add: Ajouter Dossier Bulletin Infos
+pagetitle.biFolder.add.txt: Ajouter Dossier Bulletin Info
+pagetitle.biFolder.edit: Edition Dossier Bulletin Info <b>%biFolder%</b>
+pagetitle.biFolder.edit.txt: Edition Dossier Bulletin Info "%biFolder%"
+
+BiFolder.tab.overview: Détails
+BiFolder.tab.edit: Edition
+BiFolder.tab.docs: Documents
+
+BiFolder.tlabel.list: Liste des Dossiers Bulletin Infos
+BiFolder.tlabel.add: Ajouter nouveau Dossier Bulletin Info
+BiFolder.tlabel.overview: Aperçu des détails du Dossier Bulletin Info
+BiFolder.tlabel.editTitle: Modification du titre du Dossier Bulletin Info
+BiFolder.tlabel.docs.add: Ajouter un Nouveau Document
+BiFolder.tlabel.docs.list: Liste des Documents
+
+BiFolder.empty: Aucun Dossier Bulletin Info trouvé dans la base de donnée
+
+BiFolder.add.success: Succès de l'ajout du Dossier Bulletin Info <b>%biFolder%</b>
+BiFolder.add.failure: Echec de l'ajout du Dossier Bulletin Info
+BiFolder.download.notfound: Echec de téléchargement du Dossier Bulletin Info
+BiFolder.delete.confirm.title: Demande de Confirmation
+BiFolder.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Dossier Bulletin Info ?<br/> Cette action est irreversible!
+BiFolder.delete.notfound: Dossier Bulletin Info inconnu
+BiFolder.delete.success: Succès de la suppression du Dossier Bulletin Info <b>%biFolder%</b>
+BiFolder.delete.failure: Echec de la suppression du Dossier Bulletin Info <b>%biFolder%</b>
+BiFolder.edit.notfound: Dossier Bulletin Info inconnu
+BiFolder.edit.success: Succès de la modification du Dossier Bulletin Info <b>%biFolder%</b>
+BiFolder.edit.failure: Echec de la modification du Dossier Bulletin Info <b>%biFolder%</b>
+
 # BiDoc
 menu.admin.biDoc: Document Bulletin Info
 breadcrumb.biDoc.list: Liste des Documents Bulletin Infos

@@ -3,6 +3,7 @@
 namespace Acf\DataBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Acf\DataBundle\Entity\BiFolder;
 
 /**
  * BiDocRepository
@@ -52,6 +53,50 @@ class BiDocRepository extends EntityRepository
 	public function getAll()
 	{
 		return $this->getAllQuery()->execute();
+	}
+
+	/**
+	 * All count
+	 *
+	 * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
+	 *		 \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+	 */
+	public function countByFolder(BiFolder $f)
+	{
+		$qb = $this->createQueryBuilder('b')->select('count(b)')->join('b.folder', 'f')->where('f.id = :id')->setParameter('id', $f->getId());
+		$query = $qb->getQuery();
+
+		return $query->getSingleScalarResult();
+	}
+
+	/**
+	 * Get Query for All Entities
+	 *
+	 * @return \Doctrine\ORM\Query
+	 */
+	public function getAllByFolderQuery(BiFolder $f)
+	{
+		$qb = $this->createQueryBuilder('b')
+			->join('b.folder', 'f')
+			->where('f.id = :id')
+			->orderBy('b.title', 'ASC')
+			->setParameter('id', $f->getId());
+		$query = $qb->getQuery();
+
+		return $query;
+	}
+
+	/**
+	 * Get All Entities
+	 *
+	 * @return Ambigous <\Doctrine\ORM\mixed,
+	 *		 \Doctrine\ORM\Internal\Hydration\mixed,
+	 *		 \Doctrine\DBAL\Driver\Statement,
+	 *		 \Doctrine\Common\Cache\mixed>
+	 */
+	public function getAllByFolder(BiFolder $f)
+	{
+		return $this->getAllByFolderQuery($f)->execute();
 	}
 }
 

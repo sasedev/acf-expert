@@ -26,6 +26,15 @@ class BiDoc
 
 	/**
 	 *
+	 * @var BiFolder @ORM\ManyToOne(targetEntity="BiFolder", inversedBy="docs", cascade={"persist"})
+	 *      @ORM\JoinColumns({
+	 *      @ORM\JoinColumn(name="bif_id", referencedColumnName="id")
+	 *      })
+	 */
+	protected $folder;
+
+	/**
+	 *
 	 * @var string @ORM\Column(name="title", type="text", nullable=false)
 	 */
 	protected $title;
@@ -107,6 +116,34 @@ class BiDoc
 	}
 
 	/**
+	 * Get $folder
+	 *
+	 * @return BiFolder
+	 */
+	public function getFolder()
+	{
+
+		return $this->folder;
+
+	}
+
+	/**
+	 * Set $folder
+	 *
+	 * @param BiFolder $folder
+	 *
+	 * @return BiDoc
+	 */
+	public function setFolder(BiFolder $folder)
+	{
+
+		$this->folder = $folder;
+
+		return $this;
+
+	}
+
+	/**
 	 *
 	 * @return string
 	 */
@@ -119,7 +156,7 @@ class BiDoc
 	 *
 	 * @param string $title
 	 *
-	 * @return GoodDoc
+	 * @return BiDoc
 	 */
 	public function setTitle($title)
 	{
@@ -142,7 +179,7 @@ class BiDoc
 	 *
 	 * @param string $fileName
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setFileName($fileName)
 	{
@@ -166,7 +203,7 @@ class BiDoc
 	 *
 	 * @param integer $size
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setSize($size)
 	{
@@ -190,7 +227,7 @@ class BiDoc
 	 *
 	 * @param string $mimeType
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setMimeType($mimeType)
 	{
@@ -214,7 +251,7 @@ class BiDoc
 	 *
 	 * @param string $md5
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setMd5($md5)
 	{
@@ -238,7 +275,7 @@ class BiDoc
 	 *
 	 * @param string $originalName
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setOriginalName($originalName)
 	{
@@ -262,7 +299,7 @@ class BiDoc
 	 *
 	 * @param string $description
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setDescription($description)
 	{
@@ -286,7 +323,7 @@ class BiDoc
 	 *
 	 * @param integer $nbrDownloads
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setNbrDownloads($nbrDownloads)
 	{
@@ -310,7 +347,7 @@ class BiDoc
 	 *
 	 * @param \DateTime $dtCrea
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setDtCrea($dtCrea)
 	{
@@ -334,7 +371,7 @@ class BiDoc
 	 *
 	 * @param \DateTime $dtUpdate
 	 *
-	 * @return Doc
+	 * @return BiDoc
 	 */
 	public function setDtUpdate($dtUpdate)
 	{
@@ -351,5 +388,6 @@ class BiDoc
 	public function __clone()
 	{
 	}
+
 
 }

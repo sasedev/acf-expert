@@ -9,6 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Acf\DataBundle\Entity\BiFolder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Acf\DataBundle\Repository\BiFolderRepository;
+use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 
 /**
  *
@@ -18,6 +22,12 @@ class NewTForm extends AbstractType
 {
 
 	/**
+	 *
+	 * @var BiFolder
+	 */
+	private $folder;
+
+	/**
 	 * Form builder
 	 *
 	 * @param FormBuilderInterface $builder
@@ -25,6 +35,31 @@ class NewTForm extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		$this->folder = $options['folder'];
+
+		if (null == $this->folder) {
+			$builder->add('folder', EntityType::class,
+				array('label' => 'BiDoc.folder.label', 'class' => 'AcfDataBundle:BiFolder',
+					'query_builder' => function (BiFolderRepository $br)
+					{
+						return $br->createQueryBuilder('c')
+							->orderBy('c.title', 'ASC');
+					}, 'choice_label' => 'title', 'multiple' => false, 'by_reference' => true, 'required' => true));
+		} else {
+			$folder_id = $this->folder->getId();
+			$builder->add('folder', EntityidType::class,
+				array('label' => 'BiDoc.folder.label', 'class' => 'AcfDataBundle:BiFolder',
+					'query_builder' => function (BiFolderRepository $br) use ($folder_id)
+					{
+						return $br->createQueryBuilder('c')
+							->where('c.id = :id')
+							->setParameter('id', $folder_id)
+							->orderBy('c.title', 'ASC');
+					}, 'choice_label' => 'id', 'multiple' => false, 'by_reference' => true, 'required' => true))
+
+			;
+		}
+
 		$builder->add('fileName', FileType::class, array('label' => 'BiDoc.fileName.label'));
 
 		$builder->add('title', TextType::class, array('label' => 'BiDoc.title.label'));
@@ -58,7 +93,7 @@ class NewTForm extends AbstractType
 	 */
 	public function getDefaultOptions()
 	{
-		return array('validation_groups' => array('fileName', 'description'));
+		return array('validation_groups' => array('fileName', 'description'), 'folder' => null);
 	}
 
 	/**

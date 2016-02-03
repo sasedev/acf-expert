@@ -866,6 +866,14 @@ CREATE TABLE "acf_bi_contents" (
 	CONSTRAINT "fk_acf_bi_contents_bt" FOREIGN KEY ("bt_id") REFERENCES "acf_bi_titles" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE "acf_bifolders" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"title"                                                             TEXT NOT NULL,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_bifolders" PRIMARY KEY ("id")
+);
+
 CREATE TABLE "acf_bifiles" (
 	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
 	"title"                                                             TEXT NOT NULL,
@@ -876,7 +884,9 @@ CREATE TABLE "acf_bifiles" (
 	"filemd5"                                                           TEXT NOT NULL,
 	"filedesc"                                                          TEXT NULL,
 	"filedls"                                                           INT8 NOT NULL DEFAULT 0,
+	"bif_id"                                                            UUID NOT NULL,
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-	CONSTRAINT "pk_acf_bifiles" PRIMARY KEY ("id")
+	CONSTRAINT "pk_acf_bifiles" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_bifolders_bif" FOREIGN KEY ("bif_id") REFERENCES "acf_bifolders" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );

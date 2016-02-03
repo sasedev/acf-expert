@@ -1395,6 +1395,15 @@ BulletinInfoContent.dtApplication.label: 'Date application :'
 BulletinInfoContent.dtCrea.label: "Date d'ajout :"
 
 
+# BiFolder
+BiFolder.title: Titre
+BiFolder.docs: Fichiers
+BiFolder.dtCrea: Date d'ajout
+BiFolder.dtUpdate: Date de modification
+
+BiFolder.title.label: "Titre :"
+BiFolder.docs.label: "Fichiers :"
+
 # BiDoc
 BiDoc.fileName: Fichier
 BiDoc.size: Taille
@@ -1406,6 +1415,7 @@ BiDoc.description: Description
 BiDoc.title: Titre
 BiDoc.dtCrea: Date d'ajout
 BiDoc.dtUpdate: Date de modification
+BiDoc.folder: Dossier
 
 BiDoc.fileName.label: "Fichier :"
 BiDoc.description.label: "Description :"
@@ -1415,6 +1425,7 @@ BiDoc.size.label: "Taille :"
 BiDoc.md5.label: "md5 :"
 BiDoc.nbrDownloads.label: "Nbr Téléchargements :"
 BiDoc.title.label: "Titre :"
+BiDoc.folder.label: "Dossier :"
 
 
 
