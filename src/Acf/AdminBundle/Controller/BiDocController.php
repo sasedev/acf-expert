@@ -3,7 +3,6 @@
 namespace Acf\AdminBundle\Controller;
 
 use Acf\DataBundle\Entity\BiDoc;
-use Acf\AdminBundle\Form\BiDoc\NewTForm as BiDocNewTForm;
 use Acf\AdminBundle\Form\BiDoc\UpdateContentTForm as BiDocUpdateContentTForm;
 use Acf\AdminBundle\Form\BiDoc\UpdateDescriptionTForm as BiDocUpdateDescriptionTForm;
 use Acf\AdminBundle\Form\BiDoc\UpdateOriginalNameTForm as BiDocUpdateOriginalNameTForm;

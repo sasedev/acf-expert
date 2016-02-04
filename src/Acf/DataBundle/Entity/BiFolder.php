@@ -59,8 +59,8 @@ class BiFolder
 	public function __construct()
 	{
 
-		$this->docs = new ArrayCollection();
 		$this->dtCrea = new \DateTime('now');
+		$this->docs = new ArrayCollection();
 
 	}
 
@@ -121,7 +121,7 @@ class BiFolder
 	 *
 	 * @return BiFolder
 	 */
-	public function setDtCrea($dtCrea)
+	public function setDtCrea(\DateTime $dtCrea = null)
 	{
 
 		$this->dtCrea = $dtCrea;
@@ -149,7 +149,7 @@ class BiFolder
 	 *
 	 * @return BiFolder
 	 */
-	public function setDtUpdate($dtUpdate)
+	public function setDtUpdate(\DateTime $dtUpdate = null)
 	{
 
 		$this->dtUpdate = $dtUpdate;
