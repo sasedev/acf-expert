@@ -8,9 +8,9 @@ $(function() {
 	{% if companies | length != 0 %}
 	{% for cmp in companies %}
 
-	{% if cmp.natures|length !=0 %}
-	var datanat_{{ cmp.company.idn }} = [
-	{% for nat in cmp.natures %}
+	{% if cmp.nature_list|length !=0 %}
+	var datanature_{{ cmp.company.idn }} = [
+	{% for nat in cmp.nature_list %}
 		{
 		value: {{ nat.val|number_format(3, '.', '') }},
 		color:"rgba({{ nat.nature.colorRGB.r }}, {{ nat.nature.colorRGB.g }}, {{ nat.nature.colorRGB.b }},0.5)",
@@ -20,61 +20,61 @@ $(function() {
 	{% endfor %}
 	];
 
-	var ctx1_{{ cmp.company.idn }} = $("#myDonutChart_{{ cmp.company.idn }}").get(0).getContext("2d");
-	var myDonutChart_{{ cmp.company.idn }} = new Chart(ctx1_{{ cmp.company.idn }}).Doughnut(datanat_{{ cmp.company.idn }});
+	var contx1_{{ cmp.company.idn }} = $("#buysByNatureDonutChart_{{ cmp.company.idn }}").get(0).getContext("2d");
+	var buysByNatureDonutChart_{{ cmp.company.idn }} = new Chart(contx1_{{ cmp.company.idn }}).Doughnut(datanature_{{ cmp.company.idn }});
 	{% endif %}
 
 
-	var dataca_{{ cmp.company.idn }} = {
+	var datacaht_{{ cmp.company.idn }} = {
 		labels: ["Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"],
 		datasets: [
 			{
-				label: "{{ prev_year }}",
+				label: "{{ year_prev }}",
 				fillColor: "rgba(220,220,220,0.5)",
 				strokeColor: "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data: [{{ cmp.cas.prev_year.m1 }}, {{ cmp.cas.prev_year.m2 }}, {{ cmp.cas.prev_year.m3 }}, {{ cmp.cas.prev_year.m4 }}, {{ cmp.cas.prev_year.m5 }}, {{ cmp.cas.prev_year.m6 }}, {{ cmp.cas.prev_year.m7 }}, {{ cmp.cas.prev_year.m8 }}, {{ cmp.cas.prev_year.m9 }}, {{ cmp.cas.prev_year.m10 }}, {{ cmp.cas.prev_year.m11 }}, {{ cmp.cas.prev_year.m12 }}]
+				data: [{{ cmp.cahts.year_prev.m1 }}, {{ cmp.cahts.year_prev.m2 }}, {{ cmp.cahts.year_prev.m3 }}, {{ cmp.cahts.year_prev.m4 }}, {{ cmp.cahts.year_prev.m5 }}, {{ cmp.cahts.year_prev.m6 }}, {{ cmp.cahts.year_prev.m7 }}, {{ cmp.cahts.year_prev.m8 }}, {{ cmp.cahts.year_prev.m9 }}, {{ cmp.cahts.year_prev.m10 }}, {{ cmp.cahts.year_prev.m11 }}, {{ cmp.cahts.year_prev.m12 }}]
 			},
 			{
-				label: "{{ current_year }}",
+				label: "{{ year }}",
 				fillColor: "rgba(151,187,205,0.5)",
 				strokeColor: "rgba(151,187,205,0.8)",
 				highlightFill: "rgba(151,187,205,0.75)",
 				highlightStroke: "rgba(151,187,205,1)",
-				data: [{{ cmp.cas.current_year.m1 }}, {{ cmp.cas.current_year.m2 }}, {{ cmp.cas.current_year.m3 }}, {{ cmp.cas.current_year.m4 }}, {{ cmp.cas.current_year.m5 }}, {{ cmp.cas.current_year.m6 }}, {{ cmp.cas.current_year.m7 }}, {{ cmp.cas.current_year.m8 }}, {{ cmp.cas.current_year.m9 }}, {{ cmp.cas.current_year.m10 }}, {{ cmp.cas.current_year.m11 }}, {{ cmp.cas.current_year.m12 }}]
+				data: [{{ cmp.cahts.year.m1 }}, {{ cmp.cahts.year.m2 }}, {{ cmp.cahts.year.m3 }}, {{ cmp.cahts.year.m4 }}, {{ cmp.cahts.year.m5 }}, {{ cmp.cahts.year.m6 }}, {{ cmp.cahts.year.m7 }}, {{ cmp.cahts.year.m8 }}, {{ cmp.cahts.year.m9 }}, {{ cmp.cahts.year.m10 }}, {{ cmp.cahts.year.m11 }}, {{ cmp.cahts.year.m12 }}]
 			}
 		]
 	};
 
-	var datadec_{{ cmp.company.idn }} = {
+	var contx2_{{ cmp.company.idn }} = $("#myCaHtBarChart_{{ cmp.company.idn }}").get(0).getContext("2d");
+	var myCaHtBarChart_{{ cmp.company.idn }} = new Chart(contx2_{{ cmp.company.idn }}).Bar(datacaht_{{ cmp.company.idn }});
+
+	var dataachat_{{ cmp.company.idn }} = {
 		labels: ["Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"],
 		datasets: [
 			{
-				label: "{{ prev_year }}",
+				label: "{{ year_prev }}",
 				fillColor: "rgba(220,220,220,0.5)",
 				strokeColor: "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data: [{{ cmp.decs.prev_year.m1 }}, {{ cmp.decs.prev_year.m2 }}, {{ cmp.decs.prev_year.m3 }}, {{ cmp.decs.prev_year.m4 }}, {{ cmp.decs.prev_year.m5 }}, {{ cmp.decs.prev_year.m6 }}, {{ cmp.decs.prev_year.m7 }}, {{ cmp.decs.prev_year.m8 }}, {{ cmp.decs.prev_year.m9 }}, {{ cmp.decs.prev_year.m10 }}, {{ cmp.decs.prev_year.m11 }}, {{ cmp.decs.prev_year.m12 }}]
+				data: [{{ cmp.achathts.year_prev.m1 }}, {{ cmp.achathts.year_prev.m2 }}, {{ cmp.achathts.year_prev.m3 }}, {{ cmp.achathts.year_prev.m4 }}, {{ cmp.achathts.year_prev.m5 }}, {{ cmp.achathts.year_prev.m6 }}, {{ cmp.achathts.year_prev.m7 }}, {{ cmp.achathts.year_prev.m8 }}, {{ cmp.achathts.year_prev.m9 }}, {{ cmp.achathts.year_prev.m10 }}, {{ cmp.achathts.year_prev.m11 }}, {{ cmp.achathts.year_prev.m12 }}]
 			},
 			{
-				label: "{{ current_year }}",
+				label: "{{ year }}",
 				fillColor: "rgba(151,187,205,0.5)",
 				strokeColor: "rgba(151,187,205,0.8)",
 				highlightFill: "rgba(151,187,205,0.75)",
 				highlightStroke: "rgba(151,187,205,1)",
-				data: [{{ cmp.decs.current_year.m1 }}, {{ cmp.decs.current_year.m2 }}, {{ cmp.decs.current_year.m3 }}, {{ cmp.decs.current_year.m4 }}, {{ cmp.decs.current_year.m5 }}, {{ cmp.decs.current_year.m6 }}, {{ cmp.decs.current_year.m7 }}, {{ cmp.decs.current_year.m8 }}, {{ cmp.decs.current_year.m9 }}, {{ cmp.decs.current_year.m10 }}, {{ cmp.decs.current_year.m11 }}, {{ cmp.decs.current_year.m12 }}]
+				data: [{{ cmp.achathts.year.m1 }}, {{ cmp.achathts.year.m2 }}, {{ cmp.achathts.year.m3 }}, {{ cmp.achathts.year.m4 }}, {{ cmp.achathts.year.m5 }}, {{ cmp.achathts.year.m6 }}, {{ cmp.achathts.year.m7 }}, {{ cmp.achathts.year.m8 }}, {{ cmp.achathts.year.m9 }}, {{ cmp.achathts.year.m10 }}, {{ cmp.achathts.year.m11 }}, {{ cmp.achathts.year.m12 }}]
 			}
 		]
 	};
 
-	var ctx2_{{ cmp.company.idn }} = $("#myCaChart_{{ cmp.company.idn }}").get(0).getContext("2d");
-	var myCaChart_{{ cmp.company.idn }} = new Chart(ctx2_{{ cmp.company.idn }}).Bar(dataca_{{ cmp.company.idn }});
 
-
-	var ctx3_{{ cmp.company.idn }} = $("#myDecChart_{{ cmp.company.idn }}").get(0).getContext("2d");
-	var myDecChart_{{ cmp.company.idn }} = new Chart(ctx3_{{ cmp.company.idn }}).Line(datadec_{{ cmp.company.idn }});
+	var contx3_{{ cmp.company.idn }} = $("#myAchatLineChart_{{ cmp.company.idn }}").get(0).getContext("2d");
+	var myAchatLineChart_{{ cmp.company.idn }} = new Chart(contx3_{{ cmp.company.idn }}).Line(dataachat_{{ cmp.company.idn }});
 
 
 	{% endfor %}
@@ -89,100 +89,181 @@ $(function() {
 {%endblock breadcrumb%}
 {%block content%}
 {% if companies | length != 0 %}
+<div class="row">
+	<div class="col-lg-12">
+		<ul class="pager centred">
+			<li class="previous"><a href="{{ path('_client_homepage_my', {'month':lnk_prev_month, 'year':lnk_prev_year}) }}">&laquo;&nbsp;{{ ('MonthlyBalance.month.'~lnk_prev_month)|trans }}  {{ lnk_prev_year }}</a></li>
+			{% if null != lnk_next_month and null!= lnk_next_year %}
+			<li class="next"><a href="{{ path('_client_homepage_my', {'month':lnk_next_month, 'year':lnk_next_year}) }}">{{ ('MonthlyBalance.month.'~lnk_next_month)|trans }}  {{ lnk_next_year }}&nbsp;&raquo;</a></li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
 {% for cmp in companies %}
 <div class="row">
 	<div class="col-lg-12">
 		<h3><a href="{{ path('_client_company_editGet', {'uid': cmp.company.id}) }}">{{ cmp.company.corporateName }}</a></h3>
 	</div>
-	<div class="col-lg-6">
+	<div class="col-lg-4">
 		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Chiffres du Mois ({{ current_month }} - {{ current_year }})</h4></div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-lg-6 text-right">Chiffre d'affaire :</div>
-					<div class="col-lg-6 text-right">{{ cmp.ca|number_format(3, '.', ' ') }} TND</div>
-					<div class="col-lg-12">&nbsp;</div>
-
-					<div class="col-lg-6 text-right">Achat de Marchandise :</div>
-					<div class="col-lg-6 text-right">{{ cmp.am|number_format(3, '.', ' ') }} TND</div>
-					<div class="col-lg-12">&nbsp;</div>
-
-					<div class="col-lg-6 text-right">Décaissement :</div>
-					<div class="col-lg-6 text-right">{{ cmp.dec|number_format(3, '.', ' ') }} TND</div>
-					<div class="col-lg-12">&nbsp;</div>
-
-					<div class="col-lg-6 text-right">Encaissement :</div>
-					<div class="col-lg-6 text-right">{{ cmp.enc|number_format(3, '.', ' ') }} TND</div>
-					<div class="col-lg-12">&nbsp;</div>
-
-					{% for bnk in cmp.banks %}
-					<div class="col-lg-6 text-right">Solde en Banque ({{ bnk.bank.label }}) :</div>
-					<div class="col-lg-6 text-right">{{ (bnk.enc - bnk.dec)|number_format(3, '.', ' ') }} TND</div>
-					<div class="col-lg-12">&nbsp;</div>
-
-					{% endfor %}
-
-					{% for fnd in cmp.funds %}
-					<div class="col-lg-6 text-right">Solde en Caisse ({{ fnd.fund.label }}) :</div>
-					<div class="col-lg-6 text-right">{{ (fnd.enc - fnd.dec)|number_format(3, '.', ' ') }} TND</div>
-					<div class="col-lg-12">&nbsp;</div>
-
-					{% endfor %}
-
-				</div>
+			<div class="box-header no-border">
+				<h4 class="box-title">Chiffres du Mois de {{ ('MonthlyBalance.month.'~month)|trans }}  {{ year }}</h4>
+			</div>
+			<div class="box-body box-profile">
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b>Chiffre d'affaire HT :</b>
+						<a class="pull-right">{{ cmp.monthly_ca_ht|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Chiffre d'affaire encaissé :</b>
+						<a class="pull-right">{{ cmp.monthly_ca_enc_net|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Chiffre d'affaire non encaissé :</b>
+						<a class="pull-right">{{ cmp.monthly_ca_not_enc_net|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat HT :</b>
+						<a class="pull-right">{{ cmp.monthly_achat_ht|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat Marchandise HT :</b>
+						<a class="pull-right">{{ cmp.monthly_achat_marchandise_ht|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat Payés :</b>
+						<a class="pull-right">{{ cmp.monthly_achat_payed|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat Non Payés :</b>
+						<a class="pull-right">{{ cmp.monthly_achat_not_payed|number_format(3, '.', ' ') }} TND</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-6">
-		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Chiffres du 01/01/{{ current_year }} au {{ 'now'|date('d/m/Y') }}</h4></div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-lg-6 text-right">Chiffre d'affaire :</div>
-					<div class="col-lg-6 text-right">{{ cmp.cacumul|number_format(3, '.', ' ') }} TND</div>
-					<div class="col-lg-12">&nbsp;</div>
 
-				</div>
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-header no-border">
+				<h4 class="box-title">Chiffres Cumulés du 01/01/{{ year_prev }} au
+				{% if year == current_year and month == current_monthsz %}
+				{{ 'now'|date('d/m/Y') }}
+				{% else  %}
+				{{ last_day~'/'~month~'/'~year }}
+				{% endif %}
+				</h4>
+			</div>
+			<div class="box-body box-profile">
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b>Chiffre d'affaire HT :</b>
+						<a class="pull-right">{{ (cmp.year_prev_ca_ht + cmp.year_ca_ht)|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Chiffre d'affaire encaissé :</b>
+						<a class="pull-right">{{ (cmp.year_prev_ca_enc_net + cmp.year_ca_enc_net)|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Chiffre d'affaire non encaissé :</b>
+						<a class="pull-right">{{ (cmp.year_prev_ca_not_enc_net + cmp.year_ca_not_enc_net)|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat HT :</b>
+						<a class="pull-right">{{ (cmp.year_prev_achat_ht + cmp.year_achat_ht)|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat Marchandise HT :</b>
+						<a class="pull-right">{{ (cmp.year_prev_achat_marchandise_ht + cmp.year_achat_marchandise_ht)|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat Payés :</b>
+						<a class="pull-right">{{ (cmp.year_prev_achat_payed + cmp.year_achat_payed)|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat Non Payés :</b>
+						<a class="pull-right">{{ (cmp.year_prev_achat_not_payed + cmp.year_achat_not_payed)|number_format(3, '.', ' ') }} TND</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-header no-border">
+				<h4 class="box-title">RATIOS (POUR LES SOCIETES COMMERCIALES)</h4>
+			</div>
+			<div class="box-body box-profile">
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b>STOCKS MARCHANDISES 2013 :</b>
+						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>STOCKS MARCHANDISES 2014 :</b>
+						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>STOCKS MARCHANDISES 2015 :</b>
+						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>MARGE BRUTE 2014 :</b>
+						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>MARGE BRUTE 2015 :</b>
+						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
 	<div class="col-lg-12">
 		<hr/>
 	</div>
-	{% if cmp.natures|length !=0 %}
+	{% if cmp.nature_list|length !=0 %}
 	<div class="col-lg-4">
 		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Achats {{ current_year }}</h4></div>
+			<div class="box-header with-border"><h4 class="box-title">Achats {{ year }}</h4></div>
 			<div class="box-body">
 				<div class="chart">
-					<canvas id="myDonutChart_{{ cmp.company.idn }}"></canvas>
+					<canvas id="buysByNatureDonutChart_{{ cmp.company.idn }}"></canvas>
 				</div>
 			</div>
 		</div>
 	</div>
 	{% endif %}
-	<div class="col-lg-{% if cmp.natures|length !=0 %}4{% else %}6{% endif %}">
+	<div class="col-lg-{% if cmp.nature_list|length !=0 %}4{% else %}6{% endif %}">
 		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Evolution Chiffre d'affaire du 01/01/{{ prev_year }} au {{ 'now'|date('d/m/Y') }}</h4></div>
+			<div class="box-header with-border"><h4 class="box-title">Evolution Chiffre d'affaire du 01/01/{{ year_prev }} au
+				{% if year == current_year and month == current_monthsz %}
+				{{ 'now'|date('d/m/Y') }}
+				{% else  %}
+				{{ last_day~'/'~month~'/'~year }}
+				{% endif %}</h4></div>
 			<div class="box-body">
 				<div class="chart">
-					<canvas id="myCaChart_{{ cmp.company.idn }}"></canvas>
+					<canvas id="myCaHtBarChart_{{ cmp.company.idn }}"></canvas>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-{% if cmp.natures|length !=0 %}4{% else %}6{% endif %}">
+	<div class="col-lg-{% if cmp.nature_list|length !=0 %}4{% else %}6{% endif %}">
 		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Evolution Achats du 01/01/{{ prev_year }} au {{ 'now'|date('d/m/Y') }}</h4></div>
+			<div class="box-header with-border"><h4 class="box-title">Evolution Achats du 01/01/{{ year_prev }} au
+				{% if year == current_year and month == current_monthsz %}
+				{{ 'now'|date('d/m/Y') }}
+				{% else  %}
+				{{ last_day~'/'~month~'/'~year }}
+				{% endif %}</h4></div>
 			<div class="box-body">
 				<div class="chart">
-					<canvas id="myDecChart_{{ cmp.company.idn }}"></canvas>
+					<canvas id="myAchatLineChart_{{ cmp.company.idn }}"></canvas>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-lg-12">
-		<hr/>
 	</div>
 </div>
 {% endfor %}

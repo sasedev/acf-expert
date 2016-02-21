@@ -27,7 +27,7 @@ class DefaultController extends BaseController
 
 	}
 
-	public function indexAction()
+	public function indexAction($month = null, $year = null)
 	{
 		$sc = $this->getSecurityTokenStorage();
 		$user = $sc->getToken()->getUser();
@@ -36,10 +36,63 @@ class DefaultController extends BaseController
 		$now = new \DateTime('now');
 		$current_day = $now->format('d');
 		$current_month = $now->format('m');
+		$current_monthsz = $now->format('n');
 		$current_year = $now->format('Y');
 		$prev_year = $current_year -1;
+
+		if (null == $month) {
+			$month = $current_monthsz;
+		}
+		if (null == $year) {
+			$year = $current_year;
+		}
+		if ($year > $current_year || ($year >= $current_year && $month > $current_month)) {
+			$year = $current_year;
+			$month = $current_monthsz;
+		}
+		$lnk_next_month = null;
+		$lnk_next_year = null;
+		$lnk_prev_month = $month -1;
+		$lnk_prev_year = $year;
+
+		if ($year < $current_year || $month < $current_month) {
+			$lnk_next_month = $month+1;
+			if ($lnk_next_month > 12) {
+				$lnk_next_month = 1;
+				$lnk_next_year = $year +1;
+			} else {
+				$lnk_next_year = $year;
+			}
+		}
+
+		if ($lnk_prev_month <= 0) {
+			$lnk_prev_month = 12;
+			$lnk_prev_year = $year -1;
+		}
+
+		$this->gvars['lnk_next_month'] = $lnk_next_month;
+		$this->gvars['lnk_next_year'] = $lnk_next_year;
+		$this->gvars['lnk_prev_month'] = $lnk_prev_month;
+		$this->gvars['lnk_prev_year'] = $lnk_prev_year;
+		$this->gvars['year'] = $year;
+		if ($month < 10) {
+			$this->gvars['month'] = '0'.$month;
+			$test_date = $year."-0".$month."-01";
+			$last_day =  date("t", strtotime($test_date));
+			$this->gvars['last_day'] = $last_day;
+
+		} else {
+			$this->gvars['month'] = $month;
+			$test_date = $year."-".$month."-01";
+			$last_day =  date("t", strtotime($test_date));
+			$this->gvars['last_day'] = $last_day;
+		}
+
+
+
 		$this->gvars['current_day'] = $current_day;
 		$this->gvars['current_month'] = $current_month;
+		$this->gvars['current_monthsz'] = $current_monthsz;
 		$this->gvars['current_year'] = $current_year;
 		$this->gvars['prev_year'] = $prev_year;
 
@@ -52,127 +105,193 @@ class DefaultController extends BaseController
 			$render_company = array();
 			$render_company['company'] = $company;
 
-			$achat_march_nature = $em->getRepository('AcfDataBundle:CompanyNature')->findOneBy(array('company' => $company, 'label' => 'ACHATS DE MARCHANDISES'));
-			if (null == $achat_march_nature) {
-				$achat_march_nature = new CompanyNature();
-				$achat_march_nature->setCompany($company);
-				$achat_march_nature->setLabel('ACHATS DE MARCHANDISES');
-				$render_company['am'] = 0;
-				$em->persist($achat_march_nature);
+			// chiffre d'affaire ht total du mois en cours
+			$monthly_ca_ht = $em->getRepository('AcfDataBundle:Sale')->caHtTotalByCompanyInYearMonth($company, $year, $month);
+			$monthly_ca_ht += $em->getRepository('AcfDataBundle:SecondaryVat')->caHtTotalByCompanyInYearMonth($company, $year, $month);
+			$render_company['monthly_ca_ht'] = $monthly_ca_ht;
+
+			// chiffre d'affaire encaissé du mois en cours
+			$monthly_ca_enc_net = $em->getRepository('AcfDataBundle:Sale')->caEncByCompanyInYearMonth($company, $year, $month);
+			$monthly_ca_enc_net += $em->getRepository('AcfDataBundle:SecondaryVat')->caEncByCompanyInYearMonth($company, $year, $month);
+			$render_company['monthly_ca_enc_net'] = $monthly_ca_enc_net;
+
+			// chiffre d'affaire non-encaissé du mois en cours
+			$monthly_ca_not_enc_net = $em->getRepository('AcfDataBundle:Sale')->caNotEncByCompanyInYearMonth($company, $year, $month);
+			$monthly_ca_not_enc_net += $em->getRepository('AcfDataBundle:SecondaryVat')->caNotEncByCompanyInYearMonth($company, $year, $month);
+			$render_company['monthly_ca_not_enc_net'] = $monthly_ca_not_enc_net;
+
+			// achat ht du mois en cours
+			$monthly_achat_ht = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyInYearMonth($company, $year, $month);
+			$render_company['monthly_achat_ht'] = $monthly_achat_ht;
+
+			// verification nature d'achat marchandise
+			$nature_achat_marchandise = $em->getRepository('AcfDataBundle:CompanyNature')->findOneBy(array('company' => $company, 'label' => 'ACHATS DE MARCHANDISES'));
+			if (null == $nature_achat_marchandise) {
+				$nature_achat_marchandise = new CompanyNature();
+				$nature_achat_marchandise->setCompany($company);
+				$nature_achat_marchandise->setLabel('ACHATS DE MARCHANDISES');
+				$em->persist($nature_achat_marchandise);
 				$em->flush();
-			} else {
-				$am = $em->getRepository('AcfDataBundle:Buy')->sumBalanceHtByCompanyNatureInYearMonth($achat_march_nature, $current_year, $current_month);
-				$render_company['am'] = $am;
 			}
-			$em->getRepository('AcfDataBundle:Buy')->updateCompanyNatureNullByCompany($company, $achat_march_nature);
+			$em->getRepository('AcfDataBundle:Buy')->updateCompanyNatureNullByCompany($company, $nature_achat_marchandise);
 			$em->flush();
+
+			// achat ht du mois en cours
+			$monthly_achat_marchandise_ht = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyNatureInYearMonth($nature_achat_marchandise, $year, $month);
+			$render_company['monthly_achat_marchandise_ht'] = $monthly_achat_marchandise_ht;
+
+			// achat payés
+			$monthly_achat_payed = $em->getRepository('AcfDataBundle:Buy')->achatPayedByCompanyInYearMonth($company, $year, $month);
+			$render_company['monthly_achat_payed'] = $monthly_achat_payed;
+
+			// achat payés
+			$monthly_achat_not_payed = $em->getRepository('AcfDataBundle:Buy')->achatNotPayedByCompanyInYearMonth($company, $year, $month);
+			$render_company['monthly_achat_not_payed'] = $monthly_achat_not_payed;
+
+
+			// stockage des chiffre d'affaire ht
+			$render_cahts = array();
+			$render_cahts['year_prev'] = array();
+			$render_cahts['year'] = array();
+
+
+			$render_achats_hts = array();
+			$render_achats_hts['year_prev'] = array();
+			$render_achats_hts['year'] = array();
+
+			// cumulé année précédente
+			$year_prev = $year - 1;
+			$this->gvars['year_prev'] = $year_prev;
+
+			$year_prev_ca_ht = 0;
+			$year_prev_ca_enc_net = 0;
+			$year_prev_ca_not_enc_net = 0;
+			$year_prev_achat_ht = 0;
+			$year_prev_achat_marchandise_ht = 0;
+			$year_prev_achat_payed = 0;
+			$year_prev_achat_not_payed = 0;
+
+			$logger = $this->getLogger();
+
+
+
+
+			for ($i =1; $i<=12; $i++) {
+				// chiffre d'affaire ht total du mois en cours
+				$ca_ht = $em->getRepository('AcfDataBundle:Sale')->caHtTotalByCompanyInYearMonth($company, $year_prev, $i);
+				$ca_ht += $em->getRepository('AcfDataBundle:SecondaryVat')->caHtTotalByCompanyInYearMonth($company, $year_prev, $i);
+				$year_prev_ca_ht += $ca_ht;
+				$render_cahts['year_prev']["m".$i] = $ca_ht;
+
+				// chiffre d'affaire encaissé du mois en cours
+				$ca_enc_net = $em->getRepository('AcfDataBundle:Sale')->caEncByCompanyInYearMonth($company, $year_prev, $i);
+				$ca_enc_net += $em->getRepository('AcfDataBundle:SecondaryVat')->caEncByCompanyInYearMonth($company, $year_prev, $i);
+				$year_prev_ca_enc_net += $ca_enc_net;
+
+				// chiffre d'affaire non-encaissé du mois en cours
+				$ca_not_enc_net = $em->getRepository('AcfDataBundle:Sale')->caNotEncByCompanyInYearMonth($company, $year_prev, $i);
+				$ca_not_enc_net += $em->getRepository('AcfDataBundle:SecondaryVat')->caNotEncByCompanyInYearMonth($company, $year_prev, $i);
+				$year_prev_ca_not_enc_net += $ca_not_enc_net;
+
+				// achat ht du mois en cours
+				$achat_ht = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyInYearMonth($company, $year_prev, $i);
+				$year_prev_achat_ht += $achat_ht;
+				$render_achats_hts['year_prev']["m".$i] = $achat_ht;
+
+				$logger->addError('year_prev.m'.$i.' : '.$achat_ht);
+
+				// achat ht du mois en cours
+				$achat_marchandise_ht = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyNatureInYearMonth($nature_achat_marchandise, $year_prev, $i);
+				$year_prev_achat_marchandise_ht += $achat_marchandise_ht;
+
+				// achat payés
+				$achat_payed = $em->getRepository('AcfDataBundle:Buy')->achatPayedByCompanyInYearMonth($company, $year_prev, $i);
+				$year_prev_achat_payed += $achat_payed;
+
+				// achat payés
+				$achat_not_payed = $em->getRepository('AcfDataBundle:Buy')->achatNotPayedByCompanyInYearMonth($company, $year_prev, $i);
+				$year_prev_achat_not_payed += $achat_not_payed;
+
+			}
+			$render_company['year_prev_ca_ht'] = $year_prev_ca_ht;
+			$render_company['year_prev_ca_enc_net'] = $year_prev_ca_enc_net;
+			$render_company['year_prev_ca_not_enc_net'] = $year_prev_ca_not_enc_net;
+			$render_company['year_prev_achat_ht'] = $year_prev_achat_ht;
+			$render_company['year_prev_achat_marchandise_ht'] = $year_prev_achat_marchandise_ht;
+			$render_company['year_prev_achat_payed'] = $year_prev_achat_payed;
+			$render_company['year_prev_achat_not_payed'] = $year_prev_achat_not_payed;
+
+			$year_ca_ht = 0;
+			$year_ca_enc_net = 0;
+			$year_ca_not_enc_net = 0;
+			$year_achat_ht = 0;
+			$year_achat_marchandise_ht = 0;
+			$year_achat_payed = 0;
+			$year_achat_not_payed = 0;
+			for ($i =1; $i<=12; $i++) {
+				if ($i <= $month) {
+					// chiffre d'affaire ht total du mois en cours
+					$ca_ht = $em->getRepository('AcfDataBundle:Sale')->caHtTotalByCompanyInYearMonth($company, $year, $i);
+					$ca_ht += $em->getRepository('AcfDataBundle:SecondaryVat')->caHtTotalByCompanyInYearMonth($company, $year, $i);
+					$year_ca_ht += $ca_ht;
+					$render_cahts['year']["m".$i] = $ca_ht;
+
+					// chiffre d'affaire encaissé du mois en cours
+					$ca_enc_net = $em->getRepository('AcfDataBundle:Sale')->caEncByCompanyInYearMonth($company, $year, $i);
+					$ca_enc_net += $em->getRepository('AcfDataBundle:SecondaryVat')->caEncByCompanyInYearMonth($company, $year, $i);
+					$year_ca_enc_net += $ca_enc_net;
+
+					// chiffre d'affaire non-encaissé du mois en cours
+					$ca_not_enc_net = $em->getRepository('AcfDataBundle:Sale')->caNotEncByCompanyInYearMonth($company, $year, $i);
+					$ca_not_enc_net += $em->getRepository('AcfDataBundle:SecondaryVat')->caNotEncByCompanyInYearMonth($company, $year, $i);
+					$year_ca_not_enc_net += $ca_not_enc_net;
+
+					// achat ht du mois en cours
+					$achat_ht = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyInYearMonth($company, $year, $i);
+					$year_achat_ht += $achat_ht;
+					$render_achats_hts['year']["m".$i] = $achat_ht;
+
+					// achat ht du mois en cours
+					$achat_marchandise_ht = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyNatureInYearMonth($nature_achat_marchandise, $year, $i);
+					$year_achat_marchandise_ht += $achat_marchandise_ht;
+
+					// achat payés
+					$achat_payed = $em->getRepository('AcfDataBundle:Buy')->achatPayedByCompanyInYearMonth($company, $year, $i);
+					$year_achat_payed += $achat_payed;
+
+					// achat payés
+					$achat_not_payed = $em->getRepository('AcfDataBundle:Buy')->achatNotPayedByCompanyInYearMonth($company, $year, $i);
+					$year_achat_not_payed += $achat_not_payed;
+				} else {
+					$render_cahts['year']["m".$i] = 0;
+					$render_achats_hts['year']["m".$i] = 0;
+				}
+			}
+			$render_company['year_ca_ht'] = $year_ca_ht;
+			$render_company['year_ca_enc_net'] = $year_ca_enc_net;
+			$render_company['year_ca_not_enc_net'] = $year_ca_not_enc_net;
+			$render_company['year_achat_ht'] = $year_achat_ht;
+			$render_company['year_achat_marchandise_ht'] = $year_achat_marchandise_ht;
+			$render_company['year_achat_payed'] = $year_achat_payed;
+			$render_company['year_achat_not_payed'] = $year_achat_not_payed;
+
+
+			$render_company['cahts'] = $render_cahts;
+			$render_company['achathts'] = $render_achats_hts;
+
 
 			$render_natures = array();
 			$companyNatures = $em->getRepository('AcfDataBundle:CompanyNature')->getAllByCompany($company);
 			foreach ($companyNatures as $companyNature) {
 				$render_nature = array();
-				$val = $em->getRepository('AcfDataBundle:Buy')->sumBalanceHtByCompanyNatureInYear($companyNature, $current_year);
+				$val = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyNatureInYear($companyNature, $year);
 				if (null != $val && $val != 0) {
 					$render_nature['nature'] = $companyNature;
 					$render_nature['val'] = $val;
 					$render_natures[] = $render_nature;
 				}
 			}
-			$render_company['natures'] = $render_natures;
-
-			$ca = $em->getRepository('AcfDataBundle:Sale')->sumBalanceHtByCompanyInYearMonth($company, $current_year, $current_month);
-			$ca += $em->getRepository('AcfDataBundle:SecondaryVat')->sumBalanceHtByCompanyInYearMonth($company, $current_year, $current_month);
-			$render_company['ca'] = $ca;
-
-			$cacumul = 0;
-
-			$render_cas = array();
-			$render_cas['prev_year'] = array();
-			$render_cas['current_year'] = array();
-			for ($i =1; $i<=12; $i++) {
-				$ca = $em->getRepository('AcfDataBundle:Sale')->sumBalanceHtByCompanyInYearMonth($company, $prev_year, $i);
-				$ca += $em->getRepository('AcfDataBundle:SecondaryVat')->sumBalanceHtByCompanyInYearMonth($company, $prev_year, $i);
-				$render_cas['prev_year']["m".$i] = $ca;
-			}
-			for ($i =1; $i<=12; $i++) {
-				$ca = 0;
-				if ($i <= $current_month) {
-					$ca = $em->getRepository('AcfDataBundle:Sale')->sumBalanceHtByCompanyInYearMonth($company, $current_year, $i);
-					$ca += $em->getRepository('AcfDataBundle:SecondaryVat')->sumBalanceHtByCompanyInYearMonth($company, $current_year, $i);
-					$render_cas['current_year']["m".$i] = $ca;
-					$cacumul += $ca;
-				} else {
-					$render_cas['current_year']["m".$i] = $ca;
-				}
-
-				//$logger->addDebug('ca m'.$i.' : '.$ca);
-			}
-			$render_company['cas'] = $render_cas;
-			$render_company['cacumul'] = $cacumul;
-
-			$render_decs = array();
-			$render_decs['prev_year'] = array();
-			$render_decs['current_year'] = array();
-			for ($i =1; $i<=12; $i++) {
-				$dec = $em->getRepository('AcfDataBundle:Buy')->sumBalanceNetByCompanyInYearMonth($company, $prev_year, $i);
-				if (null != $dec) {
-					$render_decs['prev_year']["m".$i] = $dec;
-				} else {
-					$render_decs['prev_year']["m".$i] = 0;
-				}
-			}
-			for ($i =1; $i<=12; $i++) {
-				if ($i <= $current_month) {
-					$dec = $em->getRepository('AcfDataBundle:Buy')->sumBalanceNetByCompanyInYearMonth($company, $current_year, $i);
-					if (null != $dec) {
-						$render_decs['current_year']["m".$i] = $dec;
-					} else {
-						$render_decs['current_year']["m".$i] = 0;
-					}
-				} else {
-					$render_decs['current_year']["m".$i] = 0;
-				}
-			}
-			$render_company['decs'] = $render_decs;
-
-
-			$enc = 0;
-			$dec = 0;
-
-			$banks = $company->getBanks();
-			$render_banks = array();
-			foreach ($banks as $bank) {
-				$render_bank = array();
-				$render_bank['bank'] = $bank;
-				$bank_decaiss = $em->getRepository('AcfDataBundle:Buy')->sumBalanceNetByAccountInYearMonth($bank, $current_year, $current_month);
-				$bank_encaiss = $em->getRepository('AcfDataBundle:Sale')->sumBalanceNetByAccountInYearMonth($bank, $current_year, $current_month);
-				$bank_encaiss += $em->getRepository('AcfDataBundle:SecondaryVat')->sumBalanceNetByAccountInYearMonth($bank, $current_year, $current_month);
-				$render_bank['dec'] = $bank_decaiss;
-				$render_bank['enc'] = $bank_encaiss;
-				$dec += $bank_decaiss;
-				$enc += $bank_encaiss;
-				$render_banks[] = $render_bank;
-			}
-			$render_company['banks'] = $render_banks;
-
-			$funds = $company->getFunds();
-			$render_funds = array();
-			foreach ($funds as $fund) {
-				$render_fund = array();
-				$render_fund['fund'] = $fund;
-				$fund_decaiss = $em->getRepository('AcfDataBundle:Buy')->sumBalanceNetByAccountInYearMonth($fund, $current_year, $current_month);
-				$fund_encaiss = $em->getRepository('AcfDataBundle:Sale')->sumBalanceNetByAccountInYearMonth($fund, $current_year, $current_month);
-				$fund_encaiss += $em->getRepository('AcfDataBundle:SecondaryVat')->sumBalanceNetByAccountInYearMonth($fund, $current_year, $current_month);
-				$render_fund['dec'] = $fund_decaiss;
-				$render_fund['enc'] = $fund_encaiss;
-				$dec += $fund_decaiss;
-				$enc += $fund_encaiss;
-				$render_funds[] = $render_fund;
-			}
-			$render_company['funds'] = $render_funds;
-
-			$render_company['enc'] = $enc;
-			$render_company['dec'] = $dec;
+			$render_company['nature_list'] = $render_natures;
 
 			$render_companies[] = $render_company;
 		}

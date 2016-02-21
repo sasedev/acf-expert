@@ -3,7 +3,6 @@
 namespace Acf\DataBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Acf\DataBundle\Entity\Account;
 use Acf\DataBundle\Entity\Transaction;
 use Acf\DataBundle\Entity\CompanyNature;
 use Acf\DataBundle\Entity\Company;
@@ -17,37 +16,99 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class BuyRepository extends EntityRepository
 {
+
 	/**
-	 * All count
+	 * achat ht du mois en cours
 	 *
 	 * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
 	 *		 \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
 	 */
-	public function sumBalanceNetByAccountInYearMonth(Account $a, $year, $month)
+	public function achatHtByCompanyInYearMonth(Company $c, $year, $month)
 	{
-		$qb = $this->createQueryBuilder('b')->select('sum(b.balanceNet)')
-			->join('b.account', 'a')
+		$qb = $this->createQueryBuilder('b')->select('sum(b.balanceTtc - b.vat - b.stamp)')
 			->join('b.monthlyBalance', 'm')
-			->where('a.id = :id')
+			->join('m.company', 'c')
+			->where('c.id = :id')
 			->andWhere('m.year = :year')
 			->andWhere('m.month = :month')
-			->andWhere('b.transactionStatus = :status')
-			->setParameter('id', $a->getId())
+			->andWhere('(b.transactionStatus = :status1 OR b.transactionStatus = :status2)')
+			->setParameter('id', $c->getId())
 			->setParameter('year', \intval($year))
 			->setParameter('month', \intval($month))
-			->setParameter('status', Transaction::STATUS_DONE);
+			->setParameter('status1', Transaction::STATUS_DONE)
+			->setParameter('status2', Transaction::STATUS_PENDING);
 		$query = $qb->getQuery();
 
-		return $query->getSingleScalarResult();
+		$res = $query->getSingleScalarResult();
+		if (null == $res) {
+			$res = 0;
+		}
+		return $res;
 	}
 
 	/**
-	 * All count
+	 * achat ht du mois en cours par nature d'achat
 	 *
 	 * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
 	 *		 \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
 	 */
-	public function sumBalanceNetByCompanyInYearMonth(Company $c, $year, $month)
+	public function achatHtByCompanyNatureInYearMonth(CompanyNature $cn, $year, $month)
+	{
+		$qb = $this->createQueryBuilder('b')->select('sum(b.balanceTtc - b.vat - b.stamp)')
+			->join('b.nature', 'n')
+			->join('b.monthlyBalance', 'm')
+			->where('n.id = :id')
+			->andWhere('m.year = :year')
+			->andWhere('m.month = :month')
+			->andWhere('(b.transactionStatus = :status1 OR b.transactionStatus = :status2)')
+			->setParameter('id', $cn->getId())
+			->setParameter('year', \intval($year))
+			->setParameter('month', \intval($month))
+			->setParameter('status1', Transaction::STATUS_DONE)
+			->setParameter('status2', Transaction::STATUS_PENDING);
+		$query = $qb->getQuery();
+
+		$res = $query->getSingleScalarResult();
+		if (null == $res) {
+			$res = 0;
+		}
+		return $res;
+	}
+
+	/**
+	 * achat ht de l'année en cours par nature d'achat
+	 *
+	 * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
+	 *		 \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+	 */
+	public function achatHtByCompanyNatureInYear(CompanyNature $cn, $year)
+	{
+		$qb = $this->createQueryBuilder('b')->select('sum(b.balanceTtc - b.vat - b.stamp)')
+			->join('b.nature', 'n')
+			->join('b.monthlyBalance', 'm')
+			->where('n.id = :id')
+			->andWhere('m.year = :year')
+			->andWhere('(b.transactionStatus = :status1 OR b.transactionStatus = :status2)')
+			->setParameter('id', $cn->getId())
+			->setParameter('year', \intval($year))
+			->setParameter('status1', Transaction::STATUS_DONE)
+			->setParameter('status2', Transaction::STATUS_PENDING);
+		$query = $qb->getQuery();
+
+		$res = $query->getSingleScalarResult();
+		if (null == $res) {
+			$res = 0;
+		}
+		return $res;
+	}
+
+	/**
+	 * achat ht du mois en cours
+	 *
+	 * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
+	 *		 \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+	 */
+	public function achatPayedByCompanyInYearMonth(Company $c, $year, $month)
 	{
 		$qb = $this->createQueryBuilder('b')->select('sum(b.balanceNet)')
 			->join('b.monthlyBalance', 'm')
@@ -56,56 +117,39 @@ class BuyRepository extends EntityRepository
 			->andWhere('m.year = :year')
 			->andWhere('m.month = :month')
 			->andWhere('b.transactionStatus = :status')
+			->andWhere('b.paymentType != :paymentType')
 			->setParameter('id', $c->getId())
 			->setParameter('year', \intval($year))
 			->setParameter('month', \intval($month))
-			->setParameter('status', Transaction::STATUS_DONE);
+			->setParameter('status', Transaction::STATUS_DONE)
+			->setParameter('paymentType', Transaction::PTYPE_NA);
 		$query = $qb->getQuery();
 
 		return $query->getSingleScalarResult();
 	}
 
 	/**
-	 * All count
+	 * achat ht du mois en cours
 	 *
 	 * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
 	 *		 \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
 	 */
-	public function sumBalanceHtByCompanyNatureInYearMonth(CompanyNature $cn, $year, $month)
+	public function achatNotPayedByCompanyInYearMonth(Company $c, $year, $month)
 	{
 		$qb = $this->createQueryBuilder('b')->select('sum(b.balanceTtc - b.vat - b.stamp)')
-			->join('b.nature', 'n')
 			->join('b.monthlyBalance', 'm')
-			->where('n.id = :id')
+			->join('m.company', 'c')
+			->where('c.id = :id')
 			->andWhere('m.year = :year')
 			->andWhere('m.month = :month')
-			->andWhere('b.transactionStatus = :status')
-			->setParameter('id', $cn->getId())
+			->andWhere('(b.transactionStatus = :status1 OR b.transactionStatus = :status2)')
+			->andWhere('b.paymentType = :paymentType')
+			->setParameter('id', $c->getId())
 			->setParameter('year', \intval($year))
 			->setParameter('month', \intval($month))
-			->setParameter('status', Transaction::STATUS_DONE);
-		$query = $qb->getQuery();
-
-		return $query->getSingleScalarResult();
-	}
-
-	/**
-	 * All count
-	 *
-	 * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-	 *		 \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
-	 */
-	public function sumBalanceHtByCompanyNatureInYear(CompanyNature $cn, $year)
-	{
-		$qb = $this->createQueryBuilder('b')->select('sum(b.balanceTtc - b.vat - b.stamp)')
-			->join('b.nature', 'n')
-			->join('b.monthlyBalance', 'm')
-			->where('n.id = :id')
-			->andWhere('m.year = :year')
-			->andWhere('b.transactionStatus = :status')
-			->setParameter('id', $cn->getId())
-			->setParameter('year', \intval($year))
-			->setParameter('status', Transaction::STATUS_DONE);
+			->setParameter('status1', Transaction::STATUS_DONE)
+			->setParameter('status2', Transaction::STATUS_PENDING)
+			->setParameter('paymentType', Transaction::PTYPE_NA);
 		$query = $qb->getQuery();
 
 		return $query->getSingleScalarResult();

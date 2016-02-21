@@ -2,6 +2,13 @@ _client_homepage:
     path:     /
     defaults: { _controller: "AcfClientBundle:Default:index" }
 
+_client_homepage_my:
+    path:     /{month}/{year}
+    defaults: { _controller: "AcfClientBundle:Default:index", year: null }
+    requirements:
+        month: "[1-9]|0[1-9]|1[012]"
+        year: \d+
+
 _client_doc_addGet:
     path:     /doc/add
     defaults: { _controller: "AcfClientBundle:Doc:addGet" }
