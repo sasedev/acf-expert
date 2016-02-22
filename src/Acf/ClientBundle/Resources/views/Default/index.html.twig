@@ -2,6 +2,7 @@
 {%block end_static_js%}
 {{ parent() }}
 <script type="text/javascript" src="{{asset('bundles/acfres/js/chartjs/1.1.min.js')}}"></script>
+<script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
@@ -75,6 +76,141 @@ $(function() {
 
 	var contx3_{{ cmp.company.idn }} = $("#myAchatLineChart_{{ cmp.company.idn }}").get(0).getContext("2d");
 	var myAchatLineChart_{{ cmp.company.idn }} = new Chart(contx3_{{ cmp.company.idn }}).Line(dataachat_{{ cmp.company.idn }});
+
+	$('#hiChart1_{{ cmp.company.idn }}').highcharts({
+		chart: {
+			plotBackgroundColor: null,
+			plotBorderWidth: 0,
+			plotShadow: false
+		},
+		credits: {
+			enabled: false
+		},
+		title: {
+			text: 'Evolution <br>chiffres<br>{{ year_prev}} - {{ year }}',
+			align: 'center',
+			verticalAlign: 'middle',
+			y: 40
+		},
+		tooltip: {
+			pointFormat: '<b>{point.percentage:.1f}%</b> / <b>{point.y:.3f} TND</b>'
+		},
+		plotOptions: {
+			pie: {
+				dataLabels: {
+					enabled: true,
+					distance: -50,
+					style: {
+						fontWeight: 'bold',
+						color: 'white',
+						textShadow: '0px 1px 2px black'
+					}
+				},
+				startAngle: -90,
+				endAngle: 90,
+				center: ['50%', '75%']
+			}
+		},
+		series: [{
+			name: 'Chiffre',
+			type: 'pie',
+			innerSize: '50%',
+			data: [
+				['{{ year }}',   {{ cmp.year_ca_ht|number_format(3, '.', '') }}],
+				['{{ year_prev}}',       {{ cmp.year_prev_ca_ht|number_format(3, '.', '') }}]
+			]
+		}]
+	});
+
+	$('#hiChart2_{{ cmp.company.idn }}').highcharts({
+		chart: {
+			plotBackgroundColor: null,
+			plotBorderWidth: 0,
+			plotShadow: false
+		},
+		credits: {
+			enabled: false
+		},
+		title: {
+			text: 'Chiffre <br>encaissé<br>{{ year }}',
+			align: 'center',
+			verticalAlign: 'middle',
+			y: 40
+		},
+		tooltip: {
+			pointFormat: '<b>{point.percentage:.1f}%</b> / <b>{point.y:.3f} TND</b>'
+		},
+		plotOptions: {
+			pie: {
+				dataLabels: {
+					enabled: true,
+					distance: -50,
+					style: {
+						fontWeight: 'bold',
+						color: 'white',
+						textShadow: '0px 1px 2px black'
+					}
+				},
+				startAngle: -90,
+				endAngle: 90,
+				center: ['50%', '75%']
+			}
+		},
+		series: [{
+			name: 'Chiffre',
+			type: 'pie',
+			innerSize: '50%',
+			data: [
+				['encaissé',   {{ cmp.year_ca_enc_net|number_format(3, '.', '') }}],
+				['non encaissé',       {{ cmp.year_ca_not_enc_net|number_format(3, '.', '') }}]
+			]
+		}]
+	});
+
+	$('#hiChart3_{{ cmp.company.idn }}').highcharts({
+		chart: {
+			plotBackgroundColor: null,
+			plotBorderWidth: 0,
+			plotShadow: false
+		},
+		credits: {
+			enabled: false
+		},
+		title: {
+			text: 'Achats <br>payés<br>{{ year }}',
+			align: 'center',
+			verticalAlign: 'middle',
+			y: 40
+		},
+		tooltip: {
+			pointFormat: '<b>{point.percentage:.1f}%</b> / <b>{point.y:.3f} TND</b>'
+		},
+		plotOptions: {
+			pie: {
+				dataLabels: {
+					enabled: true,
+					distance: -50,
+					style: {
+						fontWeight: 'bold',
+						color: 'white',
+						textShadow: '0px 1px 2px black'
+					}
+				},
+				startAngle: -90,
+				endAngle: 90,
+				center: ['50%', '75%']
+			}
+		},
+		series: [{
+			name: 'Chiffre',
+			type: 'pie',
+			innerSize: '50%',
+			data: [
+				['payés',   {{ cmp.year_achat_payed|number_format(3, '.', '') }}],
+				['non payés',       {{ cmp.year_achat_not_payed|number_format(3, '.', '') }}]
+			]
+		}]
+	});
 
 
 	{% endfor %}
@@ -210,81 +346,42 @@ $(function() {
 					</li>
 					<li class="list-group-item">
 						<b>MARGE BRUTE {{ year_prev }} :</b>
-						<a class="pull-right">{{ (
-							(
-								cmp.cahts.year_prev.m1 +
-								cmp.cahts.year_prev.m2 +
-								cmp.cahts.year_prev.m3 +
-								cmp.cahts.year_prev.m4 +
-								cmp.cahts.year_prev.m5 +
-								cmp.cahts.year_prev.m6 +
-								cmp.cahts.year_prev.m7 +
-								cmp.cahts.year_prev.m8 +
-								cmp.cahts.year_prev.m9 +
-								cmp.cahts.year_prev.m10 +
-								cmp.cahts.year_prev.m11 +
-								cmp.cahts.year_prev.m12
-							) -
-							cmp.year_prev_prev_stock.value -
-							(
-								cmp.achathts.year_prev.m1 +
-								cmp.achathts.year_prev.m2 +
-								cmp.achathts.year_prev.m3 +
-								cmp.achathts.year_prev.m4 +
-								cmp.achathts.year_prev.m5 +
-								cmp.achathts.year_prev.m6 +
-								cmp.achathts.year_prev.m7 +
-								cmp.achathts.year_prev.m8 +
-								cmp.achathts.year_prev.m9 +
-								cmp.achathts.year_prev.m10 +
-								cmp.achathts.year_prev.m11 +
-								cmp.achathts.year_prev.m12
-							) +
-							cmp.year_prev_stock.value
-							)|number_format(3, '.', ' ') }} TND</a>
+						<a class="pull-right">{{ (cmp.year_prev_ca_ht - cmp.year_prev_prev_stock.value - cmp.year_prev_achat_ht + cmp.year_prev_stock.value)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
 						<b>MARGE BRUTE {{ year }} :</b>
-						<a class="pull-right">{{ (
-							(
-								cmp.cahts.year.m1 +
-								cmp.cahts.year.m2 +
-								cmp.cahts.year.m3 +
-								cmp.cahts.year.m4 +
-								cmp.cahts.year.m5 +
-								cmp.cahts.year.m6 +
-								cmp.cahts.year.m7 +
-								cmp.cahts.year.m8 +
-								cmp.cahts.year.m9 +
-								cmp.cahts.year.m10 +
-								cmp.cahts.year.m11 +
-								cmp.cahts.year.m12
-							) -
-							cmp.year_prev_stock.value -
-							(
-								cmp.achathts.year.m1 +
-								cmp.achathts.year.m2 +
-								cmp.achathts.year.m3 +
-								cmp.achathts.year.m4 +
-								cmp.achathts.year.m5 +
-								cmp.achathts.year.m6 +
-								cmp.achathts.year.m7 +
-								cmp.achathts.year.m8 +
-								cmp.achathts.year.m9 +
-								cmp.achathts.year.m10 +
-								cmp.achathts.year.m11 +
-								cmp.achathts.year.m12
-							) +
-							cmp.year_stock.value
-							)|number_format(3, '.', ' ') }} TND</a>
+						<a class="pull-right">{{ (cmp.year_ca_ht - cmp.year_prev_stock.value - cmp.year_achat_ht + cmp.year_stock.value)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-12">
-		<hr/>
+	<div class="col-lg-12"></div>
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-header with-border"><h4 class="box-title">Evolution Chiffre d'affaire du {{ year_prev }} - {{ year }}</h4></div>
+			<div class="box-body">
+				<div id="hiChart1_{{ cmp.company.idn }}" style="width:100%; height:100%;"></div>
+			</div>
+		</div>
 	</div>
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-header with-border"><h4 class="box-title">Chiffre d’affaires encaissé {{ year }}</h4></div>
+			<div class="box-body">
+				<div id="hiChart2_{{ cmp.company.idn }}" style="width:100%; height:100%;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-header with-border"><h4 class="box-title">Achats payés {{ year }}</h4></div>
+			<div class="box-body">
+				<div id="hiChart3_{{ cmp.company.idn }}" style="width:100%; height:100%;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12"></div>
 	{% if cmp.nature_list|length !=0 %}
 	<div class="col-lg-4">
 		<div class="box box-primary">
@@ -328,6 +425,8 @@ $(function() {
 		</div>
 	</div>
 </div>
+<hr/>
+<br/>
 {% endfor %}
 {% else %}
 Interface Client
