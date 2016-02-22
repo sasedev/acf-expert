@@ -197,24 +197,86 @@ $(function() {
 			<div class="box-body box-profile">
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">
-						<b>STOCKS MARCHANDISES 2013 :</b>
-						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+						<b>STOCKS MARCHANDISES {{year_prev_prev }} :</b>
+						<a class="pull-right">{{ cmp.year_prev_prev_stock.value|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
-						<b>STOCKS MARCHANDISES 2014 :</b>
-						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+						<b>STOCKS MARCHANDISES {{ year_prev }} :</b>
+						<a class="pull-right">{{ cmp.year_prev_stock.value|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
-						<b>STOCKS MARCHANDISES 2015 :</b>
-						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+						<b>STOCKS MARCHANDISES {{ year }} :</b>
+						<a class="pull-right">{{ cmp.year_stock.value|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
-						<b>MARGE BRUTE 2014 :</b>
-						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+						<b>MARGE BRUTE {{ year_prev }} :</b>
+						<a class="pull-right">{{ (
+							(
+								cmp.cahts.year_prev.m1 +
+								cmp.cahts.year_prev.m2 +
+								cmp.cahts.year_prev.m3 +
+								cmp.cahts.year_prev.m4 +
+								cmp.cahts.year_prev.m5 +
+								cmp.cahts.year_prev.m6 +
+								cmp.cahts.year_prev.m7 +
+								cmp.cahts.year_prev.m8 +
+								cmp.cahts.year_prev.m9 +
+								cmp.cahts.year_prev.m10 +
+								cmp.cahts.year_prev.m11 +
+								cmp.cahts.year_prev.m12
+							) -
+							cmp.year_prev_prev_stock.value -
+							(
+								cmp.achathts.year_prev.m1 +
+								cmp.achathts.year_prev.m2 +
+								cmp.achathts.year_prev.m3 +
+								cmp.achathts.year_prev.m4 +
+								cmp.achathts.year_prev.m5 +
+								cmp.achathts.year_prev.m6 +
+								cmp.achathts.year_prev.m7 +
+								cmp.achathts.year_prev.m8 +
+								cmp.achathts.year_prev.m9 +
+								cmp.achathts.year_prev.m10 +
+								cmp.achathts.year_prev.m11 +
+								cmp.achathts.year_prev.m12
+							) +
+							cmp.year_prev_stock.value
+							)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
-						<b>MARGE BRUTE 2015 :</b>
-						<a class="pull-right">{{ 0|number_format(3, '.', ' ') }} TND</a>
+						<b>MARGE BRUTE {{ year }} :</b>
+						<a class="pull-right">{{ (
+							(
+								cmp.cahts.year.m1 +
+								cmp.cahts.year.m2 +
+								cmp.cahts.year.m3 +
+								cmp.cahts.year.m4 +
+								cmp.cahts.year.m5 +
+								cmp.cahts.year.m6 +
+								cmp.cahts.year.m7 +
+								cmp.cahts.year.m8 +
+								cmp.cahts.year.m9 +
+								cmp.cahts.year.m10 +
+								cmp.cahts.year.m11 +
+								cmp.cahts.year.m12
+							) -
+							cmp.year_prev_stock.value -
+							(
+								cmp.achathts.year.m1 +
+								cmp.achathts.year.m2 +
+								cmp.achathts.year.m3 +
+								cmp.achathts.year.m4 +
+								cmp.achathts.year.m5 +
+								cmp.achathts.year.m6 +
+								cmp.achathts.year.m7 +
+								cmp.achathts.year.m8 +
+								cmp.achathts.year.m9 +
+								cmp.achathts.year.m10 +
+								cmp.achathts.year.m11 +
+								cmp.achathts.year.m12
+							) +
+							cmp.year_stock.value
+							)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 				</ul>
 			</div>

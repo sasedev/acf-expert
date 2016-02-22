@@ -7,6 +7,7 @@ use Acf\DataBundle\Entity\Buy;
 use Acf\DataBundle\Entity\Sale;
 use Acf\DataBundle\Entity\SecondaryVat;
 use Acf\DataBundle\Entity\CompanyNature;
+use Acf\DataBundle\Entity\Stock;
 
 class DefaultController extends BaseController
 {
@@ -39,6 +40,7 @@ class DefaultController extends BaseController
 		$current_monthsz = $now->format('n');
 		$current_year = $now->format('Y');
 		$prev_year = $current_year -1;
+		$prev_prev_year = $prev_year -1;
 
 		if (null == $month) {
 			$month = $current_monthsz;
@@ -95,15 +97,50 @@ class DefaultController extends BaseController
 		$this->gvars['current_monthsz'] = $current_monthsz;
 		$this->gvars['current_year'] = $current_year;
 		$this->gvars['prev_year'] = $prev_year;
+		$this->gvars['prev_prev_year'] = $prev_prev_year;
 
 		$companies = $user->getCompanies();
 		$render_companies = array();
 
-		//$logger = $this->getLogger();
-
 		foreach ($companies as $company) {
 			$render_company = array();
 			$render_company['company'] = $company;
+
+			// stock de l'année en cours
+			$year_stock = $em->getRepository('AcfDataBundle:Stock')->findOneBy(array('company' => $company, 'year' => $year));
+			if (null == $year_stock) {
+				$year_stock = new Stock();
+				$year_stock->setCompany($company);
+				$year_stock->setYear($year);
+				$year_stock->setValue(0);
+				$em->persist($year_stock);
+				$em->flush();
+			}
+			$render_company['year_stock'] = $year_stock;
+
+			// stock de l'année - 1
+			$year_prev_stock = $em->getRepository('AcfDataBundle:Stock')->findOneBy(array('company' => $company, 'year' => $prev_year));
+			if (null == $year_prev_stock) {
+				$year_prev_stock = new Stock();
+				$year_prev_stock->setCompany($company);
+				$year_prev_stock->setYear($prev_year);
+				$year_prev_stock->setValue(0);
+				$em->persist($year_prev_stock);
+				$em->flush();
+			}
+			$render_company['year_prev_stock'] = $year_prev_stock;
+
+			// stock de l'année - 2
+			$year_prev_prev_stock = $em->getRepository('AcfDataBundle:Stock')->findOneBy(array('company' => $company, 'year' => $prev_prev_year));
+			if (null == $year_prev_prev_stock) {
+				$year_prev_prev_stock = new Stock();
+				$year_prev_prev_stock->setCompany($company);
+				$year_prev_prev_stock->setYear($prev_prev_year);
+				$year_prev_prev_stock->setValue(0);
+				$em->persist($year_prev_prev_stock);
+				$em->flush();
+			}
+			$render_company['year_prev_prev_stock'] = $year_prev_prev_stock;
 
 			// chiffre d'affaire ht total du mois en cours
 			$monthly_ca_ht = $em->getRepository('AcfDataBundle:Sale')->caHtTotalByCompanyInYearMonth($company, $year, $month);
@@ -162,6 +199,8 @@ class DefaultController extends BaseController
 			// cumulé année précédente
 			$year_prev = $year - 1;
 			$this->gvars['year_prev'] = $year_prev;
+			$year_prev_prev = $year_prev - 1;
+			$this->gvars['year_prev_prev'] = $year_prev_prev;
 
 			$year_prev_ca_ht = 0;
 			$year_prev_ca_enc_net = 0;
@@ -170,8 +209,6 @@ class DefaultController extends BaseController
 			$year_prev_achat_marchandise_ht = 0;
 			$year_prev_achat_payed = 0;
 			$year_prev_achat_not_payed = 0;
-
-			$logger = $this->getLogger();
 
 
 
@@ -197,8 +234,6 @@ class DefaultController extends BaseController
 				$achat_ht = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyInYearMonth($company, $year_prev, $i);
 				$year_prev_achat_ht += $achat_ht;
 				$render_achats_hts['year_prev']["m".$i] = $achat_ht;
-
-				$logger->addError('year_prev.m'.$i.' : '.$achat_ht);
 
 				// achat ht du mois en cours
 				$achat_marchandise_ht = $em->getRepository('AcfDataBundle:Buy')->achatHtByCompanyNatureInYearMonth($nature_achat_marchandise, $year_prev, $i);

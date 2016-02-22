@@ -98,7 +98,7 @@ class Stock
 	 * @param Company $company
 	 * @return Stock
 	 */
-	public function setCompany(Company $company = null)
+	public function setCompany(Company $company)
 	{
 		$this->company = $company;
 
