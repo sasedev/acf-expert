@@ -222,7 +222,7 @@ class StockController extends BaseController
 		}
 
 		if ($cloneStock->getValue() != $stock->getValue()) {
-			$msg .= "<tr><td>".$this->translate('Stock.streetNum.label').'</td><td>';
+			$msg .= "<tr><td>".$this->translate('Stock.value.label').'</td><td>';
 			if ($cloneStock->getValue() == null) {
 				$msg .= '<span class="label label-warning">'.$this->translate('_NA').'</span>';
 			} else {

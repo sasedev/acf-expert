@@ -573,7 +573,7 @@ pagetitle.stock.list.txt: Liste des Stocks
 pagetitle.stock.add: Ajouter Stock
 pagetitle.stock.add.txt: Ajouter Stock
 pagetitle.stock.edit: Edition Stock <b>%stock%</b>
-pagetitle.stock.edit.txt: Edition Stock <b>%stock%</b>
+pagetitle.stock.edit.txt: Edition Stock %stock%
 
 Stock.tab.overview: Détails
 Stock.tab.edit: Edition
@@ -597,7 +597,7 @@ Stock.edit.success: 'Succès de la modification du Stock <b>%stock%</b>'
 Stock.edit.failure: 'Echec de la modification du Stock <b>%stock%</b>'
 
 
-Stock.traceNew: 'Ajout Nouvelle le Stock <b>%stock%</b><br/>Société <b>%company%</b>'
+Stock.traceNew: 'Ajout Nouveau le Stock <b>%stock%</b><br/>Société <b>%company%</b>'
 Stock.traceEdit: 'Modification du Stock <b>%stock%</b><br/>Société <b>%company%</b>'
 Stock.traceDel: 'Suppression du Stock <b>%stock%</b><br/>Société <b>%company%</b>'
 

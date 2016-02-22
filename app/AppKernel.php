@@ -20,6 +20,9 @@ class AppKernel extends Kernel
 
 			new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 			new JMS\SerializerBundle\JMSSerializerBundle(),
+			new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+			new JMS\AopBundle\JMSAopBundle(),
+			new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
 			new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 			new Liuggio\ExcelBundle\LiuggioExcelBundle(),
 			new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),

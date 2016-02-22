@@ -28,11 +28,13 @@ framework:
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
+        #handler_id:  ~
+        handler_id:  session.handler.mongo
         name: "Acf"
         cookie_lifetime:      600
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
         gc_probability: 0
+        gc_maxlifetime: 7200 #2592000 # optional, it is set to 30 days here
     fragments: { path: /_fragment }
     http_method_override: true
     assets: ~
@@ -89,6 +91,29 @@ doctrine:
                 second_level_cache:
                     enabled:              true
 
+# doctrine mongodb odm
+doctrine_mongodb:
+    connections:
+        default:
+            server: mongodb://%mongodb_host%:%mongodb_port%
+#            options: {}
+            options:
+                username: %mongodb_user%
+                password: %mongodb_pass%
+                db: %mongodb_auth%
+    default_database: %mongodb_database%
+    auto_generate_proxy_classes:  true
+    auto_generate_hydrator_classes:  true
+    document_managers:
+        default:
+            auto_mapping: true
+            metadata_cache_driver:
+                type: memcache
+                class: Doctrine\Common\Cache\MemcacheCache
+                host: localhost
+                port: 11211
+                instance_class: Memcache
+
 # Doctrine Cache
 doctrine_cache:
     providers:
@@ -128,16 +153,16 @@ stof_doctrine_extensions:
 #    secure_all_services: true
 
 # JMS DI
-#jms_di_extra:
-#    locations:
-#        all_bundles: true
-#        directories: ["%kernel.root_dir%/../src/"]
-#    automatic_controller_injections:
-#        properties:
-#            request: "@request"
-#            router: "@router"
-#        method_calls:
-#            setRouter: ["@router"]
+jms_di_extra:
+    locations:
+        all_bundles: true
+        directories: ["%kernel.root_dir%/../src/"]
+    automatic_controller_injections:
+        properties:
+            request: "@request"
+            router: "@router"
+        method_calls:
+            setRouter: ["@router"]
 
 # knp_paginator
 knp_paginator:

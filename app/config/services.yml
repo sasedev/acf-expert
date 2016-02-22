@@ -43,4 +43,14 @@ services:
         class: Symfony\Component\Validator\Mapping\Cache\DoctrineCache
         arguments:
             - '@doctrine_cache.providers.vendor_filesystem_validation_cache'
+    # ...
+    mongo_client:
+        class: MongoClient
+        # if using a username and password
+        arguments:
+            - 'mongodb://%mongodb_host%:%mongodb_port%'
+            - { username: %mongodb_user%, password: %mongodb_pass%, db: %mongodb_auth%}
+    session.handler.mongo:
+        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
+        arguments: ['@mongo_client', '%mongo.session.options%']
 
