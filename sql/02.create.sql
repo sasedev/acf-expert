@@ -200,6 +200,17 @@ CREATE TABLE "acf_companies" (
 	CONSTRAINT "fk_acf_companies_type" FOREIGN KEY ("type_id") REFERENCES "acf_cmp_types" ("id") ON UPDATE CASCADE ON DELETE SET NULL
 );
 
+CREATE TABLE "acf_company_stocks" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"year"                                                              INT4 NOT NULL,
+	"val"                                                               FLOAT8 NOT NULL DEFAULT 0,
+	"company_id"                                                        UUID NOT NULL,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_company_stocks" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_company_stocks_company" FOREIGN KEY ("company_id") REFERENCES "acf_companies" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 CREATE TABLE "acf_company_sectors" (
 	"sector_id"                                                         INT8 NOT NULL,
 	"company_id"                                                        UUID NOT NULL,

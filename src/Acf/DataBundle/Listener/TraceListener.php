@@ -40,6 +40,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Acf\DataBundle\Entity\Stock;
 
 /**
  *
@@ -112,6 +113,18 @@ class TraceListener implements EventSubscriber
 		} elseif ($entity instanceof Company) {
 			$trace->setActionEntity(Trace::AE_COMPANY);
 			$trace->setMsg($trans->trans('Company.traceNew', array('%company%' => $entity->getCorporateName())));
+			$this->persist($trace, $em);
+		} elseif ($entity instanceof Stock) {
+			$trace->setActionEntity(Trace::AE_STOCK);
+			$trace->setMsg(
+				$trans->trans('Stock.traceNew',
+					array('%stock%' => $entity->getYear(), '%company%' => $entity->getCompany()
+						->getCorporateName())));
+			$trace->setCompanyId($entity->getCompany()
+				->getId());
+			$trace->setActionEntity2(Trace::AE_COMPANY);
+			$trace->setActionId2($entity->getCompany()
+				->getId());
 			$this->persist($trace, $em);
 		} elseif ($entity instanceof Address) {
 			$trace->setActionEntity(Trace::AE_ADDRESS);
@@ -495,6 +508,18 @@ class TraceListener implements EventSubscriber
 		} elseif ($entity instanceof Company) {
 			$trace->setActionEntity(Trace::AE_COMPANY);
 			$trace->setMsg($trans->trans('Company.traceDel', array('%company%' => $entity->getCorporateName())));
+			$this->persist($trace, $em);
+		} elseif ($entity instanceof Stock) {
+			$trace->setActionEntity(Trace::AE_STOCK);
+			$trace->setMsg(
+				$trans->trans('Stock.traceDel',
+					array('%stock%' => $entity->getYear(), '%company%' => $entity->getCompany()
+						->getCorporateName())));
+			$trace->setCompanyId($entity->getCompany()
+				->getId());
+			$trace->setActionEntity2(Trace::AE_COMPANY);
+			$trace->setActionId2($entity->getCompany()
+				->getId());
 			$this->persist($trace, $em);
 		} elseif ($entity instanceof Address) {
 			$trace->setActionEntity(Trace::AE_ADDRESS);

@@ -196,6 +196,7 @@ Company.actioncount: Nombre d'Actions
 Company.shareholders: Actionnaires
 Company.buys: Achats
 Company.sales: Ventes
+Company.stocks: Stocks
 Company.docs: Documents
 Company.dtCrea: Date d'ajout
 Company.dtUpdate: Date de modification
@@ -231,10 +232,22 @@ Company.zipCode.label: "Code Postal (Siège) :"
 Company.country.label: "Pays (Siège) :"
 Company.otherInfos.label: "Autres Informations :"
 Company.shareholders.label: "Actionnaires :"
+Company.stocks.label: "Stocks :"
 Company.buys.label: "Achats :"
 Company.sales.label: "Ventes :"
 Company.docs.label: "Documents :"
 Company.clone.label: "Clone de :"
+
+#Stock
+Stock.company: Société
+Stock.year: Année
+Stock.value: Valeur
+Stock.dtCrea: Date d'ajout
+Stock.dtUpdate: Date de modification
+
+Stock.company.label: "Société :"
+Stock.year.label: "Année :"
+Stock.value.label: "Valeur :"
 
 #Address
 Address.company: Société

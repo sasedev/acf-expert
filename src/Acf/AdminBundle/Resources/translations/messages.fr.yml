@@ -434,6 +434,7 @@ pagetitle.company.edit.txt: Edition Société "%company%"
 Company.tab.tab1: Informations Générales
 Company.tab.overview: Détails
 Company.tab.edit: Edition
+Company.tab.stocks: Stocks
 Company.tab.addresses: Adresses
 Company.tab.phones: Téléphones
 Company.tab.frames: Cadres
@@ -484,6 +485,8 @@ Company.tlabel.edit.email: 'Modification de l''Email'
 Company.tlabel.edit.adr: 'Modification de l''Adresse'
 Company.tlabel.edit.otherInfos: 'Modification des Autres Informations'
 Company.tlabel.edit.actionvn: 'Modification de la Valeure Nominale des Actions'
+Company.tlabel.stocks.add: 'Ajouter un Stock'
+Company.tlabel.stocks.list: 'Liste des Stocks'
 Company.tlabel.addresses.add: 'Ajouter une Adresse'
 Company.tlabel.addresses.list: 'Liste des Adresses'
 Company.tlabel.phones.add: 'Ajouter un Téléphone'
@@ -559,6 +562,45 @@ Company.traceNew: Ajout Nouvelle Société <b>%company%</b>
 Company.traceEdit: Modification de la Société <b>%company%</b>
 Company.traceDel: Suppression de la Société <b>%company%</b>
 
+#Stock
+menu.admin.stock: Stocks
+breadcrumb.stock.list: Liste des Stocks
+breadcrumb.stock.add: Ajouter Stock
+breadcrumb.stock.edit: Stock <b>%stock%</b>
+
+pagetitle.stock.list: Liste des Stocks
+pagetitle.stock.list.txt: Liste des Stocks
+pagetitle.stock.add: Ajouter Stock
+pagetitle.stock.add.txt: Ajouter Stock
+pagetitle.stock.edit: Edition Stock <b>%stock%</b>
+pagetitle.stock.edit.txt: Edition Stock <b>%stock%</b>
+
+Stock.tab.overview: Détails
+Stock.tab.edit: Edition
+
+Stock.tlabel.list: Liste des Stocks
+Stock.tlabel.add: Ajouter nouveau Stock
+Stock.tlabel.overview: 'Aperçu des détails du Stock'
+Stock.tlabel.edit: 'Modification du Stock'
+
+Stock.empty: Aucun Stock trouvé dans la base de donnée
+
+Stock.add.success: 'Succès de l''ajout du Stock <b>%stock%</b>'
+Stock.add.failure: 'Echec de l''ajout du Stock'
+Stock.delete.confirm.title: Demande de Confirmation
+Stock.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Stock ?<br/> Cette action est irreversible!
+Stock.delete.notfound: Stock inconnu
+Stock.delete.success: 'Succès de la suppression du Stock <b>%stock%</b>'
+Stock.delete.failure: 'Echec de la suppression du Stock'
+Stock.edit.notfound: Stock inconnu
+Stock.edit.success: 'Succès de la modification du Stock <b>%stock%</b>'
+Stock.edit.failure: 'Echec de la modification du Stock <b>%stock%</b>'
+
+
+Stock.traceNew: 'Ajout Nouvelle le Stock <b>%stock%</b><br/>Société <b>%company%</b>'
+Stock.traceEdit: 'Modification du Stock <b>%stock%</b><br/>Société <b>%company%</b>'
+Stock.traceDel: 'Suppression du Stock <b>%stock%</b><br/>Société <b>%company%</b>'
+
 #Address
 menu.admin.address: Adresses
 breadcrumb.address.list: Liste des Adresses
@@ -585,7 +627,7 @@ Address.empty: Aucune Adresse trouvée dans la base de donnée
 Address.add.success: 'Succès de l''ajout de l''Adresse <b>%address%</b>'
 Address.add.failure: 'Echec de l''ajout de l''Adresse'
 Address.delete.confirm.title: Demande de Confirmation
-Address.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Cadre ?<br/> Cette action est irreversible!
+Address.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Adresse ?<br/> Cette action est irreversible!
 Address.delete.notfound: Adresse inconnue
 Address.delete.success: 'Succès de la suppression de l''Adresse <b>%address%</b>'
 Address.delete.failure: 'Echec de la suppression de l''Adresse'

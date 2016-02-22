@@ -23,6 +23,7 @@ use Acf\AdminBundle\Form\Company\UpdateEmailTForm as CompanyUpdateEmailTForm;
 use Acf\AdminBundle\Form\Company\UpdateAdrTForm as CompanyUpdateAdrTForm;
 use Acf\AdminBundle\Form\Company\UpdateOtherInfosTForm as CompanyUpdateOtherInfosTForm;
 use Acf\AdminBundle\Form\Company\UpdateActionvnTForm as CompanyUpdateActionvnTForm;
+use Acf\AdminBundle\Form\Stock\NewTForm as StockNewTForm;
 use Acf\AdminBundle\Form\Address\NewTForm as AddressNewTForm;
 use Acf\AdminBundle\Form\Phone\NewTForm as PhoneNewTForm;
 use Acf\AdminBundle\Form\CompanyFrame\NewTForm as CompanyFrameNewTForm;
@@ -62,7 +63,8 @@ use Acf\DataBundle\Entity\Customer;
 use Acf\DataBundle\Entity\Supplier;
 use Acf\DataBundle\Entity\Bank;
 use Acf\DataBundle\Entity\Fund;
-use Acf\DataBundle\Entity\Withholding;
+use Acf\DataBundle\Entity\Withholding;;
+use Acf\DataBundle\Entity\Stock;
 use Acf\DataBundle\Entity\Address;
 use Acf\DataBundle\Entity\Phone;
 use Acf\DataBundle\Entity\ConstantStr;
@@ -579,6 +581,10 @@ class CompanyController extends BaseController
 				$companyUpdateOtherInfosForm = $this->createForm(CompanyUpdateOtherInfosTForm::class, $company);
 				$companyUpdateActionvnForm = $this->createForm(CompanyUpdateActionvnTForm::class, $company);
 
+				$stock = new Stock();
+				$stock->setCompany($company);
+				$stockNewForm = $this->createForm(StockNewTForm::class, $stock, array('company' => $company));
+
 				$address = new Address();
 				$address->setCompany($company);
 				$addressNewForm = $this->createForm(AddressNewTForm::class, $address, array('company' => $company));
@@ -690,6 +696,7 @@ class CompanyController extends BaseController
 				$this->gvars['SectorNewForm'] = $sectorNewForm->createView();
 
 				$this->gvars['company'] = $company;
+				$this->gvars['stock'] = $stock;
 				$this->gvars['address'] = $address;
 				$this->gvars['phone'] = $phone;
 				$this->gvars['companyFrame'] = $companyFrame;
@@ -736,6 +743,7 @@ class CompanyController extends BaseController
 				$this->gvars['CompanyUpdateAdrForm'] = $companyUpdateAdrForm->createView();
 				$this->gvars['CompanyUpdateOtherInfosForm'] = $companyUpdateOtherInfosForm->createView();
 				$this->gvars['CompanyUpdateActionvnForm'] = $companyUpdateActionvnForm->createView();
+				$this->gvars['StockNewForm'] = $stockNewForm->createView();
 				$this->gvars['AddressNewForm'] = $addressNewForm->createView();
 				$this->gvars['PhoneNewForm'] = $phoneNewForm->createView();
 				$this->gvars['CompanyFrameNewForm'] = $companyFrameNewForm->createView();
@@ -907,6 +915,10 @@ class CompanyController extends BaseController
 				$companyUpdateAdrForm = $this->createForm(CompanyUpdateAdrTForm::class, $company);
 				$companyUpdateOtherInfosForm = $this->createForm(CompanyUpdateOtherInfosTForm::class, $company);
 				$companyUpdateActionvnForm = $this->createForm(CompanyUpdateActionvnTForm::class, $company);
+
+				$stock = new Stock();
+				$stock->setCompany($company);
+				$stockNewForm = $this->createForm(StockNewTForm::class, $stock, array('company' => $company));
 
 				$address = new Address();
 				$address->setCompany($company);
@@ -1328,9 +1340,28 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error',
 							$this->translate('Company.edit.failure', array('%company%' => $company->getCorporateName())));
 					}
-				} elseif (isset($reqData['AddressNewForm'])) {
+				} elseif (isset($reqData['StockNewForm'])) {
 					$this->gvars['tabActive'] = 3;
 					$this->getSession()->set('tabActive', 3);
+					$stockNewForm->handleRequest($request);
+					if ($stockNewForm->isValid()) {
+						$em->persist($stock);
+						$em->flush();
+						$this->flashMsgSession('success',
+							$this->translate('Stock.add.success', array('%stock%' => $stock->getYear())));
+
+						$this->gvars['stabActive'] = 2;
+						$this->getSession()->set('stabActive', 2);
+
+						return $this->redirect($urlFrom);
+					} else {
+						$em->refresh($company);
+
+						$this->flashMsgSession('error', $this->translate('Address.add.failure'));
+					}
+				} elseif (isset($reqData['AddressNewForm'])) {
+					$this->gvars['tabActive'] = 4;
+					$this->getSession()->set('tabActive', 4);
 					$addressNewForm->handleRequest($request);
 					if ($addressNewForm->isValid()) {
 						$em->persist($address);
@@ -1348,8 +1379,8 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error', $this->translate('Address.add.failure'));
 					}
 				} elseif (isset($reqData['PhoneNewForm'])) {
-					$this->gvars['tabActive'] = 4;
-					$this->getSession()->set('tabActive', 4);
+					$this->gvars['tabActive'] = 5;
+					$this->getSession()->set('tabActive', 5);
 					$phoneNewForm->handleRequest($request);
 					if ($phoneNewForm->isValid()) {
 						$em->persist($phone);
@@ -1367,8 +1398,8 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error', $this->translate('Phone.add.failure'));
 					}
 				} elseif (isset($reqData['CompanyFrameNewForm'])) {
-					$this->gvars['tabActive'] = 5;
-					$this->getSession()->set('tabActive', 5);
+					$this->gvars['tabActive'] = 6;
+					$this->getSession()->set('tabActive', 6);
 					$companyFrameNewForm->handleRequest($request);
 					if ($companyFrameNewForm->isValid()) {
 						$em->persist($companyFrame);
@@ -1387,8 +1418,8 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error', $this->translate('CompanyFrame.add.failure'));
 					}
 				} elseif (isset($reqData['CompanyNatureNewForm'])) {
-					$this->gvars['tabActive'] = 6;
-					$this->getSession()->set('tabActive', 6);
+					$this->gvars['tabActive'] = 7;
+					$this->getSession()->set('tabActive', 7);
 					$this->gvars['stabActive'] = 1;
 					$this->getSession()->set('stabActive', 1);
 					$companyNatureNewForm->handleRequest($request);
@@ -1409,8 +1440,8 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error', $this->translate('CompanyNature.add.failure'));
 					}
 				} elseif (isset($reqData['CompanyNatureImportForm'])) {
-					$this->gvars['tabActive'] = 6;
-					$this->getSession()->set('tabActive', 6);
+					$this->gvars['tabActive'] = 8;
+					$this->getSession()->set('tabActive', 8);
 					$this->gvars['stabActive'] = 2;
 					$this->getSession()->set('stabActive', 2);
 					$companyNatureImportForm->handleRequest($request);
@@ -1512,8 +1543,8 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error', $this->translate('CompanyNature.import.failure'));
 					}
 				} elseif (isset($reqData['DocNewForm'])) {
-					$this->gvars['tabActive'] = 7;
-					$this->getSession()->set('tabActive', 7);
+					$this->gvars['tabActive'] = 8;
+					$this->getSession()->set('tabActive', 8);
 					$docNewForm->handleRequest($request);
 					if ($docNewForm->isValid()) {
 						$docFiles = $docNewForm['fileName']->getData();
@@ -1558,8 +1589,8 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error', $this->translate('Doc.add.failure'));
 					}
 				} elseif (isset($reqData['PilotNewForm'])) {
-					$this->gvars['tabActive'] = 8;
-					$this->getSession()->set('tabActive', 8);
+					$this->gvars['tabActive'] = 9;
+					$this->getSession()->set('tabActive', 9);
 					$pilotNewForm->handleRequest($request);
 					if ($pilotNewForm->isValid()) {
 
@@ -1578,8 +1609,8 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error', $this->translate('Pilot.add.failure'));
 					}
 				} elseif (isset($reqData['CompanyUserNewForm'])) {
-					$this->gvars['tabActive'] = 9;
-					$this->getSession()->set('tabActive', 9);
+					$this->gvars['tabActive'] = 10;
+					$this->getSession()->set('tabActive', 10);
 					$companyUserNewForm->handleRequest($request);
 					if ($companyUserNewForm->isValid()) {
 						$user = $companyUser->getUser();
@@ -1616,8 +1647,8 @@ class CompanyController extends BaseController
 						$this->flashMsgSession('error', $this->translate('CompanyUser.add.failure'));
 					}
 				} elseif (isset($reqData['CompanyAdminNewForm'])) {
-					$this->gvars['tabActive'] = 10;
-					$this->getSession()->set('tabActive', 10);
+					$this->gvars['tabActive'] = 11;
+					$this->getSession()->set('tabActive', 11);
 					$companyAdminNewForm->handleRequest($request);
 					if ($companyAdminNewForm->isValid()) {
 						$user = $companyAdmin->getUser();
@@ -2999,6 +3030,7 @@ class CompanyController extends BaseController
 				$this->gvars['SectorNewForm'] = $sectorNewForm->createView();
 
 				$this->gvars['company'] = $company;
+				$this->gvars['stock'] = $stock;
 				$this->gvars['address'] = $address;
 				$this->gvars['phone'] = $phone;
 				$this->gvars['companyFrame'] = $companyFrame;
@@ -3045,6 +3077,7 @@ class CompanyController extends BaseController
 				$this->gvars['CompanyUpdateOtherInfosForm'] = $companyUpdateOtherInfosForm->createView();
 				$this->gvars['CompanyUpdateActionvnForm'] = $companyUpdateActionvnForm->createView();
 				$this->gvars['CompanyUpdateRefForm'] = $companyUpdateRefForm->createView();
+				$this->gvars['StockNewForm'] = $stockNewForm->createView();
 				$this->gvars['AddressNewForm'] = $addressNewForm->createView();
 				$this->gvars['PhoneNewForm'] = $phoneNewForm->createView();
 				$this->gvars['CompanyFrameNewForm'] = $companyFrameNewForm->createView();

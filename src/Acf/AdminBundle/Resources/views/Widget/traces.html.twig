@@ -47,6 +47,14 @@
 			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
 			{{faIco('building bg-red')}}
 			{% endif %}
+		{% elseif trace.actionEntity is constant('AE_STOCK', trace)%}
+			{% if trace.actionType == constant('AT_CREATE', trace)%}
+			{{faIco('shopping-cart bg-blue')}}
+			{% elseif trace.actionType == constant('AT_UPDATE', trace)%}
+			{{faIco('shopping-cart bg-green')}}
+			{% elseif trace.actionType == constant('AT_DELETE', trace)%}
+			{{faIco('shopping-cart bg-red')}}
+			{% endif %}
 		{% elseif trace.actionEntity is constant('AE_ADDRESS', trace)%}
 			{% if trace.actionType == constant('AT_CREATE', trace)%}
 			{{faIco('map-marker bg-blue')}}
@@ -335,6 +343,8 @@
 					{% if showCompany is defined and showCompany == true %}
 					<a class="btn btn-xs" href="{{ path('_admin_company_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
 					{% endif %}
+				{% elseif trace.actionEntity is constant('AE_STOCK', trace)%}
+					<a class="btn btn-xs" href="{{ path('_admin_stock_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
 				{% elseif trace.actionEntity is constant('AE_ADDRESS', trace)%}
 					<a class="btn btn-xs" href="{{ path('_admin_address_editGet', {'uid': trace.actionId}) }}">Voir {{faIco('eye')}}</a>
 				{% elseif trace.actionEntity is constant('AE_PHONE', trace)%}

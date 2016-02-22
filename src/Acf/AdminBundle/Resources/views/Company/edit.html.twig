@@ -128,6 +128,29 @@ $(function() {
 
 	$('#MBPurchaseNewForm_month').chosen({width: "100%", disable_search_threshold: 12});
 
+	{% if company.stocks|length != 0 %}
+	$('#stockList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmStock').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmStock').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmStock').modal('show');
+			});
+		}
+	});
+	{% endif %}
+
 	{% if company.addresses|length != 0 %}
 	$('#addressList').dataTable({
 		{%if app.request.locale != 'en'%}
@@ -718,7 +741,7 @@ $(function() {
 		{% endif %}
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
-				<li {%if tabActive==1 or tabActive==2 or tabActive==3 or tabActive==4 or tabActive==5 or tabActive==6 or tabActive==7 or tabActive==8 or tabActive==9 or tabActive==10 or tabActive==11 %} class="active"{%endif%}><a href="#tab1" data-toggle="tab">{{'Company.tab.tab1'|trans|raw}}</a></li>
+				<li {%if tabActive==1 or tabActive==2 or tabActive==3 or tabActive==4 or tabActive==5 or tabActive==6 or tabActive==7 or tabActive==8 or tabActive==9 or tabActive==10 or tabActive==11 or tabActive==12 %} class="active"{%endif%}><a href="#tab1" data-toggle="tab">{{'Company.tab.tab1'|trans|raw}}</a></li>
 				<li {%if tabActive==21 or tabActive==22 or tabActive==23 or tabActive==24 or tabActive==25 or tabActive==26 or tabActive==27 or tabActive==28 or tabActive==29 or tabActive==30 %} class="active"{%endif%}><a href="#tab2" data-toggle="tab">{{'Company.tab.tab2'|trans|raw}}</a></li>
 				<li {%if tabActive==41 or tabActive==42 %} class="active"{%endif%}><a href="#tab3" data-toggle="tab">{{'Company.tab.tab3'|trans|raw}}</a></li>
 				<li {%if tabActive==51 %} class="active"{%endif%}><a href="#tab4" data-toggle="tab">{{'Company.tab.tab4'|trans|raw}}</a></li>
@@ -729,26 +752,27 @@ $(function() {
 				{% endif %}
 			</ul>
 			<div class="tab-content">
-				<div class="tab-pane fade{%if tabActive==1 or tabActive==2 or tabActive==3 or tabActive==4 or tabActive==5 or tabActive==6 or tabActive==7 or tabActive==8 or tabActive==9 or tabActive==10 or tabActive==11%} in active{%endif%}" id="tab1">
+				<div class="tab-pane fade{%if tabActive==1 or tabActive==2 or tabActive==3 or tabActive==4 or tabActive==5 or tabActive==6 or tabActive==7 or tabActive==8 or tabActive==9 or tabActive==10 or tabActive==11 or tabActive==12%} in active{%endif%}" id="tab1">
 					<div class="panel">
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
-								<li {%if tabActive==1 or ( tabActive!=1 and tabActive!=2 and tabActive!=3 and tabActive!=4 and tabActive!=5 and tabActive!=6 and tabActive!=7 and tabActive!=8 and tabActive!=9 and tabActive!=10 and tabActive!=11 )%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Company.tab.overview'|trans|raw}}</a></li>
+								<li {%if tabActive==1 or ( tabActive!=1 and tabActive!=2 and tabActive!=3 and tabActive!=4 and tabActive!=5 and tabActive!=6 and tabActive!=7 and tabActive!=8 and tabActive!=9 and tabActive!=10 and tabActive!=11 and tabActive!=12 )%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Company.tab.overview'|trans|raw}}</a></li>
 								<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Company.tab.edit'|trans|raw}}</a></li>
-								<li {%if tabActive==3%} class="active"{%endif%}><a href="#Addresses" data-toggle="tab">{{'Company.tab.addresses'|trans|raw}}</a></li>
-								<li {%if tabActive==4%} class="active"{%endif%}><a href="#Phones" data-toggle="tab">{{'Company.tab.phones'|trans|raw}}</a></li>
-								<li {%if tabActive==5%} class="active"{%endif%}><a href="#Frames" data-toggle="tab">{{'Company.tab.frames'|trans|raw}}</a></li>
-								<li {%if tabActive==6%} class="active"{%endif%}><a href="#Natures" data-toggle="tab">{{'Company.tab.natures'|trans|raw}}</a></li>
-								<li {%if tabActive==7%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'Company.tab.docs'|trans|raw}}</a></li>
+								<li {%if tabActive==3%} class="active"{%endif%}><a href="#Stocks" data-toggle="tab">{{'Company.tab.stocks'|trans|raw}}</a></li>
+								<li {%if tabActive==4%} class="active"{%endif%}><a href="#Addresses" data-toggle="tab">{{'Company.tab.addresses'|trans|raw}}</a></li>
+								<li {%if tabActive==5%} class="active"{%endif%}><a href="#Phones" data-toggle="tab">{{'Company.tab.phones'|trans|raw}}</a></li>
+								<li {%if tabActive==6%} class="active"{%endif%}><a href="#Frames" data-toggle="tab">{{'Company.tab.frames'|trans|raw}}</a></li>
+								<li {%if tabActive==7%} class="active"{%endif%}><a href="#Natures" data-toggle="tab">{{'Company.tab.natures'|trans|raw}}</a></li>
+								<li {%if tabActive==8%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'Company.tab.docs'|trans|raw}}</a></li>
 								{%if is_granted('ROLE_SUPERADMIN')%}
-								<li {%if tabActive==8%} class="active"{%endif%}><a href="#Pilots" data-toggle="tab">{{'Company.tab.pilots'|trans|raw}}</a></li>
-								<li {%if tabActive==9%} class="active"{%endif%}><a href="#Users" data-toggle="tab">{{'Company.tab.users'|trans|raw}}</a></li>
-								<li {%if tabActive==10%} class="active"{%endif%}><a href="#Admins" data-toggle="tab">{{'Company.tab.admins'|trans|raw}}</a></li>
+								<li {%if tabActive==9%} class="active"{%endif%}><a href="#Pilots" data-toggle="tab">{{'Company.tab.pilots'|trans|raw}}</a></li>
+								<li {%if tabActive==10%} class="active"{%endif%}><a href="#Users" data-toggle="tab">{{'Company.tab.users'|trans|raw}}</a></li>
+								<li {%if tabActive==11%} class="active"{%endif%}><a href="#Admins" data-toggle="tab">{{'Company.tab.admins'|trans|raw}}</a></li>
 								{% endif %}
-								<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+								<li {%if tabActive==12%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane fade{%if tabActive==1 or ( tabActive!=1 and tabActive!=2 and tabActive!=3 and tabActive!=4 and tabActive!=5 and tabActive!=6 and tabActive!=7 and tabActive!=8 and tabActive!=9 and tabActive!=10 and tabActive!=11 )%} in active{%endif%}" id="overview">
+								<div class="tab-pane fade{%if tabActive==1 or ( tabActive!=1 and tabActive!=2 and tabActive!=3 and tabActive!=4 and tabActive!=5 and tabActive!=6 and tabActive!=7 and tabActive!=8 and tabActive!=9 and tabActive!=10 and tabActive!=11 and tabActive!=12 )%} in active{%endif%}" id="overview">
 									<div class="panel box box-primary">
 										<div class="box-header"><h3 class="box-title">{{'Company.tlabel.overview'|trans}}</h3></div>
 										<div class="box-body">
@@ -992,13 +1016,72 @@ $(function() {
 								</div>
 
 
-								<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="Addresses">
+								<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="Stocks">
 									<div id="accordion03" class="box-group">
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse31" data-parent="#accordion03" data-toggle="collapse">{{'Company.tlabel.addresses.add'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse31" data-parent="#accordion03" data-toggle="collapse">{{'Company.tlabel.stocks.add'|trans}}</a></h4>
 											</div>
 											<div id="collapse31" class="panel-collapse collapse{%if tabActive==3 and stabActive==1%} in{%endif%}">
+												<div class="box-body">
+													{{form_start(StockNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+													{{form_row(StockNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+													{{form_row(StockNewForm.year, {'label_col': 3, 'widget_col': 8})}}
+													{{form_row(StockNewForm.value, {'label_col': 3, 'widget_col': 8})}}
+													<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+													{{form_end(StockNewForm)}}
+												</div>
+											</div>
+										</div>
+										<div class="panel box">
+											<div class="box-header">
+												<h4 class="box-title"><a href="#collapse32" data-parent="#accordion03" data-toggle="collapse">{{'Company.tlabel.stocks.list'|trans}}</a></h4>
+											</div>
+											<div id="collapse32" class="panel-collapse collapse{%if (tabActive==3 and stabActive==2) or tabActive!=3%} in{%endif%}">
+												<div class="box-body table-responsive">
+
+													<table id="stockList" class="table table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>{{ 'Stock.year.label'|trans|raw }}</th>
+																<th>{{ 'Stock.value.label'|trans|raw }}</th>
+																<th>{{ 'action'|trans|raw }}</th>
+															</tr>
+														</thead>
+														<tbody>
+													{% if company.stocks|length != 0 %}
+														{% for stock in company.stocks %}
+															<tr>
+																<td>{{ stock.year }}</td>
+																<td>{{ stock.value|number_format(3, '.', ' ') }} TND</td>
+																<td>
+																	<a class="btn btn-sm btn-info" href="{{path('_admin_stock_editGet',{'uid':stock.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																	<a class="btn btn-sm btn-danger deleteConfirmStock" href="{{path('_admin_stock_delete',{'uid':stock.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+																</td>
+															</tr>
+														{% endfor %}
+													{% else %}
+															<tr>
+																<td colspan="3">{{ 'Stock.empty'|trans|raw }}</td>
+															</tr>
+													{% endif %}
+														</tbody>
+													</table>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="tab-pane fade{%if tabActive==4%} in active{%endif%}" id="Addresses">
+									<div id="accordion04" class="box-group">
+										<div class="panel box box-danger">
+											<div class="box-header">
+												<h4 class="box-title"><a href="#collapse41" data-parent="#accordion04" data-toggle="collapse">{{'Company.tlabel.addresses.add'|trans}}</a></h4>
+											</div>
+											<div id="collapse41" class="panel-collapse collapse{%if tabActive==4 and stabActive==1%} in{%endif%}">
 												<div class="box-body">
 													{{form_start(AddressNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(AddressNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
@@ -1021,9 +1104,9 @@ $(function() {
 										</div>
 										<div class="panel box">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse32" data-parent="#accordion03" data-toggle="collapse">{{'Company.tlabel.addresses.list'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse42" data-parent="#accordion04" data-toggle="collapse">{{'Company.tlabel.addresses.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse32" class="panel-collapse collapse{%if (tabActive==3 and stabActive==2) or tabActive!=3%} in{%endif%}">
+											<div id="collapse32" class="panel-collapse collapse{%if (tabActive==4 and stabActive==2) or tabActive!=4%} in{%endif%}">
 												<div class="box-body table-responsive">
 
 													<table id="addressList" class="table table-bordered table-hover">
@@ -1062,13 +1145,13 @@ $(function() {
 
 
 
-								<div class="tab-pane fade{%if tabActive==4%} in active{%endif%}" id="Phones">
-									<div id="accordion04" class="box-group">
+								<div class="tab-pane fade{%if tabActive==5%} in active{%endif%}" id="Phones">
+									<div id="accordion05" class="box-group">
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse41" data-parent="#accordion04" data-toggle="collapse">{{'Company.tlabel.phones.add'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse51" data-parent="#accordion05" data-toggle="collapse">{{'Company.tlabel.phones.add'|trans}}</a></h4>
 											</div>
-											<div id="collapse41" class="panel-collapse collapse{%if tabActive==4 and stabActive==1%} in{%endif%}">
+											<div id="collapse51" class="panel-collapse collapse{%if tabActive==5 and stabActive==1%} in{%endif%}">
 												<div class="box-body">
 													{{form_start(PhoneNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(PhoneNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
@@ -1082,9 +1165,9 @@ $(function() {
 										</div>
 										<div class="panel box">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse42" data-parent="#accordion04" data-toggle="collapse">{{'Company.tlabel.phones.list'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse52" data-parent="#accordion05" data-toggle="collapse">{{'Company.tlabel.phones.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse42" class="panel-collapse collapse{%if (tabActive==4 and stabActive==2) or tabActive!=4%} in{%endif%}">
+											<div id="collapse52" class="panel-collapse collapse{%if (tabActive==5 and stabActive==2) or tabActive!=5%} in{%endif%}">
 												<div class="box-body table-responsive">
 
 													<table id="phoneList" class="table table-bordered table-hover">
@@ -1124,13 +1207,13 @@ $(function() {
 								</div>
 
 
-								<div class="tab-pane fade{%if tabActive==5%} in active{%endif%}" id="Frames">
-									<div id="accordion05" class="box-group">
+								<div class="tab-pane fade{%if tabActive==6%} in active{%endif%}" id="Frames">
+									<div id="accordion06" class="box-group">
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse51" data-parent="#accordion05" data-toggle="collapse">{{'Company.tlabel.frames.add'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse61" data-parent="#accordion06" data-toggle="collapse">{{'Company.tlabel.frames.add'|trans}}</a></h4>
 											</div>
-											<div id="collapse51" class="panel-collapse collapse{%if tabActive==5 and stabActive==1%} in{%endif%}">
+											<div id="collapse61" class="panel-collapse collapse{%if tabActive==6 and stabActive==1%} in{%endif%}">
 												<div class="box-body">
 													{{form_start(CompanyFrameNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(CompanyFrameNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
@@ -1157,9 +1240,9 @@ $(function() {
 										</div>
 										<div class="panel box">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse52" data-parent="#accordion05" data-toggle="collapse">{{'Company.tlabel.frames.list'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse62" data-parent="#accordion06" data-toggle="collapse">{{'Company.tlabel.frames.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse52" class="panel-collapse collapse{%if (tabActive==5 and stabActive==2) or tabActive!=5%} in{%endif%}">
+											<div id="collapse62" class="panel-collapse collapse{%if (tabActive==6 and stabActive==2) or tabActive!=6%} in{%endif%}">
 												<div class="box-body table-responsive">
 
 													<table id="companyFrameList" class="table table-bordered table-hover">
@@ -1196,13 +1279,13 @@ $(function() {
 									</div>
 								</div>
 
-								<div class="tab-pane fade{%if tabActive==6%} in active{%endif%}" id="Natures">
-									<div id="accordion06" class="box-group">
+								<div class="tab-pane fade{%if tabActive==7%} in active{%endif%}" id="Natures">
+									<div id="accordion07" class="box-group">
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse61" data-parent="#accordion06" data-toggle="collapse">{{'Company.tlabel.natures.add'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse71" data-parent="#accordion07" data-toggle="collapse">{{'Company.tlabel.natures.add'|trans}}</a></h4>
 											</div>
-											<div id="collapse61" class="panel-collapse collapse{%if tabActive==6 and stabActive==1 %} in{%endif%}">
+											<div id="collapse71" class="panel-collapse collapse{%if tabActive==7 and stabActive==1 %} in{%endif%}">
 												<div class="box-body">
 													{{form_start(CompanyNatureNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(CompanyNatureNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
@@ -1215,9 +1298,9 @@ $(function() {
 										</div>
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse62" data-parent="#accordion06" data-toggle="collapse">{{'Company.tlabel.natures.excel'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse72" data-parent="#accordion07" data-toggle="collapse">{{'Company.tlabel.natures.excel'|trans}}</a></h4>
 											</div>
-											<div id="collapse62" class="panel-collapse collapse{%if tabActive==6 and stabActive==2 %} in{%endif%}">
+											<div id="collapse72" class="panel-collapse collapse{%if tabActive==7 and stabActive==2 %} in{%endif%}">
 												<div class="box-body">
 													{{form_start(CompanyNatureImportForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(CompanyNatureImportForm.excel, {'label_col': 3, 'widget_col': 8 })}}
@@ -1228,14 +1311,14 @@ $(function() {
 										</div>
 										<div class="panel box">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse63" data-parent="#accordion06" data-toggle="collapse">{{'Company.tlabel.natures.list'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse73" data-parent="#accordion07" data-toggle="collapse">{{'Company.tlabel.natures.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse63" class="panel-collapse collapse{%if (tabActive==6 and stabActive==3) or tabActive!=6%} in{%endif%}">
+											<div id="collapse73" class="panel-collapse collapse{%if (tabActive==7 and stabActive==3) or tabActive!=7%} in{%endif%}">
 												<div class="box-body table-responsive">
 													<div class="well well-sm text-right">
 														<a href="{{ path('_admin_company_companyNatureExcel', {'uid': company.id}) }}" class="btn btn-success">{{ faIco('file-excel-o') }} {{ 'action.excel'|trans }}</a>
 													</div>
-													{% if tabActive == 6 %}
+													{% if tabActive == 7 %}
 													{% for flashMessage in app.session.flashbag.get('log') %}
 													<div class="callout callout-info">
 													{{ flashMessage|raw }}
@@ -1278,13 +1361,13 @@ $(function() {
 								</div>
 
 
-								<div class="tab-pane fade{%if tabActive==7%} in active{%endif%}" id="Docs">
-									<div id="accordion07" class="box-group">
+								<div class="tab-pane fade{%if tabActive==8%} in active{%endif%}" id="Docs">
+									<div id="accordion08" class="box-group">
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse71" data-parent="#accordion07" data-toggle="collapse">{{'Company.tlabel.docs.add'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse81" data-parent="#accordion08" data-toggle="collapse">{{'Company.tlabel.docs.add'|trans}}</a></h4>
 											</div>
-											<div id="collapse71" class="panel-collapse collapse{%if tabActive==7 and stabActive==1%} in{%endif%}">
+											<div id="collapse81" class="panel-collapse collapse{%if tabActive==8 and stabActive==1%} in{%endif%}">
 												<div class="box-body">
 													{{form_start(DocNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(DocNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
@@ -1297,9 +1380,9 @@ $(function() {
 										</div>
 										<div class="panel box">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse72" data-parent="#accordion07" data-toggle="collapse">{{'Company.tlabel.docs.list'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse82" data-parent="#accordion08" data-toggle="collapse">{{'Company.tlabel.docs.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse72" class="panel-collapse collapse{%if (tabActive==7 and stabActive==2) or tabActive!=7%} in{%endif%}">
+											<div id="collapse82" class="panel-collapse collapse{%if (tabActive==8 and stabActive==2) or tabActive!=8%} in{%endif%}">
 												<div class="box-body table-responsive">
 
 													<table class="table table-bordered table-hover" id="docList">
@@ -1354,13 +1437,13 @@ $(function() {
 									</div>
 								</div>
 {%if is_granted('ROLE_SUPERADMIN')%}
-								<div class="tab-pane fade{%if tabActive==8%} in active{%endif%}" id="Pilots">
-									<div id="accordion08" class="box-group">
+								<div class="tab-pane fade{%if tabActive==9%} in active{%endif%}" id="Pilots">
+									<div id="accordion09" class="box-group">
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse81" data-parent="#accordion08" data-toggle="collapse">{{'Company.tlabel.pilots.add'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse91" data-parent="#accordion09" data-toggle="collapse">{{'Company.tlabel.pilots.add'|trans}}</a></h4>
 											</div>
-											<div id="collapse81" class="panel-collapse collapse{%if tabActive==8 and stabActive==1%} in{%endif%}">
+											<div id="collapse91" class="panel-collapse collapse{%if tabActive==9 and stabActive==1%} in{%endif%}">
 												<div class="box-body">
 													{{form_start(PilotNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(PilotNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
@@ -1402,9 +1485,9 @@ $(function() {
 										</div>
 										<div class="panel box">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse82" data-parent="#accordion08" data-toggle="collapse">{{'Company.tlabel.pilots.list'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse92" data-parent="#accordion09" data-toggle="collapse">{{'Company.tlabel.pilots.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse82" class="panel-collapse collapse{%if (tabActive==8 and stabActive==2) or tabActive!=8%} in{%endif%}">
+											<div id="collapse92" class="panel-collapse collapse{%if (tabActive==9 and stabActive==2) or tabActive!=9%} in{%endif%}">
 												<div class="box-body table-responsive">
 													<div class="well well-sm text-right">
 														<a href="{{ path('_admin_company_pilotExcel', {'uid': company.id}) }}" class="btn btn-success">{{ faIco('file-excel-o') }} {{ 'action.excel'|trans }}</a>
@@ -1501,13 +1584,13 @@ $(function() {
 									</div>
 								</div>
 
-								<div class="tab-pane fade{%if tabActive==9%} in active{%endif%}" id="Users">
-									<div id="accordion09" class="box-group">
+								<div class="tab-pane fade{%if tabActive==10%} in active{%endif%}" id="Users">
+									<div id="accordion10" class="box-group">
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse91" data-parent="#accordion09" data-toggle="collapse">{{'Company.tlabel.users.add'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse101" data-parent="#accordion10" data-toggle="collapse">{{'Company.tlabel.users.add'|trans}}</a></h4>
 											</div>
-											<div id="collapse91" class="panel-collapse collapse{%if tabActive==9 and stabActive==1 %} in{%endif%}">
+											<div id="collapse101" class="panel-collapse collapse{%if tabActive==10 and stabActive==1 %} in{%endif%}">
 												<div class="box-body">
 													{{form_start(CompanyUserNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(CompanyUserNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
@@ -1556,9 +1639,9 @@ $(function() {
 										</div>
 										<div class="panel box">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse92" data-parent="#accordion09" data-toggle="collapse">{{'Company.tlabel.users.list'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse102" data-parent="#accordion10" data-toggle="collapse">{{'Company.tlabel.users.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse92" class="panel-collapse collapse{%if (tabActive==9 and stabActive==2) or tabActive!=9%} in{%endif%}">
+											<div id="collapse102" class="panel-collapse collapse{%if (tabActive==10 and stabActive==2) or tabActive!=10%} in{%endif%}">
 												<div class="box-body table-responsive">
 													<table id="companyUserList" class="table table-bordered table-hover">
 														<thead>
@@ -1666,13 +1749,13 @@ $(function() {
 									</div>
 								</div>
 
-								<div class="tab-pane fade{%if tabActive==10%} in active{%endif%}" id="Admins">
-									<div id="accordion10" class="box-group">
+								<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Admins">
+									<div id="accordion11" class="box-group">
 										<div class="panel box box-danger">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse101" data-parent="#accordion10" data-toggle="collapse">{{'Company.tlabel.admins.add'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse111" data-parent="#accordion11" data-toggle="collapse">{{'Company.tlabel.admins.add'|trans}}</a></h4>
 											</div>
-											<div id="collapse101" class="panel-collapse collapse{%if tabActive==10 and stabActive==1 %} in{%endif%}">
+											<div id="collapse111" class="panel-collapse collapse{%if tabActive==11 and stabActive==1 %} in{%endif%}">
 												<div class="box-body">
 													{{form_start(CompanyAdminNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
 													{{form_row(CompanyAdminNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
@@ -1684,9 +1767,9 @@ $(function() {
 										</div>
 										<div class="panel box">
 											<div class="box-header">
-												<h4 class="box-title"><a href="#collapse102" data-parent="#accordion10" data-toggle="collapse">{{'Company.tlabel.admins.list'|trans}}</a></h4>
+												<h4 class="box-title"><a href="#collapse112" data-parent="#accordion11" data-toggle="collapse">{{'Company.tlabel.admins.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse102" class="panel-collapse collapse{%if (tabActive==10 and stabActive==2) or tabActive!=9%} in{%endif%}">
+											<div id="collapse112" class="panel-collapse collapse{%if (tabActive==11 and stabActive==2) or tabActive!=11%} in{%endif%}">
 												<div class="box-body table-responsive">
 													<table id="companyAdminList" class="table table-bordered table-hover">
 														<thead>
@@ -1720,7 +1803,7 @@ $(function() {
 								</div>
 
 								{% endif %}
-								<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+								<div class="tab-pane fade{%if tabActive==12%} in active{%endif%}" id="Logs">
 									<div class="panel box box-warning">
 										<div class="box-header">
 											<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
@@ -3341,6 +3424,19 @@ $(function() {
 
 			</div>
 		</div>
+	</div>
+</div>
+<div id="deleteConfirmStock" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Stock.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'Stock.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
 	</div>
 </div>
 <div id="deleteConfirmAddress" class="modal fade in" tabindex="-1" style="display: none;">

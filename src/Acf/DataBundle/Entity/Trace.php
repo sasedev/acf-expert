@@ -209,6 +209,12 @@ class Trace
 
 	/**
 	 *
+	 * @var string
+	 */
+	const AE_STOCK = "38Stock";
+
+	/**
+	 *
 	 * @var integer
 	 */
 	const AT_CREATE = 1;

@@ -445,6 +445,26 @@ _admin_company_shareholderExcel:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_admin_stock_delete:
+    path:     /stock/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Stock:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_stock_editGet:
+    path:     /stock/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Stock:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_stock_editPost:
+    path:     /stock/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Stock:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _admin_address_delete:
     path:     /address/delete/{uid}
     defaults: { _controller: "AcfAdminBundle:Address:delete" }

@@ -1,0 +1,80 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	{% if is_granted('ROLE_SUPERADMIN') %}
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	{% endif %}
+	<li><a href="{{ path('_admin_company_editGet', {'uid': stock.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': stock.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_stock_editGet', {'uid': stock.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.stock.edit'|trans({'%stock%': stock.year})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_SUPERADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_company_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Stock.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Stock.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Stock.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Stock.company'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_company_editGet', {'uid': stock.company.id}) }}">{{stock.company.corporateName}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Stock.year'|trans|raw}} :</div>
+								<div class="col-lg-9">{{stock.year}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Stock.value'|trans|raw}} :</div>
+								<div class="col-lg-9">{{stock.value|number_format(3, '.', ' ') }} TND&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Stock.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{stock.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{stock.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Stock.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{stock.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{stock.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Stock.tlabel.edit'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(StockUpdateForm, {'method':'POST', 'action': path('_admin_stock_editPost', {'uid': stock.id}), 'style': 'horizontal'})}}
+							{{form_row(StockUpdateForm.year, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_row(StockUpdateForm.value, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(StockUpdateForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==11%} in active{%endif%}" id="Logs">
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h4 class="box-title">{{'tlabel.logs'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-12">
+									{{ include('AcfAdminBundle:Widget:traces.html.twig', { 'traces': traces, 'showlinks2': true })}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

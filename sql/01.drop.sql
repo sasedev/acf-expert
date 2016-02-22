@@ -43,6 +43,7 @@ DROP TABLE IF EXISTS "acf_company_frames";
 DROP TABLE IF EXISTS "acf_company_users";
 DROP TABLE IF EXISTS "acf_company_admins";
 DROP TABLE IF EXISTS "acf_company_sectors";
+DROP TABLE IF EXISTS "acf_company_stocks";
 DROP TABLE IF EXISTS "acf_companies";
 DROP TABLE IF EXISTS "acf_cmp_sectors";
 DROP TABLE IF EXISTS "acf_cmp_types";
