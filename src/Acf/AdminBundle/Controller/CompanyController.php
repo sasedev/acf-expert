@@ -2525,7 +2525,7 @@ class CompanyController extends BaseController
 
 
 									if ($this->endswith($xlsValue, '%')) {
-										$value = \intval(\substr($xlsValue, 0, \strlen($xlsValue) - 2));
+										$value = \intval(\substr($xlsValue, 0, -1));
 									} else {
 										$value = \intval($xlsValue);
 									}
