@@ -775,7 +775,7 @@ _admin_mbpurchase_editPost:
 
 _admin_mbpurchase_excel:
     path:     /mbpurchase/excel/{uid}
-    defaults: { _controller: "AcfAdminBundle:MBPurchase:excelYear" }
+    defaults: { _controller: "AcfAdminBundle:MBPurchase:excel" }
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 

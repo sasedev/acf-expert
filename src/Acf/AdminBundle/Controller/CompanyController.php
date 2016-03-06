@@ -1758,15 +1758,15 @@ class CompanyController extends BaseController
 						$excelObj->setActiveSheetIndex($activeSheetIndex);
 						$worksheet = $excelObj->getActiveSheet();
 						$highestRow = $worksheet->getHighestRow();
-						$lineRead = 0;
+						$lineRead = 1;
 						$companyLabelsNew = 0;
 						$lineUnprocessed = 0;
 						$lineError = 0;
-						for ($row = 1; $row <= $highestRow; $row ++) {
+						for ($row = 2; $row <= $highestRow; $row ++) {
 							$lineRead ++;
 
-							$abrev = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
-							$name = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$name = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
+							$abrev = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
 
 							if ($abrev != "" && $name != "") {
 								$companyLabel = $em->getRepository('AcfDataBundle:CompanyLabel')->findOneBy(
@@ -1874,7 +1874,7 @@ class CompanyController extends BaseController
 							$i ++;
 						}
 						if ($activeSheetIndex == -1) {
-							$log .= "Aucune Feuille de Titre 'Sage' trouvée tentative d'import depuis le première Feuille<br>";
+							$log .= "Aucune Feuille de Titre 'Sage' trouvée tentative d'import depuis la première Feuille<br>";
 							$activeSheetIndex = 0;
 						}
 
@@ -1894,33 +1894,40 @@ class CompanyController extends BaseController
 
 						$worksheet = $excelObj->getActiveSheet();
 						$highestRow = $worksheet->getHighestRow();
-						$lineRead = 0;
+						$lineRead = 1;
 						$customersNew = 0;
 						$lineUnprocessed = 0;
 						$lineError = 0;
-						for ($row = 1; $row <= $highestRow; $row ++) {
+						for ($row = 2; $row <= $highestRow; $row ++) {
 							$lineRead ++;
 
-							$number = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
-							$label = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$xlsLabel = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
+							$xlsNumber = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$xlsMatricule = \trim(\strval($worksheet->getCellByColumnAndRow(2, $row)->getValue()));
+							$xlsAddress = \trim(\strval($worksheet->getCellByColumnAndRow(4, $row)->getValue()));
+							$xlsRc = \trim(\strval($worksheet->getCellByColumnAndRow(5, $row)->getValue()));
 
-							if ($number != "" && \is_numeric($number)) {
-								$number = \intval($number) - $customersPrefixNum;
+							if ($xlsNumber != "" && \is_numeric($xlsNumber)) {
+								$xlsNumber = \intval($xlsNumber) - $customersPrefixNum;
 							}
 
-							if ($number != "" && $number > 0 && $label != "") {
+							if ($xlsNumber != "" && $xlsNumber > 0 && $xlsLabel != "") {
 
-								$customer = $em->getRepository('AcfDataBundle:Customer')->findOneBy(
-									array('company' => $company, 'number' => $number));
 								$customer1 = $em->getRepository('AcfDataBundle:Customer')->findOneBy(
-									array('company' => $company, 'label' => $label));
-								if (null == $customer && null == $customer1) {
+									array('company' => $company, 'number' => $xlsNumber));
+								$customer2 = $em->getRepository('AcfDataBundle:Customer')->findOneBy(
+									array('company' => $company, 'label' => $xlsLabel));
+								if (null == $customer1 && null == $customer2) {
 									$customersNew ++;
 
 									$customer = new Customer();
 									$customer->setCompany($company);
-									$customer->setNumber($number);
-									$customer->setLabel($label);
+									$customer->setLabel($xlsLabel);
+									$customer->setNumber($xlsNumber);
+									$customer->setFisc($xlsMatricule);
+									$customer->setCin($xlsMatricule);
+									$customer->setAddress($xlsAddress);
+									$customer->setCommercialRegister($xlsRc);
 
 									$em->persist($customer);
 								} else {
@@ -1929,7 +1936,7 @@ class CompanyController extends BaseController
 								}
 							} else {
 								$lineError ++;
-								$log .= "la ligne " . $lineRead . " contient des erreurs<br>";
+								$log .= "la ligne " . $lineRead . " contient des erreurs (COL A : ".$xlsLabel.", COL B: ".$xlsNumber.")<br>";
 							}
 						}
 						$em->flush();
@@ -2037,33 +2044,40 @@ class CompanyController extends BaseController
 
 						$worksheet = $excelObj->getActiveSheet();
 						$highestRow = $worksheet->getHighestRow();
-						$lineRead = 0;
+						$lineRead = 1;
 						$suppliersNew = 0;
 						$lineUnprocessed = 0;
 						$lineError = 0;
-						for ($row = 1; $row <= $highestRow; $row ++) {
+						for ($row = 2; $row <= $highestRow; $row ++) {
 							$lineRead ++;
 
-							$number = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
-							$label = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$xlsLabel = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
+							$xlsNumber = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$xlsMatricule = \trim(\strval($worksheet->getCellByColumnAndRow(2, $row)->getValue()));
+							$xlsAddress = \trim(\strval($worksheet->getCellByColumnAndRow(3, $row)->getValue()));
+							$xlsRc = \trim(\strval($worksheet->getCellByColumnAndRow(4, $row)->getValue()));
 
-							if ($number != "" && \is_numeric($number)) {
-								$number = \intval($number) - $suppliersPrefixNum;
+							if ($xlsNumber != "" && \is_numeric($xlsNumber)) {
+								$xlsNumber = \intval($xlsNumber) - $suppliersPrefixNum;
 							}
 
-							if ($number != "" && $number > 0 && $label != "") {
+							if ($xlsNumber != "" && $xlsNumber > 0 && $xlsLabel != "") {
 
-								$supplier = $em->getRepository('AcfDataBundle:Supplier')->findOneBy(
-									array('company' => $company, 'number' => $number));
 								$supplier1 = $em->getRepository('AcfDataBundle:Supplier')->findOneBy(
-									array('company' => $company, 'label' => $label));
-								if (null == $supplier && null == $supplier1) {
+									array('company' => $company, 'number' => $xlsNumber));
+								$supplier2 = $em->getRepository('AcfDataBundle:Supplier')->findOneBy(
+									array('company' => $company, 'label' => $xlsLabel));
+								if (null == $supplier1 && null == $supplier2) {
 									$suppliersNew ++;
 
 									$supplier = new Supplier();
 									$supplier->setCompany($company);
-									$supplier->setNumber($number);
-									$supplier->setLabel($label);
+									$supplier->setLabel($xlsLabel);
+									$supplier->setNumber($xlsNumber);
+									$supplier->setFisc($xlsMatricule);
+									$supplier->setCin($xlsMatricule);
+									$supplier->setAddress($xlsAddress);
+									$supplier->setCommercialRegister($xlsRc);
 
 									$em->persist($supplier);
 								} else {
@@ -2072,7 +2086,7 @@ class CompanyController extends BaseController
 								}
 							} else {
 								$lineError ++;
-								$log .= "la ligne " . $lineRead . " contient des erreurs<br>";
+								$log .= "la ligne " . $lineRead . " contient des erreurs (COL A : ".$xlsLabel.", COL B: ".$xlsNumber.")<br>";
 							}
 						}
 						$em->flush();
@@ -2180,19 +2194,21 @@ class CompanyController extends BaseController
 
 						$worksheet = $excelObj->getActiveSheet();
 						$highestRow = $worksheet->getHighestRow();
-						$lineRead = 0;
+						$lineRead = 1;
 						$banksNew = 0;
 						$lineUnprocessed = 0;
 						$lineError = 0;
-						for ($row = 1; $row <= $highestRow; $row ++) {
+						for ($row = 2; $row <= $highestRow; $row ++) {
 							$lineRead ++;
 
-							$number = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
-							$label = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
-							$contact = \trim(\strval($worksheet->getCellByColumnAndRow(2, $row)->getValue()));
-							$tel = \trim(\strval($worksheet->getCellByColumnAndRow(3, $row)->getValue()));
-							$fax = \trim(\strval($worksheet->getCellByColumnAndRow(4, $row)->getValue()));
-							$email = \trim(\strval($worksheet->getCellByColumnAndRow(5, $row)->getValue()));
+							$label = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
+							$number = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$agence = \trim(\strval($worksheet->getCellByColumnAndRow(2, $row)->getValue()));
+							$rib = \trim(\strval($worksheet->getCellByColumnAndRow(3, $row)->getValue()));
+							$contact = \trim(\strval($worksheet->getCellByColumnAndRow(4, $row)->getValue()));
+							$tel = \trim(\strval($worksheet->getCellByColumnAndRow(5, $row)->getValue()));
+							$fax = \trim(\strval($worksheet->getCellByColumnAndRow(6, $row)->getValue()));
+							$email = \trim(\strval($worksheet->getCellByColumnAndRow(7, $row)->getValue()));
 
 							if ($number != "" && \is_numeric($number)) {
 								$number = \intval($number) - $banksPrefixNum;
@@ -2209,8 +2225,10 @@ class CompanyController extends BaseController
 
 									$bank = new Bank();
 									$bank->setCompany($company);
-									$bank->setNumber($number);
 									$bank->setLabel($label);
+									$bank->setNumber($number);
+									$bank->setAgency($agence);
+									$bank->setRib($rib);
 									$bank->setContact($contact);
 									$bank->setTel($tel);
 									$bank->setFax($fax);
@@ -2331,15 +2349,15 @@ class CompanyController extends BaseController
 
 						$worksheet = $excelObj->getActiveSheet();
 						$highestRow = $worksheet->getHighestRow();
-						$lineRead = 0;
+						$lineRead = 1;
 						$fundsNew = 0;
 						$lineUnprocessed = 0;
 						$lineError = 0;
-						for ($row = 1; $row <= $highestRow; $row ++) {
+						for ($row = 2; $row <= $highestRow; $row ++) {
 							$lineRead ++;
 
-							$number = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
-							$label = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$label = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
+							$number = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
 
 							if ($number != "" && \is_numeric($number)) {
 								$number = \intval($number) - $fundsPrefixNum;
@@ -2356,8 +2374,8 @@ class CompanyController extends BaseController
 
 									$fund = new Fund();
 									$fund->setCompany($company);
-									$fund->setNumber($number);
 									$fund->setLabel($label);
+									$fund->setNumber($number);
 
 									$em->persist($fund);
 								} else {
@@ -2476,15 +2494,16 @@ class CompanyController extends BaseController
 
 						$worksheet = $excelObj->getActiveSheet();
 						$highestRow = $worksheet->getHighestRow();
-						$lineRead = 0;
+						$lineRead = 1;
 						$withholdingsNew = 0;
 						$lineUnprocessed = 0;
 						$lineError = 0;
-						for ($row = 1; $row <= $highestRow; $row ++) {
+						for ($row = 2; $row <= $highestRow; $row ++) {
 							$lineRead ++;
 
-							$number = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
-							$label = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$label = \trim(\strval($worksheet->getCellByColumnAndRow(0, $row)->getValue()));
+							$number = \trim(\strval($worksheet->getCellByColumnAndRow(1, $row)->getValue()));
+							$xlsValue = \trim(\strval($worksheet->getCellByColumnAndRow(2, $row)->getValue()));
 
 							if ($number != "" && \is_numeric($number)) {
 								$number = \intval($number) - $withholdingsPrefixNum;
@@ -2492,17 +2511,26 @@ class CompanyController extends BaseController
 
 							if ($number != "" && $number > 0 && $label != "") {
 
-								$withholding = $em->getRepository('AcfDataBundle:Withholding')->findOneBy(
-									array('company' => $company, 'number' => $number));
 								$withholding1 = $em->getRepository('AcfDataBundle:Withholding')->findOneBy(
+									array('company' => $company, 'number' => $number));
+								$withholding2 = $em->getRepository('AcfDataBundle:Withholding')->findOneBy(
 									array('company' => $company, 'label' => $label));
-								if (null == $withholding && null == $withholding1) {
+								if (null == $withholding1 && null == $withholding2) {
 									$withholdingsNew ++;
 
 									$withholding = new Withholding();
 									$withholding->setCompany($company);
 									$withholding->setNumber($number);
 									$withholding->setLabel($label);
+
+
+									if ($this->endswith($xlsValue, '%')) {
+										$value = \intval(\substr($xlsValue, 0, \strlen($xlsValue) - 2));
+									} else {
+										$value = \intval($xlsValue);
+									}
+
+									$withholding->setValue($value);
 
 									$em->persist($withholding);
 								} else {
