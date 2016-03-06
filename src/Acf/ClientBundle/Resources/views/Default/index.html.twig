@@ -346,11 +346,11 @@ $(function() {
 					</li>
 					<li class="list-group-item">
 						<b>MARGE BRUTE {{ year_prev }} :</b>
-						<a class="pull-right">{{ (cmp.year_prev_ca_ht - cmp.year_prev_prev_stock.value - cmp.year_prev_achat_ht + cmp.year_prev_stock.value)|number_format(3, '.', ' ') }} TND</a>
+						<a class="pull-right">{{ (cmp.year_prev_ca_ht - cmp.year_prev_prev_stock.value - cmp.year_prev_achat_marchandise_ht + cmp.year_prev_stock.value)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
 						<b>MARGE BRUTE {{ year }} :</b>
-						<a class="pull-right">{{ (cmp.year_ca_ht - cmp.year_prev_stock.value - cmp.year_achat_ht + cmp.year_stock.value)|number_format(3, '.', ' ') }} TND</a>
+						<a class="pull-right">{{ (cmp.year_ca_ht - cmp.year_prev_stock.value - cmp.year_achat_marchandise_ht + cmp.year_stock.value)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 				</ul>
 			</div>
