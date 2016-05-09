@@ -454,41 +454,48 @@ class MBPurchaseController extends BaseController
 									'monthlyBalance' => $mbpurchase,
 									'bill' => $bill
 								));
+								$exist = false;
 								if (null == $buy) {
 									$buysNew ++;
 
 									$buy = new Buy();
-									$buy->setMonthlyBalance($mbpurchase);
-
-									$buy->setNumber($mbpurchase->getCount());
-									$buy->setDtActivation($dtActivation);
-									$buy->setBill($bill);
-									$buy->setRelation($supplier);
-									$buy->setLabel($label);
-									$buy->setVat($vat);
-									$buy->setVatDevise($vat);
-									$buy->setStamp($stamp);
-									$buy->setStampDevise($stamp);
-									$buy->setBalanceTtc($balanceTtc);
-									$buy->setBalanceTtcDevise($balanceTtc);
-									$buy->setRegime($regime);
-									$buy->setWithholding($withholding);
-									$buy->setBalanceNet($balanceNet);
-									$buy->setBalanceNetDevise($balanceNet);
-									$buy->setPaymentType($paymentType);
-									$buy->setDtPayment($dtPayment);
-									$buy->setAccount($account);
-									$buy->setNature($nature);
-									$buy->setTransactionStatus($status);
-									$buy->setOtherInfos($otherInfos);
-
-									$em->persist($buy);
-									$mbpurchase->updateCount();
-									$em->persist($mbpurchase);
 								} else {
 									$lineUnprocessed ++;
-									$log .= "l'Achat à la ligne " . $lineRead . " existe déjà<br>";
+									$log .= "l'Achat à la ligne " . $lineRead . " existe déjà et sera donc remplacé<br>";
+									$exist = true;
 								}
+
+								$buy->setMonthlyBalance($mbpurchase);
+
+								if (!$exist) {
+									$buy->setNumber($mbpurchase->getCount());
+								}
+								$buy->setDtActivation($dtActivation);
+								$buy->setBill($bill);
+								$buy->setRelation($supplier);
+								$buy->setLabel($label);
+								$buy->setVat($vat);
+								$buy->setVatDevise($vat);
+								$buy->setStamp($stamp);
+								$buy->setStampDevise($stamp);
+								$buy->setBalanceTtc($balanceTtc);
+								$buy->setBalanceTtcDevise($balanceTtc);
+								$buy->setRegime($regime);
+								$buy->setWithholding($withholding);
+								$buy->setBalanceNet($balanceNet);
+								$buy->setBalanceNetDevise($balanceNet);
+								$buy->setPaymentType($paymentType);
+								$buy->setDtPayment($dtPayment);
+								$buy->setAccount($account);
+								$buy->setNature($nature);
+								$buy->setTransactionStatus($status);
+								$buy->setOtherInfos($otherInfos);
+
+								$em->persist($buy);
+								if (!$exist) {
+									$mbpurchase->updateCount();
+								}
+								$em->persist($mbpurchase);
 							} else {
 								$lineError ++;
 								$log .= "la ligne " . $lineRead . " contient des erreurs<br>";
