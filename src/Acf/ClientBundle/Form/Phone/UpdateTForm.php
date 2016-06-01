@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\ClientBundle\Form\Phone;
 
 use Symfony\Component\Form\AbstractType;
@@ -10,61 +9,72 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class UpdateTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('label', TextType::class, array('label' => 'Phone.label.label'));
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('label', TextType::class, array(
+            'label' => 'Phone.label.label'
+        ));
 
-		$builder->add('phone', TextType::class, array('label' => 'Phone.phone.label'));
+        $builder->add('phone', TextType::class, array(
+            'label' => 'Phone.phone.label'
+        ));
 
-		$builder->add('contact', TextType::class, array('label' => 'Phone.contact.label', 'required' => false));
-	}
+        $builder->add('contact', TextType::class, array(
+            'label' => 'Phone.contact.label',
+            'required' => false
+        ));
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'PhoneUpdateForm';
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'PhoneUpdateForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('validation_groups' => array('phone'));
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'phone'
+            )
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

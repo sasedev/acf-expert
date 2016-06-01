@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\AdminBundle\Form\Company;
 
 use Acf\DataBundle\Entity\Company;
@@ -11,56 +10,63 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class UpdateCorporateNameTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('corporateName', TextType::class, array('label' => 'Company.corporateName.label'));
-	}
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('corporateName', TextType::class, array(
+            'label' => 'Company.corporateName.label'
+        ));
+    }
 
-	/**
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'CompanyUpdateCorporateNameForm';
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'CompanyUpdateCorporateNameForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('validation_groups' => array('corporateName'));
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'corporateName'
+            )
+        );
+    }
 
-	/**
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

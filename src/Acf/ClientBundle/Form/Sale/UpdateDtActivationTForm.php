@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\ClientBundle\Form\Sale;
 
 use Symfony\Component\Form\AbstractType;
@@ -10,58 +9,65 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class UpdateDtActivationTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('dtActivation', DateType::class,
-			array('label' => 'Sale.dtActivation.label', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd'));
-	}
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('dtActivation', DateType::class, array(
+            'label' => 'Sale.dtActivation.label',
+            'widget' => 'single_text',
+            'format' => 'yyyy-MM-dd'
+        ));
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'SaleUpdateDtActivationForm';
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'SaleUpdateDtActivationForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('validation_groups' => array('dtActivation'));
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'dtActivation'
+            )
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\DataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -18,324 +17,329 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Agenda extends FCEventClass
 {
 
-	/**
-	 *
-	 * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-	 *      @ORM\Id
-	 *      @ORM\GeneratedValue(strategy="UUID")
-	 */
-	protected $id;
+    /**
+     *
+     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
+     */
+    protected $id;
 
-	/**
-	 *
-	 * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="events", cascade={"persist"})
-	 *      @ORM\JoinColumns({
-	 *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 *      })
-	 */
-	protected $user;
+    /**
+     *
+     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="events", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *      })
+     */
+    protected $user;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="evt_start", type="datetimetz", nullable=false)
-	 */
-	protected $dtStart;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="evt_start", type="datetimetz", nullable=false)
+     */
+    protected $dtStart;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="evt_end", type="datetimetz", nullable=false)
-	 */
-	protected $dtEnd;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="evt_end", type="datetimetz", nullable=false)
+     */
+    protected $dtEnd;
 
-	/**
-	 *
-	 * @var string @ORM\Column(name="evt_title", type="text", nullable=true)
-	 */
-	protected $title;
+    /**
+     *
+     * @var string @ORM\Column(name="evt_title", type="text", nullable=true)
+     */
+    protected $title;
 
-	/**
-	 *
-	 * @var string @ORM\Column(name="evt_comments", type="text", nullable=true)
-	 */
-	protected $comment;
+    /**
+     *
+     * @var string @ORM\Column(name="evt_comments", type="text", nullable=true)
+     */
+    protected $comment;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
-	 */
-	protected $dtCrea;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     */
+    protected $dtCrea;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-	 *      @Gedmo\Timestampable(on="update")
-	 */
-	protected $dtUpdate;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
+     */
+    protected $dtUpdate;
 
-	/**
-	 *
-	 * @var Collection @ORM\ManyToMany(targetEntity="User", inversedBy="sharedEvents", cascade={"persist"})
-	 *      @ORM\JoinTable(name="acf_agenda_shares",
-	 *      joinColumns={
-	 *      @ORM\JoinColumn(name="evt_id", referencedColumnName="id")
-	 *      },
-	 *      inverseJoinColumns={
-	 *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 *      }
-	 *      )
-	 */
-	protected $users;
+    /**
+     *
+     * @var Collection @ORM\ManyToMany(targetEntity="User", inversedBy="sharedEvents", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_agenda_shares",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="evt_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *      }
+     *      )
+     */
+    protected $users;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param User $user        	
-	 */
-	public function __construct()
-	{
-		$this->dtCrea = new \DateTime('now');
-		$this->users = new ArrayCollection();
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dtCrea = new \DateTime('now');
+        $this->users = new ArrayCollection();
+    }
 
-	/**
-	 * Get id
-	 * 
-	 * @return guid
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Get id
+     *
+     * @return guid
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * Get user
-	 * 
-	 * @return User
-	 */
-	public function getUser()
-	{
-		return $this->user;
-	}
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 
-	/**
-	 * Set user
-	 * 
-	 * @param User $user        	
-	 *
-	 * @return Agenda
-	 */
-	public function setUser(User $user)
-	{
-		$this->user = $user;
-		
-		return $this;
-	}
+    /**
+     * Set user
+     *
+     * @param User $user
+     *
+     * @return Agenda
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
 
-	/**
-	 * Get dtStart
-	 * 
-	 * @return \DateTime
-	 */
-	public function getDtStart()
-	{
-		return $this->dtStart;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set dtStart
-	 * 
-	 * @param \DateTime $dtStart        	
-	 *
-	 * @return Agenda
-	 */
-	public function setDtStart(\DateTime $dtStart)
-	{
-		$this->dtStart = $dtStart;
-		
-		return $this;
-	}
+    /**
+     * Get dtStart
+     *
+     * @return \DateTime
+     */
+    public function getDtStart()
+    {
+        return $this->dtStart;
+    }
 
-	/**
-	 * Get dtEnd
-	 * 
-	 * @return \DateTime
-	 */
-	public function getDtEnd()
-	{
-		return $this->dtEnd;
-	}
+    /**
+     * Set dtStart
+     *
+     * @param \DateTime $dtStart
+     *
+     * @return Agenda
+     */
+    public function setDtStart(\DateTime $dtStart)
+    {
+        $this->dtStart = $dtStart;
 
-	/**
-	 * Set dtEnd
-	 * 
-	 * @param \DateTime $dtEnd        	
-	 *
-	 * @return Agenda
-	 */
-	public function setDtEnd(\DateTime $dtEnd)
-	{
-		$this->dtEnd = $dtEnd;
-		
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 *
-	 * @return string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
+    /**
+     * Get dtEnd
+     *
+     * @return \DateTime
+     */
+    public function getDtEnd()
+    {
+        return $this->dtEnd;
+    }
 
-	/**
-	 *
-	 * @param string $title        	
-	 *
-	 * @return Agenda
-	 */
-	public function setTitle($title)
-	{
-		$this->title = $title;
-		
-		return $this;
-	}
+    /**
+     * Set dtEnd
+     *
+     * @param \DateTime $dtEnd
+     *
+     * @return Agenda
+     */
+    public function setDtEnd(\DateTime $dtEnd)
+    {
+        $this->dtEnd = $dtEnd;
 
-	/**
-	 *
-	 * @return string
-	 */
-	public function getComment()
-	{
-		return $this->comment;
-	}
+        return $this;
+    }
 
-	/**
-	 *
-	 * @param string $comment        	
-	 *
-	 * @return Agenda
-	 */
-	public function setComment($comment)
-	{
-		$this->comment = $comment;
-		
-		return $this;
-	}
+    /**
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	/**
-	 * Set dtcrea
-	 * 
-	 * @param \DateTime $dtcrea        	
-	 *
-	 * @return Agenda
-	 */
-	public function setDtCrea(\DateTime $dtcrea)
-	{
-		$this->dtCrea = $dtcrea;
-		
-		return $this;
-	}
+    /**
+     *
+     * @param string $title
+     *
+     * @return Agenda
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
-	/**
-	 * Get dtcrea
-	 * 
-	 * @return \DateTime
-	 */
-	public function getDtCrea()
-	{
-		return $this->dtCrea;
-	}
+        return $this;
+    }
 
-	/**
-	 *
-	 * @return DateTime
-	 */
-	public function getDtUpdate()
-	{
-		return $this->dtUpdate;
-	}
+    /**
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
 
-	/**
-	 *
-	 * @param \DateTime $dtUpdate        	
-	 *
-	 * @return Agenda
-	 */
-	public function setDtUpdate(\DateTime $dtUpdate)
-	{
-		$this->dtUpdate = $dtUpdate;
-		
-		return $this;
-	}
+    /**
+     *
+     * @param string $comment
+     *
+     * @return Agenda
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
 
-	/**
-	 * Add user
-	 * 
-	 * @param User $user        	
-	 *
-	 * @return Agenda
-	 */
-	public function addUser(User $user)
-	{
-		$this->users[] = $user;
-		
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Remove user
-	 * 
-	 * @param User $user        	
-	 *
-	 * @return Agenda
-	 */
-	public function removeUser(User $user)
-	{
-		$this->users->removeElement($user);
-		
-		return $this;
-	}
+    /**
+     * Set dtcrea
+     *
+     * @param \DateTime $dtcrea
+     *
+     * @return Agenda
+     */
+    public function setDtCrea(\DateTime $dtcrea)
+    {
+        $this->dtCrea = $dtcrea;
 
-	/**
-	 * Get users
-	 * 
-	 * @return ArrayCollection
-	 */
-	public function getUsers()
-	{
-		return $this->users;
-	}
+        return $this;
+    }
 
-	/**
-	 *
-	 * @param Collection $users        	
-	 *
-	 * @return Agenda
-	 */
-	public function setUsers(Collection $users)
-	{
-		$this->users = $users;
-		
-		return $this;
-	}
+    /**
+     * Get dtcrea
+     *
+     * @return \DateTime
+     */
+    public function getDtCrea()
+    {
+        return $this->dtCrea;
+    }
 
-	/**
-	 * Chack user in list
-	 * 
-	 * @return boolean
-	 */
-	public function isUserInAgenda(User $user)
-	{
-		foreach ($this->users as $agendaUser) {
-			if ($agendaUser->getId() == $user->getId()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    /**
+     *
+     * @return DateTime
+     */
+    public function getDtUpdate()
+    {
+        return $this->dtUpdate;
+    }
 
-	public function __clone()
-	{
-	}
+    /**
+     *
+     * @param \DateTime $dtUpdate
+     *
+     * @return Agenda
+     */
+    public function setDtUpdate(\DateTime $dtUpdate)
+    {
+        $this->dtUpdate = $dtUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Add user
+     *
+     * @param User $user
+     *
+     * @return Agenda
+     */
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param User $user
+     *
+     * @return Agenda
+     */
+    public function removeUser(User $user)
+    {
+        $this->users->removeElement($user);
+
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     *
+     * @param Collection $users
+     *
+     * @return Agenda
+     */
+    public function setUsers(Collection $users)
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * Check user in list
+     *
+     * @param User $user
+     *
+     * @return boolean
+     */
+    public function isUserInAgenda(User $user)
+    {
+        foreach ($this->users as $agendaUser) {
+            if ($agendaUser->getId() == $user->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     */
+    public function __clone()
+    {
+
+    }
 }

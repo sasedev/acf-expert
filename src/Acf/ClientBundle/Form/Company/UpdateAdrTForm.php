@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\ClientBundle\Form\Company;
 
 use Symfony\Component\Form\AbstractType;
@@ -13,68 +12,92 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class UpdateAdrTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('streetNum', IntegerType::class, array('label' => 'Company.streetNum.label', 'scale' => 0, 'required' => false));
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('streetNum', IntegerType::class, array(
+            'label' => 'Company.streetNum.label',
+            'scale' => 0,
+            'required' => false
+        ));
 
-		$builder->add('address', TextareaType::class, array('label' => 'Company.address.label', 'required' => false));
+        $builder->add('address', TextareaType::class, array(
+            'label' => 'Company.address.label',
+            'required' => false
+        ));
 
-		$builder->add('address2', TextareaType::class, array('label' => 'Company.address2.label', 'required' => false));
+        $builder->add('address2', TextareaType::class, array(
+            'label' => 'Company.address2.label',
+            'required' => false
+        ));
 
-		$builder->add('town', TextType::class, array('label' => 'Company.town.label', 'required' => false));
+        $builder->add('town', TextType::class, array(
+            'label' => 'Company.town.label',
+            'required' => false
+        ));
 
-		$builder->add('zipCode', TextType::class, array('label' => 'Company.zipCode.label', 'required' => false));
+        $builder->add('zipCode', TextType::class, array(
+            'label' => 'Company.zipCode.label',
+            'required' => false
+        ));
 
-		$builder->add('country', CountryType::class,
-			array('label' => 'Company.country.label', 'required' => false, 'placeholder' => 'Options.choose', 'empty_data' => null));
-	}
+        $builder->add('country', CountryType::class, array(
+            'label' => 'Company.country.label',
+            'required' => false,
+            'placeholder' => 'Options.choose',
+            'empty_data' => null
+        ));
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'CompanyUpdateAdrForm';
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'CompanyUpdateAdrForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('validation_groups' => array('Default'));
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'Default'
+            )
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

@@ -10,62 +10,63 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class UpdateRefTForm extends AbstractType
 {
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
 
-		$builder->add('ref', TextType::class, array('label' => 'Company.ref.label'));
-	}
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('ref', TextType::class, array(
+            'label' => 'Company.ref.label'
+        ));
+    }
 
-	/**
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'CompanyUpdateRefForm';
+    }
 
-		return 'CompanyUpdateRefForm';
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'ref'
+            )
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
-
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-
-		return array(
-			'validation_groups' => array('ref')
-		);
-
-	}
-
-	/**
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

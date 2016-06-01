@@ -8,250 +8,262 @@ use Sasedev\Commons\SharedBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @author sasedev
  *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class StockController extends BaseController
 {
 
-	/**
-	 *
-	 * @var array
-	 */
-	protected $gvars = array();
+    /**
+     *
+     * @var array
+     */
+    protected $gvars = array();
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gvars['menu_active'] = 'company';
+    }
 
-		$this->gvars['menu_active'] = 'company';
+    /**
+     *
+     * @param string $uid
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction($uid)
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_company_list');
+        }
+        $em = $this->getEntityManager();
+        try {
+            $stock = $em->getRepository('AcfDataBundle:Stock')->find($uid);
 
-	}
+            if (null == $stock) {
+                $this->flashMsgSession('warning', $this->translate('Stock.delete.notfound'));
+            } else {
+                $em->remove($stock);
+                $em->flush();
 
-	public function deleteAction($uid)
-	{
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_company_list');
-		}
-		$em = $this->getEntityManager();
-		try {
-			$stock = $em->getRepository('AcfDataBundle:Stock')->find($uid);
+                $this->flashMsgSession('success', $this->translate('Stock.delete.success', array(
+                    '%stock%' => $stock->getYear()
+                )));
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 
-			if (null == $stock) {
-				$this->flashMsgSession('warning', $this->translate('Stock.delete.notfound'));
-			} else {
-				$em->remove($stock);
-				$em->flush();
+            $this->flashMsgSession('error', $this->translate('Stock.delete.failure'));
+        }
 
-				$this->flashMsgSession(
-					'success',
-					$this->translate('Stock.delete.success', array('%stock%' => $stock->getYear()))
-				);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
+        return $this->redirect($urlFrom);
+    }
 
-			$this->flashMsgSession('error', $this->translate('Stock.delete.failure'));
-		}
+    /**
+     *
+     * @param string $uid
+     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function editGetAction($uid)
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_company_list');
+        }
 
-		return $this->redirect($urlFrom);
+        $em = $this->getEntityManager();
+        try {
+            $stock = $em->getRepository('AcfDataBundle:Stock')->find($uid);
 
-	}
+            if (null == $stock) {
+                $this->flashMsgSession('warning', $this->translate('Stock.edit.notfound'));
+            } else {
+                $traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($stock->getId(), Trace::AE_STOCK);
+                $this->gvars['traces'] = array_reverse($traces);
+                $stockUpdateForm = $this->createForm(StockUpdateTForm::class, $stock);
 
-	public function editGetAction($uid)
-	{
+                $this->gvars['stock'] = $stock;
+                $this->gvars['StockUpdateForm'] = $stockUpdateForm->createView();
 
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_company_list');
-		}
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
+                $this->getSession()->remove('tabActive');
 
-		$em = $this->getEntityManager();
-		try {
-			$stock = $em->getRepository('AcfDataBundle:Stock')->find($uid);
+                $this->gvars['pagetitle'] = $this->translate('pagetitle.stock.edit', array(
+                    '%stock%' => $stock->getYear()
+                ));
+                $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.stock.edit.txt', array(
+                    '%stock%' => $stock->getYear()
+                ));
 
-			if (null == $stock) {
-				$this->flashMsgSession('warning', $this->translate('Stock.edit.notfound'));
-			} else {
-				$traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($stock->getId(), Trace::AE_STOCK);
-				$this->gvars['traces'] = array_reverse($traces);
-				$stockUpdateForm = $this->createForm(StockUpdateTForm::class, $stock);
+                return $this->renderResponse('AcfAdminBundle:Stock:edit.html.twig', $this->gvars);
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
 
+        return $this->redirect($urlFrom);
+    }
 
-				$this->gvars['stock'] = $stock;
-				$this->gvars['StockUpdateForm'] = $stockUpdateForm->createView();
+    /**
+     *
+     * @param Request $request
+     * @param string  $uid
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editPostAction(Request $request, $uid)
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_company_list');
+        }
 
-				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
-				$this->getSession()->remove('tabActive');
+        $em = $this->getEntityManager();
+        try {
+            $stock = $em->getRepository('AcfDataBundle:Stock')->find($uid);
 
+            if (null == $stock) {
+                $this->flashMsgSession('warning', $this->translate('Stock.edit.notfound'));
+            } else {
+                $traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($stock->getId(), Trace::AE_STOCK);
+                $this->gvars['traces'] = array_reverse($traces);
+                $stockUpdateForm = $this->createForm(StockUpdateTForm::class, $stock);
 
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
+                $this->getSession()->remove('tabActive');
 
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.stock.edit', array('%stock%' => $stock->getYear()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.stock.edit.txt', array('%stock%' => $stock->getYear()));
+                $reqData = $request->request->all();
 
-				return $this->renderResponse('AcfAdminBundle:Stock:edit.html.twig', $this->gvars);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
-		}
+                $cloneStock = clone $stock;
 
-		return $this->redirect($urlFrom);
-	}
+                if (isset($reqData['StockUpdateForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $stockUpdateForm->handleRequest($request);
+                    if ($stockUpdateForm->isValid()) {
+                        $em->persist($stock);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('Stock.edit.success', array(
+                            '%stock%' => $stock->getYear()
+                        )));
 
-	public function editPostAction(Request $request, $uid)
-	{
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_company_list');
-		}
+                        $this->traceEntity($cloneStock, $stock);
 
-		$em = $this->getEntityManager();
-		try {
-			$stock = $em->getRepository('AcfDataBundle:Stock')->find($uid);
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($stock);
 
-			if (null == $stock) {
-				$this->flashMsgSession('warning', $this->translate('Stock.edit.notfound'));
-			} else {
-				$traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($stock->getId(), Trace::AE_STOCK);
-				$this->gvars['traces'] = array_reverse($traces);
-				$stockUpdateForm = $this->createForm(StockUpdateTForm::class, $stock);
+                        $this->flashMsgSession('error', $this->translate('Stock.edit.failure', array(
+                            '%stock%' => $stock->getYear()
+                        )));
+                    }
+                }
 
+                $this->gvars['stock'] = $stock;
+                $this->gvars['StockUpdateForm'] = $stockUpdateForm->createView();
 
+                $this->gvars['pagetitle'] = $this->translate('pagetitle.stock.edit', array(
+                    '%stock%' => $stock->getYear()
+                ));
+                $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.stock.edit.txt', array(
+                    '%stock%' => $stock->getYear()
+                ));
 
-				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
-				$this->getSession()->remove('tabActive');
+                return $this->renderResponse('AcfAdminBundle:Stock:edit.html.twig', $this->gvars);
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
 
-				$reqData = $request->request->all();
+        return $this->redirect($urlFrom);
+    }
 
-				$cloneStock = clone $stock;
+    protected function traceEntity(Stock $cloneStock, Stock $stock)
+    {
+        $curUser = $this->getSecurityTokenStorage()
+            ->getToken()
+            ->getUser();
+        $trace = new Trace();
+        $trace->setActionId($stock->getId());
+        $trace->setActionType(Trace::AT_UPDATE);
+        $trace->setUserId($curUser->getId());
+        $trace->setCompanyId($stock->getCompany()
+        ->getId());
+        $trace->setUserFullname($curUser->getFullName());
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            if (!$this->hasRole('ROLE_ADMIN')) {
+                $trace->setUserType(Trace::UT_CLIENT);
+            } else {
+                $trace->setUserType(Trace::UT_ADMIN);
+            }
+        } else {
+            $trace->setUserType(Trace::UT_SUPERADMIN);
+        }
 
-				if (isset($reqData['StockUpdateForm'])) {
-					$this->gvars['tabActive'] = 2;
-					$this->getSession()->set('tabActive', 2);
-					$stockUpdateForm->handleRequest($request);
-					if ($stockUpdateForm->isValid()) {
-						$em->persist($stock);
-						$em->flush();
-						$this->flashMsgSession(
-							'success',
-							$this->translate('Stock.edit.success', array('%stock%' => $stock->getYear()))
-						);
+        $tableBegin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
+        $tableBegin .= '<thead><tr><th class="text-left">' . $this->translate('Entity.field') . '</th>';
+        $tableBegin .= '<th class="text-left">' . $this->translate('Entity.oldVal') . '</th>';
+        $tableBegin .= '<th class="text-left">' . $this->translate('Entity.newVal') . '</th></tr></thead><tbody>';
 
-						$this->traceEntity($cloneStock, $stock);
+        $tableEnd = '</tbody></table>';
 
-						return $this->redirect($urlFrom);
-					} else {
-						$em->refresh($stock);
+        $trace->setActionEntity(Trace::AE_STOCK);
+        $trace->setActionId2($stock->getCompany()
+        ->getId());
+        $trace->setActionEntity2(Trace::AE_COMPANY);
 
-						$this->flashMsgSession('error', $this->translate('Stock.edit.failure', array('%stock%' => $stock->getYear())));
-					}
-				}
+        $msg = '';
 
-				$this->gvars['stock'] = $stock;
-				$this->gvars['StockUpdateForm'] = $stockUpdateForm->createView();
+        if ($cloneStock->getYear() != $stock->getYear()) {
+            $msg .= '<tr><td>' . $this->translate('Stock.year.label') . '</td><td>';
+            if ($cloneStock->getYear() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $cloneStock->getYear();
+            }
+            $msg .= '</td><td>';
+            if ($stock->getYear() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $stock->getYear();
+            }
+            $msg .= '</td></tr>';
+        }
 
+        if ($cloneStock->getValue() != $stock->getValue()) {
+            $msg .= '<tr><td>' . $this->translate('Stock.value.label') . '</td><td>';
+            if ($cloneStock->getValue() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $cloneStock->getValue();
+            }
+            $msg .= '</td><td>';
+            if ($stock->getValue() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $stock->getValue();
+            }
+            $msg .= '</td></tr>';
+        }
 
+        if ($msg != '') {
 
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.stock.edit', array('%stock%' => $stock->getYear()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.stock.edit.txt', array('%stock%' => $stock->getYear()));
+            $msg = $tableBegin . $msg . $tableEnd;
 
-				return $this->renderResponse('AcfAdminBundle:Stock:edit.html.twig', $this->gvars);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
-		}
-
-		return $this->redirect($urlFrom);
-	}
-
-	protected function traceEntity(Stock $cloneStock, Stock $stock) {
-
-		$curUser = $this->getSecurityTokenStorage()->getToken()->getUser();
-		$trace = new Trace();
-		$trace->setActionId($stock->getId());
-		$trace->setActionType(Trace::AT_UPDATE);
-		$trace->setUserId($curUser->getId());
-		$trace->setCompanyId($stock->getCompany()->getId());
-		$trace->setUserFullname($curUser->getFullName());
-		if (! $this->hasRole('ROLE_SUPERADMIN')) {
-			if (! $this->hasRole('ROLE_ADMIN')) {
-				$trace->setUserType(Trace::UT_CLIENT);
-			} else {
-				$trace->setUserType(Trace::UT_ADMIN);
-			}
-
-		} else {
-			$trace->setUserType(Trace::UT_SUPERADMIN);
-		}
-
-
-
-		$table_begin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
-		$table_begin .= '<thead><tr><th class="text-left">'.$this->translate('Entity.field').'</th>';
-		$table_begin .= '<th class="text-left">'.$this->translate('Entity.oldVal').'</th>';
-		$table_begin .= '<th class="text-left">'.$this->translate('Entity.newVal').'</th></tr></thead><tbody>';
-
-		$table_end = '</tbody></table>';
-
-		$trace->setActionEntity(Trace::AE_STOCK);
-		$trace->setActionId2($stock->getCompany()->getId());
-		$trace->setActionEntity2(Trace::AE_COMPANY);
-
-		$msg = "";
-
-		if ($cloneStock->getYear() != $stock->getYear()) {
-			$msg .= "<tr><td>".$this->translate('Stock.year.label').'</td><td>';
-			if ($cloneStock->getYear() == null) {
-				$msg .= '<span class="label label-warning">'.$this->translate('_NA').'</span>';
-			} else {
-				$msg .= $cloneStock->getYear();
-			}
-			$msg .= "</td><td>";
-			if ($stock->getYear() == null) {
-				$msg .= '<span class="label label-warning">'.$this->translate('_NA').'</span>';
-			} else {
-				$msg .= $stock->getYear();
-			}
-			$msg .= "</td></tr>";
-		}
-
-		if ($cloneStock->getValue() != $stock->getValue()) {
-			$msg .= "<tr><td>".$this->translate('Stock.value.label').'</td><td>';
-			if ($cloneStock->getValue() == null) {
-				$msg .= '<span class="label label-warning">'.$this->translate('_NA').'</span>';
-			} else {
-				$msg .= $cloneStock->getValue();
-			}
-			$msg .= "</td><td>";
-			if ($stock->getValue() == null) {
-				$msg .= '<span class="label label-warning">'.$this->translate('_NA').'</span>';
-			} else {
-				$msg .= $stock->getValue();
-			}
-			$msg .= "</td></tr>";
-		}
-
-		if ($msg != "") {
-
-			$msg = $table_begin.$msg.$table_end;
-
-			$trace->setMsg(
-				$this->translate(
-					'Stock.traceEdit',
-					array('%stock%' => $stock->getYear(), '%company%' => $stock->getCompany()->getCorporateName())
-					).$msg
-				);
-			$trace->setDtCrea(new \DateTime('now'));
-			$em = $this->getEntityManager();
-			$em->persist($trace);
-			$em->flush();
-		}
-	}
-
+            $trace->setMsg($this->translate('Stock.traceEdit', array(
+                '%stock%' => $stock->getYear(),
+                '%company%' => $stock->getCompany()
+                    ->getCorporateName()
+            )) . $msg);
+            $trace->setDtCrea(new \DateTime('now'));
+            $em = $this->getEntityManager();
+            $em->persist($trace);
+            $em->flush();
+        }
+    }
 }

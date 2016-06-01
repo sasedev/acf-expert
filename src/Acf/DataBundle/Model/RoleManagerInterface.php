@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\DataBundle\Model;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -8,44 +7,46 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 interface RoleManagerInterface
 {
 
-	/**
-	 *
-	 * @return array
-	 */
-	public function getRoles();
+    /**
+     *
+     * @return array
+     */
+    public function getRoles();
 
-	/**
-	 *
-	 * @return string
-	 */
-	public function getClass();
+    /**
+     *
+     * @return string
+     */
+    public function getClass();
 
-	/**
-	 *
-	 * @return ObjectManager
-	 */
-	public function getEntityManager();
+    /**
+     *
+     * @return ObjectManager
+     */
+    public function getEntityManager();
 
-	/**
-	 *
-	 * @return ObjectRepository
-	 */
-	public function getEntityRepository();
+    /**
+     *
+     * @return ObjectRepository
+     */
+    public function getEntityRepository();
 
-	/**
-	 *
-	 * @return RoleInterface
-	 */
-	public function createRole();
+    /**
+     *
+     * @return RoleInterface
+     */
+    public function createRole();
 
-	/**
-	 *
-	 * @return self
-	 */
-	public function saveRole(RoleInterface $role);
+    /**
+     *
+     * @param RoleInterface $role
+     *
+     * @return self
+     */
+    public function saveRole(RoleInterface $role);
 }

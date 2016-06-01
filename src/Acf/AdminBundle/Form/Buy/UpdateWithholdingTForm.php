@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\AdminBundle\Form\Buy;
 
 use Acf\DataBundle\Entity\MBPurchase;
@@ -12,84 +11,102 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class UpdateWithholdingTForm extends AbstractType
 {
 
-	/**
-	 *
-	 * @var MBPurchase
-	 */
-	private $mbpurchase;
+    /**
+     *
+     * @var MBPurchase
+     */
+    private $mbpurchase;
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$this->mbpurchase = $options['monthlybalance'];
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return null
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this->mbpurchase = $options['monthlybalance'];
 
-		if (null == $this->mbpurchase) {
-			$builder->add('withholding', EntityType::class,
-				array('label' => 'Buy.withholding.label', 'class' => 'AcfDataBundle:Withholding',
-					'query_builder' => function (WithholdingRepository $wr)
-					{
-						return $wr->createQueryBuilder('w')
-							->orderBy('w.label', 'ASC');
-					}, 'choice_label' => 'label', 'multiple' => false, 'by_reference' => true, 'required' => true));
-		} else {
-			$company_id = $this->mbpurchase->getCompany()->getId();
-			$builder->add('withholding', EntityType::class,
-				array('label' => 'Buy.withholding.label', 'class' => 'AcfDataBundle:Withholding',
-					'query_builder' => function (WithholdingRepository $wr) use ($company_id)
-					{
-						return $wr->createQueryBuilder('w')
-							->join('w.company', 'c')
-							->where('c.id = :cid')
-							->setParameter('cid', $company_id)
-							->orderBy('w.label', 'ASC');
-					}, 'choice_label' => 'label', 'multiple' => false, 'by_reference' => true, 'required' => true));
-		}
-	}
+        if (null == $this->mbpurchase) {
+            $builder->add('withholding', EntityType::class, array(
+                'label' => 'Buy.withholding.label',
+                'class' => 'AcfDataBundle:Withholding',
+                'query_builder' => function (WithholdingRepository $wr) {
+                    return $wr->createQueryBuilder('w')
+                        ->orderBy('w.label', 'ASC');
+                },
+                'choice_label' => 'label',
+                'multiple' => false,
+                'by_reference' => true,
+                'required' => true
+            ));
+        } else {
+            $companyId = $this->mbpurchase->getCompany()->getId();
+            $builder->add('withholding', EntityType::class, array(
+                'label' => 'Buy.withholding.label',
+                'class' => 'AcfDataBundle:Withholding',
+                'query_builder' => function (WithholdingRepository $wr) use ($companyId) {
+                    return $wr->createQueryBuilder('w')
+                        ->join('w.company', 'c')
+                        ->where('c.id = :cid')
+                        ->setParameter('cid', $companyId)
+                        ->orderBy('w.label', 'ASC');
+                },
+                'choice_label' => 'label',
+                'multiple' => false,
+                'by_reference' => true,
+                'required' => true
+            ));
+        }
+    }
 
-	/**
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'BuyUpdateWithholdingForm';
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'BuyUpdateWithholdingForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('validation_groups' => array('withholding'), 'monthlybalance' => null);
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'withholding'
+            ),
+            'monthlybalance' => null
+        );
+    }
 
-	/**
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,215 +18,194 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class BiFolder
 {
 
-	/**
-	 *
-	 * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-	 *      @ORM\Id
-	 *      @ORM\GeneratedValue(strategy="UUID")
-	 */
-	protected $id;
+    /**
+     *
+     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
+     */
+    protected $id;
 
-	/**
-	 *
-	 * @var string @ORM\Column(name="title", type="text", nullable=false)
-	 */
-	protected $title;
+    /**
+     *
+     * @var string @ORM\Column(name="title", type="text", nullable=false)
+     */
+    protected $title;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
-	 */
-	protected $dtCrea;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     */
+    protected $dtCrea;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-	 *      @Gedmo\Timestampable(on="update")
-	 */
-	protected $dtUpdate;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
+     */
+    protected $dtUpdate;
 
-	/**
-	 *
-	 * @var Collection @ORM\OneToMany(targetEntity="BiDoc", mappedBy="folder", cascade={"persist", "remove"})
-	 *      @ORM\OrderBy({"title" = "ASC"})
-	 */
-	protected $docs;
+    /**
+     *
+     * @var Collection @ORM\OneToMany(targetEntity="BiDoc", mappedBy="folder", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"title" = "ASC"})
+     */
+    protected $docs;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dtCrea = new \DateTime('now');
+        $this->docs = new ArrayCollection();
+    }
 
-		$this->dtCrea = new \DateTime('now');
-		$this->docs = new ArrayCollection();
+    /**
+     * Get id
+     *
+     * @return guid
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	}
+    /**
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	/**
-	 * Get id
-	 *
-	 * @return guid
-	 */
-	public function getId()
-	{
+    /**
+     *
+     * @param string $title
+     *
+     * @return BiFolder
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
-		return $this->id;
+        return $this;
+    }
 
-	}
+    /**
+     * Get dtCrea
+     *
+     * @return \DateTime
+     */
+    public function getDtCrea()
+    {
+        return $this->dtCrea;
+    }
 
-	/**
-	 *
-	 * @return string
-	 */
-	public function getTitle()
-	{
+    /**
+     * Set dtCrea
+     *
+     * @param \DateTime $dtCrea
+     *
+     * @return BiFolder
+     */
+    public function setDtCrea(\DateTime $dtCrea = null)
+    {
+        $this->dtCrea = $dtCrea;
 
-		return $this->title;
+        return $this;
+    }
 
-	}
+    /**
+     * Get dtUpdate
+     *
+     * @return \DateTime
+     */
+    public function getDtUpdate()
+    {
+        return $this->dtUpdate;
+    }
 
-	/**
-	 *
-	 * @param string $title
-	 *
-	 * @return BiFolder
-	 */
-	public function setTitle($title)
-	{
+    /**
+     * Set dtUpdate
+     *
+     * @param \DateTime $dtUpdate
+     *
+     * @return BiFolder
+     */
+    public function setDtUpdate(\DateTime $dtUpdate = null)
+    {
+        $this->dtUpdate = $dtUpdate;
 
-		$this->title = $title;
+        return $this;
+    }
 
-		return $this;
+    /**
+     * Add doc
+     *
+     * @param BiDoc $doc
+     *
+     * @return BiFolder
+     */
+    public function addDoc(BiDoc $doc)
+    {
+        $this->docs[] = $doc;
 
-	}
+        return $this;
+    }
 
-	/**
-	 * Get dtCrea
-	 *
-	 * @return \DateTime
-	 */
-	public function getDtCrea()
-	{
+    /**
+     * Remove doc
+     *
+     * @param BiDoc $doc
+     *
+     * @return BiFolder
+     */
+    public function removeDoc(BiDoc $doc)
+    {
+        $this->docs->removeElement($doc);
 
-		return $this->dtCrea;
+        return $this;
+    }
 
-	}
+    /**
+     * Get docs
+     *
+     * @return ArrayCollection
+     */
+    public function getDocs()
+    {
+        return $this->docs;
+    }
 
-	/**
-	 * Set dtCrea
-	 *
-	 * @param \DateTime $dtCrea
-	 *
-	 * @return BiFolder
-	 */
-	public function setDtCrea(\DateTime $dtCrea = null)
-	{
+    /**
+     *
+     * @param Collection $docs
+     *
+     * @return BiFolder
+     */
+    public function setAddresses(Collection $docs)
+    {
+        $this->docs = $docs;
 
-		$this->dtCrea = $dtCrea;
+        return $this;
+    }
 
-		return $this;
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getId() . ' ' . $this->getTitle();
+    }
 
-	}
+    /**
+     *
+     */
+    public function __clone()
+    {
 
-	/**
-	 * Get dtUpdate
-	 *
-	 * @return \DateTime
-	 */
-	public function getDtUpdate()
-	{
-
-		return $this->dtUpdate;
-
-	}
-
-	/**
-	 * Set dtUpdate
-	 *
-	 * @param \DateTime $dtUpdate
-	 *
-	 * @return BiFolder
-	 */
-	public function setDtUpdate(\DateTime $dtUpdate = null)
-	{
-
-		$this->dtUpdate = $dtUpdate;
-
-		return $this;
-
-	}
-
-	/**
-	 * Add doc
-	 *
-	 * @param BiDoc $doc
-	 *
-	 * @return BiFolder
-	 */
-	public function addDoc(BiDoc $doc)
-	{
-
-		$this->docs[] = $doc;
-
-		return $this;
-
-	}
-
-	/**
-	 * Remove doc
-	 *
-	 * @param BiDoc $doc
-	 *
-	 * @return BiFolder
-	 */
-	public function removeDoc(BiDoc $doc)
-	{
-
-		$this->docs->removeElement($doc);
-
-		return $this;
-
-	}
-
-	/**
-	 * Get docs
-	 *
-	 * @return ArrayCollection
-	 */
-	public function getDocs()
-	{
-
-		return $this->docs;
-
-	}
-
-	/**
-	 *
-	 * @param Collection $docs
-	 *
-	 * @return BiFolder
-	 */
-	public function setAddresses(Collection $docs)
-	{
-
-		$this->docs = $docs;
-
-		return $this;
-
-	}
-
-	public function __toString()
-	{
-
-		return $this->getId() . ' ' . $this->getTitle();
-
-	}
-
-	public function __clone()
-	{
-
-
-	}
-
+    }
 }

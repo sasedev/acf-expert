@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\AdminBundle\Controller;
 
 use Acf\DataBundle\Entity\ConstantFloat;
@@ -15,266 +14,284 @@ use Sasedev\Commons\SharedBundle\Controller\BaseController;
 class ConstantFloatController extends BaseController
 {
 
-	/**
-	 *
-	 * @var array
-	 */
-	protected $gvars = array();
+    /**
+     *
+     * @var array
+     */
+    protected $gvars = array();
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gvars['menu_active'] = 'constantFloat';
+    }
 
-		$this->gvars['menu_active'] = 'constantFloat';
+    /**
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction()
+    {
+        if (!$this->hasRole('ROLE_SUPERSUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
+        $em = $this->getEntityManager();
+        $constantFloats = $em->getRepository('AcfDataBundle:ConstantFloat')->getAll();
+        $this->gvars['constantFloats'] = $constantFloats;
 
-	}
+        $this->gvars['smenu_active'] = 'list';
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.list');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.list.txt');
 
-	public function listAction()
-	{
-		if (! $this->hasRole('ROLE_SUPERSUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
-		$em = $this->getEntityManager();
-		$constantFloats = $em->getRepository('AcfDataBundle:ConstantFloat')->getAll();
-		$this->gvars['constantFloats'] = $constantFloats;
+        return $this->renderResponse('AcfAdminBundle:ConstantFloat:list.html.twig', $this->gvars);
+    }
 
-		$this->gvars['smenu_active'] = 'list';
-		$this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.list');
-		$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.list.txt');
-		return $this->renderResponse('AcfAdminBundle:ConstantFloat:list.html.twig', $this->gvars);
-	}
+    /**
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function addGetAction()
+    {
+        if (!$this->hasRole('ROLE_SUPERSUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
+        $constantFloat = new ConstantFloat();
+        $constantFloatNewForm = $this->createForm(ConstantFloatNewTForm::class, $constantFloat);
+        $this->gvars['constantFloat'] = $constantFloat;
+        $this->gvars['ConstantFloatNewForm'] = $constantFloatNewForm->createView();
 
-	public function addGetAction()
-	{
-		if (! $this->hasRole('ROLE_SUPERSUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
-		$constantFloat = new ConstantFloat();
-		$constantFloatNewForm = $this->createForm(ConstantFloatNewTForm::class, $constantFloat);
-		$this->gvars['constantFloat'] = $constantFloat;
-		$this->gvars['ConstantFloatNewForm'] = $constantFloatNewForm->createView();
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.add');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.add.txt');
+        $this->gvars['smenu_active'] = 'add';
 
-		$this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.add');
-		$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.add.txt');
-		$this->gvars['smenu_active'] = 'add';
+        return $this->renderResponse('AcfAdminBundle:ConstantFloat:add.html.twig', $this->gvars);
+    }
 
-		return $this->renderResponse('AcfAdminBundle:ConstantFloat:add.html.twig', $this->gvars);
-	}
+    /**
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function addPostAction()
+    {
+        if (!$this->hasRole('ROLE_SUPERSUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            return $this->redirect($this->generateUrl('_admin_constantFloat_addGet'));
+        }
 
-	public function addPostAction()
-	{
-		if (! $this->hasRole('ROLE_SUPERSUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			return $this->redirect($this->generateUrl('_admin_constantFloat_addGet'));
-		}
+        $constantFloat = new ConstantFloat();
+        $constantFloatNewForm = $this->createForm(ConstantFloatNewTForm::class, $constantFloat);
+        $this->gvars['constantFloat'] = $constantFloat;
 
-		$constantFloat = new ConstantFloat();
-		$constantFloatNewForm = $this->createForm(ConstantFloatNewTForm::class, $constantFloat);
-		$this->gvars['constantFloat'] = $constantFloat;
+        $request = $this->getRequest();
+        $reqData = $request->request->all();
 
-		$request = $this->getRequest();
-		$reqData = $request->request->all();
+        if (isset($reqData['ConstantFloatNewForm'])) {
+            $constantFloatNewForm->handleRequest($request);
+            if ($constantFloatNewForm->isValid()) {
+                $em = $this->getEntityManager();
+                $em->persist($constantFloat);
+                $em->flush();
+                $this->flashMsgSession('success', $this->translate('ConstantFloat.add.success', array(
+                    '%constantFloat%' => $constantFloat->getName()
+                )));
 
-		if (isset($reqData['ConstantFloatNewForm'])) {
-			$constantFloatNewForm->handleRequest($request);
-			if ($constantFloatNewForm->isValid()) {
-				$em = $this->getEntityManager();
-				$em->persist($constantFloat);
-				$em->flush();
-				$this->flashMsgSession(
-					'success',
-					$this->translate('ConstantFloat.add.success', array('%constantFloat%' => $constantFloat->getName()))
-				);
+                return $this->redirect($this->generateUrl('_admin_constantFloat_editGet', array(
+                    'uid' => $constantFloat->getId()
+                )));
+            } else {
+                $this->flashMsgSession('error', $this->translate('ConstantFloat.add.failure'));
+            }
+        }
+        $this->gvars['ConstantFloatNewForm'] = $constantFloatNewForm->createView();
 
-				return $this->redirect(
-					$this->generateUrl('_admin_constantFloat_editGet', array('uid' => $constantFloat->getId()))
-				);
-			} else {
-				$this->flashMsgSession(
-					'error',
-					$this->translate('ConstantFloat.add.failure')
-				);
-			}
-		}
-		$this->gvars['ConstantFloatNewForm'] = $constantFloatNewForm->createView();
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.add');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.add.txt');
+        $this->gvars['smenu_active'] = 'add';
 
-		$this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.add');
-		$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.add.txt');
-		$this->gvars['smenu_active'] = 'add';
+        return $this->renderResponse('AcfAdminBundle:ConstantFloat:add.html.twig', $this->gvars);
+    }
 
-		return $this->renderResponse('AcfAdminBundle:ConstantFloat:add.html.twig', $this->gvars);
-	}
+    /**
+     *
+     * @param string $uid
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction($uid)
+    {
+        if (!$this->hasRole('ROLE_SUPERSUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_constantFloat_list');
+        }
+        $em = $this->getEntityManager();
+        try {
+            $constantFloat = $em->getRepository('AcfDataBundle:ConstantFloat')->find($uid);
 
-	public function deleteAction($uid)
-	{
-		if (! $this->hasRole('ROLE_SUPERSUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_constantFloat_list');
-		}
-		$em = $this->getEntityManager();
-		try {
-			$constantFloat = $em->getRepository('AcfDataBundle:ConstantFloat')->find($uid);
+            if (null == $constantFloat) {
+                $this->flashMsgSession('warning', $this->translate('ConstantFloat.delete.notfound'));
+            } else {
+                $em->remove($constantFloat);
+                $em->flush();
 
-			if (null == $constantFloat) {
-				$this->flashMsgSession('warning', $this->translate('ConstantFloat.delete.notfound'));
-			} else {
-				$em->remove($constantFloat);
-				$em->flush();
+                $this->flashMsgSession('success', $this->translate('ConstantFloat.delete.success', array(
+                    '%constantFloat%' => $constantFloat->getName()
+                )));
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 
-				$this->flashMsgSession(
-					'success',
-					$this->translate('ConstantFloat.delete.success', array('%constantFloat%' => $constantFloat->getName()))
-				);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
+            $this->flashMsgSession('error', $this->translate('ConstantFloat.delete.failure'));
+        }
 
-			$this->flashMsgSession('error', $this->translate('ConstantFloat.delete.failure'));
-		}
+        return $this->redirect($urlFrom);
+    }
 
-		return $this->redirect($urlFrom);
+    /**
+     *
+     * @param string $uid
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editGetAction($uid)
+    {
+        if (!$this->hasRole('ROLE_SUPERSUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_constantFloat_list');
+        }
 
-	}
+        $em = $this->getEntityManager();
+        try {
+            $constantFloat = $em->getRepository('AcfDataBundle:ConstantFloat')->find($uid);
 
-	public function editGetAction($uid)
-	{
-		if (! $this->hasRole('ROLE_SUPERSUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_constantFloat_list');
-		}
+            if (null == $constantFloat) {
+                $this->flashMsgSession('warning', $this->translate('ConstantFloat.edit.notfound'));
+            } else {
+                $constantFloatUpdateDescriptionForm = $this->createForm(ConstantFloatUpdateDescriptionTForm::class, $constantFloat);
+                $constantFloatUpdateValueForm = $this->createForm(ConstantFloatUpdateValueTForm::class, $constantFloat);
 
-		$em = $this->getEntityManager();
-		try {
-			$constantFloat = $em->getRepository('AcfDataBundle:ConstantFloat')->find($uid);
+                $this->gvars['constantFloat'] = $constantFloat;
+                $this->gvars['ConstantFloatUpdateDescriptionForm'] = $constantFloatUpdateDescriptionForm->createView();
+                $this->gvars['ConstantFloatUpdateValueForm'] = $constantFloatUpdateValueForm->createView();
 
-			if (null == $constantFloat) {
-				$this->flashMsgSession('warning', $this->translate('ConstantFloat.edit.notfound'));
-			} else {
-				$constantFloatUpdateDescriptionForm = $this->createForm(ConstantFloatUpdateDescriptionTForm::class, $constantFloat);
-				$constantFloatUpdateValueForm = $this->createForm(ConstantFloatUpdateValueTForm::class, $constantFloat);
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
+                $this->getSession()->remove('tabActive');
 
-				$this->gvars['constantFloat'] = $constantFloat;
-				$this->gvars['ConstantFloatUpdateDescriptionForm'] = $constantFloatUpdateDescriptionForm->createView();
-				$this->gvars['ConstantFloatUpdateValueForm'] = $constantFloatUpdateValueForm->createView();
+                $this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.edit', array(
+                    '%constantFloat%' => $constantFloat->getName()
+                ));
+                $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.edit.txt', array(
+                    '%constantFloat%' => $constantFloat->getName()
+                ));
 
-				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
-				$this->getSession()->remove('tabActive');
+                return $this->renderResponse('AcfAdminBundle:ConstantFloat:edit.html.twig', $this->gvars);
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
 
+        return $this->redirect($urlFrom);
+    }
 
+    /**
+     *
+     * @param string $uid
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editPostAction($uid)
+    {
+        if (!$this->hasRole('ROLE_SUPERSUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            return $this->redirect($this->generateUrl('_admin_constantFloat_list'));
+        }
 
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.edit', array('%constantFloat%' => $constantFloat->getName()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.edit.txt', array('%constantFloat%' => $constantFloat->getName()));
+        $em = $this->getEntityManager();
+        try {
+            $constantFloat = $em->getRepository('AcfDataBundle:ConstantFloat')->find($uid);
 
-				return $this->renderResponse('AcfAdminBundle:ConstantFloat:edit.html.twig', $this->gvars);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
-		}
+            if (null == $constantFloat) {
+                $this->flashMsgSession('warning', $this->translate('ConstantFloat.edit.notfound'));
+            } else {
+                $constantFloatUpdateDescriptionForm = $this->createForm(ConstantFloatUpdateDescriptionTForm::class, $constantFloat);
+                $constantFloatUpdateValueForm = $this->createForm(ConstantFloatUpdateValueTForm::class, $constantFloat);
 
-		return $this->redirect($urlFrom);
-	}
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
+                $this->getSession()->remove('tabActive');
 
+                $request = $this->getRequest();
+                $reqData = $request->request->all();
 
-	public function editPostAction($uid)
-	{
-		if (! $this->hasRole('ROLE_SUPERSUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			return $this->redirect($this->generateUrl('_admin_constantFloat_list'));
-		}
+                if (isset($reqData['ConstantFloatUpdateDescriptionForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $constantFloatUpdateDescriptionForm->handleRequest($request);
+                    if ($constantFloatUpdateDescriptionForm->isValid()) {
+                        $em->persist($constantFloat);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('ConstantFloat.edit.success', array(
+                            '%constantFloat%' => $constantFloat->getName()
+                        )));
 
-		$em = $this->getEntityManager();
-		try {
-			$constantFloat = $em->getRepository('AcfDataBundle:ConstantFloat')->find($uid);
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($constantFloat);
 
-			if (null == $constantFloat) {
-				$this->flashMsgSession('warning', $this->translate('ConstantFloat.edit.notfound'));
-			} else {
-				$constantFloatUpdateDescriptionForm = $this->createForm(ConstantFloatUpdateDescriptionTForm::class, $constantFloat);
-				$constantFloatUpdateValueForm = $this->createForm(ConstantFloatUpdateValueTForm::class, $constantFloat);
+                        $this->flashMsgSession('error', $this->translate('ConstantFloat.edit.failure', array(
+                            '%constantFloat%' => $constantFloat->getName()
+                        )));
+                    }
+                } elseif (isset($reqData['ConstantFloatUpdateValueForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $constantFloatUpdateValueForm->handleRequest($request);
+                    if ($constantFloatUpdateValueForm->isValid()) {
+                        $em->persist($constantFloat);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('ConstantFloat.edit.success', array(
+                            '%constantFloat%' => $constantFloat->getName()
+                        )));
 
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($constantFloat);
 
+                        $this->flashMsgSession('error', $this->translate('ConstantFloat.edit.failure', array(
+                            '%constantFloat%' => $constantFloat->getName()
+                        )));
+                    }
+                }
 
-				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
-				$this->getSession()->remove('tabActive');
+                $this->gvars['constantFloat'] = $constantFloat;
+                $this->gvars['ConstantFloatUpdateDescriptionForm'] = $constantFloatUpdateDescriptionForm->createView();
+                $this->gvars['ConstantFloatUpdateValueForm'] = $constantFloatUpdateValueForm->createView();
 
-				$request = $this->getRequest();
-				$reqData = $request->request->all();
+                $this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.edit', array(
+                    '%constantFloat%' => $constantFloat->getName()
+                ));
+                $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.edit.txt', array(
+                    '%constantFloat%' => $constantFloat->getName()
+                ));
 
-				if (isset($reqData['ConstantFloatUpdateDescriptionForm'])) {
-					$this->gvars['tabActive'] = 2;
-					$this->getSession()->set('tabActive', 2);
-					$constantFloatUpdateDescriptionForm->handleRequest($request);
-					if ($constantFloatUpdateDescriptionForm->isValid()) {
-						$em->persist($constantFloat);
-						$em->flush();
-						$this->flashMsgSession(
-							'success',
-							$this->translate('ConstantFloat.edit.success', array('%constantFloat%' => $constantFloat->getName()))
-						);
+                return $this->renderResponse('AcfAdminBundle:ConstantFloat:edit.html.twig', $this->gvars);
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
 
-						return $this->redirect($urlFrom);
-					} else {
-						$em->refresh($constantFloat);
-
-						$this->flashMsgSession(
-							'error',
-							$this->translate('ConstantFloat.edit.failure', array('%constantFloat%' => $constantFloat->getName()))
-						);
-					}
-				} elseif (isset($reqData['ConstantFloatUpdateValueForm'])) {
-					$this->gvars['tabActive'] = 2;
-					$this->getSession()->set('tabActive', 2);
-					$constantFloatUpdateValueForm->handleRequest($request);
-					if ($constantFloatUpdateValueForm->isValid()) {
-						$em->persist($constantFloat);
-						$em->flush();
-						$this->flashMsgSession(
-							'success',
-							$this->translate('ConstantFloat.edit.success', array('%constantFloat%' => $constantFloat->getName()))
-						);
-
-						return $this->redirect($urlFrom);
-					} else {
-						$em->refresh($constantFloat);
-
-						$this->flashMsgSession(
-							'error',
-							$this->translate('ConstantFloat.edit.failure', array('%constantFloat%' => $constantFloat->getName()))
-						);
-					}
-				}
-
-				$this->gvars['constantFloat'] = $constantFloat;
-				$this->gvars['ConstantFloatUpdateDescriptionForm'] = $constantFloatUpdateDescriptionForm->createView();
-				$this->gvars['ConstantFloatUpdateValueForm'] = $constantFloatUpdateValueForm->createView();
-
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.constantFloat.edit', array('%constantFloat%' => $constantFloat->getName()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.constantFloat.edit.txt', array('%constantFloat%' => $constantFloat->getName()));
-
-				return $this->renderResponse('AcfAdminBundle:ConstantFloat:edit.html.twig', $this->gvars);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
-		}
-
-		return $this->redirect($urlFrom);
-
-	}
+        return $this->redirect($urlFrom);
+    }
 }

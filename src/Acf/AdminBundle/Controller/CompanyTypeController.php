@@ -1,7 +1,6 @@
 <?php
 namespace Acf\AdminBundle\Controller;
 
-
 use Acf\DataBundle\Entity\CompanyType;
 use Acf\AdminBundle\Form\CompanyType\NewTForm as CompanyTypeNewTForm;
 use Acf\AdminBundle\Form\CompanyType\UpdateTForm as CompanyTypeUpdateTForm;
@@ -9,303 +8,318 @@ use Sasedev\Commons\SharedBundle\Controller\BaseController;
 use Acf\DataBundle\Entity\Trace;
 
 /**
- * @author sasedev
  *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class CompanyTypeController extends BaseController
 {
 
-	/**
-	 *
-	 * @var array
-	 */
-	protected $gvars = array();
+    /**
+     *
+     * @var array
+     */
+    protected $gvars = array();
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gvars['menu_active'] = 'companyType';
+    }
 
-		$this->gvars['menu_active'] = 'companyType';
+    /**
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction()
+    {
+        $em = $this->getEntityManager();
+        $companyTypes = $em->getRepository('AcfDataBundle:CompanyType')->getAll();
+        $this->gvars['companyTypes'] = $companyTypes;
 
-	}
+        $this->gvars['smenu_active'] = 'list';
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.list');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.list.txt');
 
-	public function listAction()
-	{
-		$em = $this->getEntityManager();
-		$companyTypes = $em->getRepository('AcfDataBundle:CompanyType')->getAll();
-		$this->gvars['companyTypes'] = $companyTypes;
+        return $this->renderResponse('AcfAdminBundle:CompanyType:list.html.twig', $this->gvars);
+    }
 
-		$this->gvars['smenu_active'] = 'list';
-		$this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.list');
-		$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.list.txt');
-		return $this->renderResponse('AcfAdminBundle:CompanyType:list.html.twig', $this->gvars);
-	}
+    /**
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addGetAction()
+    {
+        $companyType = new CompanyType();
+        $companyTypeNewForm = $this->createForm(CompanyTypeNewTForm::class, $companyType);
+        $this->gvars['companyType'] = $companyType;
+        $this->gvars['CompanyTypeNewForm'] = $companyTypeNewForm->createView();
 
-	public function addGetAction()
-	{
-		$companyType = new CompanyType();
-		$companyTypeNewForm = $this->createForm(CompanyTypeNewTForm::class, $companyType);
-		$this->gvars['companyType'] = $companyType;
-		$this->gvars['CompanyTypeNewForm'] = $companyTypeNewForm->createView();
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.add');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.add.txt');
+        $this->gvars['smenu_active'] = 'add';
 
-		$this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.add');
-		$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.add.txt');
-		$this->gvars['smenu_active'] = 'add';
+        return $this->renderResponse('AcfAdminBundle:CompanyType:add.html.twig', $this->gvars);
+    }
 
-		return $this->renderResponse('AcfAdminBundle:CompanyType:add.html.twig', $this->gvars);
-	}
+    /**
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function addPostAction()
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            return $this->redirect($this->generateUrl('_admin_companyType_addGet'));
+        }
 
-	public function addPostAction()
-	{
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			return $this->redirect($this->generateUrl('_admin_companyType_addGet'));
-		}
+        $companyType = new CompanyType();
+        $companyTypeNewForm = $this->createForm(CompanyTypeNewTForm::class, $companyType);
 
-		$companyType = new CompanyType();
-		$companyTypeNewForm = $this->createForm(CompanyTypeNewTForm::class, $companyType);
+        $request = $this->getRequest();
+        $reqData = $request->request->all();
 
-		$request = $this->getRequest();
-		$reqData = $request->request->all();
+        if (isset($reqData['CompanyTypeNewForm'])) {
+            $companyTypeNewForm->handleRequest($request);
+            if ($companyTypeNewForm->isValid()) {
+                $em = $this->getEntityManager();
+                $em->persist($companyType);
+                $em->flush();
+                $this->flashMsgSession('success', $this->translate('CompanyType.add.success', array(
+                    '%companyType%' => $companyType->getLabel()
+                )));
 
-		if (isset($reqData['CompanyTypeNewForm'])) {
-			$companyTypeNewForm->handleRequest($request);
-			if ($companyTypeNewForm->isValid()) {
-				$em = $this->getEntityManager();
-				$em->persist($companyType);
-				$em->flush();
-				$this->flashMsgSession(
-					'success',
-					$this->translate('CompanyType.add.success', array('%companyType%' => $companyType->getLabel()))
-				);
+                return $this->redirect($this->generateUrl('_admin_companyType_editGet', array(
+                    'id' => $companyType->getId()
+                )));
+            } else {
+                $this->flashMsgSession('error', $this->translate('CompanyType.add.failure'));
+            }
+        }
+        $this->gvars['companyType'] = $companyType;
+        $this->gvars['CompanyTypeNewForm'] = $companyTypeNewForm->createView();
 
-				return $this->redirect(
-					$this->generateUrl('_admin_companyType_editGet', array('id' => $companyType->getId()))
-				);
-			} else {
-				$this->flashMsgSession(
-					'error',
-					$this->translate('CompanyType.add.failure')
-				);
-			}
-		}
-		$this->gvars['companyType'] = $companyType;
-		$this->gvars['CompanyTypeNewForm'] = $companyTypeNewForm->createView();
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.add');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.add.txt');
+        $this->gvars['smenu_active'] = 'add';
 
-		$this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.add');
-		$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.add.txt');
-		$this->gvars['smenu_active'] = 'add';
+        return $this->renderResponse('AcfAdminBundle:CompanyType:add.html.twig', $this->gvars);
+    }
 
-		return $this->renderResponse('AcfAdminBundle:CompanyType:add.html.twig', $this->gvars);
-	}
+    /**
+     *
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction($id)
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_companyType_list');
+        }
+        $em = $this->getEntityManager();
+        try {
+            $companyType = $em->getRepository('AcfDataBundle:CompanyType')->find($id);
 
-	public function deleteAction($id)
-	{
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_companyType_list');
-		}
-		$em = $this->getEntityManager();
-		try {
-			$companyType = $em->getRepository('AcfDataBundle:CompanyType')->find($id);
+            if (null == $companyType) {
+                $this->flashMsgSession('warning', $this->translate('CompanyType.delete.notfound'));
+            } else {
+                $em->remove($companyType);
+                $em->flush();
 
-			if (null == $companyType) {
-				$this->flashMsgSession('warning', $this->translate('CompanyType.delete.notfound'));
-			} else {
-				$em->remove($companyType);
-				$em->flush();
+                $this->flashMsgSession('success', $this->translate('CompanyType.delete.success', array(
+                    '%companyType%' => $companyType->getLabel()
+                )));
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 
-				$this->flashMsgSession(
-					'success',
-					$this->translate('CompanyType.delete.success', array('%companyType%' => $companyType->getLabel()))
-				);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
+            $this->flashMsgSession('error', $this->translate('CompanyType.delete.failure'));
+        }
 
-			$this->flashMsgSession('error', $this->translate('CompanyType.delete.failure'));
-		}
+        return $this->redirect($urlFrom);
+    }
 
-		return $this->redirect($urlFrom);
+    /**
+     *
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function editGetAction($id)
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_companyType_list');
+        }
 
-	}
+        $em = $this->getEntityManager();
+        try {
+            $companyType = $em->getRepository('AcfDataBundle:CompanyType')->find($id);
 
-	public function editGetAction($id)
-	{
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_companyType_list');
-		}
+            if (null == $companyType) {
+                $this->flashMsgSession('warning', $this->translate('CompanyType.edit.notfound'));
+            } else {
+                $traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($companyType->getId(), Trace::AE_TYPE);
+                $this->gvars['traces'] = array_reverse($traces);
+                $companyTypeUpdateForm = $this->createForm(CompanyTypeUpdateTForm::class, $companyType);
 
-		$em = $this->getEntityManager();
-		try {
-			$companyType = $em->getRepository('AcfDataBundle:CompanyType')->find($id);
+                $this->gvars['companyType'] = $companyType;
+                $this->gvars['CompanyTypeUpdateForm'] = $companyTypeUpdateForm->createView();
 
-			if (null == $companyType) {
-				$this->flashMsgSession('warning', $this->translate('CompanyType.edit.notfound'));
-			} else {
-				$traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($companyType->getId(), Trace::AE_TYPE);
-				$this->gvars['traces'] = array_reverse($traces);
-				$companyTypeUpdateForm = $this->createForm(CompanyTypeUpdateTForm::class, $companyType);
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
+                $this->getSession()->remove('tabActive');
 
-				$this->gvars['companyType'] = $companyType;
-				$this->gvars['CompanyTypeUpdateForm'] = $companyTypeUpdateForm->createView();
+                $this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.edit', array(
+                    '%companyType%' => $companyType->getLabel()
+                ));
+                $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.edit.txt', array(
+                    '%companyType%' => $companyType->getLabel()
+                ));
 
-				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
-				$this->getSession()->remove('tabActive');
+                return $this->renderResponse('AcfAdminBundle:CompanyType:edit.html.twig', $this->gvars);
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
 
+        return $this->redirect($urlFrom);
+    }
 
+    /**
+     *
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editPostAction($id)
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            return $this->redirect($this->generateUrl('_admin_companyType_list'));
+        }
 
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.edit', array('%companyType%' => $companyType->getLabel()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.edit.txt', array('%companyType%' => $companyType->getLabel()));
+        $em = $this->getEntityManager();
+        try {
+            $companyType = $em->getRepository('AcfDataBundle:CompanyType')->find($id);
 
-				return $this->renderResponse('AcfAdminBundle:CompanyType:edit.html.twig', $this->gvars);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
-		}
+            if (null == $companyType) {
+                $this->flashMsgSession('warning', $this->translate('CompanyType.edit.notfound'));
+            } else {
+                $traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($companyType->getId(), Trace::AE_TYPE);
+                $this->gvars['traces'] = array_reverse($traces);
+                $companyTypeUpdateForm = $this->createForm(CompanyTypeUpdateTForm::class, $companyType);
 
-		return $this->redirect($urlFrom);
-	}
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
+                $this->getSession()->remove('tabActive');
 
+                $request = $this->getRequest();
+                $reqData = $request->request->all();
 
-	public function editPostAction($id)
-	{
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			return $this->redirect($this->generateUrl('_admin_companyType_list'));
-		}
+                $cloneCompanyType = clone $companyType;
 
-		$em = $this->getEntityManager();
-		try {
-			$companyType = $em->getRepository('AcfDataBundle:CompanyType')->find($id);
+                if (isset($reqData['CompanyTypeUpdateForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $companyTypeUpdateForm->handleRequest($request);
+                    if ($companyTypeUpdateForm->isValid()) {
+                        $em->persist($companyType);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('CompanyType.edit.success', array(
+                            '%companyType%' => $companyType->getLabel()
+                        )));
 
-			if (null == $companyType) {
-				$this->flashMsgSession('warning', $this->translate('CompanyType.edit.notfound'));
-			} else {
-				$traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($companyType->getId(), Trace::AE_TYPE);
-				$this->gvars['traces'] = array_reverse($traces);
-				$companyTypeUpdateForm = $this->createForm(CompanyTypeUpdateTForm::class, $companyType);
+                        $this->traceEntity($cloneCompanyType, $companyType);
 
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($companyType);
 
+                        $this->flashMsgSession('error', $this->translate('CompanyType.edit.failure', array(
+                            '%companyType%' => $companyType->getLabel()
+                        )));
+                    }
+                }
 
-				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
-				$this->getSession()->remove('tabActive');
+                $this->gvars['companyType'] = $companyType;
+                $this->gvars['CompanyTypeUpdateForm'] = $companyTypeUpdateForm->createView();
 
-				$request = $this->getRequest();
-				$reqData = $request->request->all();
+                $this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.edit', array(
+                    '%companyType%' => $companyType->getLabel()
+                ));
+                $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.edit.txt', array(
+                    '%companyType%' => $companyType->getLabel()
+                ));
 
-				$cloneCompanyType = clone $companyType;
+                return $this->renderResponse('AcfAdminBundle:CompanyType:edit.html.twig', $this->gvars);
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
 
-				if (isset($reqData['CompanyTypeUpdateForm'])) {
-					$this->gvars['tabActive'] = 2;
-					$this->getSession()->set('tabActive', 2);
-					$companyTypeUpdateForm->handleRequest($request);
-					if ($companyTypeUpdateForm->isValid()) {
-						$em->persist($companyType);
-						$em->flush();
-						$this->flashMsgSession(
-							'success',
-							$this->translate('CompanyType.edit.success', array('%companyType%' => $companyType->getLabel()))
-						);
+        return $this->redirect($urlFrom);
+    }
 
-						$this->traceEntity($cloneCompanyType, $companyType);
+    protected function traceEntity(CompanyType $cloneCompanyType, CompanyType $companyType)
+    {
+        $curUser = $this->getSecurityTokenStorage()
+            ->getToken()
+            ->getUser();
+        $trace = new Trace();
+        $trace->setActionId($companyType->getId());
+        $trace->setActionType(Trace::AT_UPDATE);
+        $trace->setUserId($curUser->getId());
+        $trace->setUserFullname($curUser->getFullName());
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            if (!$this->hasRole('ROLE_ADMIN')) {
+                $trace->setUserType(Trace::UT_CLIENT);
+            } else {
+                $trace->setUserType(Trace::UT_ADMIN);
+            }
+        } else {
+            $trace->setUserType(Trace::UT_SUPERADMIN);
+        }
 
-						return $this->redirect($urlFrom);
-					} else {
-						$em->refresh($companyType);
+        $tableBegin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
+        $tableBegin .= '<thead><tr><th class="text-left">' . $this->translate('Entity.field') . '</th>';
+        $tableBegin .= '<th class="text-left">' . $this->translate('Entity.oldVal') . '</th>';
+        $tableBegin .= '<th class="text-left">' . $this->translate('Entity.newVal') . '</th></tr></thead><tbody>';
 
-						$this->flashMsgSession(
-							'error',
-							$this->translate('CompanyType.edit.failure', array('%companyType%' => $companyType->getLabel()))
-						);
-					}
-				}
+        $tableEnd = '</tbody></table>';
 
-				$this->gvars['companyType'] = $companyType;
-				$this->gvars['CompanyTypeUpdateForm'] = $companyTypeUpdateForm->createView();
+        $trace->setActionEntity(Trace::AE_TYPE);
 
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.companyType.edit', array('%companyType%' => $companyType->getLabel()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.companyType.edit.txt', array('%companyType%' => $companyType->getLabel()));
+        $msg = '';
 
-				return $this->renderResponse('AcfAdminBundle:CompanyType:edit.html.twig', $this->gvars);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
-		}
+        if ($cloneCompanyType->getLabel() != $companyType->getLabel()) {
+            $msg .= '<tr><td>' . $this->translate('CompanyType.label.label') . '</td><td>';
+            if ($cloneCompanyType->getLabel() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $cloneCompanyType->getLabel();
+            }
+            $msg .= '</td><td>';
+            if ($companyType->getLabel() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $companyType->getLabel();
+            }
+            $msg .= '</td></tr>';
+        }
 
-		return $this->redirect($urlFrom);
+        if ($msg != '') {
 
-	}
+            $msg = $tableBegin . $msg . $tableEnd;
 
-	protected function traceEntity(CompanyType $cloneCompanyType, CompanyType $companyType) {
-
-		$curUser = $this->getSecurityTokenStorage()->getToken()->getUser();
-		$trace = new Trace();
-		$trace->setActionId($companyType->getId());
-		$trace->setActionType(Trace::AT_UPDATE);
-		$trace->setUserId($curUser->getId());
-		$trace->setUserFullname($curUser->getFullName());
-		if (! $this->hasRole('ROLE_SUPERADMIN')) {
-			if (! $this->hasRole('ROLE_ADMIN')) {
-				$trace->setUserType(Trace::UT_CLIENT);
-			} else {
-				$trace->setUserType(Trace::UT_ADMIN);
-			}
-
-		} else {
-			$trace->setUserType(Trace::UT_SUPERADMIN);
-		}
-
-
-
-		$table_begin = ': <br><table class="table table-bordered table-condensed table-hover table-striped">';
-		$table_begin .= '<thead><tr><th class="text-left">'.$this->translate('Entity.field').'</th>';
-		$table_begin .= '<th class="text-left">'.$this->translate('Entity.oldVal').'</th>';
-		$table_begin .= '<th class="text-left">'.$this->translate('Entity.newVal').'</th></tr></thead><tbody>';
-
-		$table_end = '</tbody></table>';
-
-		$trace->setActionEntity(Trace::AE_TYPE);
-
-		$msg = "";
-
-		if ($cloneCompanyType->getLabel() != $companyType->getLabel()) {
-			$msg .= "<tr><td>".$this->translate('CompanyType.label.label').'</td><td>';
-			if ($cloneCompanyType->getLabel() == null) {
-				$msg .= '<span class="label label-warning">'.$this->translate('_NA').'</span>';
-			} else {
-				$msg .= $cloneCompanyType->getLabel();
-			}
-			$msg .= "</td><td>";
-			if ($companyType->getLabel() == null) {
-				$msg .= '<span class="label label-warning">'.$this->translate('_NA').'</span>';
-			} else {
-				$msg .= $companyType->getLabel();
-			}
-			$msg .= "</td></tr>";
-		}
-
-		if ($msg != "") {
-
-			$msg = $table_begin.$msg.$table_end;
-
-			$trace->setMsg(
-				$this->translate(
-					'CompanyType.traceEdit',
-					array('%companyType%' => $companyType->getLabel())
-					).$msg
-				);
-			$trace->setDtCrea(new \DateTime('now'));
-			$em = $this->getEntityManager();
-			$em->persist($trace);
-			$em->flush();
-		}
-	}
-
+            $trace->setMsg($this->translate('CompanyType.traceEdit', array(
+                '%companyType%' => $companyType->getLabel()
+            )) . $msg);
+            $trace->setDtCrea(new \DateTime('now'));
+            $em = $this->getEntityManager();
+            $em->persist($trace);
+            $em->flush();
+        }
+    }
 }

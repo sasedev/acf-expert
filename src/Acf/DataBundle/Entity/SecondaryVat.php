@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\DataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -8,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  *         @ORM\Table(name="acf_transaction_vats")
  *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\SecondaryVatRepository")
  *         @ORM\HasLifecycleCallbacks
@@ -16,309 +15,326 @@ use Symfony\Component\Validator\Constraints as Assert;
 class SecondaryVat
 {
 
-	/**
-	 *
-	 * @var integer
-	 */
-	const VI_0 = 0;
+    /**
+     *
+     * @var integer
+     */
+    const VI_0 = 0;
 
-	/**
-	 *
-	 * @var integer
-	 */
-	const VI_6 = 6;
+    /**
+     *
+     * @var integer
+     */
+    const VI_6 = 6;
 
-	/**
-	 *
-	 * @var integer
-	 */
-	const VI_12 = 12;
+    /**
+     *
+     * @var integer
+     */
+    const VI_12 = 12;
 
-	/**
-	 *
-	 * @var integer
-	 */
-	const VI_18 = 18;
+    /**
+     *
+     * @var integer
+     */
+    const VI_18 = 18;
 
-	/**
-	 *
-	 * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-	 *      @ORM\Id
-	 *      @ORM\GeneratedValue(strategy="UUID")
-	 */
-	protected $id;
+    /**
+     *
+     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
+     */
+    protected $id;
 
-	/**
-	 *
-	 * @var Sale @ORM\ManyToOne(targetEntity="Sale", inversedBy="secondaryVats", cascade={"persist"})
-	 *      @ORM\JoinColumns({
-	 *      @ORM\JoinColumn(name="transaction_id", referencedColumnName="id")
-	 *      })
-	 */
-	protected $sale;
+    /**
+     *
+     * @var Sale @ORM\ManyToOne(targetEntity="Sale", inversedBy="secondaryVats", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="transaction_id", referencedColumnName="id")
+     *      })
+     */
+    protected $sale;
 
-	/**
-	 *
-	 * @var integer @ORM\Column(name="vatinfo", type="integer", nullable=false)
-	 *      @Assert\Choice(callback="choiceVatInfoCallback", groups={"vatInfo"})
-	 */
-	protected $vatInfo;
+    /**
+     *
+     * @var integer @ORM\Column(name="vatinfo", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceVatInfoCallback", groups={"vatInfo"})
+     */
+    protected $vatInfo;
 
-	/**
-	 *
-	 * @var float @ORM\Column(name="vat", type="float", precision=10, scale=0, nullable=false)
-	 *      @Assert\GreaterThanOrEqual(value=0, groups={"vat"})
-	 */
-	protected $vat;
+    /**
+     *
+     * @var float @ORM\Column(name="vat", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"vat"})
+     */
+    protected $vat;
 
-	/**
-	 *
-	 * @var float @ORM\Column(name="balance_net", type="float", precision=10, scale=0, nullable=false)
-	 *      @Assert\GreaterThan(value=0, groups={"balanceNet"})
-	 */
-	protected $balanceNet;
+    /**
+     *
+     * @var float @ORM\Column(name="balance_net", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThan(value=0, groups={"balanceNet"})
+     */
+    protected $balanceNet;
 
-	/**
-	 *
-	 * @var float @ORM\Column(name="balance_ttc", type="float", precision=10, scale=0, nullable=false)
-	 *      @Assert\GreaterThan(value=0, groups={"balanceTtc"})
-	 */
-	protected $balanceTtc;
+    /**
+     *
+     * @var float @ORM\Column(name="balance_ttc", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThan(value=0, groups={"balanceTtc"})
+     */
+    protected $balanceTtc;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
-	 */
-	protected $dtCrea;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     */
+    protected $dtCrea;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-	 *      @Gedmo\Timestampable(on="update")
-	 */
-	protected $dtUpdate;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
+     */
+    protected $dtUpdate;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->dtCrea = new \DateTime('now');
-		$this->vat = 0;
-		$this->balanceTtc = 0;
-		$this->balanceNet = 0;
-		$this->vatInfo = self::VI_0;
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dtCrea = new \DateTime('now');
+        $this->vat = 0;
+        $this->balanceTtc = 0;
+        $this->balanceNet = 0;
+        $this->vatInfo = self::VI_0;
+    }
 
-	/**
-	 * Get id
-	 * 
-	 * @return guid
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Get id
+     *
+     * @return guid
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 *
-	 * @return Sale
-	 */
-	public function getSale()
-	{
-		return $this->sale;
-	}
+    /**
+     *
+     * @return Sale
+     */
+    public function getSale()
+    {
+        return $this->sale;
+    }
 
-	/**
-	 *
-	 * @param Sale $sale        	
-	 *
-	 * @return SecondaryVat
-	 */
-	public function setSale(Sale $sale)
-	{
-		$this->sale = $sale;
-		
-		return $this;
-	}
+    /**
+     *
+     * @param Sale $sale
+     *
+     * @return SecondaryVat
+     */
+    public function setSale(Sale $sale)
+    {
+        $this->sale = $sale;
 
-	/**
-	 *
-	 * @return MonthlyBalance
-	 */
-	public function getMonthlyBalance()
-	{
-		return $this->getSale()->getMonthlyBalance();
-	}
+        return $this;
+    }
 
-	/**
-	 *
-	 * @return Company
-	 */
-	public function getCompany()
-	{
-		return $this->getSale()->getCompany();
-	}
+    /**
+     *
+     * @return MonthlyBalance
+     */
+    public function getMonthlyBalance()
+    {
+        return $this->getSale()->getMonthlyBalance();
+    }
 
-	/**
-	 *
-	 * @return integer
-	 */
-	public function getVatInfo()
-	{
-		return $this->vatInfo;
-	}
+    /**
+     *
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->getSale()->getCompany();
+    }
 
-	/**
-	 *
-	 * @param integer $vatInfo        	
-	 *
-	 * @return SecondaryVat
-	 */
-	public function setVatInfo($vatInfo)
-	{
-		$this->vatInfo = $vatInfo;
-		
-		return $this;
-	}
+    /**
+     *
+     * @return integer
+     */
+    public function getVatInfo()
+    {
+        return $this->vatInfo;
+    }
 
-	/**
-	 *
-	 * @return float
-	 */
-	public function getVat()
-	{
-		return $this->vat;
-	}
+    /**
+     *
+     * @param integer $vatInfo
+     *
+     * @return SecondaryVat
+     */
+    public function setVatInfo($vatInfo)
+    {
+        $this->vatInfo = $vatInfo;
 
-	/**
-	 *
-	 * @param float $vat        	
-	 *
-	 * @return SecondaryVat
-	 */
-	public function setVat($vat)
-	{
-		$this->vat = $vat;
-		
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 *
-	 * @return float
-	 */
-	public function getBalanceNet()
-	{
-		return $this->balanceNet;
-	}
+    /**
+     *
+     * @return float
+     */
+    public function getVat()
+    {
+        return $this->vat;
+    }
 
-	/**
-	 *
-	 * @param float $balanceNet        	
-	 *
-	 * @return SecondaryVat
-	 */
-	public function setBalanceNet($balanceNet)
-	{
-		$this->balanceNet = $balanceNet;
-		
-		return $this;
-	}
+    /**
+     *
+     * @param float $vat
+     *
+     * @return SecondaryVat
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
 
-	/**
-	 *
-	 * @return float
-	 */
-	public function getBalanceTtc()
-	{
-		return $this->balanceTtc;
-	}
+        return $this;
+    }
 
-	/**
-	 *
-	 * @param float $balanceTtc        	
-	 *
-	 * @return SecondaryVat
-	 */
-	public function setBalanceTtc($balanceTtc)
-	{
-		$this->balanceTtc = $balanceTtc;
-		
-		return $this;
-	}
+    /**
+     *
+     * @return float
+     */
+    public function getBalanceNet()
+    {
+        return $this->balanceNet;
+    }
 
-	/**
-	 *
-	 * @return \DateTime
-	 */
-	public function getDtCrea()
-	{
-		return $this->dtCrea;
-	}
+    /**
+     *
+     * @param float $balanceNet
+     *
+     * @return SecondaryVat
+     */
+    public function setBalanceNet($balanceNet)
+    {
+        $this->balanceNet = $balanceNet;
 
-	/**
-	 *
-	 * @param \DateTime $dtCrea        	
-	 *
-	 * @return SecondaryVat
-	 */
-	public function setDtCrea(\DateTime $dtCrea)
-	{
-		$this->dtCrea = $dtCrea;
-		
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 *
-	 * @return \DateTime
-	 */
-	public function getDtUpdate()
-	{
-		return $this->dtUpdate;
-	}
+    /**
+     *
+     * @return float
+     */
+    public function getBalanceTtc()
+    {
+        return $this->balanceTtc;
+    }
 
-	/**
-	 *
-	 * @param \DateTime $dtUpdate        	
-	 *
-	 * @return SecondaryVat
-	 */
-	public function setDtUpdate(\DateTime $dtUpdate)
-	{
-		$this->dtUpdate = $dtUpdate;
-		
-		return $this;
-	}
+    /**
+     *
+     * @param float $balanceTtc
+     *
+     * @return SecondaryVat
+     */
+    public function setBalanceTtc($balanceTtc)
+    {
+        $this->balanceTtc = $balanceTtc;
 
-	/**
-	 * Choice Form vatInfo
-	 * 
-	 * @return multitype:string
-	 */
-	public static function choiceVatInfo()
-	{
-		return array('SecondaryVat.vatInfo.choice.' . self::VI_0 => self::VI_0, 'SecondaryVat.vatInfo.choice.' . self::VI_6 => self::VI_6, 
-			'SecondaryVat.vatInfo.choice.' . self::VI_12 => self::VI_12, 'SecondaryVat.vatInfo.choice.' . self::VI_18 => self::VI_18);
-	}
+        return $this;
+    }
 
-	/**
-	 * Choice Validator vatInfo
-	 * 
-	 * @return multitype:integer
-	 */
-	public static function choiceVatInfoCallback()
-	{
-		return array(self::VI_0, self::VI_6, self::VI_12, self::VI_18);
-	}
+    /**
+     *
+     * @return \DateTime
+     */
+    public function getDtCrea()
+    {
+        return $this->dtCrea;
+    }
 
-	public function __toString()
-	{
-		return $this->getSale()->getLabel() . ' ' . $this->getVatInfo();
-	}
+    /**
+     *
+     * @param \DateTime $dtCrea
+     *
+     * @return SecondaryVat
+     */
+    public function setDtCrea(\DateTime $dtCrea)
+    {
+        $this->dtCrea = $dtCrea;
 
-	public function __clone()
-	{
-	}
+        return $this;
+    }
+
+    /**
+     *
+     * @return \DateTime
+     */
+    public function getDtUpdate()
+    {
+        return $this->dtUpdate;
+    }
+
+    /**
+     *
+     * @param \DateTime $dtUpdate
+     *
+     * @return SecondaryVat
+     */
+    public function setDtUpdate(\DateTime $dtUpdate)
+    {
+        $this->dtUpdate = $dtUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Choice Form vatInfo
+     *
+     * @return multitype:string
+     */
+    public static function choiceVatInfo()
+    {
+        return array(
+            'SecondaryVat.vatInfo.choice.' . self::VI_0 => self::VI_0,
+            'SecondaryVat.vatInfo.choice.' . self::VI_6 => self::VI_6,
+            'SecondaryVat.vatInfo.choice.' . self::VI_12 => self::VI_12,
+            'SecondaryVat.vatInfo.choice.' . self::VI_18 => self::VI_18
+        );
+    }
+
+    /**
+     * Choice Validator vatInfo
+     *
+     * @return multitype:integer
+     */
+    public static function choiceVatInfoCallback()
+    {
+        return array(
+            self::VI_0,
+            self::VI_6,
+            self::VI_12,
+            self::VI_18
+        );
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getSale()->getLabel() . ' ' . $this->getVatInfo();
+    }
+
+    /**
+     *
+     */
+    public function __clone()
+    {
+
+    }
 }

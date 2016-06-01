@@ -5,58 +5,61 @@ use Sasedev\Commons\SharedBundle\Controller\BaseController;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class CompanyAdminController extends BaseController
 {
 
-	/**
-	 *
-	 * @var array
-	 */
-	protected $gvars = array();
+    /**
+     *
+     * @var array
+     */
+    protected $gvars = array();
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gvars['menu_active'] = 'company';
+    }
 
-		$this->gvars['menu_active'] = 'company';
+    /**
+     *
+     * @param string $uid
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction($uid)
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_company_list');
+        }
+        $em = $this->getEntityManager();
+        try {
+            $companyAdmin = $em->getRepository('AcfDataBundle:CompanyAdmin')->find($uid);
 
-	}
+            if (null == $companyAdmin) {
+                $this->flashMsgSession('warning', $this->translate('CompanyAdmin.delete.notfound'));
+            } else {
 
-	public function deleteAction($uid)
-	{
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_company_list');
-		}
-		$em = $this->getEntityManager();
-		try {
-			$companyAdmin = $em->getRepository('AcfDataBundle:CompanyAdmin')->find($uid);
+                $em->remove($companyAdmin);
+                $em->flush();
 
-			if (null == $companyAdmin) {
-				$this->flashMsgSession('warning', $this->translate('CompanyAdmin.delete.notfound'));
-			} else {
+                $this->flashMsgSession('success', $this->translate('CompanyAdmin.delete.success', array(
+                    '%company%' => $companyAdmin->getCompany()
+                        ->getCorporateName(),
+                    '%user%' => $companyAdmin->getUser()
+                        ->getFullName()
+                )));
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 
+            $this->flashMsgSession('error', $this->translate('CompanyAdmin.delete.failure'));
+        }
 
-				$em->remove($companyAdmin);
-				$em->flush();
-
-				$this->flashMsgSession(
-					'success',
-					$this->translate('CompanyAdmin.delete.success', array('%company%' => $companyAdmin->getCompany()->getCorporateName(), '%user%' => $companyAdmin->getUser()->getFullName()))
-				);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine().' '.$e->getMessage().' '.$e->getTraceAsString());
-
-			$this->flashMsgSession('error', $this->translate('CompanyAdmin.delete.failure'));
-		}
-
-		return $this->redirect($urlFrom);
-
-	}
+        return $this->redirect($urlFrom);
+    }
 }

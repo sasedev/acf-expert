@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\ClientBundle\Form\Company;
 
 use Acf\DataBundle\Repository\SectorRepository;
@@ -11,63 +10,74 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class UpdateSectorsTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('sectors', EntityType::class,
-			array('label' => 'Company.sectors.label', 'class' => 'AcfDataBundle:Sector',
-				'query_builder' => function (SectorRepository $sr)
-				{
-					return $sr->createQueryBuilder('s')
-						->orderBy('s.label', 'ASC');
-				}, 'choice_label' => 'label', 'multiple' => true, 'by_reference' => true, 'required' => true));
-	}
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return null
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('sectors', EntityType::class, array(
+            'label' => 'Company.sectors.label',
+            'class' => 'AcfDataBundle:Sector',
+            'query_builder' => function (SectorRepository $sr) {
+                return $sr->createQueryBuilder('s')
+                    ->orderBy('s.label', 'ASC');
+            },
+            'choice_label' => 'label',
+            'multiple' => true,
+            'by_reference' => true,
+            'required' => true
+        ));
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'CompanyUpdateSectorsForm';
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'CompanyUpdateSectorsForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('validation_groups' => array('Default'));
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'Default'
+            )
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\ClientBundle\Form\Address;
 
 use Symfony\Component\Form\AbstractType;
@@ -14,80 +13,124 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  *
- * @author sasedev
+ * @author sasedev <seif.salah@gmail.com>
  */
 class UpdateTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('label', TextType::class, array('label' => 'Address.label.label'));
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('label', TextType::class, array(
+            'label' => 'Address.label.label'
+        ));
 
-		$builder->add('streetNum', IntegerType::class, array('label' => 'Address.streetNum.label', 'scale' => 0, 'required' => false));
+        $builder->add('streetNum', IntegerType::class, array(
+            'label' => 'Address.streetNum.label',
+            'scale' => 0,
+            'required' => false
+        ));
 
-		$builder->add('address', TextareaType::class, array('label' => 'Address.address.label', 'required' => false));
+        $builder->add('address', TextareaType::class, array(
+            'label' => 'Address.address.label',
+            'required' => false
+        ));
 
-		$builder->add('address2', TextareaType::class, array('label' => 'Address.address2.label', 'required' => false));
+        $builder->add('address2', TextareaType::class, array(
+            'label' => 'Address.address2.label',
+            'required' => false
+        ));
 
-		$builder->add('town', TextType::class, array('label' => 'Address.town.label', 'required' => false));
+        $builder->add('town', TextType::class, array(
+            'label' => 'Address.town.label',
+            'required' => false
+        ));
 
-		$builder->add('zipCode', TextType::class, array('label' => 'Address.zipCode.label', 'required' => false));
+        $builder->add('zipCode', TextType::class, array(
+            'label' => 'Address.zipCode.label',
+            'required' => false
+        ));
 
-		$builder->add('country', CountryType::class,
-			array('label' => 'Address.country.label', 'required' => false, 'placeholder' => 'Options.choose', 'empty_data' => null));
+        $builder->add('country', CountryType::class, array(
+            'label' => 'Address.country.label',
+            'required' => false,
+            'placeholder' => 'Options.choose',
+            'empty_data' => null
+        ));
 
-		$builder->add('email', EmailType::class, array('label' => 'Address.email.label', 'required' => false));
+        $builder->add('email', EmailType::class, array(
+            'label' => 'Address.email.label',
+            'required' => false
+        ));
 
-		$builder->add('phone', TextType::class, array('label' => 'Address.phone.label', 'required' => false));
+        $builder->add('phone', TextType::class, array(
+            'label' => 'Address.phone.label',
+            'required' => false
+        ));
 
-		$builder->add('mobile', TextType::class, array('label' => 'Address.mobile.label', 'required' => false));
+        $builder->add('mobile', TextType::class, array(
+            'label' => 'Address.mobile.label',
+            'required' => false
+        ));
 
-		$builder->add('fax', TextType::class, array('label' => 'Address.fax.label', 'required' => false));
+        $builder->add('fax', TextType::class, array(
+            'label' => 'Address.fax.label',
+            'required' => false
+        ));
 
-		$builder->add('otherInfos', TextareaType::class, array('label' => 'Address.otherInfos.label', 'required' => false));
-	}
+        $builder->add('otherInfos', TextareaType::class, array(
+            'label' => 'Address.otherInfos.label',
+            'required' => false
+        ));
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'AddressUpdateForm';
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'AddressUpdateForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('validation_groups' => array('phone', 'mobile', 'fax', 'email'));
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'phone',
+                'mobile',
+                'fax',
+                'email'
+            )
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

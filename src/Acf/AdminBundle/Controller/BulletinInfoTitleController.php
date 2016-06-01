@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\AdminBundle\Controller;
 
 use Acf\AdminBundle\Form\BulletinInfoTitle\UpdateTForm as BulletinInfoTitleUpdateTForm;
@@ -11,205 +10,228 @@ use Sasedev\Commons\SharedBundle\Controller\BaseController;
 
 /**
  *
- *
- * @author      sasedev <seif.salah@gmail.com>
- * @version     $Id$
- * @license     MIT
- *
+ * @author sasedev <seif.salah@gmail.com>
+ * @version $Id$
+ * @license MIT
  */
 class BulletinInfoTitleController extends BaseController
 {
 
-	/**
-	 *
-	 * @var array
-	 */
-	protected $gvars = array();
+    /**
+     *
+     * @var array
+     */
+    protected $gvars = array();
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gvars['menu_active'] = 'bulletinInfo';
+    }
 
-		$this->gvars['menu_active'] = 'bulletinInfo';
+    /**
+     *
+     * @param string $uid
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction($uid)
+    {
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
 
-	}
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_bulletinInfo_list');
+        }
+        $em = $this->getEntityManager();
+        try {
+            $bulletinInfoTitle = $em->getRepository('AcfDataBundle:BulletinInfoTitle')->find($uid);
 
-	public function deleteAction($uid)
-	{
-		if (! $this->hasRole('ROLE_SUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
+            if (null == $bulletinInfoTitle) {
+                $this->flashMsgSession('warning', $this->translate('BulletinInfoTitle.delete.notfound'));
+            } else {
+                $em->remove($bulletinInfoTitle);
+                $em->flush();
 
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_bulletinInfo_list');
-		}
-		$em = $this->getEntityManager();
-		try {
-			$bulletinInfoTitle = $em->getRepository('AcfDataBundle:BulletinInfoTitle')->find($uid);
+                $this->flashMsgSession('success', $this->translate('BulletinInfoTitle.delete.success', array(
+                    '%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()
+                )));
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
 
-			if (null == $bulletinInfoTitle) {
-				$this->flashMsgSession('warning', $this->translate('BulletinInfoTitle.delete.notfound'));
-			} else {
-				$em->remove($bulletinInfoTitle);
-				$em->flush();
+            $this->flashMsgSession('error', $this->translate('BulletinInfoTitle.delete.failure'));
+        }
 
-				$this->flashMsgSession('success',
-					$this->translate('BulletinInfoTitle.delete.success', array('%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle())));
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        return $this->redirect($urlFrom);
+    }
 
-			$this->flashMsgSession('error', $this->translate('BulletinInfoTitle.delete.failure'));
-		}
+    /**
+     *
+     * @param string $uid
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editGetAction($uid)
+    {
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
 
-		return $this->redirect($urlFrom);
-	}
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_bulletinInfoTitle_list');
+        }
 
-	public function editGetAction($uid)
-	{
-		if (! $this->hasRole('ROLE_SUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
+        $em = $this->getEntityManager();
+        try {
+            $bulletinInfoTitle = $em->getRepository('AcfDataBundle:BulletinInfoTitle')->find($uid);
 
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_bulletinInfoTitle_list');
-		}
+            if (null == $bulletinInfoTitle) {
+                $this->flashMsgSession('warning', $this->translate('BulletinInfoTitle.edit.notfound'));
+            } else {
+                $bulletinInfoTitleUpdateForm = $this->createForm(BulletinInfoTitleUpdateTForm::class, $bulletinInfoTitle);
 
-		$em = $this->getEntityManager();
-		try {
-			$bulletinInfoTitle = $em->getRepository('AcfDataBundle:BulletinInfoTitle')->find($uid);
+                $bulletinInfoContent = new BulletinInfoContent();
+                $bulletinInfoContent->setBulletinInfoTitle($bulletinInfoTitle);
+                $bulletinInfoContentNewForm = $this->createForm(BulletinInfoContentNewTForm::class, $bulletinInfoContent, array(
+                    'bulletinInfoTitle' => $bulletinInfoTitle
+                ));
 
-			if (null == $bulletinInfoTitle) {
-				$this->flashMsgSession('warning', $this->translate('BulletinInfoTitle.edit.notfound'));
-			} else {
-				$bulletinInfoTitleUpdateForm = $this->createForm(BulletinInfoTitleUpdateTForm::class, $bulletinInfoTitle);
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
+                $this->getSession()->remove('tabActive');
 
-				$bulletinInfoContent = new BulletinInfoContent();
-				$bulletinInfoContent->setBulletinInfoTitle($bulletinInfoTitle);
-				$bulletinInfoContentNewForm = $this->createForm(BulletinInfoContentNewTForm::class, $bulletinInfoContent, array('bulletinInfoTitle' => $bulletinInfoTitle));
+                $this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
+                $this->getSession()->remove('stabActive');
 
-				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
-				$this->getSession()->remove('tabActive');
+                $this->gvars['bulletinInfoTitle'] = $bulletinInfoTitle;
 
-				$this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
-				$this->getSession()->remove('stabActive');
+                $this->gvars['BulletinInfoTitleUpdateForm'] = $bulletinInfoTitleUpdateForm->createView();
+                $this->gvars['BulletinInfoContentNewForm'] = $bulletinInfoContentNewForm->createView();
 
-				$this->gvars['bulletinInfoTitle'] = $bulletinInfoTitle;
+                $this->gvars['pagetitle'] = $this->translate('pagetitle.bulletinInfoTitle.edit', array(
+                    '%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()
+                ));
+                $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.bulletinInfoTitle.edit.txt', array(
+                    '%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()
+                ));
 
-				$this->gvars['BulletinInfoTitleUpdateForm'] = $bulletinInfoTitleUpdateForm->createView();
-				$this->gvars['BulletinInfoContentNewForm'] = $bulletinInfoContentNewForm->createView();
+                return $this->renderResponse('AcfAdminBundle:BulletinInfoTitle:edit.html.twig', $this->gvars);
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
 
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.bulletinInfoTitle.edit',
-					array('%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.bulletinInfoTitle.edit.txt',
-					array('%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()));
+        return $this->redirect($urlFrom);
+    }
 
-				return $this->renderResponse('AcfAdminBundle:BulletinInfoTitle:edit.html.twig', $this->gvars);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
-		}
+    /**
+     *
+     * @param string $uid
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editPostAction($uid)
+    {
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
 
-		return $this->redirect($urlFrom);
-	}
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_bulletinInfoTitle_list');
+        }
 
-	public function editPostAction($uid)
-	{
-		if (! $this->hasRole('ROLE_SUPERADMIN')) {
-			return $this->redirect($this->generateUrl('_admin_homepage'));
-		}
+        $em = $this->getEntityManager();
+        try {
+            $bulletinInfoTitle = $em->getRepository('AcfDataBundle:BulletinInfoTitle')->find($uid);
 
-		$urlFrom = $this->getReferer();
-		if (null == $urlFrom || trim($urlFrom) == '') {
-			$urlFrom = $this->generateUrl('_admin_bulletinInfoTitle_list');
-		}
+            if (null == $bulletinInfoTitle) {
+                $this->flashMsgSession('warning', $this->translate('BulletinInfoTitle.edit.notfound'));
+            } else {
+                $bulletinInfoTitleUpdateForm = $this->createForm(BulletinInfoTitleUpdateTForm::class, $bulletinInfoTitle);
 
-		$em = $this->getEntityManager();
-		try {
-			$bulletinInfoTitle = $em->getRepository('AcfDataBundle:BulletinInfoTitle')->find($uid);
+                $bulletinInfoContent = new BulletinInfoContent();
+                $bulletinInfoContent->setBulletinInfoTitle($bulletinInfoTitle);
+                $bulletinInfoContentNewForm = $this->createForm(BulletinInfoContentNewTForm::class, $bulletinInfoContent, array(
+                    'bulletinInfoTitle' => $bulletinInfoTitle
+                ));
 
-			if (null == $bulletinInfoTitle) {
-				$this->flashMsgSession('warning', $this->translate('BulletinInfoTitle.edit.notfound'));
-			} else {
-				$bulletinInfoTitleUpdateForm = $this->createForm(BulletinInfoTitleUpdateTForm::class, $bulletinInfoTitle);
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
+                $this->getSession()->remove('tabActive');
 
-				$bulletinInfoContent = new BulletinInfoContent();
-				$bulletinInfoContent->setBulletinInfoTitle($bulletinInfoTitle);
-				$bulletinInfoContentNewForm = $this->createForm(BulletinInfoContentNewTForm::class, $bulletinInfoContent, array('bulletinInfoTitle' => $bulletinInfoTitle));
+                $this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
+                $this->getSession()->remove('stabActive');
 
-				$this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
-				$this->getSession()->remove('tabActive');
+                $request = $this->getRequest();
+                $reqData = $request->request->all();
 
-				$this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
-				$this->getSession()->remove('stabActive');
+                if (isset($reqData['BulletinInfoTitleUpdateForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $bulletinInfoTitleUpdateForm->handleRequest($request);
+                    if ($bulletinInfoTitleUpdateForm->isValid()) {
+                        $em->persist($bulletinInfoTitle);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('BulletinInfoTitle.edit.success', array(
+                            '%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()
+                        )));
 
-				$request = $this->getRequest();
-				$reqData = $request->request->all();
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($bulletinInfoTitle);
 
-				if (isset($reqData['BulletinInfoTitleUpdateForm'])) {
-					$this->gvars['tabActive'] = 2;
-					$this->getSession()->set('tabActive', 2);
-					$bulletinInfoTitleUpdateForm->handleRequest($request);
-					if ($bulletinInfoTitleUpdateForm->isValid()) {
-						$em->persist($bulletinInfoTitle);
-						$em->flush();
-						$this->flashMsgSession('success',
-							$this->translate('BulletinInfoTitle.edit.success', array('%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle())));
+                        $this->flashMsgSession('error', $this->translate('BulletinInfoTitle.edit.failure', array(
+                            '%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()
+                        )));
+                    }
+                } elseif (isset($reqData['BulletinInfoContentNewForm'])) {
+                    $this->gvars['tabActive'] = 3;
+                    $this->getSession()->set('tabActive', 3);
+                    $bulletinInfoContentNewForm->handleRequest($request);
+                    if ($bulletinInfoContentNewForm->isValid()) {
+                        $em->persist($bulletinInfoContent);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('BulletinInfoContent.add.success', array(
+                            '%bulletinInfoContent%' => $bulletinInfoContent->getTitle()
+                        )));
 
-						return $this->redirect($urlFrom);
-					} else {
-						$em->refresh($bulletinInfoTitle);
+                        $this->gvars['stabActive'] = 2;
+                        $this->getSession()->set('stabActive', 2);
 
-						$this->flashMsgSession('error',
-							$this->translate('BulletinInfoTitle.edit.failure', array('%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle())));
-					}
-				} elseif (isset($reqData['BulletinInfoContentNewForm'])) {
-					$this->gvars['tabActive'] = 3;
-					$this->getSession()->set('tabActive', 3);
-					$bulletinInfoContentNewForm->handleRequest($request);
-					if ($bulletinInfoContentNewForm->isValid()) {
-						$em->persist($bulletinInfoContent);
-						$em->flush();
-						$this->flashMsgSession('success',
-							$this->translate('BulletinInfoContent.add.success', array('%bulletinInfoContent%' => $bulletinInfoContent->getTitle())));
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($bulletinInfoTitle);
 
-						$this->gvars['stabActive'] = 2;
-						$this->getSession()->set('stabActive', 2);
+                        $this->flashMsgSession('error', $this->translate('BulletinInfoContent.add.failure'));
+                    }
+                }
 
-						return $this->redirect($urlFrom);
-					} else {
-						$em->refresh($bulletinInfoTitle);
+                $this->gvars['bulletinInfoTitle'] = $bulletinInfoTitle;
 
-						$this->flashMsgSession('error',
-							$this->translate('BulletinInfoContent.add.failure'));
-					}
-				}
+                $this->gvars['BulletinInfoTitleUpdateForm'] = $bulletinInfoTitleUpdateForm->createView();
+                $this->gvars['BulletinInfoContentNewForm'] = $bulletinInfoContentNewForm->createView();
 
-				$this->gvars['bulletinInfoTitle'] = $bulletinInfoTitle;
+                $this->gvars['pagetitle'] = $this->translate('pagetitle.bulletinInfoTitle.edit', array(
+                    '%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()
+                ));
+                $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.bulletinInfoTitle.edit.txt', array(
+                    '%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()
+                ));
 
-				$this->gvars['BulletinInfoTitleUpdateForm'] = $bulletinInfoTitleUpdateForm->createView();
-				$this->gvars['BulletinInfoContentNewForm'] = $bulletinInfoContentNewForm->createView();
+                return $this->renderResponse('AcfAdminBundle:BulletinInfoTitle:edit.html.twig', $this->gvars);
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
 
-				$this->gvars['pagetitle'] = $this->translate('pagetitle.bulletinInfoTitle.edit',
-					array('%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()));
-				$this->gvars['pagetitle_txt'] = $this->translate('pagetitle.bulletinInfoTitle.edit.txt',
-					array('%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()));
-
-				return $this->renderResponse('AcfAdminBundle:BulletinInfoTitle:edit.html.twig', $this->gvars);
-			}
-		} catch (\Exception $e) {
-			$logger = $this->getLogger();
-			$logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
-		}
-
-		return $this->redirect($urlFrom);
-	}
+        return $this->redirect($urlFrom);
+    }
 }
-
-?>

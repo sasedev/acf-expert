@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\AdminBundle\Form\ConstantFloat;
 
 use Symfony\Component\Form\AbstractType;
@@ -17,56 +16,68 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class NewTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('name', TextType::class, array('label' => 'ConstantFloat.name.label'));
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('name', TextType::class, array(
+            'label' => 'ConstantFloat.name.label'
+        ));
 
-		$builder->add('value', NumberType::class, array('label' => 'ConstantFloat.value.label'));
+        $builder->add('value', NumberType::class, array(
+            'label' => 'ConstantFloat.value.label'
+        ));
 
-		$builder->add('description', TextareaType::class, array('label' => 'ConstantFloat.description.label', 'required' => false));
-	}
+        $builder->add('description', TextareaType::class, array(
+            'label' => 'ConstantFloat.description.label',
+            'required' => false
+        ));
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'ConstantFloatNewForm';
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'ConstantFloatNewForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('validation_groups' => array('admCreate', 'Default'));
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'admCreate',
+                'Default'
+            )
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

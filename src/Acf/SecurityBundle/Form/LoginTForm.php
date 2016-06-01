@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\SecurityBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -20,61 +19,76 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class LoginTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('username', TextType::class, array('label' => 'User.username.label'));
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('username', TextType::class, array(
+            'label' => 'User.username.label'
+        ));
 
-		$builder->add('password', PasswordType::class, array('label' => 'User.password.label'));
+        $builder->add('password', PasswordType::class, array(
+            'label' => 'User.password.label'
+        ));
 
-		$builder->add('remember_me', CheckboxType::class, array('label' => 'User.rememberme.label', 'required' => false));
+        $builder->add('remember_me', CheckboxType::class, array(
+            'label' => 'User.rememberme.label',
+            'required' => false
+        ));
 
-		$builder->add('target_path', HiddenType::class, array('required' => false));
+        $builder->add('target_path', HiddenType::class, array(
+            'required' => false
+        ));
 
-		$builder->add('submit', SubmitType::class, array('label' => 'action.btnLogin'));
+        $builder->add('submit', SubmitType::class, array(
+            'label' => 'action.btnLogin'
+        ));
 
-		$builder->add('reset', ResetType::class, array('label' => 'action.btnReset'));
-	}
+        $builder->add('reset', ResetType::class, array(
+            'label' => 'action.btnReset'
+        ));
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see FormTypeInterface::getName()
-	 */
-	public function getName()
-	{
-		return "LoginForm";
-	}
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     */
+    public function getName()
+    {
+        return 'LoginForm';
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array('csrf_protection' => false);
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'csrf_protection' => false
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritDoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

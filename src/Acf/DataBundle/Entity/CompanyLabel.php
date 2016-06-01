@@ -1,5 +1,4 @@
 <?php
-
 namespace Acf\DataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,187 +15,191 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class CompanyLabel
 {
 
-	/**
-	 *
-	 * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-	 *      @ORM\Id
-	 *      @ORM\GeneratedValue(strategy="UUID")
-	 */
-	protected $id;
+    /**
+     *
+     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
+     */
+    protected $id;
 
-	/**
-	 *
-	 * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="companyLabels", cascade={"persist"})
-	 *      @ORM\JoinColumns({
-	 *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-	 *      })
-	 */
-	protected $company;
+    /**
+     *
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="companyLabels", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
+     */
+    protected $company;
 
-	/**
-	 *
-	 * @var string @ORM\Column(name="name", type="text", nullable=false)
-	 */
-	protected $name;
+    /**
+     *
+     * @var string @ORM\Column(name="name", type="text", nullable=false)
+     */
+    protected $name;
 
-	/**
-	 *
-	 * @var string @ORM\Column(name="abreviation", type="text", nullable=false)
-	 */
-	protected $abrev;
+    /**
+     *
+     * @var string @ORM\Column(name="abreviation", type="text", nullable=false)
+     */
+    protected $abrev;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
-	 */
-	protected $dtCrea;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     */
+    protected $dtCrea;
 
-	/**
-	 *
-	 * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-	 *      @Gedmo\Timestampable(on="update")
-	 */
-	protected $dtUpdate;
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
+     */
+    protected $dtUpdate;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->dtCrea = new \DateTime('now');
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dtCrea = new \DateTime('now');
+    }
 
-	/**
-	 * Get id
-	 * 
-	 * @return guid
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Get id
+     *
+     * @return guid
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * Get company
-	 * 
-	 * @return Company
-	 */
-	public function getCompany()
-	{
-		return $this->company;
-	}
+    /**
+     * Get company
+     *
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
 
-	/**
-	 * Set company
-	 * 
-	 * @param Company $company        	
-	 *
-	 * @return CompanyLabel
-	 */
-	public function setCompany(Company $company = null)
-	{
-		$this->company = $company;
-		
-		return $this;
-	}
+    /**
+     * Set company
+     *
+     * @param Company $company
+     *
+     * @return CompanyLabel
+     */
+    public function setCompany(Company $company = null)
+    {
+        $this->company = $company;
 
-	/**
-	 * Get name
-	 * 
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set name
-	 * 
-	 * @param string $name        	
-	 *
-	 * @return CompanyLabel
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-		
-		return $this;
-	}
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Get abrev
-	 * 
-	 * @return string
-	 */
-	public function getAbrev()
-	{
-		return $this->abrev;
-	}
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return CompanyLabel
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
-	/**
-	 * Set abrev
-	 * 
-	 * @param string $abrev        	
-	 *
-	 * @return CompanyLabel
-	 */
-	public function setAbrev($abrev)
-	{
-		$this->abrev = $abrev;
-		
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get dtCrea
-	 * 
-	 * @return \DateTime
-	 */
-	public function getDtCrea()
-	{
-		return $this->dtCrea;
-	}
+    /**
+     * Get abrev
+     *
+     * @return string
+     */
+    public function getAbrev()
+    {
+        return $this->abrev;
+    }
 
-	/**
-	 * Set dtCrea
-	 * 
-	 * @param \DateTime $dtCrea        	
-	 *
-	 * @return CompanyLabel
-	 */
-	public function setDtCrea($dtCrea)
-	{
-		$this->dtCrea = $dtCrea;
-		
-		return $this;
-	}
+    /**
+     * Set abrev
+     *
+     * @param string $abrev
+     *
+     * @return CompanyLabel
+     */
+    public function setAbrev($abrev)
+    {
+        $this->abrev = $abrev;
 
-	/**
-	 * Get dtUpdate
-	 * 
-	 * @return \DateTime
-	 */
-	public function getDtUpdate()
-	{
-		return $this->dtUpdate;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set dtUpdate
-	 * 
-	 * @param \DateTime $dtUpdate        	
-	 *
-	 * @return CompanyLabel
-	 */
-	public function setDtUpdate($dtUpdate)
-	{
-		$this->dtUpdate = $dtUpdate;
-		
-		return $this;
-	}
+    /**
+     * Get dtCrea
+     *
+     * @return \DateTime
+     */
+    public function getDtCrea()
+    {
+        return $this->dtCrea;
+    }
 
-	public function __clone()
-	{
-	}
+    /**
+     * Set dtCrea
+     *
+     * @param \DateTime $dtCrea
+     *
+     * @return CompanyLabel
+     */
+    public function setDtCrea($dtCrea)
+    {
+        $this->dtCrea = $dtCrea;
+
+        return $this;
+    }
+
+    /**
+     * Get dtUpdate
+     *
+     * @return \DateTime
+     */
+    public function getDtUpdate()
+    {
+        return $this->dtUpdate;
+    }
+
+    /**
+     * Set dtUpdate
+     *
+     * @param \DateTime $dtUpdate
+     *
+     * @return CompanyLabel
+     */
+    public function setDtUpdate($dtUpdate)
+    {
+        $this->dtUpdate = $dtUpdate;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function __clone()
+    {
+
+    }
 }
