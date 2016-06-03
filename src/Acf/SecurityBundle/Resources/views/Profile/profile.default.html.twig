@@ -1,5 +1,6 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
@@ -8,6 +9,8 @@
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.3.1.js')}}"></script>
 {%if app.request.locale != 'en'%}
@@ -88,8 +91,22 @@ $(function() {
 			avatar_sel.html(xhr.responseText);
 		}
 	});
-
-
+    {% if user.orders|length != 0 %}
+    $('#orderList').dataTable({
+        {%if app.request.locale != 'en'%}
+        "language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+        {% endif %}
+        "columns": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            { "searchable": false, "sortable": false }
+        ],
+        "pageLength": 10
+    });
+    {% endif %}
 
 });
 {%endblock end2_dynamic_jstxt%}
@@ -106,6 +123,7 @@ $(function() {
 		<ul class="nav nav-tabs">
 			<li {%if tabActive==1%} class="active" {%endif%}><a href="#overview" data-toggle="tab">{{'Profile.tab.overview'|trans|raw}}</a></li>
 			<li {%if tabActive==2%} class="active" {%endif%}><a href="#edit" data-toggle="tab">{{'Profile.tab.edit'|trans|raw}}</a></li>
+			<li {%if tabActive==3%} class="active" {%endif%}><a href="#orders" data-toggle="tab">{{'Profile.tab.orders'|trans|raw}}</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
@@ -243,6 +261,47 @@ $(function() {
 					</div>
 				</div>
 			</div>
+            <div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="orders">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">{{ 'Profile.tlabel.listOrders'|trans|raw}}</h3>
+                    </div>
+                    <div class="box-body table-responsive">
+                        <table id="orderList" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{{ 'Order.dtCrea.label'|trans|raw }}</th>
+                                    <th>{{ 'Order.id.label'|trans|raw }}</th>
+                                    <th>{{ 'Order.val.label'|trans|raw }}</th>
+                                    <th>{{ 'Order.status.label'|trans|raw }}</th>
+                                    <th>{{ 'Order.description.label'|trans|raw }}</th>
+                                    <th>{{ 'action'|trans|raw }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% if user.orders|length != 0 %}
+                                {% for order in user.orders %}
+                                <tr>
+                                    <td align="right">{{order.dtCrea|date('Y-m-d')}} {{'_at'|trans}} {{order.dtCrea|localeDate('none', 'short')}}</td>
+                                    <td align="right">{{ order.id }}</td>
+                                    <td align="right">{{ order.val|number_format(3, '.', ' ') }} TND</td>
+                                    <td align="right">{{ ('Order.status.'~order.status)|trans|raw }}</td>
+                                    <td>{{ order.description|raw }}</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-info" href="{{path('_security_order_editGet',{'uid':order.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">{{ 'Order.empty'|trans|raw }}</td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
 	</div>

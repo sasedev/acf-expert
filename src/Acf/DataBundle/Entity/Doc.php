@@ -27,7 +27,7 @@ class Doc
     /**
      *
      * @var string @ORM\Column(name="filename", type="text", nullable=false)
-     *      @Assert\File(maxSize='20480k', groups={"fileName"})
+     *      @Assert\File(maxSize="20480k", groups={"fileName"})
      */
     protected $fileName;
 

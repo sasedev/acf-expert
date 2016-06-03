@@ -160,6 +160,13 @@
 							<li{% if smenu_active=='add'%} class="active"{% endif %}><a href="{{ path('_admin_user_addGet') }}">{{ faIco('angle-double-right') }} {{ 'menu.add'|trans }}</a></li>
 						</ul>
 					</li>
+                    <li class="treeview{% if menu_active=='order'%} active{% endif %}">
+                        <a href="#"> {{ faIco('shopping-cart') }} <span>{{ 'menu.admin.order'|trans }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li{% if smenu_active=='list'%} class="active"{% endif %}><a href="{{ path('_admin_order_list') }}">{{ faIco('angle-double-right') }} {{ 'menu.list'|trans }}</a></li>
+                            <li{% if smenu_active=='add'%} class="active"{% endif %}><a href="{{ path('_admin_order_addGet') }}">{{ faIco('angle-double-right') }} {{ 'menu.add'|trans }}</a></li>
+                        </ul>
+                    </li>
 					<li class="treeview{% if menu_active=='job'%} active{% endif %}">
 						<a href="#"> {{ faIco('leaf') }} <span>{{ 'menu.admin.job'|trans }}</span> <i class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">

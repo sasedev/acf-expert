@@ -56,7 +56,7 @@ class Docgroupaudit
      *      @Gedmo\SlugHandlerOption(name="parentRelationField", value="parent"),
      *      @Gedmo\SlugHandlerOption(name="separator", value="/")
      *      })
-     *      }, separator='_', updatable=true, style="camel", fields={"label"})
+     *      }, separator="_", updatable=true, style="camel", fields={"label"})
      */
     protected $pageUrlFull;
 

@@ -2159,3 +2159,40 @@ BiDoc.delete.failure: Echec de la suppression du Document Bulletin Info <b>%biDo
 BiDoc.edit.notfound: Document Bulletin Info inconnu
 BiDoc.edit.success: Succès de la modification du Document Bulletin Info <b>%biDoc%</b>
 BiDoc.edit.failure: Echec de la modification du Document Bulletin Info <b>%biDoc%</b>
+
+
+# Order
+menu.admin.order: Commandes
+breadcrumb.order.list: Liste des Commandes
+breadcrumb.order.add: Ajouter Commande
+breadcrumb.order.edit: Commande <b>%order%</b>
+
+pagetitle.order.list: Liste des Commandes
+pagetitle.order.list.txt: Liste des Commandes
+pagetitle.order.add: Ajouter Commande
+pagetitle.order.add.txt: Ajouter Commande
+pagetitle.order.edit: Edition Commande <b>%order%</b>
+pagetitle.order.edit.txt: Edition Commande "%order%"
+
+Order.tab.overview: Détails
+Order.tab.edit: Edition
+
+Order.tlabel.list: Liste des Commandes
+Order.tlabel.add: Ajouter nouvelle Commande
+Order.tlabel.overview: Aperçu des détails de la Commande
+Order.tlabel.editVal: Modification du Montant de la Commande
+Order.tlabel.editStatus: Modification de l'Etat de la Commande
+Order.tlabel.editDescription: Modification de la Description de la Commande
+
+Order.empty: Aucune Commande trouvée dans la base de donnée
+
+Order.add.success: Succès de l'ajout de la Commande <b>%order%</b>
+Order.add.failure: Echec de l'ajout de la Commande
+Order.delete.confirm.title: Demande de Confirmation
+Order.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Commande ?<br/> Cette action est irreversible!
+Order.delete.notfound: Commande inconnue
+Order.delete.success: Succès de la suppression de la Commande <b>%order%</b>
+Order.delete.failure: Echec de la suppression de la Commande
+Order.edit.notfound: Commande inconnue
+Order.edit.success: Succès de la modification de la Commande <b>%order%</b>
+Order.edit.failure: Echec de la modification de la Commande <b>%order%</b>

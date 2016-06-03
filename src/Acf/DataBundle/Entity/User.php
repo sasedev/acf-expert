@@ -338,6 +338,13 @@ class User implements UserInterface, \Serializable
     protected $sharedNotifs;
 
     /**
+     *
+     * @var Collection @ORM\OneToMany(targetEntity="Order", mappedBy="user", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     */
+    protected $orders;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -357,6 +364,7 @@ class User implements UserInterface, \Serializable
         $this->sharedEvents = new ArrayCollection();
         $this->notifs = new ArrayCollection();
         $this->sharedNotifs = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     /**
@@ -1482,6 +1490,57 @@ class User implements UserInterface, \Serializable
     public function setSharedNotifs(Collection $sharedNotifs)
     {
         $this->sharedNotifs = $sharedNotifs;
+
+        return $this;
+    }
+
+    /**
+     * Add order
+     *
+     * @param Order $order
+     *
+     * @return User
+     */
+    public function addOrder(Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param Order $order
+     *
+     * @return User
+     */
+    public function removeOrder(Order $order)
+    {
+        $this->orders->removeElement($order);
+
+        return $this;
+    }
+
+    /**
+     * Get orders
+     *
+     * @return ArrayCollection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     *
+     * @param Collection $orders
+     *
+     * @return User
+     */
+    public function setOrders(Collection $orders)
+    {
+        $this->orders = $orders;
 
         return $this;
     }

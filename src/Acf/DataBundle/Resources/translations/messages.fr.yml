@@ -1441,27 +1441,41 @@ BiDoc.title.label: "Titre :"
 BiDoc.folder.label: "Dossier :"
 
 
+# Order
+Order.id: ID
+Order.ref: Référence
+Order.user: Utilisateur
+Order.val: Valeur
+Order.status: Etat
+Order.status.1: "Nouveau"
+Order.status.2: "En Attente"
+Order.status.3: "Payée"
+Order.status.4: "Refusée"
+Order.status.5: "Annulée"
+Order.status.6: "Erreur"
+Order.description: Description
+Order.auth: "Numéro d'autorisation"
+Order.sessId: Session
+Order.ipAddr: "Adresse IP"
+Order.dtCrea: Date d'ajout
+Order.dtUpdate: Date de modification
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Order.id.label: "ID :"
+Order.ref.label: "Référence :"
+Order.user.label: "Utilisateur :"
+Order.val.label: "Valeur :"
+Order.status.label: "Etat :"
+Order.status.choice.1: "Nouveau"
+Order.status.choice.2: "En Attente"
+Order.status.choice.3: "Payé"
+Order.status.choice.4: "Refusé"
+Order.status.choice.5: "Annulé"
+Order.status.choice.6: "Erreur"
+Order.description.label: "Description :"
+Order.auth.label: "Numéro d'autorisation :"
+Order.sessId.label: "Session :"
+Order.ipAddr.label: "Adresse IP :"
+Order.dtCrea.label: "Date d'ajout :"
+Order.dtUpdate.label: "Date de modification :"
 
 

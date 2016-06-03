@@ -899,3 +899,20 @@ CREATE TABLE "acf_bifiles" (
 	CONSTRAINT "pk_acf_bifiles" PRIMARY KEY ("id"),
 	CONSTRAINT "fk_acf_bifolders_bif" FOREIGN KEY ("bif_id") REFERENCES "acf_bifolders" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE "acf_orders" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "ref"                                                               TEXT NOT NULL,
+    "user_id"                                                           INT8 NOT NULL,
+    "description"                                                       TEXT NULL,
+    "val"                                                               INT8 NOT NULL,
+    "status"                                                            INT4 NOT NULL,
+    "auth"                                                              TEXT NULL,
+    "session_id"                                                        TEXT NULL,
+    "ip_addr"                                                           TEXT NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_acf_orders" PRIMARY KEY ("id"),
+    CONSTRAINT "uk_acf_orders" UNIQUE ("ref"),
+    CONSTRAINT "fk_acf_orders_user" FOREIGN KEY ("user_id") REFERENCES "acf_users" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);

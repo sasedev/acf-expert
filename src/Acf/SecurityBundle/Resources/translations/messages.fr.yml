@@ -43,7 +43,12 @@ pagetitle.security.lostPassword: 'Mot de passe Perdu'
 pagetitle.security.lostPassword.txt: 'Récupération de mot de passe'
 pagetitle.security.register: 'Inscription'
 pagetitle.security.register.txt: 'Création d''un Nouveau Compte ACF'
+pagetitle.myorder.edit: 'Commande <b>%order%</b>'
+pagetitle.myorder.edit.txt: 'Commande "%order%"'
 
+myorder.validate: Payer ma commande
+myorder.cancel: Annuler ma commande
+action.btnPay: Payer
 # breadcrumb
 
 breadcrumb.home: Acceuil
@@ -53,6 +58,7 @@ pagetitle.profile.txt: Mon Profil Utilisateur
 
 Profile.tab.overview: Détails
 Profile.tab.edit: Edition
+Profile.tab.orders: Commandes
 Profile.tlabel.overview: 'Aperçu des détails de mon Profil'
 Profile.tlabel.editAvatar: 'Modification de mon Avatar'
 Profile.tlabel.editAvatar.crop: 'Selectionner la partie visible'
@@ -60,6 +66,7 @@ Profile.tlabel.editProfile: 'Modification des détails de mon Profil'
 Profile.tlabel.editPreferedLang: 'Modification du Paramètre de Langue'
 Profile.tlabel.editEmail: 'Modification de mon Email'
 Profile.tlabel.editPassword: 'Modification de mon Mot de passe'
+Profile.tlabel.listOrders: 'Mes Commandes'
 Profile.edit.success: 'Succès de la modification de votre Profile'
 Profile.edit.failure: 'Echec de la modification de votre Profile'
 

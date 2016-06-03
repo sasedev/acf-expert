@@ -1267,3 +1267,37 @@ _admin_biDoc_editPost:
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_order_list:
+    path:     /orders
+    defaults: { _controller: "AcfAdminBundle:Order:list" }
+
+_admin_order_addGet:
+    path:     /order/add
+    defaults: { _controller: "AcfAdminBundle:Order:addGet" }
+    methods: [GET]
+
+_admin_order_addPost:
+    path:     /order/add
+    defaults: { _controller: "AcfAdminBundle:Order:addPost" }
+    methods: [POST]
+
+_admin_order_delete:
+    path:     /order/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_order_editGet:
+    path:     /order/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_order_editPost:
+    path:     /order/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
