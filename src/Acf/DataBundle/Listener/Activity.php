@@ -3,7 +3,6 @@ namespace Acf\DataBundle\Listener;
 
 use Acf\DataBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -23,7 +22,7 @@ class Activity
 
     /**
      *
-     * @var EntityManager
+     * @var Doctrine\ORM\EntityManager
      */
     private $em;
 
@@ -31,7 +30,7 @@ class Activity
      * Constructor
      *
      * @param TokenStorage $tokenStorage
-     * @param Doctrine     $doctrine
+     * @param Doctrine $doctrine
      */
     public function __construct(TokenStorage $tokenStorage, Doctrine $doctrine)
     {
@@ -53,12 +52,12 @@ class Activity
         if ($event->getRequestType() !== HttpKernel::MASTER_REQUEST) {
             return;
         }
-
+        
         // We are checking a token authentification is available before using
         // the User
         if ($this->tokenStorage->getToken()) {
             $user = $this->tokenStorage->getToken()->getUser();
-
+            
             // We are using a delay during wich the user will be considered as
             // still active, in order to
             // avoid too much UPDATE in the
@@ -66,7 +65,7 @@ class Activity
             // $delay = new \DateTime ();
             // $delay
             // ->setTimestamp (strtotime ('2 minutes ago'));
-
+            
             // We are checking the Admin class in order to be certain we can
             // call "getLastActivity".
             // && $user->getLastActivity() < $delay) {
