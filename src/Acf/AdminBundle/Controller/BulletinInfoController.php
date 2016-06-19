@@ -10,6 +10,7 @@ use Acf\DataBundle\Entity\BulletinInfo;
 use Acf\DataBundle\Entity\BulletinInfoContent;
 use Acf\DataBundle\Entity\BulletinInfoTitle;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
+use Acf\DataBundle\Entity\Role;
 
 /**
  *
@@ -46,11 +47,11 @@ class BulletinInfoController extends BaseController
         $em = $this->getEntityManager();
         $bulletinInfos = $em->getRepository('AcfDataBundle:BulletinInfo')->getAll();
         $this->gvars['bulletinInfos'] = $bulletinInfos;
-
+        
         $this->gvars['smenu_active'] = 'list';
         $this->gvars['pagetitle'] = $this->translate('pagetitle.bulletinInfo.list');
         $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.bulletinInfo.list.txt');
-
+        
         return $this->renderResponse('AcfAdminBundle:BulletinInfo:list.html.twig', $this->gvars);
     }
 
@@ -64,13 +65,13 @@ class BulletinInfoController extends BaseController
             return $this->redirect($this->generateUrl('_admin_homepage'));
         }
         $bulletinInfoImportForm = $this->createForm(BulletinInfoImportTForm::class);
-
+        
         $this->gvars['BulletinInfoImportForm'] = $bulletinInfoImportForm->createView();
-
+        
         $this->gvars['pagetitle'] = $this->translate('pagetitle.bulletinInfo.add');
         $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.bulletinInfo.add.txt');
         $this->gvars['smenu_active'] = 'add';
-
+        
         return $this->renderResponse('AcfAdminBundle:BulletinInfo:import.html.twig', $this->gvars);
     }
 
@@ -87,45 +88,45 @@ class BulletinInfoController extends BaseController
         if (null == $urlFrom || trim($urlFrom) == '') {
             $urlFrom = $this->generateUrl('_admin_bulletinInfo_list');
         }
-
+        
         $bulletinInfoImportForm = $this->createForm(BulletinInfoImportTForm::class);
-
+        
         $request = $this->getRequest();
         $reqData = $request->request->all();
-
+        
         if (isset($reqData['BulletinInfoImportForm'])) {
             $bulletinInfoImportForm->handleRequest($request);
             if ($bulletinInfoImportForm->isValid()) {
-
+                
                 ini_set('memory_limit', '4096M');
                 ini_set('max_execution_time', '0');
                 $extension = $bulletinInfoImportForm['excel']->getData()->guessExtension();
                 if ($extension == 'zip') {
                     $extension = 'xlsx';
                 }
-
+                
                 $filename = uniqid() . '.' . $extension;
                 $bulletinInfoImportForm['excel']->getData()->move($this->getParameter('adapter_files'), $filename);
                 $fullfilename = $this->getParameter('adapter_files');
                 $fullfilename .= '/' . $filename;
-
+                
                 $excelObj = $this->get('phpexcel')->createPHPExcelObject($fullfilename);
-
+                
                 $log = '';
-
+                
                 $iterator = $excelObj->getWorksheetIterator();
-
+                
                 $activeSheetIndex = -1;
                 $i = 0;
-
+                
                 $bulletinInfo = new BulletinInfo();
-
+                
                 foreach ($iterator as $worksheet) {
                     $worksheetTitle = $worksheet->getTitle();
                     $highestRow = $worksheet->getHighestRow(); // e.g. 10
                     $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
                     $highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);
-
+                    
                     $log .= "Feuille : '" . $worksheetTitle . "' trouvée contenant " . $highestRow . ' lignes et ' . $highestColumnIndex . ' colonnes avec comme plus grand index ' . $highestColumn . ' <br>';
                     if (\trim($worksheetTitle) == 'BulletinInfo') {
                         $activeSheetIndex = $i;
@@ -136,7 +137,7 @@ class BulletinInfoController extends BaseController
                     $log .= "Aucune Feuille de Titre 'BulletinInfo' trouvée tentative d'import depuis le première Feuille<br>";
                     $activeSheetIndex = 0;
                 }
-
+                
                 $excelObj->setActiveSheetIndex($activeSheetIndex);
                 $worksheet = $excelObj->getActiveSheet();
                 $highestRow = $worksheet->getHighestRow();
@@ -146,7 +147,7 @@ class BulletinInfoController extends BaseController
                 $bulletinInfoContentNew = 0;
                 $lineError = 0;
                 $haserror = false;
-
+                
                 if ($highestRow < 3) {
                     $log .= 'Fichier Excel Invalide<br>';
                     $haserror = true;
@@ -165,7 +166,7 @@ class BulletinInfoController extends BaseController
                         $lineError++;
                     }
                 }
-
+                
                 if (!$haserror) {
                     $em = $this->getEntityManager();
                     $bulletinInfoTest = $em->getRepository('AcfDataBundle:BulletinInfo')->findOneBy(array(
@@ -176,9 +177,9 @@ class BulletinInfoController extends BaseController
                         $haserror = true;
                     }
                 }
-
+                
                 if (!$haserror) {
-
+                    
                     $bulletinInfo->setNum($num);
                     $bulletinInfo->setDtStart($dtStart);
                     $em->persist($bulletinInfo);
@@ -244,7 +245,7 @@ class BulletinInfoController extends BaseController
                                     $log .= 'Titre : Numéro de nouveau Titre ' . $testNum . ' trouvé à la ligne  ' . $lineRead . ' mais texte vide<br>';
                                 }
                             }
-
+                            
                             if ($isContent) {
                                 $bcTitle = \trim(\strval($worksheet->getCellByColumnAndRow(2, $row)->getValue()));
                                 if ($bcTitle != '') {
@@ -307,21 +308,21 @@ class BulletinInfoController extends BaseController
                     }
                     $em->flush();
                 }
-
+                
                 $log .= $lineRead . ' lignes lues<br>';
                 $log .= $lineUnprocessed . ' lignes non traités<br>';
                 $log .= $bulletinInfoTitleNew . " nouveaux Titres de Bulletin d'Informations<br>";
                 $log .= $bulletinInfoContentNew . " nouveaux Contenus de Bulletin d'Informations<br>";
                 $log .= $lineError . ' lignes contenant des erreurs<br>';
-
+                
                 $this->flashMsgSession('log', $log);
-
+                
                 if (!$haserror) {
-
+                    
                     $this->flashMsgSession('success', $this->translate('BulletinInfo.import.success', array(
                         '%bulletinInfo%' => $bulletinInfo->getId()
                     )));
-
+                    
                     return $this->redirect($this->generateUrl('_admin_bulletinInfo_editGet', array(
                         'uid' => $bulletinInfo->getId()
                     )));
@@ -329,7 +330,7 @@ class BulletinInfoController extends BaseController
             }
         }
         $this->flashMsgSession('error', $this->translate('BulletinInfo.import.failure'));
-
+        
         return $this->redirect($urlFrom);
     }
 
@@ -343,7 +344,7 @@ class BulletinInfoController extends BaseController
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             return $this->redirect($this->generateUrl('_admin_homepage'));
         }
-
+        
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
             $urlFrom = $this->generateUrl('_admin_bulletinInfo_list');
@@ -351,13 +352,13 @@ class BulletinInfoController extends BaseController
         $em = $this->getEntityManager();
         try {
             $bulletinInfo = $em->getRepository('AcfDataBundle:BulletinInfo')->find($uid);
-
+            
             if (null == $bulletinInfo) {
                 $this->flashMsgSession('warning', $this->translate('BulletinInfo.delete.notfound'));
             } else {
                 $em->remove($bulletinInfo);
                 $em->flush();
-
+                
                 $this->flashMsgSession('success', $this->translate('BulletinInfo.delete.success', array(
                     '%bulletinInfo%' => $bulletinInfo->getNum()
                 )));
@@ -365,10 +366,10 @@ class BulletinInfoController extends BaseController
         } catch (\Exception $e) {
             $logger = $this->getLogger();
             $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
-
+            
             $this->flashMsgSession('error', $this->translate('BulletinInfo.delete.failure'));
         }
-
+        
         return $this->redirect($urlFrom);
     }
 
@@ -382,56 +383,56 @@ class BulletinInfoController extends BaseController
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             return $this->redirect($this->generateUrl('_admin_homepage'));
         }
-
+        
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
             $urlFrom = $this->generateUrl('_admin_bulletinInfo_list');
         }
-
+        
         $em = $this->getEntityManager();
         try {
             $bulletinInfo = $em->getRepository('AcfDataBundle:BulletinInfo')->find($uid);
-
+            
             if (null == $bulletinInfo) {
                 $this->flashMsgSession('warning', $this->translate('BulletinInfo.edit.notfound'));
             } else {
                 $bulletinInfoUpdateDtStartForm = $this->createForm(BulletinInfoUpdateDtStartTForm::class, $bulletinInfo);
                 $bulletinInfoUpdateNumForm = $this->createForm(BulletinInfoUpdateNumTForm::class, $bulletinInfo);
                 $bulletinInfoUpdateDescriptionForm = $this->createForm(BulletinInfoUpdateDescriptionTForm::class, $bulletinInfo);
-
+                
                 $bulletinInfoTitle = new BulletinInfoTitle();
                 $bulletinInfoTitle->setBulletinInfo($bulletinInfo);
                 $bulletinInfoTitleNewForm = $this->createForm(BulletinInfoTitleNewTForm::class, $bulletinInfoTitle, array(
                     'bulletinInfo' => $bulletinInfo
                 ));
-
+                
                 $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
                 $this->getSession()->remove('tabActive');
-
+                
                 $this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
                 $this->getSession()->remove('stabActive');
-
+                
                 $this->gvars['bulletinInfo'] = $bulletinInfo;
-
+                
                 $this->gvars['BulletinInfoUpdateDtStartForm'] = $bulletinInfoUpdateDtStartForm->createView();
                 $this->gvars['BulletinInfoUpdateDescriptionForm'] = $bulletinInfoUpdateDescriptionForm->createView();
                 $this->gvars['BulletinInfoUpdateNumForm'] = $bulletinInfoUpdateNumForm->createView();
                 $this->gvars['BulletinInfoTitleNewForm'] = $bulletinInfoTitleNewForm->createView();
-
+                
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.bulletinInfo.edit', array(
                     '%bulletinInfo%' => $bulletinInfo->getNum()
                 ));
                 $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.bulletinInfo.edit.txt', array(
                     '%bulletinInfo%' => $bulletinInfo->getNum()
                 ));
-
+                
                 return $this->renderResponse('AcfAdminBundle:BulletinInfo:edit.html.twig', $this->gvars);
             }
         } catch (\Exception $e) {
             $logger = $this->getLogger();
             $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
         }
-
+        
         return $this->redirect($urlFrom);
     }
 
@@ -446,38 +447,38 @@ class BulletinInfoController extends BaseController
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             return $this->redirect($this->generateUrl('_admin_homepage'));
         }
-
+        
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
             $urlFrom = $this->generateUrl('_admin_bulletinInfo_list');
         }
-
+        
         $em = $this->getEntityManager();
         try {
             $bulletinInfo = $em->getRepository('AcfDataBundle:BulletinInfo')->find($uid);
-
+            
             if (null == $bulletinInfo) {
                 $this->flashMsgSession('warning', $this->translate('BulletinInfo.edit.notfound'));
             } else {
                 $bulletinInfoUpdateDtStartForm = $this->createForm(BulletinInfoUpdateDtStartTForm::class, $bulletinInfo);
                 $bulletinInfoUpdateDescriptionForm = $this->createForm(BulletinInfoUpdateDescriptionTForm::class, $bulletinInfo);
                 $bulletinInfoUpdateNumForm = $this->createForm(BulletinInfoUpdateNumTForm::class, $bulletinInfo);
-
+                
                 $bulletinInfoTitle = new BulletinInfoTitle();
                 $bulletinInfoTitle->setBulletinInfo($bulletinInfo);
                 $bulletinInfoTitleNewForm = $this->createForm(BulletinInfoTitleNewTForm::class, $bulletinInfoTitle, array(
                     'bulletinInfo' => $bulletinInfo
                 ));
-
+                
                 $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
                 $this->getSession()->remove('tabActive');
-
+                
                 $this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
                 $this->getSession()->remove('stabActive');
-
+                
                 $request = $this->getRequest();
                 $reqData = $request->request->all();
-
+                
                 if (isset($reqData['BulletinInfoUpdateDtStartForm'])) {
                     $this->gvars['tabActive'] = 2;
                     $this->getSession()->set('tabActive', 2);
@@ -488,11 +489,11 @@ class BulletinInfoController extends BaseController
                         $this->flashMsgSession('success', $this->translate('BulletinInfo.edit.success', array(
                             '%bulletinInfo%' => $bulletinInfo->getNum()
                         )));
-
+                        
                         return $this->redirect($urlFrom);
                     } else {
                         $em->refresh($bulletinInfo);
-
+                        
                         $this->flashMsgSession('error', $this->translate('BulletinInfo.edit.failure', array(
                             '%bulletinInfo%' => $bulletinInfo->getNum()
                         )));
@@ -507,11 +508,11 @@ class BulletinInfoController extends BaseController
                         $this->flashMsgSession('success', $this->translate('BulletinInfo.edit.success', array(
                             '%bulletinInfo%' => $bulletinInfo->getNum()
                         )));
-
+                        
                         return $this->redirect($urlFrom);
                     } else {
                         $em->refresh($bulletinInfo);
-
+                        
                         $this->flashMsgSession('error', $this->translate('BulletinInfo.edit.failure', array(
                             '%bulletinInfo%' => $bulletinInfo->getNum()
                         )));
@@ -526,11 +527,11 @@ class BulletinInfoController extends BaseController
                         $this->flashMsgSession('success', $this->translate('BulletinInfo.edit.success', array(
                             '%bulletinInfo%' => $bulletinInfo->getNum()
                         )));
-
+                        
                         return $this->redirect($urlFrom);
                     } else {
                         $em->refresh($bulletinInfo);
-
+                        
                         $this->flashMsgSession('error', $this->translate('BulletinInfo.edit.failure', array(
                             '%bulletinInfo%' => $bulletinInfo->getNum()
                         )));
@@ -545,39 +546,95 @@ class BulletinInfoController extends BaseController
                         $this->flashMsgSession('success', $this->translate('BulletinInfoTitle.add.success', array(
                             '%bulletinInfoTitle%' => $bulletinInfoTitle->getTitle()
                         )));
-
+                        
                         $this->gvars['stabActive'] = 2;
                         $this->getSession()->set('stabActive', 2);
-
+                        
                         return $this->redirect($urlFrom);
                     } else {
                         $em->refresh($bulletinInfo);
-
+                        
                         $this->flashMsgSession('error', $this->translate('BulletinInfoTitle.add.failure'));
                     }
                 }
-
+                
                 $this->gvars['bulletinInfo'] = $bulletinInfo;
-
+                
                 $this->gvars['BulletinInfoUpdateDtStartForm'] = $bulletinInfoUpdateDtStartForm->createView();
                 $this->gvars['BulletinInfoUpdateDescriptionForm'] = $bulletinInfoUpdateDescriptionForm->createView();
                 $this->gvars['BulletinInfoUpdateNumForm'] = $bulletinInfoUpdateNumForm->createView();
                 $this->gvars['BulletinInfoTitleNewForm'] = $bulletinInfoTitleNewForm->createView();
-
+                
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.bulletinInfo.edit', array(
                     '%bulletinInfo%' => $bulletinInfo->getNum()
                 ));
                 $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.bulletinInfo.edit.txt', array(
                     '%bulletinInfo%' => $bulletinInfo->getNum()
                 ));
-
+                
                 return $this->renderResponse('AcfAdminBundle:BulletinInfo:edit.html.twig', $this->gvars);
             }
         } catch (\Exception $e) {
             $logger = $this->getLogger();
             $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
         }
+        
+        return $this->redirect($urlFrom);
+    }
 
+    /**
+     *
+     * @param string $uid
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function mailAction($uid)
+    {
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
+        
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_bulletinInfo_list');
+        }
+        
+        $em = $this->getEntityManager();
+        try {
+            $bulletinInfo = $em->getRepository('AcfDataBundle:BulletinInfo')->find($uid);
+            
+            if (null == $bulletinInfo) {
+                $this->flashMsgSession('warning', $this->translate('BulletinInfo.edit.notfound'));
+            } else {
+                $acfInfoRole = $em->getRepository('AcfDataBundle:Role')->findOneBy(array(
+                    'name' => 'ROLE_CLIENT2'
+                ));
+                $from = $this->getParameter('mail_from');
+                $fromName = $this->getParameter('mail_from_name');
+                $subject = $this->translate('_mail.newbi.subject', array(
+                    '%bulletinInfo%' => $bulletinInfo->getNum()
+                ), 'messages');
+                $i = 0;
+                foreach ($acfInfoRole->getUsers() as $user) {
+                    $i++;
+                    $mvars = array();
+                    $mvars['bi'] = $bulletinInfo;
+                    $mvars['user'] = $user;
+                    $message = \Swift_Message::newInstance();
+                    $message->setFrom($from, $fromName);
+                    $message->setTo($user->getEmail(), $user->getFullname());
+                    $message->setSubject($subject);
+                    $message->setBody($this->renderView('AcfAdminBundle:BulletinInfo:mail.html.twig', $mvars), 'text/html');
+                    $this->sendmail($message);
+                }
+                $this->flashMsgSession('success', $this->translate('BulletinInfo.mail.success', array(
+                    '%sendmail%' => $i
+                )));
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
+        
         return $this->redirect($urlFrom);
     }
 }

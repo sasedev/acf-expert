@@ -1,0 +1,5 @@
+<html>
+<body>
+{{'_mail.newbi.body'|trans({'%user%':user.fullName, '%url%': url('_info_bulletinInfo_editGet', {'uid': bi.id}) ,'%bulletinInfo%':bi.num}, "messages")|raw}}
+</body>
+</html>

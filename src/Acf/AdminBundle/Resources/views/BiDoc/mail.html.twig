@@ -1,0 +1,5 @@
+<html>
+<body>
+{{'_mail.newbiDoc.body'|trans({'%user%':user.fullName, '%url%': url('_info_biDoc_download', {'uid': biDoc.id}) ,'%biDoc%':biDoc.title}, "messages")|raw}}
+</body>
+</html>

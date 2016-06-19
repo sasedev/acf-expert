@@ -1140,7 +1140,6 @@ _admin_bulletinInfo_importPost:
     path:     /bulletinInfo/import
     defaults: { _controller: "AcfAdminBundle:BulletinInfo:importPost" }
     methods: [POST]
-    methods: [POST]
 
 _admin_bulletinInfo_delete:
     path:     /bulletinInfo/delete/{uid}
@@ -1161,8 +1160,13 @@ _admin_bulletinInfo_editPost:
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
-    methods: [POST]
-    methods: [POST]
+
+_admin_bulletinInfo_sendmail:
+    path:     /bulletinInfo/mail/{uid}
+    defaults: { _controller: "AcfAdminBundle:BulletinInfo:mail" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
 _admin_bulletinInfoTitle_delete:
     path:     /bulletinInfoTitle/delete/{uid}
@@ -1183,7 +1187,6 @@ _admin_bulletinInfoTitle_editPost:
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
-    methods: [POST]
     methods: [POST]
 
 _admin_bulletinInfoContent_delete:
@@ -1265,6 +1268,13 @@ _admin_biDoc_editPost:
     path:     /biDoc/edit/{uid}
     defaults: { _controller: "AcfAdminBundle:BiDoc:editPost" }
     methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_biDoc_sendmail:
+    path:     /biDoc/mail/{uid}
+    defaults: { _controller: "AcfAdminBundle:BiDoc:mail" }
+    methods: [GET]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 

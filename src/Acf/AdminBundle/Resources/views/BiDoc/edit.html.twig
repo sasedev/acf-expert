@@ -96,7 +96,7 @@ $(function() {
 								<div class="col-lg-3 text-right">{{'BiDoc.md5'|trans|raw}} :</div>
 								<div class="col-lg-9">{{biDoc.md5}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'BiDoc.nbrDownloads'|trans|raw}} :</div>
-								<div class="col-lg-9">{{biDoc.nbrDownloads}}&nbsp;</div>
+								<div class="col-lg-9">{{biDoc.nbrDownloads}}&nbsp;<br><br><a href="{{ path('_admin_biDoc_sendmail', {'uid': biDoc.id}) }}" class="btn-primary btn">{{glyphIco('envelope')}}</a>&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
 
 								<div class="col-lg-3 text-right">{{'BiDoc.dtCrea'|trans|raw}} :</div>
