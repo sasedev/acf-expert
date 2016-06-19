@@ -6,6 +6,7 @@ use Acf\AdminBundle\Form\Order\NewTForm as OrderNewTForm;
 use Acf\AdminBundle\Form\Order\UpdateValTForm as OrderUpdateValTForm;
 use Acf\AdminBundle\Form\Order\UpdateStatusTForm as OrderUpdateStatusTForm;
 use Acf\AdminBundle\Form\Order\UpdateDescriptionTForm as OrderUpdateDescriptionTForm;
+use Acf\AdminBundle\Form\Order\UpdateUserTForm as OrderUpdateUserTForm;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 
 /**
@@ -180,11 +181,13 @@ class OrderController extends BaseController
                 $orderUpdateValForm = $this->createForm(OrderUpdateValTForm::class, $order);
                 $orderUpdateStatusForm = $this->createForm(OrderUpdateStatusTForm::class, $order);
                 $orderUpdateDescriptionForm = $this->createForm(OrderUpdateDescriptionTForm::class, $order);
+                $orderUpdateUserForm = $this->createForm(OrderUpdateUserTForm::class, $order);
                 
                 $this->gvars['order'] = $order;
                 $this->gvars['OrderUpdateValForm'] = $orderUpdateValForm->createView();
                 $this->gvars['OrderUpdateStatusForm'] = $orderUpdateStatusForm->createView();
                 $this->gvars['OrderUpdateDescriptionForm'] = $orderUpdateDescriptionForm->createView();
+                $this->gvars['OrderUpdateUserForm'] = $orderUpdateUserForm->createView();
                 
                 $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
                 $this->getSession()->remove('tabActive');
@@ -231,6 +234,7 @@ class OrderController extends BaseController
                 $orderUpdateValForm = $this->createForm(OrderUpdateValTForm::class, $order);
                 $orderUpdateStatusForm = $this->createForm(OrderUpdateStatusTForm::class, $order);
                 $orderUpdateDescriptionForm = $this->createForm(OrderUpdateDescriptionTForm::class, $order);
+                $orderUpdateUserForm = $this->createForm(OrderUpdateUserTForm::class, $order);
                 
                 $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
                 $this->getSession()->remove('tabActive');
@@ -295,12 +299,32 @@ class OrderController extends BaseController
                             '%order%' => $order->getRef()
                         )));
                     }
+                } elseif (isset($reqData['OrderUpdateUserForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $orderUpdateUserForm->handleRequest($request);
+                    if ($orderUpdateUserForm->isValid()) {
+                        $em->persist($order);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('Order.edit.success', array(
+                            '%order%' => $order->getRef()
+                        )));
+                        
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($order);
+                        
+                        $this->flashMsgSession('error', $this->translate('Order.edit.failure', array(
+                            '%order%' => $order->getRef()
+                        )));
+                    }
                 }
                 
                 $this->gvars['order'] = $order;
                 $this->gvars['OrderUpdateValForm'] = $orderUpdateValForm->createView();
                 $this->gvars['OrderUpdateStatusForm'] = $orderUpdateStatusForm->createView();
                 $this->gvars['OrderUpdateDescriptionForm'] = $orderUpdateDescriptionForm->createView();
+                $this->gvars['OrderUpdateUserForm'] = $orderUpdateUserForm->createView();
                 
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.order.edit', array(
                     '%order%' => $order->getRef()

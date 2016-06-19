@@ -31,6 +31,8 @@ $(function() {
 	});
 
     $('#OrderUpdateStatusForm_status').chosen({width: "100%", disable_search_threshold: 10});
+
+    $('#OrderUpdateUserForm_user').chosen({width: "100%", disable_search_threshold: 10});
 });
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
@@ -104,14 +106,23 @@ $(function() {
 					       {{form_end(OrderUpdateStatusForm)}}
 					    </div>
 					</div>
+                    <div class="panel box box-danger">
+                        <div class="box-header"><h3 class="box-title">{{'Order.tlabel.editUser'|trans}}</h3></div>
+                        <div class="box-body">
+                            {{form_start(OrderUpdateUserForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+                            {{form_row(OrderUpdateUserForm.user, {'label_col': 3, 'widget_col': 8 })}}
+                            <div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+                            {{form_end(OrderUpdateUserForm)}}
+                        </div>
+                    </div>
 					<div class="panel box box-danger">
-					<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editDescription'|trans}}</h3></div>
-					<div class="box-body">
-					{{form_start(OrderUpdateDescriptionForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
-					{{form_row(OrderUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
-					<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-					{{form_end(OrderUpdateDescriptionForm)}}
-					</div>
+    					<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editDescription'|trans}}</h3></div>
+    					<div class="box-body">
+        					{{form_start(OrderUpdateDescriptionForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+        					{{form_row(OrderUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+        					<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+        					{{form_end(OrderUpdateDescriptionForm)}}
+    					</div>
 					</div>
 				</div>
 			</div>
