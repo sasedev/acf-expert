@@ -1,7 +1,6 @@
 <?php
 namespace Acf\FrontBundle\Controller;
 
-
 use Acf\DataBundle\Entity\Order;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,22 +25,30 @@ class PaymentNotifController extends BaseController
     public function paymentnotifAction()
     {
         $request = $this->getRequest();
-
+        
         $ipFrom = $request->getClientIp();
         $logger = $this->getLogger();
-        $logger->addDebug('IP : '.$ipFrom);
-
-        if ($ipFrom != '196.203.11.74' && $ipFrom != '196.203.11.69') {
+        $logger->addError('IP : ' . $ipFrom);
+        
+        if ($ipFrom != '196.203.11.74' && $ipFrom != '196.203.11.69' && $ipFrom != '196.203.11.72') {
             throw new HttpException('403', 'Access Forbiden');
         }
-
-        $ref = $request->request->get('Reference', null);
-        $actionId = $request->request->get('Action', 'DETAIL');
-        $paramId = $request->request->get('Param', null);
-
+        
+        $logger->addError($request->getQueryString());
+        
+        $ref = $request->get('Reference', null);
+        $actionId = $request->get('Action', 'DETAIL');
+        $paramId = $request->get('Param', null);
+        
+        $logger->addError('$ref: ' . $ref);
+        $logger->addError('$actionId: ' . $actionId);
+        $logger->addError('$paramId: ' . $paramId);
+        
         if (null != $ref && \trim($ref) != '') {
             $em = $this->getEntityManager();
-            $order = $em->getRepository('AcfDataBundle:Order')->findOneBy(array('ref' => $ref));
+            $order = $em->getRepository('AcfDataBundle:Order')->findOneBy(array(
+                'ref' => $ref
+            ));
             if (null == $order) {
                 throw new HttpException('404', 'Unknown Order');
             } else {
@@ -119,7 +126,7 @@ class PaymentNotifController extends BaseController
         } else {
             throw new HttpException('500', 'Wrong request');
         }
-
+        
         return $this->renderResponse('AcfFrontBundle:Payment:paymentnotif.html.twig', $this->gvars);
     }
 }
