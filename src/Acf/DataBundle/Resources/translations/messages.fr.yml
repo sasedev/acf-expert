@@ -1410,11 +1410,15 @@ BulletinInfoContent.dtCrea.label: "Date d'ajout :"
 
 # BiFolder
 BiFolder.title: Titre
+BiFolder.parent: Parent
+BiFolder.childs: Enfants
 BiFolder.docs: Fichiers
 BiFolder.dtCrea: Date d'ajout
 BiFolder.dtUpdate: Date de modification
 
 BiFolder.title.label: "Titre :"
+BiFolder.parent.label: "Parent :"
+BiFolder.childs.label: "Enfant :"
 BiFolder.docs.label: "Fichiers :"
 
 # BiDoc

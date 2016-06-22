@@ -878,9 +878,12 @@ CREATE TABLE "acf_bi_contents" (
 CREATE TABLE "acf_bifolders" (
 	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
 	"title"                                                             TEXT NOT NULL,
+	"pageurl_full"                                                      TEXT NULL,
+	"parent_id"                                                         UUID NULL,
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-	CONSTRAINT "pk_acf_bifolders" PRIMARY KEY ("id")
+	CONSTRAINT "pk_acf_bifolders" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_bifolders_parent" FOREIGN KEY ("parent_id") REFERENCES "acf_bifolders" ("id") ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE "acf_bifiles" (

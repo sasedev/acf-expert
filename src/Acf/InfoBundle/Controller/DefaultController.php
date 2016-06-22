@@ -2,11 +2,11 @@
 namespace Acf\InfoBundle\Controller;
 
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
+use Acf\DataBundle\Entity\BiFolder;
 
 /**
  *
  * @author sasedev <seif.salah@gmail.com>
- *
  */
 class DefaultController extends BaseController
 {
@@ -34,7 +34,7 @@ class DefaultController extends BaseController
         $em = $this->getEntityManager();
         $bulletinInfos = $em->getRepository('AcfDataBundle:BulletinInfo')->getAll();
         $this->gvars['bulletinInfos'] = $bulletinInfos;
-        $biFolders = $em->getRepository('AcfDataBundle:BiFolder')->getAll();
+        $biFolders = $em->getRepository('AcfDataBundle:BiFolder')->getRoots();
         $this->gvars['biFolders'] = $biFolders;
 
         $this->gvars['smenu_active'] = 'list';
@@ -85,5 +85,19 @@ class DefaultController extends BaseController
         }
 
         return $this->redirect($urlFrom);
+    }
+
+    /**
+     *
+     * @param BiFolder $parent
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function childsAction(BiFolder $parent)
+    {
+        $em = $this->getEntityManager();
+        $dg = $em->getRepository('AcfDataBundle:BiFolder')->find($parent);
+        $this->gvars['parent'] = $dg;
+
+        return $this->renderResponse('AcfInfoBundle:BiFolder:childs.html.twig', $this->gvars);
     }
 }

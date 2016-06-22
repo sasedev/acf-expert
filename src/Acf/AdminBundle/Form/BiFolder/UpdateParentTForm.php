@@ -4,7 +4,6 @@ namespace Acf\AdminBundle\Form\BiFolder;
 use Acf\DataBundle\Repository\BiFolderRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author sasedev <seif.salah@gmail.com>
  */
-class NewTForm extends AbstractType
+class UpdateParentTForm extends AbstractType
 {
 
     /**
@@ -21,18 +20,21 @@ class NewTForm extends AbstractType
      *
      * @param FormBuilderInterface $builder
      * @param array $options
+     *
+     * @return null
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', TextType::class, array(
-            'label' => 'BiFolder.title.label'
-        ));
-        
+        $selfUrl = $options['selfUrl'];
+
         $builder->add('parent', EntityType::class, array(
             'label' => 'BiFolder.parent.label',
             'class' => 'AcfDataBundle:BiFolder',
-            'query_builder' => function (BiFolderRepository $dgr) {
-                return $dgr->createQueryBuilder('d')->orderBy('d.pageUrlFull', 'ASC');
+            'query_builder' => function (BiFolderRepository $dgr) use ($selfUrl) {
+                $qb = $dgr->createQueryBuilder('d')->where('d.pageUrlFull NOT LIKE :url');
+                $qb->setParameter('url', $selfUrl . '%');
+
+                return $qb->addOrderBy('d.pageUrlFull', 'ASC');
             },
             'choice_label' => 'pageUrlFull',
             'multiple' => false,
@@ -50,7 +52,7 @@ class NewTForm extends AbstractType
      */
     public function getName()
     {
-        return 'BiFolderNewForm';
+        return 'BiFolderUpdateParentForm';
     }
 
     /**
@@ -71,9 +73,9 @@ class NewTForm extends AbstractType
     {
         return array(
             'validation_groups' => array(
-                'title',
                 'parent'
-            )
+            ),
+            'selfUrl' => ''
         );
     }
 

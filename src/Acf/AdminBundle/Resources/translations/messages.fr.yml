@@ -2109,6 +2109,7 @@ BiFolder.tlabel.list: Liste des Dossiers Bulletin Infos
 BiFolder.tlabel.add: Ajouter nouveau Dossier Bulletin Info
 BiFolder.tlabel.overview: Aperçu des détails du Dossier Bulletin Info
 BiFolder.tlabel.editTitle: Modification du titre du Dossier Bulletin Info
+BiFolder.tlabel.editParent: Modification du parent du Dossier Bulletin Info
 BiFolder.tlabel.docs.add: Ajouter un Nouveau Document
 BiFolder.tlabel.docs.list: Liste des Documents
 

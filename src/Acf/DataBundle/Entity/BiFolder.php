@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *         @ORM\Table(name="acf_bifolders")
  *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\BiFolderRepository")
  *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"title"}, errorPath="title", groups={"title"})
+ *         @UniqueEntity(fields={"title", "parent"}, errorPath="title", groups={"title"})
  */
 class BiFolder
 {
@@ -34,6 +34,25 @@ class BiFolder
 
     /**
      *
+     * @var string @ORM\Column(name="pageurl_full", type="text", nullable=false)
+     *      @Gedmo\Slug(handlers={
+     *      @Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\TreeSlugHandler", options={
+     *      @Gedmo\SlugHandlerOption(name="parentRelationField", value="parent"),
+     *      @Gedmo\SlugHandlerOption(name="separator", value="/")
+     *      })
+     *      }, separator="_", updatable=true, style="camel", fields={"title"})
+     */
+    protected $pageUrlFull;
+
+    /**
+     *
+     * @var BiFolder @ORM\ManyToOne(targetEntity="BiFolder", inversedBy="childs", cascade={"persist"})
+     *      @ORM\JoinColumns({@ORM\JoinColumn(name="parent_id", referencedColumnName="id")})
+     */
+    protected $parent;
+
+    /**
+     *
      * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
@@ -44,6 +63,13 @@ class BiFolder
      *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
+
+    /**
+     *
+     * @var Collection @ORM\OneToMany(targetEntity="BiFolder", mappedBy="parent",cascade={"persist"})
+     *      @ORM\OrderBy({"title" = "ASC"})
+     */
+    protected $childs;
 
     /**
      *
@@ -58,6 +84,7 @@ class BiFolder
     public function __construct()
     {
         $this->dtCrea = new \DateTime('now');
+        $this->childs = new ArrayCollection();
         $this->docs = new ArrayCollection();
     }
 
@@ -89,6 +116,58 @@ class BiFolder
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get $pageUrlFull
+     *
+     * @return string
+     */
+    public function getPageUrlFull()
+    {
+        return $this->pageUrlFull;
+    }
+
+    /**
+     * Set $pageUrlFull
+     *
+     * @param string $pageUrlFull
+     *
+     * @return BiFolder $this
+     */
+    public function setPageUrlFull($pageUrlFull)
+    {
+        $this->pageUrlFull = $pageUrlFull;
+
+        return $this;
+    }
+
+    /**
+     * Get $parent
+     *
+     * @return BiFolder
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set $parent
+     *
+     * @param BiFolder $parent|null
+     *
+     * @return BiFolder $this
+     */
+    public function setParent(BiFolder $parent = null)
+    {
+        $this->parent = $parent;
+
+        if (null == $parent) {
+            $this->setPageUrlFull($this->getTitle());
+        }
 
         return $this;
     }
@@ -142,6 +221,58 @@ class BiFolder
     }
 
     /**
+     * Add child
+     *
+     * @param BiFolder $child
+     *
+     * @return BiFolder
+     */
+    public function addChild(BiFolder $child)
+    {
+        $this->childs[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param BiFolder $child
+     *
+     * @return BiFolder
+     */
+    public function removeChild(BiFolder $child)
+    {
+        $this->childs->removeElement($child);
+
+        return $this;
+    }
+
+    /**
+     * Get childs
+     *
+     * @return ArrayCollection
+     */
+    public function getChilds()
+    {
+        return $this->childs;
+    }
+
+    /**
+     * Set $childs
+     *
+     * @param Collection $childs
+     *
+     * @return BiFolder $this
+     */
+    public function setChilds(Collection $childs)
+    {
+        $this->childs = $childs;
+
+        return $this;
+    }
+
+    /**
      * Add doc
      *
      * @param BiDoc $doc
@@ -185,7 +316,7 @@ class BiFolder
      *
      * @return BiFolder
      */
-    public function setAddresses(Collection $docs)
+    public function setDocs(Collection $docs)
     {
         $this->docs = $docs;
 
@@ -202,10 +333,8 @@ class BiFolder
     }
 
     /**
-     *
      */
     public function __clone()
     {
-
     }
 }
