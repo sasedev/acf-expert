@@ -14,3 +14,5 @@ info.BulletinInfo.description.label: "Description :"
 
 info.BulletinInfo.title: BULLETIN D'INFORMATION ET DE DOCUMENTATION
 info.BulletinInfo.desc: BULLETIN N° <b>%num%</b> DU <b>%dtStart%</b>
+info.BiFolder.tlabel.list: Documentation comptable, juridique, fiscale et sociale
+info.BiDoc.empty: Aucun Document trouvé dans la base de donnée

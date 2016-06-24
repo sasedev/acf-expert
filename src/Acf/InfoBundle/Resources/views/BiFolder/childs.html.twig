@@ -32,7 +32,7 @@
                 {{ render_hinclude(controller('AcfInfoBundle:Default:childs', {parent: biFolder.id})) }}
                 {% endif %}
                 {% if biFolder.childs|length == 0 and biFolder.docs|length == 0%}
-                {{ 'BiFolder.empty'|trans|raw }}
+                {{ 'info.BiDoc.empty'|trans|raw }}
                             <br><br><br>
                 {% endif %}
             </div>
