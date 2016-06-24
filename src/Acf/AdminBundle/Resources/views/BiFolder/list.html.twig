@@ -116,7 +116,7 @@ $(function() {
                             <br><br><br>
                             {% endif %}
                             {% if biFolder.childs|length != 0 %}
-                            {{ render_hinclude(controller('AcfAdminBundle:BiFolder:childs', {parent: biFolder.id})) }}
+                            {{ render(controller('AcfAdminBundle:BiFolder:childs', {parent: biFolder.id})) }}
                             {% endif %}
                         </div>
                     </div>

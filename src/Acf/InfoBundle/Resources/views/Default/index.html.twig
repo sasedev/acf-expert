@@ -120,7 +120,7 @@ $(function() {
                             </table>
                             {% endif %}
                             {% if biFolder.childs|length != 0 %}
-                            {{ render_hinclude(controller('AcfInfoBundle:Default:childs', {parent: biFolder.id})) }}
+                            {{ render(controller('AcfInfoBundle:Default:childs', {parent: biFolder.id})) }}
                             {% endif %}
                             {% if biFolder.childs|length == 0 and biFolder.docs|length == 0%}
                             {{ 'info.BiDoc.empty'|trans|raw }}
