@@ -7,7 +7,6 @@ use Acf\DataBundle\Entity\User;
 /**
  *
  * @author sasedev <seif.salah@gmail.com>
- *
  */
 class DefaultController extends BaseController
 {
@@ -38,7 +37,7 @@ class DefaultController extends BaseController
         $user = $sc->getToken()->getUser();
 
         $minDate = new \DateTime('now');
-        $minDate->modify('-7 days');
+        $minDate->modify('-14 days');
 
         if ($ac->isGranted('ROLE_SUPERADMIN', $user)) {
             $traces = $em->getRepository('AcfDataBundle:Trace')->getAll($minDate);
