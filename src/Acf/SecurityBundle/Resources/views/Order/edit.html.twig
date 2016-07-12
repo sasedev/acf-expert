@@ -52,7 +52,7 @@ $(function() {
             </div>
         </div>
     </div>
-    {% if order.status == constant('ST_NEW', order) %}
+    {% if order.status != constant('ST_OK', order) and  order.status != constant('ST_CANCELED', order)  order.status != constant('ST_ERROR', order) %}
     <div class="col-lg-6">
         <div class="box box-success">
             <div class="box-header"><h3 class="box-title">{{'myorder.validate'|trans}}</h3></div>
