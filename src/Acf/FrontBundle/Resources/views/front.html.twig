@@ -227,9 +227,14 @@
 				{% endif %}
 				{% if is_granted('ROLE_CLIENT3')%}
 				<ul class="sidebar-menu" id="side-menu5">
-					<li{% if menu_active=='prhome'%} class="active"{% endif %}>
+					<li{% if menu_active=='payrollhome'%} class="active"{% endif %}>
 						<a href="{{ path('_payroll_homepage') }}"> {{ faIco('dashboard') }} <span>{{ 'menu.payroll'|trans }}</span></a>
 					</li>
+					{% for company in app.user.companies %}
+					<li{% if menu_active=='payroll'~company.id%} class="active"{% endif %}>
+						<a href="{{ path('_payroll_company_editGet', {'uid': company.id}) }}"> {{ faIco('building') }} <span>{{ company.corporateName }}</span></a>
+					</li>
+					{% endfor %}
 				</ul>
 				<br>
 				{% endif %}

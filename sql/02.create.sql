@@ -919,3 +919,72 @@ CREATE TABLE "acf_orders" (
     CONSTRAINT "uk_acf_orders" UNIQUE ("ref"),
     CONSTRAINT "fk_acf_orders_user" FOREIGN KEY ("user_id") REFERENCES "acf_users" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE "acf_mpayes" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"ref"                                                               TEXT NOT NULL,
+	"year"                                                              INT4 NOT NULL DEFAULT 2000,
+	"month"                                                             INT4 NOT NULL DEFAULT 1,
+	"company_id"                                                        UUID NOT NULL,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_mpayes" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_mpayes_company" FOREIGN KEY ("company_id") REFERENCES "acf_companies" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE "acf_msalaries" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"ref"                                                               TEXT NOT NULL,
+	"nom"                                                               TEXT NOT NULL,
+	"prenom"                                                            TEXT NOT NULL,
+	"active"                                                            TEXT NULL,
+	"fonction"                                                          TEXT NULL,
+	"regime"                                                          TEXT NULL,
+	"dtstartcontrat"                                                    TEXT NULL,
+	"dtendcontrat"                                                      TEXT NULL,
+	"departement"                                                       TEXT NULL,
+	"categorie"                                                         TEXT NULL,
+	"echelon"                                                           TEXT NULL,
+	"cin"                                                               TEXT NULL,
+	"cnss"                                                              TEXT NULL,
+	"birthday"                                                          TEXT NULL,
+	"adresse"                                                           TEXT NULL,
+	"tel"                                                               TEXT NULL,
+	"mail"                                                              TEXT NULL,
+	"banque"                                                            TEXT NULL,
+	"rib"                                                               TEXT NULL,
+	"chefdefamille"                                                     TEXT NULL,
+	"situationfamiliale"                                                TEXT NULL,
+	"enfanthandicap"                                                    TEXT NULL,
+	"enfantsansbourse"                                                  TEXT NULL,
+	"nbrjwork"                                                          TEXT NULL,
+	"nbrjabsence"                                                       TEXT NULL,
+	"nbrjconge"                                                         TEXT NULL,
+	"nbrh075sup"                                                           TEXT NULL,
+	"nbrh100sup"                                                           TEXT NULL,
+	"nbrjsup"                                                           TEXT NULL,
+	"remboursement"                                                     TEXT NULL,
+	"achatste"                                                          TEXT NULL,
+	"avancesalaire"                                                     TEXT NULL,
+	"salairebrut"                                                       TEXT NULL,
+	"salairenet"                                                        TEXT NULL,
+	"avantagenature"                                                    TEXT NULL,
+	"ticketresto"                                                       TEXT NULL,
+	"ticketcadeau"                                                      TEXT NULL,
+	"assurancevie"                                                      TEXT NULL,
+	"comptecea"                                                         TEXT NULL,
+	"remarques"                                                         TEXT NULL,
+	"mpaye_id"                                                          UUID NOT NULL,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_msalaries" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_msalaries_mpaye" FOREIGN KEY ("mpaye_id") REFERENCES "acf_mpayes" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE "acf_mpaye_docs" (
+	"doc_id"                                                            UUID NOT NULL,
+	"mpaye_id"                                                          UUID NOT NULL,
+	CONSTRAINT "pk_acf_mpaye_docs" PRIMARY KEY ("doc_id", "mpaye_id"),
+	CONSTRAINT "fk_acf_mpaye_docs_doc" FOREIGN KEY ("doc_id") REFERENCES "acf_company_docs" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT "fk_acf_mpaye_docs_mpaye" FOREIGN KEY ("mpaye_id") REFERENCES "acf_mpayes" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);

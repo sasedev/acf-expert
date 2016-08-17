@@ -358,6 +358,13 @@ class Company
 
     /**
      *
+     * @var Collection @ORM\OneToMany(targetEntity="MPaye", mappedBy="company", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"year" = "ASC", "month" = "ASC"})
+     */
+    protected $payes;
+
+    /**
+     *
      * @var Collection @ORM\OneToMany(targetEntity="Docgroup", mappedBy="company", cascade={"persist", "remove"})
      *      @ORM\OrderBy({"label" = "ASC"})
      */
@@ -437,6 +444,7 @@ class Company
         $this->accounts = new ArrayCollection();
         $this->withholdings = new ArrayCollection();
         $this->monthlyBalances = new ArrayCollection();
+        $this->payes = new ArrayCollection();
         $this->docgroups = new ArrayCollection();
         $this->docgroupcomptables = new ArrayCollection();
         $this->docgroupfiscals = new ArrayCollection();
@@ -2077,6 +2085,57 @@ class Company
     }
 
     /**
+     * Add paye
+     *
+     * @param MPaye $paye
+     *
+     * @return Company
+     */
+    public function addPaye(MPaye $paye)
+    {
+        $this->payes[] = $paye;
+
+        return $this;
+    }
+
+    /**
+     * Remove paye
+     *
+     * @param MPaye $paye
+     *
+     * @return Company
+     */
+    public function removePaye(MPaye $paye)
+    {
+        $this->payes->removeElement($paye);
+
+        return $this;
+    }
+
+    /**
+     * Get payes
+     *
+     * @return ArrayCollection
+     */
+    public function getPayes()
+    {
+        return $this->payes;
+    }
+
+    /**
+     *
+     * @param Collection $payes
+     *
+     * @return Company
+     */
+    public function setPayes(Collection $payes)
+    {
+        $this->payes = $payes;
+
+        return $this;
+    }
+
+    /**
      * Get purchases
      *
      * @return ArrayCollection
@@ -2108,6 +2167,23 @@ class Company
         }
 
         return $sales;
+    }
+
+    /**
+     * Get sales
+     *
+     * @return ArrayCollection
+     */
+    public function getSalaries()
+    {
+        $salaries = new ArrayCollection();
+        foreach ($this->payes as $mpaye) {
+            if ($mpaye instanceof MPaye) {
+                $salaries->add($mpaye);
+            }
+        }
+
+        return $salaries;
     }
 
     /**
@@ -2545,7 +2621,6 @@ class Company
     }
 
     /**
-     *
      */
     public function __clone()
     {

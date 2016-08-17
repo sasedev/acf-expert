@@ -245,6 +245,20 @@ class Doc
     protected $transactions;
 
     /**
+     *
+     * @var Collection @ORM\ManyToMany(targetEntity="MPaye", inversedBy="docs", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_mpaye_docs",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="mpaye_id", referencedColumnName="id")
+     *      }
+     *      )
+     */
+    protected $mpayes;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -263,6 +277,7 @@ class Doc
         $this->relations = new ArrayCollection();
         $this->monthlyBalances = new ArrayCollection();
         $this->transactions = new ArrayCollection();
+        $this->mpayes = new ArrayCollection();
     }
 
     /**
@@ -1081,6 +1096,19 @@ class Doc
     }
 
     /**
+     *
+     * @param Collection $monthlyBalances
+     *
+     * @return Doc
+     */
+    public function setMonthlyBalances(Collection $monthlyBalances)
+    {
+        $this->monthlyBalances = $monthlyBalances;
+
+        return $this;
+    }
+
+    /**
      * Get Mbpurchases
      *
      * @return ArrayCollection
@@ -1112,19 +1140,6 @@ class Doc
         }
 
         return $mbsales;
-    }
-
-    /**
-     *
-     * @param Collection $monthlyBalances
-     *
-     * @return Doc
-     */
-    public function setMonthlyBalances(Collection $monthlyBalances)
-    {
-        $this->monthlyBalances = $monthlyBalances;
-
-        return $this;
     }
 
     /**
@@ -1213,6 +1228,57 @@ class Doc
     }
 
     /**
+     * Add mpaye
+     *
+     * @param MPaye $mpaye
+     *
+     * @return Doc
+     */
+    public function addMpaye(MPaye $mpaye)
+    {
+        $this->mpayes[] = $mpaye;
+
+        return $this;
+    }
+
+    /**
+     * Remove mpaye
+     *
+     * @param MPaye $mpaye
+     *
+     * @return Doc
+     */
+    public function removeMpaye(MPaye $mpaye)
+    {
+        $this->mpayes->removeElement($mpaye);
+
+        return $this;
+    }
+
+    /**
+     * Get mpayes
+     *
+     * @return ArrayCollection
+     */
+    public function getMpayes()
+    {
+        return $this->mpayes;
+    }
+
+    /**
+     *
+     * @param Collection $mpayes
+     *
+     * @return Doc
+     */
+    public function setMpayes(Collection $mpayes)
+    {
+        $this->mpayes = $mpayes;
+
+        return $this;
+    }
+
+    /**
      *
      * @return string
      */
@@ -1222,10 +1288,8 @@ class Doc
     }
 
     /**
-     *
      */
     public function __clone()
     {
-
     }
 }

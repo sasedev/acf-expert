@@ -200,6 +200,9 @@ Company.stocks: Stocks
 Company.docs: Documents
 Company.dtCrea: Date d'ajout
 Company.dtUpdate: Date de modification
+Company.msalaries: "Salariés :"
+Company.tmsalariesBrut: "Total des Salaires Brut :"
+Company.tmsalariesNet: "Total des Salaires Net :"
 
 Company.actionvn.label: "Valeur Nominale des Actions :"
 Company.actioncount.label: "Nombre d'Actions :"
@@ -1482,4 +1485,154 @@ Order.ipAddr.label: "Adresse IP :"
 Order.dtCrea.label: "Date d'ajout :"
 Order.dtUpdate.label: "Date de modification :"
 
+
+
+#MPaye
+MPaye.month: Mois
+MPaye.month.1: Janvier
+MPaye.month.2: Février
+MPaye.month.3: Mars
+MPaye.month.4: Avril
+MPaye.month.5: Mai
+MPaye.month.6: Juin
+MPaye.month.7: Juillet
+MPaye.month.8: Août
+MPaye.month.9: Septembre
+MPaye.month.01: Janvier
+MPaye.month.02: Février
+MPaye.month.03: Mars
+MPaye.month.04: Avril
+MPaye.month.05: Mai
+MPaye.month.06: Juin
+MPaye.month.07: Juillet
+MPaye.month.08: Août
+MPaye.month.09: Septembre
+MPaye.month.10: Octobre
+MPaye.month.11: Novembre
+MPaye.month.12: Décembre
+MPaye.month.label: "Mois :"
+MPaye.month.choice.1: Janvier
+MPaye.month.choice.2: Février
+MPaye.month.choice.3: Mars
+MPaye.month.choice.4: Avril
+MPaye.month.choice.5: Mai
+MPaye.month.choice.6: Juin
+MPaye.month.choice.7: Juillet
+MPaye.month.choice.8: Août
+MPaye.month.choice.9: Septembre
+MPaye.month.choice.01: Janvier
+MPaye.month.choice.02: Février
+MPaye.month.choice.03: Mars
+MPaye.month.choice.04: Avril
+MPaye.month.choice.05: Mai
+MPaye.month.choice.06: Juin
+MPaye.month.choice.07: Juillet
+MPaye.month.choice.08: Août
+MPaye.month.choice.09: Septembre
+MPaye.month.choice.10: Octobre
+MPaye.month.choice.11: Novembre
+MPaye.month.choice.12: Décembre
+
+MPaye.company: Société
+MPaye.ref: Référence
+MPaye.month: Mois
+MPaye.year: Année
+MPaye.docs: Documents
+MPaye.dtCrea: Date d'ajout
+MPaye.dtUpdate: Date de modification
+
+MPaye.company.label: "Société :"
+MPaye.ref.label: "Référence :"
+MPaye.month.label: "Mois :"
+MPaye.year.label: "Année :"
+MPaye.docs.label: "Documents :"
+
+
+# MSalary
+MSalary.company: Société
+MSalary.paye: Mois
+MSalary.matricule: 'MATRICULE'
+MSalary.nom: NOM
+MSalary.prenom: PRENOM
+MSalary.actif: Salarié Actif
+MSalary.fonction: FONCTION / QUALIFICATION
+MSalary.regime: Régime Contrat
+MSalary.dtStartContrat: Date début contrat
+MSalary.dtEndContrat: Date fin contrat
+MSalary.departement: DEPARTEMENT
+MSalary.categorie: CATEGORIE
+MSalary.echelon: ECHELON
+MSalary.cin: N° CIN
+MSalary.cnss: N° CNSS
+MSalary.birthday: Date Naissance
+MSalary.adresse: Adresse
+MSalary.tel: Tél
+MSalary.email: Mail
+MSalary.banque: BANQUE
+MSalary.rib: RIB BANCAIRE
+MSalary.familyChef: Chef de famille
+MSalary.familySituation: Situation familiale
+MSalary.handicap: Enfant handicapé
+MSalary.childWoBourse: Enfant - de 25 ans sans bourse
+MSalary.nbrDaysWork: 'NBRE JOURS TRAVAIL'
+MSalary.nbrDaysAbs: 'NBRE JOURS ABSENCE'
+MSalary.nbrDaysFerry: 'NBRE JOURS CONGE'
+MSalary.nbrH075Sup: 'NBRE HEURES SUPPLEMENTAIRES - MAJ 75%'
+MSalary.nbrH100Sup: 'NBRE HEURES SUPPLEMENTAIRES - MAJ 100%'
+MSalary.nbrDSup: 'NBRE JOURS SUPPLEMENTAIRES'
+MSalary.remboursement: 'Remboursement Prêt'
+MSalary.buysFromCompany: 'Achat auprès société'
+MSalary.salaryAdvance: 'Avance / Salaire'
+MSalary.salaryBrut: Salaire brut
+MSalary.salaryNet: "Salaire net"
+MSalary.advantageNature: "Avantages en nature"
+MSalary.ticketResto: "TICKET RESTO"
+MSalary.ticketCadeau: "TICKET CADEAU"
+MSalary.lifeAssurance: "Montant Assurance vie (10 mD /an max)"
+MSalary.ceaAccount: "Souscription compte CEA"
+MSalary.others: "Remarques"
+MSalary.dtCrea: Date d'Ajout
+MSalary.dtUpdate: Date de Modification
+
+MSalary.paye.label: 'Mois :'
+MSalary.matricule.label: 'MATRICULE :'
+MSalary.nom.label: 'NOM :'
+MSalary.prenom.label: 'PRENOM :'
+MSalary.actif.label: 'Salarié Actif :'
+MSalary.fonction.label: 'FONCTION / QUALIFICATION :'
+MSalary.regime.label: 'Régime Contrat :'
+MSalary.dtStartContrat.label: 'Date début contrat :'
+MSalary.dtEndContrat.label: 'Date fin contrat :'
+MSalary.departement.label: 'DEPARTEMENT :'
+MSalary.categorie.label: 'CATEGORIE :'
+MSalary.echelon.label: 'ECHELON :'
+MSalary.cin.label: 'N° CIN :'
+MSalary.cnss.label: 'N° CNSS :'
+MSalary.birthday.label: 'Date Naissance :'
+MSalary.adresse.label: 'Adresse :'
+MSalary.tel.label: 'Tél :'
+MSalary.email.label: 'Mail :'
+MSalary.banque.label: 'BANQUE :'
+MSalary.rib.label: 'RIB BANCAIRE :'
+MSalary.familyChef.label: 'Chef de famille :'
+MSalary.familySituation.label: 'Situation familiale :'
+MSalary.handicap.label: 'Enfant handicapé :'
+MSalary.childWoBourse.label: 'Enfant - de 25 ans sans bourse :'
+MSalary.nbrDaysWork.label: 'NBRE JOURS TRAVAIL :'
+MSalary.nbrDaysAbs.label: 'NBRE JOURS ABSENCE :'
+MSalary.nbrDaysFerry.label: 'NBRE JOURS CONGE :'
+MSalary.nbrH075Sup.label: 'NBRE HEURES SUPPLEMENTAIRES - MAJ 75% :'
+MSalary.nbrH100Sup.label: 'NBRE HEURES SUPPLEMENTAIRES - MAJ 100% :'
+MSalary.nbrDSup.label: 'NBRE JOURS SUPPLEMENTAIRES :'
+MSalary.remboursement.label: 'Remboursement Prêt :'
+MSalary.buysFromCompany.label: 'Achat auprès société :'
+MSalary.salaryAdvance.label: 'Avance / Salaire :'
+MSalary.salaryBrut.label: "Salaire brut :"
+MSalary.salaryNet.label: "Salaire net :"
+MSalary.advantageNature.label: "Avantages en nature :"
+MSalary.ticketResto.label: "TICKET RESTO  :"
+MSalary.ticketCadeau.label: "TICKET CADEAU :"
+MSalary.lifeAssurance.label: "Montant Assurance vie (10 mD /an max) :"
+MSalary.ceaAccount.label: "Souscription compte CEA :"
+MSalary.others.label: "Remarques :"
 

@@ -1311,3 +1311,43 @@ _admin_order_editPost:
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mpaye_editGet:
+    path:     /mpaye/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:MPaye:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mpaye_editPost:
+    path:     /mpaye/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:MPaye:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_mpaye_excel:
+    path:     /mpaye/excel/{uid}
+    defaults: { _controller: "AcfAdminBundle:MPaye:excel" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_msalary_delete:
+    path:     /msalary/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:MSalary:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_msalary_editGet:
+    path:     /msalary/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:MSalary:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_msalary_editPost:
+    path:     /msalary/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:MSalary:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

@@ -464,6 +464,7 @@ Company.tab.tab5: "Dossier Social / Personnel"
 Company.tab.tab6: Dossier Système
 Company.tab.tab7: Dossier Audit
 Company.tab.docgroupaudits: Documents Audits
+Company.tab.tab10: Paye
 
 Company.tlabel.list: Liste des Sociétés
 Company.tlabel.add: Ajouter nouvelle Société
@@ -544,6 +545,9 @@ Company.tlabel.docgroupaudits.add: 'Ajouter un Groupe de Documents'
 Company.tlabel.docgroupaudits.list: 'Liste des groupes de Documents'
 Company.tlabel.docs.add: 'Ajouter un Document'
 Company.tlabel.docs.list: 'Liste des Documents'
+Company.tlabel.payes.add: 'Ajouter un Mois (Paye)'
+Company.tlabel.payes.addYear: 'Ajouter une Année (Paye)'
+Company.tlabel.payes.list: 'Gestion des Fiches de Paye'
 
 Company.empty: Aucune Société trouvée dans la base de donnée
 
@@ -2206,3 +2210,116 @@ Order.delete.failure: Echec de la suppression de la Commande
 Order.edit.notfound: Commande inconnue
 Order.edit.success: Succès de la modification de la Commande <b>%order%</b>
 Order.edit.failure: Echec de la modification de la Commande <b>%order%</b>
+
+
+
+#MBPurchase
+menu.admin.mpaye: Mois (Paye)
+breadcrumb.mpaye.list: Liste des Mois (Paye)
+breadcrumb.mpaye.add: Ajouter Mois (Paye)
+breadcrumb.mpaye.edit: Mois (Paye) <b>%mpaye%</b>
+
+pagetitle.mpaye.list: Liste des Mois (Paye)
+pagetitle.mpaye.listByCompany: Liste des Mois (Paye) de la Société %company%
+pagetitle.mpaye.list.txt: Liste des Mois (Paye)
+pagetitle.mpaye.add: Ajouter Mois (Paye)
+pagetitle.mpaye.add.txt: Ajouter Mois (Paye)
+pagetitle.mpaye.edit: Edition Mois (Paye) <b>%mpaye%</b>
+pagetitle.mpaye.edit.txt: Edition Mois (Paye) "%mpaye%"
+
+MPaye.tab.docs: Documents
+MPaye.tab.overview: Détails
+MPaye.tab.edit: Edition
+MPaye.tab.addSalary: Import Fiches de Paye
+
+MPaye.tlabel.list: Liste des Mois (Paye)
+MPaye.tlabel.add: Ajouter nouveau Mois (Paye)
+MPaye.tlabel.overview: 'Aperçu des détails du Mois (Paye)'
+MPaye.tlabel.edit: 'Modifier les détails du Mois (Paye)'
+MPaye.tlabel.import: 'Importer des Fiches depuis Excel'
+MPaye.tlabel.addSalary: 'Ajouter une Fiche'
+MPaye.tlabel.docs.add: 'Ajouter un Nouveau Document du Mois (Paye)'
+MPaye.tlabel.docs.edit: 'Modifier la Liste des Documents du Mois (Paye)'
+MPaye.tlabel.docs.list: 'Liste des Documents du Mois (Paye)'
+
+MPaye.empty: Aucun Mois (Paye) trouvé dans la base de donnée
+
+MPaye.add.success: 'Succès de l''ajout du Mois (Paye) <b>%mpaye%</b>'
+MPaye.add.failure: 'Echec de l''ajout du Mois (Paye)'
+MPaye.delete.confirm.title: Demande de Confirmation
+MPaye.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Mois (Paye) ?<br/> Cette action est irreversible!
+MPaye.delete.notfound: Mois (Paye) inconnu
+MPaye.delete.success: 'Succès de la suppression du Mois (Paye) <b>%mpaye%</b>'
+MPaye.delete.failure: 'Echec de la suppression du Mois (Paye)'
+MPaye.edit.notfound: Mois inconnu
+MPaye.edit.success: 'Succès de la modification du Mois <b>%mpaye%</b>'
+MPaye.edit.failure: 'Echec de la modification du Mois <b>%mpaye%</b>'
+
+MPaye.traceNew: 'Ajout Nouveau Mois de Paye <b>%mpaye%</b><br/>Société <b>%company%</b>'
+MPaye.traceEdit: 'Modification Mois de Paye <b>%mpaye%</b><br/>Société <b>%company%</b>'
+MPaye.traceDel: 'Suppression Mois de Paye <b>%mpaye%</b><br/>Société <b>%company%</b>'
+
+# Sale
+menu.admin.msalary: Ventes
+breadcrumb.msalary.list: Liste des Ventes
+breadcrumb.msalary.add: Ajouter Vente
+breadcrumb.msalary.edit: Vente <b>%sale%</b>
+
+pagetitle.msalary.list: Liste des Ventes
+pagetitle.msalary.listExcel: '%mpaye%'
+pagetitle.msalary.listByMPaye: Liste des Fiches du Mois %mpaye% (%company%)
+pagetitle.msalary.listByYear: 'Liste des Fiches de l''Année %year% (%company%)'
+pagetitle.msalary.list.txt: Liste des Fiches
+pagetitle.msalary.add: Ajouter Fiche
+pagetitle.msalary.add.txt: Ajouter Fiche
+pagetitle.msalary.edit: Edition Fiche <b>%msalary%</b>
+pagetitle.msalary.edit.txt: Edition Fiche "%msalary%"
+
+
+MSalary.tab.docs: Documents
+MSalary.tab.overview: Détails
+MSalary.tab.edit: Edition
+MSalary.tlabel.overview: 'Aperçu des détails de la Vente'
+MSalary.tlabel.editNumber: 'Modifier le Numéro de la Vente'
+MSalary.tlabel.editDtActivation: 'Modifier la Date de la Vente'
+MSalary.tlabel.editBill: 'Modifier la Facture de la Vente'
+MSalary.tlabel.editRelation: 'Modifier le Client de la Vente'
+MSalary.tlabel.editLabel: 'Modifier l''Intitulé de la Vente'
+MSalary.tlabel.editDevise: 'Modifier la Devise de la Vente'
+MSalary.tlabel.editConversionRate: 'Modifier le Taux de Conversion de la Vente'
+MSalary.tlabel.editVat: 'Modifier le Montant de la TVA de la Vente'
+MSalary.tlabel.editVatDevise: 'Modifier le Montant de la TVA de la Vente (Devise)'
+MSalary.tlabel.editVatInfo: 'Modifier la TVA Pour Infos de la Vente'
+MSalary.tlabel.editStamp: 'Modifier le Montant du Timbre Fiscal de la Vente'
+MSalary.tlabel.editStampDevise: 'Modifier le Montant du Timbre Fiscal de la Vente (Devise)'
+MSalary.tlabel.editRegime: 'Modifier le Régime de la Vente'
+MSalary.tlabel.editBalanceTtc: 'Modifier le Montant TTC de la Vente'
+MSalary.tlabel.editBalanceTtcDevise: 'Modifier le Montant TTC de la Vente (Devise)'
+MSalary.tlabel.editWithholding: 'Modifier le Taux de Retenue de la Vente'
+MSalary.tlabel.editBalanceNet: 'Modifier le Montant Net de la Vente'
+MSalary.tlabel.editBalanceNetDevise: 'Modifier le Montant Net de la Vente (Devise)'
+MSalary.tlabel.editPaymentType: 'Modifier le Type de Paiement de la Vente'
+MSalary.tlabel.editTransactionStatus: 'Modifier le Status et la Date de Paiement de la Vente'
+MSalary.tlabel.editValidated: 'Modifier la Validation de la Vente'
+MSalary.tlabel.editAccount: 'Modifier le Compte Bancaire/la Caisse de la Vente'
+MSalary.tlabel.editOtherInfos: 'Modifier les remarques de la Vente'
+MSalary.tlabel.addSecondaryVat: 'Ajouter une TVA Secondaire'
+
+MSalary.tlabel.list: Liste des Ventes
+MSalary.tlabel.add: Ajouter nouvelle Vente
+MSalary.tlabel.overview: 'Aperçu des détails de la Vente'
+MSalary.tlabel.edit: 'Modifier les détails de la Vente'
+MSalary.tlabel.docs.add: 'Ajouter un Nouveau Document à la Vente'
+MSalary.tlabel.docs.edit: 'Modifier la Liste des Documents de la Vente'
+MSalary.tlabel.docs.list: 'Liste des Documents de la Vente'
+
+MSalary.empty: Aucune Fiche de Paye trouvée dans la base de donnée
+
+MSalary.excel.label: 'Fichier Excel avec Fiches de Paye'
+MSalary.import.success: 'Succès de l''import du fichier Excel Paye'
+MSalary.import.failure: 'Echec de l''import du fichier Excel Paye'
+MSalary.delete.confirm.title: Demande de Confirmation
+MSalary.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Fiche de Paye ?<br/> Cette action est irreversible!
+MSalary.delete.notfound: Fiche de Paye inconnue
+MSalary.delete.success: 'Succès de la suppression de la Fiche de Paye <b>%msalary%</b>'
+MSalary.delete.failure: 'Echec de la suppression de la Fiche de Paye'

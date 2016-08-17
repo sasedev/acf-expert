@@ -1,1 +1,66 @@
-Hello World!
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li class="active"><a href="{{ path('_payroll_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.payroll'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+{% if companies | length != 0 %}
+<div class="row">
+	<div class="col-lg-12">
+		<ul class="pager centred">
+			<li class="previous"><a href="{{ path('_payroll_homepage_my', {'month':lnk_prev_month, 'year':lnk_prev_year}) }}">&laquo;&nbsp;{{ ('MPaye.month.'~lnk_prev_month)|trans }}  {{ lnk_prev_year }}</a></li>
+			{% if null != lnk_next_month and null!= lnk_next_year %}
+			<li class="next"><a href="{{ path('_payroll_homepage_my', {'month':lnk_next_month, 'year':lnk_next_year}) }}">{{ ('MPaye.month.'~lnk_next_month)|trans }}  {{ lnk_next_year }}&nbsp;&raquo;</a></li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+{% for cmp in companies %}
+<div class="row">
+	<div class="col-lg-12">
+		<h3><a href="{{ path('_payroll_company_editGet', {'uid': cmp.company.id}) }}">{{ cmp.company.corporateName }}</a></h3>
+	</div>
+	<div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+		<div class="info-box">
+			<span class="info-box-icon bg-aqua">
+				<i class="fa fa-users"></i>
+			</span>
+			<div class="info-box-content">
+				<span class="info-box-text">{{ 'Company.msalaries'|trans }}</span>
+				<span class="info-box-number">{{ cmp.countEmployees }}</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+		<div class="info-box">
+			<span class="info-box-icon bg-red">
+				<i class="fa fa-money"></i>
+			</span>
+			<div class="info-box-content">
+				<span class="info-box-text">{{ 'Company.tmsalariesBrut'|trans }}</span>
+				<span class="info-box-number">{{ cmp.totalSalariesBrut }} <small>TND</small></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+		<div class="info-box">
+			<span class="info-box-icon bg-yellow">
+				<i class="fa fa-money"></i>
+			</span>
+			<div class="info-box-content">
+				<span class="info-box-text">{{ 'Company.tmsalariesNet'|trans }}</span>
+				<span class="info-box-number">{{ cmp.totalSalariesNet }} <small>TND</small></span>
+			</div>
+		</div>
+	</div>
+	
+	
+</div>
+<hr/>
+<br/>
+{% endfor %}
+{% else %}
+Interface Client
+{% endif %}
+{%endblock content%}

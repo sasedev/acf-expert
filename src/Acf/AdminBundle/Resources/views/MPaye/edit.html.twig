@@ -1,0 +1,410 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+	
+	$("#MSalaryImportForm_excel").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Excel", browseIcon: '{{faIco('folder-open')}}', remove1Class: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+	$('#MPayeUpdateDocsForm_docs').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+
+	
+	$("#DocNewForm_fileName").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+	{% if mpaye.docs|length != 0 %}
+	$('#docList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		]
+	});
+	{% endif %}
+
+	{% if mpaye.salaries|length != 0 %}
+	$('#salaryList').dataTable({
+		"sScrollX":	  "100%",
+		"sScrollXInner": "150%",
+		"sScrollY":	  "250px",
+		"bScrollCollapse": true,
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmSalary').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmSalary').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmSalary').modal('show');
+			});
+		}
+	});
+	{% endif %}
+
+	$('#chmonth').chosen({disable_search_threshold: 10});
+
+	$('#changeMonth').click(function () {
+		window.location.replace($('#chmonth').val());
+	});
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_company_editGet', {'uid': mpaye.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': mpaye.company.corporateName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_mpaye_editGet', {'uid': mpaye.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.mpaye.edit'|trans({'%mpaye%': mpaye.ref})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<select id="chmonth">
+			{% for month in mpaye.company.salaries %}
+				<option value="{{ path('_admin_mpaye_editGet', {'uid': month.id}) }}" {% if month.id == mpaye.id %}selected="selected"{% endif %}>{{ month.ref }}</option>
+			{% endfor %}
+			</select>
+			<button id="changeMonth" class="btn btn-primary">{{ faIco('calendar') }} {{ 'action.changeMonth'|trans }}</button>
+			&nbsp; | &nbsp;
+			<a href="{{ path('_admin_mpaye_excel', {'uid': mpaye.id}) }}" class="btn btn-success">{{ faIco('file-excel-o') }} {{ 'action.excel'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'MPaye.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#addSalary" data-toggle="tab">{{'MPaye.tab.addSalary'|trans|raw}}</a></li>
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'MPaye.tab.docs'|trans|raw}}</a></li>
+				</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'MPaye.tlabel.overview'|trans}} {{ mpaye.ref }} (<a href="{{ path('_admin_company_editGet', {'uid': mpaye.company.id}) }}">{{ mpaye.company.corporateName }}</a>)</h3></div>
+						<div class="box-body table-responsive">
+							{% for flashMessage in app.session.flashbag.get('log') %}
+							<div class="callout callout-info">
+							{{ flashMessage|raw }}
+							</div>
+							{% endfor %}
+							<table id="salaryList" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>{{ 'MSalary.matricule.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.nom.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.prenom.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.actif.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.fonction.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.regime.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.dtStartContrat.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.dtEndContrat.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.departement.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.categorie.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.echelon.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.cin.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.cnss.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.birthday.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.adresse.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.tel.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.email.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.banque.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.rib.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.familyChef.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.familySituation.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.handicap.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.childWoBourse.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.nbrDaysWork.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.nbrDaysAbs.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.nbrDaysFerry.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.nbrH075Sup.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.nbrH100Sup.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.nbrDSup.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.remboursement.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.buysFromCompany.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.salaryAdvance.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.salaryBrut.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.salaryNet.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.advantageNature.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.ticketResto.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.ticketCadeau.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.lifeAssurance.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.ceaAccount.label'|trans|raw }}</th>
+										<th>{{ 'MSalary.others.label'|trans|raw }}</th>
+										<th>{{ 'action'|trans|raw }}</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% if mpaye.salaries|length != 0 %}
+									{% for salary in mpaye.salaries %}
+									<tr>
+										<td>{{ salary.matricule }}</td>
+										<td>{{ salary.nom }}</td>
+										<td>{{ salary.prenom }}</td>
+										<td>{{ salary.actif }}</td>
+										<td>{{ salary.fonction }}</td>
+										<td>{{ salary.regime }}</td>
+										<td>{{ salary.dtStartContrat }}</td>
+										<td>{{ salary.dtEndContrat }}</td>
+										<td>{{ salary.departement }}</td>
+										<td>{{ salary.categorie }}</td>
+										<td>{{ salary.echelon }}</td>
+										<td>{{ salary.cin }}</td>
+										<td>{{ salary.cnss }}</td>
+										<td>{{ salary.birthday }}</td>
+										<td>{{ salary.adresse }}</td>
+										<td>{{ salary.tel }}</td>
+										<td>{{ salary.email }}</td>
+										<td>{{ salary.banque }}</td>
+										<td>{{ salary.rib }}</td>
+										<td>{{ salary.familyChef }}</td>
+										<td>{{ salary.familySituation }}</td>
+										<td>{{ salary.handicap }}</td>
+										<td>{{ salary.childWoBourse }}</td>
+										<td>{{ salary.nbrDaysWork }}</td>
+										<td>{{ salary.nbrDaysAbs }}</td>
+										<td>{{ salary.nbrDaysFerry }}</td>
+										<td>{{ salary.nbrH075Sup }}</td>
+										<td>{{ salary.nbrH100Sup }}</td>
+										<td>{{ salary.nbrDSup }}</td>
+										<td>{{ salary.remboursement }}</td>
+										<td>{{ salary.buysFromCompany }}</td>
+										<td>{{ salary.salaryAdvance }}</td>
+										<td>{{ salary.salaryBrut }}</td>
+										<td>{{ salary.salaryNet }}</td>
+										<td>{{ salary.advantageNature }}</td>
+										<td>{{ salary.ticketResto }}</td>
+										<td>{{ salary.ticketCadeau }}</td>
+										<td>{{ salary.lifeAssurance }}</td>
+										<td>{{ salary.ceaAccount }}</td>
+										<td>{{ salary.others }}</td>
+										<td>
+											<a class="btn btn-sm btn-danger deleteConfirmSalary" href="{{path('_admin_msalary_delete',{'uid':salary.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+										</td>
+									</tr>
+									
+									{% endfor %}
+								{% else %}
+									<tr>
+										<td colspan="41">{{ 'MSalary.empty'|trans|raw }}</td>
+									</tr>
+								{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="addSalary">
+					<div class="panel box box-danger">
+						<div class="box-header">
+							<h4 class="box-title">{{'MPaye.tlabel.import'|trans}}</h4>
+						</div>
+						<div class="box-body">
+							{{form_start(MSalaryImportForm, {'method':'POST', 'action': path('_admin_mpaye_editPost', {'uid': mpaye.id}), 'style': 'horizontal'})}}
+							{{form_row(MSalaryImportForm.excel, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnExcel'|trans|raw}}</button></div></div>
+							{{form_end(MSalaryImportForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="Docs"><div id="accordion03" class="box-group">
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse31" data-parent="#accordion03" data-toggle="collapse">{{'MPaye.tlabel.docs.add'|trans}}</a></h4>
+							</div>
+							<div id="collapse31" class="panel-collapse collapse{%if tabActive==3 and stabActive==1%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(DocNewForm, {'method':'POST', 'action': path('_admin_mpaye_editGet', {'uid': mpaye.id}), 'style': 'horizontal'})}}
+									{{form_row(DocNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+									{{form_row(DocNewForm.fileName, {'label_col': 3, 'widget_col': 8 })}}
+									{{form_row(DocNewForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+									{{form_end(DocNewForm)}}
+								</div>
+							</div>
+						</div>
+						<div class="panel box box-danger">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse32" data-parent="#accordion03" data-toggle="collapse">{{'MPaye.tlabel.docs.edit'|trans}}</a></h4>
+							</div>
+							<div id="collapse32" class="panel-collapse collapse{%if tabActive==3 and stabActive==2%} in{%endif%}">
+								<div class="box-body">
+									{{form_start(MPayeUpdateDocsForm, {'method':'POST', 'action': path('_admin_mpaye_editPost', {'uid': mpaye.id}), 'style': 'horizontal'})}}
+									{{form_row(MPayeUpdateDocsForm.docs, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+									<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+									{{form_end(MPayeUpdateDocsForm)}}
+								</div>
+							</div>
+						</div>
+						<div class="panel box">
+							<div class="box-header">
+								<h4 class="box-title"><a href="#collapse33" data-parent="#accordion03" data-toggle="collapse">{{'MPaye.tlabel.docs.list'|trans}}</a></h4>
+							</div>
+							<div id="collapse33" class="panel-collapse collapse{%if (tabActive==3 and stabActive==3) or tabActive!=3%} in{%endif%}">
+								<div class="box-body table-responsive">
+									<table id="docList" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>{{ 'Doc.fileName.label'|trans|raw }}</th>
+												<th>{{ 'Doc.mimeType.label'|trans|raw }}</th>
+												<th>{{ 'Doc.size.label'|trans|raw }}</th>
+												<th>{{ 'Doc.nbrDownloads.label'|trans|raw }}</th>
+												<th>{{ 'Doc.dtCrea'|trans|raw }}:</th>
+												<th>{{ 'Doc.description.label'|trans|raw }}</th>
+												<th>{{ 'action'|trans|raw }}</th>
+											</tr>
+										</thead>
+										<tbody>
+										{% if mpaye.docs|length != 0 %}
+											{% for doc in mpaye.docs %}
+											<tr>
+												<td>{{ doc.originalName }}</td>
+												<td>{{ doc.mimeType }}</td>
+												<td>{%if doc.size<1024%}
+														{{doc.size}} o
+													{%elseif doc.size<(1024*1024)%}
+														{{'%.2f'|format(doc.size/1024)}} Ko
+													{%elseif doc.size<(1024*1024*1024)%}
+														{{'%.2f'|format(doc.size/1024/1024)}} Mo
+													{%else%}
+														{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+													{% endif %}
+												</td>
+												<td>{{ doc.nbrDownloads }}</td>
+												<td>{{ doc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+												<td>{{ doc.description | raw }}</td>
+												<td>
+													<a class="btn btn-sm btn-primary" href="{{path('_admin_doc_download',{'uid':doc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+													<a class="btn btn-sm btn-info" href="{{path('_admin_doc_editGet',{'uid':doc.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												</td>
+											</tr>
+											{% endfor %}
+										{% else %}
+											<tr>
+												<td colspan="7">{{ 'Doc.empty'|trans|raw }}</td>
+											</tr>
+										{% endif %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmSalary" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'MSalary.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'MSalary.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{%endblock content%}

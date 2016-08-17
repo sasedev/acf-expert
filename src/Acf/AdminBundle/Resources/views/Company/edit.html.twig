@@ -128,6 +128,8 @@ $(function() {
 
 	$('#MBPurchaseNewForm_month').chosen({width: "100%", disable_search_threshold: 12});
 
+	$('#MPayeNewForm_month').chosen({width: "100%", disable_search_threshold: 12});
+
 	{% if company.stocks|length != 0 %}
 	$('#stockList').dataTable({
 		{%if app.request.locale != 'en'%}
@@ -607,6 +609,20 @@ $(function() {
 		"bPaginate": false
 	});
 
+
+	$('.mpayeList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"bPaginate": false
+	});
+
 {%if is_granted('ROLE_SUPERADMIN')%}
 	{% if company.shareholders|length != 0 %}
 	$('#shareholderList').dataTable({
@@ -750,6 +766,7 @@ $(function() {
 				<li {%if tabActive==71 %} class="active"{%endif%}><a href="#tab6" data-toggle="tab">{{'Company.tab.tab6'|trans|raw}}</a></li>
 				<li {%if tabActive==81 %} class="active"{%endif%}><a href="#tab7" data-toggle="tab">{{'Company.tab.tab7'|trans|raw}}</a></li>
 				{% endif %}
+				<li {%if tabActive==101 or tabActive==102 or tabActive==103 %} class="active"{%endif%}><a href="#tab10" data-toggle="tab">{{'Company.tab.tab10'|trans|raw}}</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade{%if tabActive==1 or tabActive==2 or tabActive==3 or tabActive==4 or tabActive==5 or tabActive==6 or tabActive==7 or tabActive==8 or tabActive==9 or tabActive==10 or tabActive==11 or tabActive==12%} in active{%endif%}" id="tab1">
@@ -2476,7 +2493,7 @@ $(function() {
 																		{% endfor %}
 																	{% else %}
 																		<tr>
-																			<td colspan="5">{{ 'MBSale.empty'|trans|raw }}</td>
+																			<td colspan="5">{{ 'MPaye.empty'|trans|raw }}</td>
 																		</tr>
 																	{% endif %}
 																	</tbody>
@@ -3421,6 +3438,95 @@ $(function() {
 					</div>
 				</div>
 {% endif %}
+				<div class="tab-pane fade{%if tabActive==101%} in active{%endif%}" id="tab10">
+					<div class="panel">
+						<div id="accordion101" class="box-group">
+							<div class="panel box box-danger">
+								<div class="box-header">
+									<h4 class="box-title"><a href="#collapse1011" data-parent="#accordion101" data-toggle="collapse">{{'Company.tlabel.payes.add'|trans}}</a></h4>
+								</div>
+								<div id="collapse1011" class="panel-collapse collapse{%if tabActive==101 and stabActive==1%} in{%endif%}">
+									<div class="box-body">
+										{{form_start(MPayeNewForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+										{{form_row(MPayeNewForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+										{{form_row(MPayeNewForm.year, {'label_col': 3, 'widget_col': 8 })}}
+										{{form_row(MPayeNewForm.month, {'label_col': 3, 'widget_col': 8 })}}
+										<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+										{{form_end(MPayeNewForm)}}
+									</div>
+								</div>
+							</div>
+							<div class="panel box box-danger">
+								<div class="box-header">
+									<h4 class="box-title"><a href="#collapse1012" data-parent="#accordion101" data-toggle="collapse">{{'Company.tlabel.payes.addYear'|trans}}</a></h4>
+								</div>
+								<div id="collapse1012" class="panel-collapse collapse{%if tabActive==101 and stabActive==2%} in{%endif%}">
+									<div class="box-body">
+										{{form_start(MPayeNewYearForm, {'method':'POST', 'action': path('_admin_company_editPost', {'uid': company.id}), 'style': 'horizontal'})}}
+										{{form_row(MPayeNewYearForm.company, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+										{{form_row(MPayeNewYearForm.year, {'label_col': 3, 'widget_col': 8 })}}
+										<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+										{{form_end(MPayeNewYearForm)}}
+									</div>
+								</div>
+							</div>
+							<div class="panel box">
+								<div class="box-header">
+									<h4 class="box-title"><a href="#collapse1013" data-parent="#accordion101" data-toggle="collapse">{{'Company.tlabel.payes.list'|trans}}</a></h4>
+								</div>
+								<div id="collapse1013" class="panel-collapse collapse{%if (tabActive==101 and stabActive==3) or tabActive!=101%} in{%endif%}">
+									<div class="box-body table-responsive">
+										{% if mpayeYears | length != 0 %}
+										<div id="accordionMpayeList" class="box-group">
+											{% for mpayeYear in mpayeYears %}
+											<div class="panel box box-info">
+												<div class="box-header">
+													<h4 class="box-title"><a href="#collapseMpayeList{{ mpayeYear.year }}" data-parent="#accordionMpayeList" data-toggle="collapse">{{ mpayeYear.year }}</a></h4>
+												</div>
+												<div id="collapseMpayeList{{ mpayeYear.year }}" class="panel-collapse collapse">
+													<table class="table table-bordered table-hover mpayeList">
+														<thead>
+															<tr>
+																<th>{{ 'MPaye.ref.label'|trans|raw }}</th>
+																<th>{{ 'MPaye.month.label'|trans|raw }}</th>
+																<th>{{ 'MPaye.year.label'|trans|raw }}</th>
+																<th>{{ 'action'|trans|raw }}</th>
+															</tr>
+														</thead>
+														<tbody>
+														{% if company.payes|length != 0 %}
+															{% for mpaye in company.payes %}
+															{% if mpaye.year == mpayeYear.year %}
+															<tr>
+																<td>{{ mpaye.ref }}</td>
+																<td>{{('MPaye.month.'~mpaye.month)|trans}}</td>
+																<td>{{ mpaye.year }}</td>
+																<td>
+																	<a class="btn btn-sm btn-info" href="{{path('_admin_mpaye_editGet',{'uid':mpaye.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+																	<a class="btn btn-sm btn-success" href="{{path('_admin_mpaye_excel',{'uid':mpaye.id})}}">{{ faIco('file-excel-o') }} &nbsp; {{ 'action.excel'|trans }}</a>
+																</td>
+															</tr>
+															{% endif %}
+															{% endfor %}
+														{% else %}
+															<tr>
+																<td colspan="4">{{ 'MPaye.empty'|trans|raw }}</td>
+															</tr>
+														{% endif %}
+														</tbody>
+													</table>
+												</div>
+											</div>
+											{% endfor %}
+										</div>
+										{% endif %}
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
 			</div>
 		</div>

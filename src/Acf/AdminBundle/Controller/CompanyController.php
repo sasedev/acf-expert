@@ -47,8 +47,10 @@ use Acf\AdminBundle\Form\Withholding\NewTForm as WithholdingNewTForm;
 use Acf\AdminBundle\Form\Withholding\ImportTForm as WithholdingImportTForm;
 use Acf\AdminBundle\Form\MBPurchase\NewTForm as MBPurchaseNewTForm;
 use Acf\AdminBundle\Form\MBSale\NewTForm as MBSaleNewTForm;
+use Acf\AdminBundle\Form\MPaye\NewTForm as MPayeNewTForm;
 use Acf\AdminBundle\Form\MBPurchase\NewYearTForm as MBPurchaseNewYearTForm;
 use Acf\AdminBundle\Form\MBSale\NewYearTForm as MBSaleNewYearTForm;
+use Acf\AdminBundle\Form\MPaye\NewYearTForm as MPayeNewYearTForm;
 use Acf\AdminBundle\Form\Docgroupcomptable\NewTForm as DocgroupcomptableNewTForm;
 use Acf\AdminBundle\Form\Docgroup\NewTForm as DocgroupNewTForm;
 use Acf\AdminBundle\Form\Docgroupfiscal\NewTForm as DocgroupfiscalNewTForm;
@@ -63,13 +65,13 @@ use Acf\DataBundle\Entity\Supplier;
 use Acf\DataBundle\Entity\Bank;
 use Acf\DataBundle\Entity\Fund;
 use Acf\DataBundle\Entity\Withholding;
-;
 use Acf\DataBundle\Entity\Stock;
 use Acf\DataBundle\Entity\Address;
 use Acf\DataBundle\Entity\Phone;
 use Acf\DataBundle\Entity\ConstantStr;
 use Acf\DataBundle\Entity\MBSale;
 use Acf\DataBundle\Entity\MBPurchase;
+use Acf\DataBundle\Entity\MPaye;
 use Acf\DataBundle\Entity\Docgroupcomptable;
 use Acf\DataBundle\Entity\Docgroup;
 use Acf\DataBundle\Entity\Docgroupfiscal;
@@ -149,17 +151,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.company.list'))
-                ->setSubject($this->translate('pagetitle.company.list'))
-                ->setDescription($this->translate('pagetitle.company.list'))
-                ->setKeywords($this->translate('pagetitle.company.list'))
-                ->setCategory('ACF Companies');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.company.list'))->setSubject($this->translate('pagetitle.company.list'))->setDescription($this->translate('pagetitle.company.list'))->setKeywords($this->translate('pagetitle.company.list'))->setCategory('ACF Companies');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -167,37 +159,21 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.company.list'));
 
             $workSheet->setCellValue('A1', $this->translate('Company.ref.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('Company.corporateName.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
             $workSheet->setCellValue('C1', $this->translate('Company.type.label'));
-            $workSheet->getStyle('C1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('C1')->getFont()->setBold(true);
             $workSheet->setCellValue('D1', $this->translate('Company.sectors.label'));
-            $workSheet->getStyle('D1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('D1')->getFont()->setBold(true);
             $workSheet->setCellValue('E1', $this->translate('Company.fisc.label'));
-            $workSheet->getStyle('E1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('E1')->getFont()->setBold(true);
             $workSheet->setCellValue('F1', $this->translate('Company.docs.label'));
-            $workSheet->getStyle('F1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('F1')->getFont()->setBold(true);
             $workSheet->setCellValue('G1', $this->translate('Company.buys.label'));
-            $workSheet->getStyle('G1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('G1')->getFont()->setBold(true);
             $workSheet->setCellValue('H1', $this->translate('Company.sales.label'));
-            $workSheet->getStyle('H1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('H1')->getFont()->setBold(true);
 
             $workSheet->getStyle('A1:H1')->applyFromArray(array(
                 'fill' => array(
@@ -214,8 +190,7 @@ class CompanyController extends BaseController
                 $i++;
                 $workSheet->setCellValue('A' . $i, $company->getRef(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('B' . $i, $company->getCorporateName(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-                $workSheet->setCellValue('C' . $i, $company->getType()
-                ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('C' . $i, $company->getType()->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $sectors = '';
                 $ln = 0;
                 foreach ($company->getSectors() as $sector) {
@@ -226,9 +201,7 @@ class CompanyController extends BaseController
                     $ln++;
                 }
                 $workSheet->setCellValue('D' . $i, $sectors, \PHPExcel_Cell_DataType::TYPE_STRING2);
-                $workSheet->getStyle('D' . $i)
-                    ->getAlignment()
-                    ->setWrapText(true);
+                $workSheet->getStyle('D' . $i)->getAlignment()->setWrapText(true);
                 $workSheet->setCellValue('E' . $i, $company->getFisc(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('F' . $i, \count($company->getDocs()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
                 $workSheet->setCellValue('G' . $i, \count($company->getPurchases()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
@@ -741,6 +714,15 @@ class CompanyController extends BaseController
                     'company' => $company
                 ));
 
+                $mpaye = new MPaye();
+                $mpaye->setCompany($company);
+                $mpayeNewForm = $this->createForm(MPayeNewTForm::class, $mpaye, array(
+                    'company' => $company
+                ));
+                $mpayeNewYearForm = $this->createForm(MPayeNewYearTForm::class, $mpaye, array(
+                    'company' => $company
+                ));
+
                 $docgroupcomptable = new Docgroupcomptable();
                 $docgroupcomptable->setCompany($company);
                 $docgroupcomptableNewForm = $this->createForm(DocgroupcomptableNewTForm::class, $docgroupcomptable, array(
@@ -865,9 +847,11 @@ class CompanyController extends BaseController
                 $this->gvars['WithholdingNewForm'] = $withholdingNewForm->createView();
                 $this->gvars['WithholdingImportForm'] = $withholdingImportForm->createView();
                 $this->gvars['MBSaleNewForm'] = $mbsaleNewForm->createView();
-                $this->gvars['MBPurchaseNewForm'] = $mbpurchaseNewForm->createView();
                 $this->gvars['MBSaleNewYearForm'] = $mbsaleNewYearForm->createView();
+                $this->gvars['MBPurchaseNewForm'] = $mbpurchaseNewForm->createView();
                 $this->gvars['MBPurchaseNewYearForm'] = $mbpurchaseNewYearForm->createView();
+                $this->gvars['MPayeNewForm'] = $mpayeNewForm->createView();
+                $this->gvars['MPayeNewYearForm'] = $mpayeNewYearForm->createView();
                 $this->gvars['DocgroupcomptableNewForm'] = $docgroupcomptableNewForm->createView();
                 $this->gvars['DocgroupNewForm'] = $docgroupNewForm->createView();
                 $this->gvars['ShareholderNewForm'] = $shareholderNewForm->createView();
@@ -879,9 +863,11 @@ class CompanyController extends BaseController
 
                 $mbsaleYears = $em->getRepository('AcfDataBundle:MBSale')->getAllYearByCompany($company);
                 $mbpurchaseYears = $em->getRepository('AcfDataBundle:MBPurchase')->getAllYearByCompany($company);
+                $mpayeYears = $em->getRepository('AcfDataBundle:MPaye')->getAllYearByCompany($company);
 
                 $this->gvars['mbsaleYears'] = $mbsaleYears;
                 $this->gvars['mbpurchaseYears'] = $mbpurchaseYears;
+                $this->gvars['mpayeYears'] = $mpayeYears;
 
                 $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
                 $this->getSession()->remove('tabActive');
@@ -1142,6 +1128,15 @@ class CompanyController extends BaseController
                     'company' => $company
                 ));
                 $mbpurchaseNewYearForm = $this->createForm(MBPurchaseNewYearTForm::class, $mbpurchase, array(
+                    'company' => $company
+                ));
+
+                $mpaye = new MPaye();
+                $mpaye->setCompany($company);
+                $mpayeNewForm = $this->createForm(MPayeNewTForm::class, $mpaye, array(
+                    'company' => $company
+                ));
+                $mpayeNewYearForm = $this->createForm(MPayeNewYearTForm::class, $mpaye, array(
                     'company' => $company
                 ));
 
@@ -1840,10 +1835,8 @@ class CompanyController extends BaseController
                         $em->persist($companyUser);
                         $em->flush();
                         $this->flashMsgSession('success', $this->translate('CompanyUser.add.success', array(
-                            '%company%' => $companyUser->getCompany()
-                                ->getCorporateName(),
-                            '%user%' => $companyUser->getUser()
-                                ->getFullName()
+                            '%company%' => $companyUser->getCompany()->getCorporateName(),
+                            '%user%' => $companyUser->getUser()->getFullName()
                         )));
 
                         $this->gvars['stabActive'] = 2;
@@ -1884,10 +1877,8 @@ class CompanyController extends BaseController
                         $em->persist($companyAdmin);
                         $em->flush();
                         $this->flashMsgSession('success', $this->translate('CompanyAdmin.add.success', array(
-                            '%company%' => $companyAdmin->getCompany()
-                                ->getCorporateName(),
-                            '%user%' => $companyAdmin->getUser()
-                                ->getFullName()
+                            '%company%' => $companyAdmin->getCompany()->getCorporateName(),
+                            '%user%' => $companyAdmin->getUser()->getFullName()
                         )));
 
                         $this->gvars['stabActive'] = 2;
@@ -3288,6 +3279,68 @@ class CompanyController extends BaseController
 
                         $this->flashMsgSession('error', $this->translate('Docgroupaudit.add.failure'));
                     }
+                } elseif (isset($reqData['MPayeNewForm'])) {
+                    $this->gvars['tabActive'] = 101;
+                    $this->getSession()->set('tabActive', 101);
+                    $mpayeNewForm->handleRequest($request);
+                    if ($mpayeNewForm->isValid()) {
+                        $mpaye->generateRef();
+                        $em->persist($mpaye);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('MPaye.add.success', array(
+                            '%mpaye%' => $mpaye->getRef()
+                        )));
+
+                        $this->gvars['stabActive'] = 3;
+                        $this->getSession()->set('stabActive', 3);
+
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $this->gvars['stabActive'] = 2;
+                        $this->getSession()->set('stabActive', 2);
+                        $em->refresh($company);
+
+                        $this->flashMsgSession('error', $this->translate('MPaye.add.failure'));
+                    }
+                } elseif (isset($reqData['MPayeNewYearForm'])) {
+                    $this->gvars['tabActive'] = 101;
+                    $this->getSession()->set('tabActive', 101);
+                    $mpayeNewYearForm->handleRequest($request);
+                    if ($mpayeNewYearForm->isValid()) {
+                        $year = $mpayeNewYearForm['year']->getData();
+                        foreach (MPaye::choiceMonthCallback() as $month) {
+
+                            $mpaye = $em->getRepository('AcfDataBundle:MPaye')->findOneBy(array(
+                                'company' => $company,
+                                'year' => $year,
+                                'month' => $month
+                            ));
+                            if (null == $mpaye) {
+                                $mpaye = new MPaye();
+                                $mpaye->setCompany($company);
+                                $mpaye->setYear($year);
+                                $mpaye->setMonth($month);
+                                $mpaye->generateRef();
+                                $em->persist($mpaye);
+                                $this->flashMsgSession('success', $this->translate('MPaye.add.success', array(
+                                    '%mpaye%' => $mpaye->getRef()
+                                )));
+                            }
+                        }
+
+                        $em->flush();
+
+                        $this->gvars['stabActive'] = 3;
+                        $this->getSession()->set('stabActive', 3);
+
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $this->gvars['stabActive'] = 2;
+                        $this->getSession()->set('stabActive', 2);
+                        $em->refresh($company);
+
+                        $this->flashMsgSession('error', $this->translate('MPaye.add.failure'));
+                    }
                 }
 
                 $sector = new Sector();
@@ -3369,6 +3422,8 @@ class CompanyController extends BaseController
                 $this->gvars['MBPurchaseNewForm'] = $mbpurchaseNewForm->createView();
                 $this->gvars['MBSaleNewYearForm'] = $mbsaleNewYearForm->createView();
                 $this->gvars['MBPurchaseNewYearForm'] = $mbpurchaseNewYearForm->createView();
+                $this->gvars['MPayeNewForm'] = $mpayeNewForm->createView();
+                $this->gvars['MPayeNewYearForm'] = $mpayeNewYearForm->createView();
                 $this->gvars['DocgroupcomptableNewForm'] = $docgroupcomptableNewForm->createView();
                 $this->gvars['DocgroupNewForm'] = $docgroupNewForm->createView();
                 $this->gvars['ShareholderNewForm'] = $shareholderNewForm->createView();
@@ -3380,9 +3435,11 @@ class CompanyController extends BaseController
 
                 $mbsaleYears = $em->getRepository('AcfDataBundle:MBSale')->getAllYearByCompany($company);
                 $mbpurchaseYears = $em->getRepository('AcfDataBundle:MBPurchase')->getAllYearByCompany($company);
+                $mpayeYears = $em->getRepository('AcfDataBundle:MPaye')->getAllYearByCompany($company);
 
                 $this->gvars['mbsaleYears'] = $mbsaleYears;
                 $this->gvars['mbpurchaseYears'] = $mbpurchaseYears;
+                $this->gvars['mpayeYears'] = $mpayeYears;
 
                 $customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array(
                     'name' => 'customersPrefix'
@@ -3485,17 +3542,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.shareholder.list'))
-                ->setSubject($this->translate('pagetitle.shareholder.list'))
-                ->setDescription($this->translate('pagetitle.shareholder.list'))
-                ->setKeywords($this->translate('pagetitle.shareholder.list'))
-                ->setCategory('ACF companyLabel');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.shareholder.list'))->setSubject($this->translate('pagetitle.shareholder.list'))->setDescription($this->translate('pagetitle.shareholder.list'))->setKeywords($this->translate('pagetitle.shareholder.list'))->setCategory('ACF companyLabel');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -3503,60 +3550,34 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.shareholder.list'));
 
             $workSheet->setCellValue('A1', $this->translate('Company.capital.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $company->getCapital());
-            $workSheet->getStyle('B1')
-                ->getNumberFormat()
-                ->setFormatCode('#,##0.000');
+            $workSheet->getStyle('B1')->getNumberFormat()->setFormatCode('#,##0.000');
 
             $workSheet->setCellValue('A2', $this->translate('Company.actionvn.label'));
-            $workSheet->getStyle('A2')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A2')->getFont()->setBold(true);
             $workSheet->setCellValue('B2', $company->getActionvn());
-            $workSheet->getStyle('B2')
-                ->getNumberFormat()
-                ->setFormatCode('#,##0.000');
+            $workSheet->getStyle('B2')->getNumberFormat()->setFormatCode('#,##0.000');
 
             $workSheet->setCellValue('A3', $this->translate('Company.actioncount.label'));
-            $workSheet->getStyle('A3')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A3')->getFont()->setBold(true);
             $workSheet->setCellValue('B3', $company->getActioncount());
-            $workSheet->getStyle('B3')
-                ->getNumberFormat()
-                ->setFormatCode('#,##0');
+            $workSheet->getStyle('B3')->getNumberFormat()->setFormatCode('#,##0');
 
             $workSheet->setCellValue('A5', $this->translate('Shareholder.name.label'));
-            $workSheet->getStyle('A5')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A5')->getFont()->setBold(true);
             $workSheet->setCellValue('B5', $this->translate('Shareholder.cin.label'));
-            $workSheet->getStyle('B5')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B5')->getFont()->setBold(true);
             $workSheet->setCellValue('C5', $this->translate('Shareholder.quality.label'));
-            $workSheet->getStyle('C5')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('C5')->getFont()->setBold(true);
             $workSheet->setCellValue('D5', $this->translate('Shareholder.address.label'));
-            $workSheet->getStyle('D5')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('D5')->getFont()->setBold(true);
             $workSheet->setCellValue('E5', $this->translate('Shareholder.trades.label'));
-            $workSheet->getStyle('E5')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('E5')->getFont()->setBold(true);
             $workSheet->setCellValue('F5', $this->translate('Shareholder.tradesv.label'));
-            $workSheet->getStyle('F5')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('F5')->getFont()->setBold(true);
             $workSheet->setCellValue('G5', $this->translate('Shareholder.tradesp.label'));
-            $workSheet->getStyle('G5')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('G5')->getFont()->setBold(true);
 
             $workSheet->getStyle('A5:G5')->applyFromArray(array(
                 'fill' => array(
@@ -3576,17 +3597,11 @@ class CompanyController extends BaseController
                 $workSheet->setCellValue('C' . $i, $shareholder->getQuality(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('D' . $i, $shareholder->getAddress(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('E' . $i, $shareholder->getTrades());
-                $workSheet->getStyle('E' . $i)
-                    ->getNumberFormat()
-                    ->setFormatCode('#,##0');
+                $workSheet->getStyle('E' . $i)->getNumberFormat()->setFormatCode('#,##0');
                 $workSheet->setCellValue('F' . $i, $shareholder->getTradesv());
-                $workSheet->getStyle('F' . $i)
-                    ->getNumberFormat()
-                    ->setFormatCode('#,##0.000');
+                $workSheet->getStyle('F' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
                 $workSheet->setCellValue('G' . $i, $shareholder->getTradesp() / 100);
-                $workSheet->getStyle('G' . $i)
-                    ->getNumberFormat()
-                    ->setFormatCode('#,##0.00%');
+                $workSheet->getStyle('G' . $i)->getNumberFormat()->setFormatCode('#,##0.00%');
 
                 if ($i % 2 == 1) {
                     $workSheet->getStyle('A' . $i . ':G' . $i)->applyFromArray(array(
@@ -3660,17 +3675,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.companyLabel.list'))
-                ->setSubject($this->translate('pagetitle.companyLabel.list'))
-                ->setDescription($this->translate('pagetitle.companyLabel.list'))
-                ->setKeywords($this->translate('pagetitle.companyLabel.list'))
-                ->setCategory('ACF companyLabel');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.companyLabel.list'))->setSubject($this->translate('pagetitle.companyLabel.list'))->setDescription($this->translate('pagetitle.companyLabel.list'))->setKeywords($this->translate('pagetitle.companyLabel.list'))->setCategory('ACF companyLabel');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -3678,13 +3683,9 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.companyLabel.list'));
 
             $workSheet->setCellValue('A1', $this->translate('CompanyLabel.name.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('CompanyLabel.abrev.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
 
             $workSheet->getStyle('A1:B1')->applyFromArray(array(
                 'fill' => array(
@@ -3770,17 +3771,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.companyNature.list'))
-                ->setSubject($this->translate('pagetitle.companyNature.list'))
-                ->setDescription($this->translate('pagetitle.companyNature.list'))
-                ->setKeywords($this->translate('pagetitle.companyNature.list'))
-                ->setCategory('ACF companyNature');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.companyNature.list'))->setSubject($this->translate('pagetitle.companyNature.list'))->setDescription($this->translate('pagetitle.companyNature.list'))->setKeywords($this->translate('pagetitle.companyNature.list'))->setCategory('ACF companyNature');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -3788,14 +3779,10 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.companyNature.list'));
 
             $workSheet->setCellValue('A1', $this->translate('CompanyNature.label.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
 
             $workSheet->setCellValue('B1', $this->translate('CompanyNature.color.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
 
             $workSheet->getStyle('A1:B1')->applyFromArray(array(
                 'fill' => array(
@@ -3879,17 +3866,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.pilot.list'))
-                ->setSubject($this->translate('pagetitle.pilot.list'))
-                ->setDescription($this->translate('pagetitle.pilot.list'))
-                ->setKeywords($this->translate('pagetitle.pilot.list'))
-                ->setCategory('ACF pilot');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.pilot.list'))->setSubject($this->translate('pagetitle.pilot.list'))->setDescription($this->translate('pagetitle.pilot.list'))->setKeywords($this->translate('pagetitle.pilot.list'))->setCategory('ACF pilot');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -3897,129 +3874,67 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.pilot.list'));
 
             $workSheet->setCellValue('A1', $this->translate('Pilot.ref.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('Pilot.mission.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
             $workSheet->setCellValue('C1', $this->translate('Pilot.natureMission.label'));
-            $workSheet->getStyle('C1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('C1')->getFont()->setBold(true);
             $workSheet->setCellValue('D1', $this->translate('Pilot.prestataire.label'));
-            $workSheet->getStyle('D1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('D1')->getFont()->setBold(true);
             $workSheet->setCellValue('E1', $this->translate('Pilot.recetteFinance.label'));
-            $workSheet->getStyle('E1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('E1')->getFont()->setBold(true);
             $workSheet->setCellValue('F1', $this->translate('Pilot.pinAnce.label'));
-            $workSheet->getStyle('F1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('F1')->getFont()->setBold(true);
             $workSheet->setCellValue('G1', $this->translate('Pilot.expirationAnce.label'));
-            $workSheet->getStyle('G1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('G1')->getFont()->setBold(true);
             $workSheet->setCellValue('H1', $this->translate('Pilot.mpImpots.label'));
-            $workSheet->getStyle('H1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('H1')->getFont()->setBold(true);
             $workSheet->setCellValue('I1', $this->translate('Pilot.idCnss.label'));
-            $workSheet->getStyle('I1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('I1')->getFont()->setBold(true);
             $workSheet->setCellValue('J1', $this->translate('Pilot.mpCnss.label'));
-            $workSheet->getStyle('J1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('J1')->getFont()->setBold(true);
             $workSheet->setCellValue('K1', $this->translate('Pilot.nomCac.label'));
-            $workSheet->getStyle('K1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('K1')->getFont()->setBold(true);
             $workSheet->setCellValue('L1', $this->translate('Pilot.dureeMandat.label'));
-            $workSheet->getStyle('L1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('L1')->getFont()->setBold(true);
             $workSheet->setCellValue('M1', $this->translate('Pilot.numMandat.label'));
-            $workSheet->getStyle('M1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('M1')->getFont()->setBold(true);
             $workSheet->setCellValue('N1', $this->translate('Pilot.rapportCac.label'));
-            $workSheet->getStyle('N1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('N1')->getFont()->setBold(true);
             $workSheet->setCellValue('O1', $this->translate('Pilot.declEmpl.label'));
-            $workSheet->getStyle('O1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('O1')->getFont()->setBold(true);
             $workSheet->setCellValue('P1', $this->translate('Pilot.isDur.label'));
-            $workSheet->getStyle('P1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('P1')->getFont()->setBold(true);
             $workSheet->setCellValue('Q1', $this->translate('Pilot.pvCa.label'));
-            $workSheet->getStyle('Q1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('Q1')->getFont()->setBold(true);
             $workSheet->setCellValue('R1', $this->translate('Pilot.rapportGerance.label'));
-            $workSheet->getStyle('R1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('R1')->getFont()->setBold(true);
             $workSheet->setCellValue('S1', $this->translate('Pilot.pvAgo.label'));
-            $workSheet->getStyle('S1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('S1')->getFont()->setBold(true);
             $workSheet->setCellValue('T1', $this->translate('Pilot.pvAge.label'));
-            $workSheet->getStyle('T1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('T1')->getFont()->setBold(true);
             $workSheet->setCellValue('U1', $this->translate('Pilot.livresCotes.label'));
-            $workSheet->getStyle('U1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('U1')->getFont()->setBold(true);
             $workSheet->setCellValue('V1', $this->translate('Pilot.honTeorAnn.label'));
-            $workSheet->getStyle('V1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('V1')->getFont()->setBold(true);
             $workSheet->setCellValue('W1', $this->translate('Pilot.modeFact.label'));
-            $workSheet->getStyle('W1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('W1')->getFont()->setBold(true);
             $workSheet->setCellValue('X1', $this->translate('Pilot.nonFactMont.label'));
-            $workSheet->getStyle('X1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('X1')->getFont()->setBold(true);
             $workSheet->setCellValue('Y1', $this->translate('Pilot.nonFactDesc.label'));
-            $workSheet->getStyle('Y1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('Y1')->getFont()->setBold(true);
             $workSheet->setCellValue('Z1', $this->translate('Pilot.nonEncMont.label'));
-            $workSheet->getStyle('Z1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('Z1')->getFont()->setBold(true);
             $workSheet->setCellValue('AA1', $this->translate('Pilot.nonEncDesc.label'));
-            $workSheet->getStyle('AA1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('AA1')->getFont()->setBold(true);
             $workSheet->setCellValue('AB1', $this->translate('Pilot.commentQuit.label'));
-            $workSheet->getStyle('AB1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('AB1')->getFont()->setBold(true);
             $workSheet->setCellValue('AC1', $this->translate('Pilot.mqQuitImpots.label'));
-            $workSheet->getStyle('AC1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('AC1')->getFont()->setBold(true);
             $workSheet->setCellValue('AD1', $this->translate('Pilot.mqQuitCnss.label'));
-            $workSheet->getStyle('AD1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('AD1')->getFont()->setBold(true);
             $workSheet->setCellValue('AE1', $this->translate('Pilot.comments.label'));
-            $workSheet->getStyle('AE1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('AE1')->getFont()->setBold(true);
 
             $workSheet->getStyle('A1:AE1')->applyFromArray(array(
                 'fill' => array(
@@ -4057,23 +3972,17 @@ class CompanyController extends BaseController
                 $workSheet->setCellValue('U' . $i, $pilot->getLivresCotes(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 
                 $workSheet->setCellValue('V' . $i, $pilot->getHonTeorAnn());
-                $workSheet->getStyle('V' . $i)
-                    ->getNumberFormat()
-                    ->setFormatCode('#,##0.000');
+                $workSheet->getStyle('V' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
 
                 $workSheet->setCellValue('W' . $i, $pilot->getModeFact(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 
                 $workSheet->setCellValue('X' . $i, $pilot->getNonFactMont());
-                $workSheet->getStyle('G' . $i)
-                    ->getNumberFormat()
-                    ->setFormatCode('#,##0.000');
+                $workSheet->getStyle('G' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
 
                 $workSheet->setCellValue('Y' . $i, $pilot->getNonFactDesc(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 
                 $workSheet->setCellValue('Z' . $i, $pilot->getNonEncMont());
-                $workSheet->getStyle('G' . $i)
-                    ->getNumberFormat()
-                    ->setFormatCode('#,##0.000');
+                $workSheet->getStyle('G' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
 
                 $workSheet->setCellValue('AA' . $i, $pilot->getNonEncDesc(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('AB' . $i, $pilot->getCommentQuit(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -4178,17 +4087,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.customer.list'))
-                ->setSubject($this->translate('pagetitle.customer.list'))
-                ->setDescription($this->translate('pagetitle.customer.list'))
-                ->setKeywords($this->translate('pagetitle.customer.list'))
-                ->setCategory('ACF customer');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.customer.list'))->setSubject($this->translate('pagetitle.customer.list'))->setDescription($this->translate('pagetitle.customer.list'))->setKeywords($this->translate('pagetitle.customer.list'))->setCategory('ACF customer');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -4196,29 +4095,17 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.customer.list'));
 
             $workSheet->setCellValue('A1', $this->translate('Customer.label.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('Customer.number.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
             $workSheet->setCellValue('C1', $this->translate('Customer.fisc.label'));
-            $workSheet->getStyle('C1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('C1')->getFont()->setBold(true);
             $workSheet->setCellValue('D1', $this->translate('Customer.sectors.label'));
-            $workSheet->getStyle('D1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('D1')->getFont()->setBold(true);
             $workSheet->setCellValue('E1', $this->translate('Customer.address.label'));
-            $workSheet->getStyle('E1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('E1')->getFont()->setBold(true);
             $workSheet->setCellValue('F1', $this->translate('Customer.commercialRegister.label'));
-            $workSheet->getStyle('F1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('F1')->getFont()->setBold(true);
 
             $workSheet->getStyle('A1:F1')->applyFromArray(array(
                 'fill' => array(
@@ -4332,17 +4219,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.supplier.list'))
-                ->setSubject($this->translate('pagetitle.supplier.list'))
-                ->setDescription($this->translate('pagetitle.supplier.list'))
-                ->setKeywords($this->translate('pagetitle.supplier.list'))
-                ->setCategory('ACF supplier');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.supplier.list'))->setSubject($this->translate('pagetitle.supplier.list'))->setDescription($this->translate('pagetitle.supplier.list'))->setKeywords($this->translate('pagetitle.supplier.list'))->setCategory('ACF supplier');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -4350,25 +4227,15 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.supplier.list'));
 
             $workSheet->setCellValue('A1', $this->translate('Supplier.label.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('Supplier.number.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
             $workSheet->setCellValue('C1', $this->translate('Supplier.fisc.label'));
-            $workSheet->getStyle('C1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('C1')->getFont()->setBold(true);
             $workSheet->setCellValue('D1', $this->translate('Supplier.address.label'));
-            $workSheet->getStyle('D1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('D1')->getFont()->setBold(true);
             $workSheet->setCellValue('E1', $this->translate('Supplier.commercialRegister.label'));
-            $workSheet->getStyle('E1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('E1')->getFont()->setBold(true);
 
             $workSheet->getStyle('A1:E1')->applyFromArray(array(
                 'fill' => array(
@@ -4476,17 +4343,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.bank.list'))
-                ->setSubject($this->translate('pagetitle.bank.list'))
-                ->setDescription($this->translate('pagetitle.bank.list'))
-                ->setKeywords($this->translate('pagetitle.bank.list'))
-                ->setCategory('ACF bank');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.bank.list'))->setSubject($this->translate('pagetitle.bank.list'))->setDescription($this->translate('pagetitle.bank.list'))->setKeywords($this->translate('pagetitle.bank.list'))->setCategory('ACF bank');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -4494,37 +4351,21 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.bank.list'));
 
             $workSheet->setCellValue('A1', $this->translate('Bank.label.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('Bank.number.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
             $workSheet->setCellValue('C1', $this->translate('Bank.agency.label'));
-            $workSheet->getStyle('C1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('C1')->getFont()->setBold(true);
             $workSheet->setCellValue('D1', $this->translate('Bank.rib.label'));
-            $workSheet->getStyle('D1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('D1')->getFont()->setBold(true);
             $workSheet->setCellValue('E1', $this->translate('Bank.contact.label'));
-            $workSheet->getStyle('E1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('E1')->getFont()->setBold(true);
             $workSheet->setCellValue('F1', $this->translate('Bank.tel.label'));
-            $workSheet->getStyle('F1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('F1')->getFont()->setBold(true);
             $workSheet->setCellValue('G1', $this->translate('Bank.fax.label'));
-            $workSheet->getStyle('G1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('G1')->getFont()->setBold(true);
             $workSheet->setCellValue('H1', $this->translate('Bank.email.label'));
-            $workSheet->getStyle('H1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('H1')->getFont()->setBold(true);
 
             $workSheet->getStyle('A1:H1')->applyFromArray(array(
                 'fill' => array(
@@ -4637,17 +4478,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.fund.list'))
-                ->setSubject($this->translate('pagetitle.fund.list'))
-                ->setDescription($this->translate('pagetitle.fund.list'))
-                ->setKeywords($this->translate('pagetitle.fund.list'))
-                ->setCategory('ACF fund');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.fund.list'))->setSubject($this->translate('pagetitle.fund.list'))->setDescription($this->translate('pagetitle.fund.list'))->setKeywords($this->translate('pagetitle.fund.list'))->setCategory('ACF fund');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -4655,13 +4486,9 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.fund.list'));
 
             $workSheet->setCellValue('A1', $this->translate('Fund.label.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('Fund.number.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
 
             $workSheet->getStyle('A1:B1')->applyFromArray(array(
                 'fill' => array(
@@ -4762,17 +4589,7 @@ class CompanyController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()
-                ->setCreator('Salah Abdelkader Seif Eddine')
-                ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
-                ->getFullname())
-                ->setTitle($this->translate('pagetitle.withholding.list'))
-                ->setSubject($this->translate('pagetitle.withholding.list'))
-                ->setDescription($this->translate('pagetitle.withholding.list'))
-                ->setKeywords($this->translate('pagetitle.withholding.list'))
-                ->setCategory('ACF withholding');
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.withholding.list'))->setSubject($this->translate('pagetitle.withholding.list'))->setDescription($this->translate('pagetitle.withholding.list'))->setKeywords($this->translate('pagetitle.withholding.list'))->setCategory('ACF withholding');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -4780,17 +4597,11 @@ class CompanyController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.withholding.list'));
 
             $workSheet->setCellValue('A1', $this->translate('Withholding.label.label'));
-            $workSheet->getStyle('A1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('Withholding.number.label'));
-            $workSheet->getStyle('B1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
             $workSheet->setCellValue('C1', $this->translate('Withholding.value.label'));
-            $workSheet->getStyle('C1')
-                ->getFont()
-                ->setBold(true);
+            $workSheet->getStyle('C1')->getFont()->setBold(true);
 
             $withholdingsConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array(
                 'name' => 'withholdingsPrefix'
@@ -4875,9 +4686,7 @@ class CompanyController extends BaseController
 
     protected function traceEntity(Company $cloneCompany, Company $company)
     {
-        $curUser = $this->getSecurityTokenStorage()
-            ->getToken()
-            ->getUser();
+        $curUser = $this->getSecurityTokenStorage()->getToken()->getUser();
         $trace = new Trace();
         $trace->setActionId($company->getId());
         $trace->setActionType(Trace::AT_UPDATE);
@@ -5342,5 +5151,4 @@ class CompanyController extends BaseController
             $em->flush();
         }
     }
-
 }

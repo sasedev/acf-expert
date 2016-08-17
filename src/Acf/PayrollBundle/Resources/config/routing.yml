@@ -1,3 +1,84 @@
 _payroll_homepage:
     path:     /
     defaults: { _controller: "AcfPayrollBundle:Default:index" }
+
+_payroll_homepage_my:
+    path:     /{month}/{year}
+    defaults: { _controller: "AcfPayrollBundle:Default:index", year: null }
+    requirements:
+        month: "[1-9]|0[1-9]|1[012]"
+        year: \d+
+
+_payroll_doc_addGet:
+    path:     /doc/add
+    defaults: { _controller: "AcfPayrollBundle:Doc:addGet" }
+    methods: [GET]
+
+_payroll_doc_addPost:
+    path:     /doc/add
+    defaults: { _controller: "AcfPayrollBundle:Doc:addPost" }
+    methods: [POST]
+
+_payroll_doc_delete:
+    path:     /doc/delete/{uid}
+    defaults: { _controller: "AcfPayrollBundle:Doc:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_payroll_doc_download:
+    path:     /doc/download/{uid}
+    defaults: { _controller: "AcfPayrollBundle:Doc:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_payroll_doc_editGet:
+    path:     /doc/edit/{uid}
+    defaults: { _controller: "AcfPayrollBundle:Doc:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_payroll_doc_editPost:
+    path:     /doc/edit/{uid}
+    defaults: { _controller: "AcfPayrollBundle:Doc:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_payroll_company_editGet:
+    path:     /company/edit/{uid}
+    defaults: { _controller: "AcfPayrollBundle:Company:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_payroll_company_editPost:
+    path:     /company/edit/{uid}
+    defaults: { _controller: "AcfPayrollBundle:Company:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_payroll_mpaye_editGet:
+    path:     /mpaye/edit/{uid}
+    defaults: { _controller: "AcfPayrollBundle:MPaye:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_payroll_mpaye_editPost:
+    path:     /mpaye/edit/{uid}
+    defaults: { _controller: "AcfPayrollBundle:MPaye:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_payroll_mpaye_excel:
+    path:     /mpaye/excel/{uid}
+    defaults: { _controller: "AcfPayrollBundle:MPaye:excel" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
