@@ -2259,7 +2259,9 @@ MPaye.traceNew: 'Ajout Nouveau Mois de Paye <b>%mpaye%</b><br/>Société <b>%com
 MPaye.traceEdit: 'Modification Mois de Paye <b>%mpaye%</b><br/>Société <b>%company%</b>'
 MPaye.traceDel: 'Suppression Mois de Paye <b>%mpaye%</b><br/>Société <b>%company%</b>'
 
-# Sale
+_mail.newdocs.bodyMPayeUser: 'Le(s) document(s) a/ont été ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%mpayeurl%"><b>%mpaye%</b></a>) :'
+
+# Salary
 menu.admin.msalary: Ventes
 breadcrumb.msalary.list: Liste des Ventes
 breadcrumb.msalary.add: Ajouter Vente

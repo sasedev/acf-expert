@@ -1,0 +1,8 @@
+<html>
+<body>
+{{'_mail.newdocs.bodyMPayeUser'|trans({'%companyurl%':url('_payroll_company_editGet', {'uid': company.id}), '%company%':company.corporateName,'%mpayeurl%': url('_payroll_mpaye_editGet', {'uid': mpaye.id}), '%mpaye%': mpaye.ref }, "messages")|raw}}<br>
+{% for doc in docs %}
+- <a href="{{ url('_payroll_doc_download', {'uid': doc.id}) }}">{{ doc.originalName }}</a><br>
+{% endfor %}
+</body>
+</html>

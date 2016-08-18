@@ -1,2 +1,7 @@
 menu.payroll: ACF-Fiches de Paie
 breadcrumb.payroll: ACF - Fiches de Paie
+_mail.newdocsMP.subject: ACF-Paie - Notification Nouveaux Documents
+_mail.newdocs.bodyMPaye: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%mpayeurl%"><b>%mpaye%</b></a>) le(s) document(s) de Paye suivant(s) :'
+_mail.newmpaye.subject: ACF-Paie - Ajout / Modification de Fiches de Paie
+_mail.excel.bodyMPaye: 'Le Client <b>%user%</b> a ajouté/modifier à la société <a href="%companyurl%"><b>%company%</b></a> la liste de Fiche de Paye Suivante : <a href="%mpayeurl%"><b>%mpaye%</b></a>'
+

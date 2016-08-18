@@ -1,0 +1,5 @@
+<html>
+<body>
+{{'_mail.excel.bodyMPaye'|trans({'%user%':user.fullName,'%companyurl%':url('_admin_company_editGet', {'uid': company.id}), '%company%':company.corporateName,'%mpayeurl%': url('_admin_mpaye_editGet', {'uid': mpaye.id}), '%mpaye%': mpaye.ref }, "messages")|raw}}<br>
+</body>
+</html>

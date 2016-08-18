@@ -348,6 +348,29 @@ class MPayeController extends BaseController
                         $log .= $lineUnprocessed . ' Fiche déjà dans la base<br>';
                         $log .= $lineError . ' lignes contenant des erreurs<br>'; // */
 
+                        $from = $this->getParameter('mail_from');
+                        $fromName = $this->getParameter('mail_from_name');
+                        $subject = $this->translate('_mail.newmpaye.subject', array(), 'messages');
+
+                        $user = $this->getSecurityTokenStorage()->getToken()->getUser();
+                        $company = $mpaye->getCompany();
+
+                        $admins = $company->getAdmins();
+                        if (\count($admins) != 0) {
+                            $mvars = array();
+                            $mvars['mpaye'] = $mpaye;
+                            $mvars['user'] = $user;
+                            $mvars['company'] = $company;
+                            $message = \Swift_Message::newInstance();
+                            $message->setFrom($from, $fromName);
+                            foreach ($admins as $admin) {
+                                $message->addTo($admin->getEmail(), $admin->getFullname());
+                            }
+                            $message->setSubject($subject);
+                            $message->setBody($this->renderView('AcfPayrollBundle:Mail:MPayenew.html.twig', $mvars), 'text/html');
+                            $this->sendmail($message);
+                        }
+
                         $this->flashMsgSession('log', $log);
 
                         $this->flashMsgSession('success', $this->translate('MSalary.import.success'));
@@ -369,6 +392,7 @@ class MPayeController extends BaseController
                     $docNewForm->handleRequest($request);
                     if ($docNewForm->isValid()) {
                         $docFiles = $docNewForm['fileName']->getData();
+                        $docs = array();
 
                         $docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
 
@@ -398,6 +422,8 @@ class MPayeController extends BaseController
                             $mpaye->addDoc($doc);
 
                             $docNames .= $doc->getOriginalName() . ' ';
+
+                            $docs[] = $doc;
                         }
 
                         $em->persist($mpaye);
@@ -407,6 +433,30 @@ class MPayeController extends BaseController
                         )));
                         $this->gvars['stabActive'] = 3;
                         $this->getSession()->set('stabActive', 3);
+
+                        $from = $this->getParameter('mail_from');
+                        $fromName = $this->getParameter('mail_from_name');
+                        $subject = $this->translate('_mail.newdocsMP.subject', array(), 'messages');
+
+                        $user = $this->getSecurityTokenStorage()->getToken()->getUser();
+                        $company = $mpaye->getCompany();
+
+                        $admins = $company->getAdmins();
+                        if (\count($admins) != 0) {
+                            $mvars = array();
+                            $mvars['mpaye'] = $mpaye;
+                            $mvars['user'] = $user;
+                            $mvars['company'] = $company;
+                            $mvars['docs'] = $docs;
+                            $message = \Swift_Message::newInstance();
+                            $message->setFrom($from, $fromName);
+                            foreach ($admins as $admin) {
+                                $message->addTo($admin->getEmail(), $admin->getFullname());
+                            }
+                            $message->setSubject($subject);
+                            $message->setBody($this->renderView('AcfPayrollBundle:Mail:MPayenewdoc.html.twig', $mvars), 'text/html');
+                            $this->sendmail($message);
+                        }
 
                         return $this->redirect($urlFrom);
                     } else {
@@ -700,5 +750,32 @@ class MPayeController extends BaseController
         }
 
         return $this->redirect($urlFrom);
+    }
+
+    protected function newDocNotifyAdmin(Docgroupbank $dg, $docs)
+    {
+        $from = $this->getParameter('mail_from');
+        $fromName = $this->getParameter('mail_from_name');
+        $subject = $this->translate('_mail.newdocs.subject', array(), 'messages');
+
+        $user = $this->getSecurityTokenStorage()->getToken()->getUser();
+        $company = $dg->getCompany();
+
+        $admins = $company->getAdmins();
+        if (\count($admins) != 0) {
+            $mvars = array();
+            $mvars['dg'] = $dg;
+            $mvars['user'] = $user;
+            $mvars['company'] = $company;
+            $mvars['docs'] = $docs;
+            $message = \Swift_Message::newInstance();
+            $message->setFrom($from, $fromName);
+            foreach ($admins as $admin) {
+                $message->addTo($admin->getEmail(), $admin->getFullname());
+            }
+            $message->setSubject($subject);
+            $message->setBody($this->renderView('AcfClientBundle:Mail:Docgroupbanknewdoc.html.twig', $mvars), 'text/html');
+            $this->sendmail($message);
+        }
     }
 }
