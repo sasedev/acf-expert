@@ -107,3 +107,4 @@ NewUser.paymentType.choice.3: 'Espèces'
 Agenda.chooseDate.label: 'Allez à :'
 
 menu.newuser: Inscription
+security.cgu: <b>En introduisant mon identifiant et mon mot de passe et en cliquant sur le bouton « Connexion » du lien <a href="%login_url%">%login_url%</a>, je reconnais avoir pris connaissance des <a href="%cgu_url%">Conditions Générales d’Utilisation</a> du site <a href="%home_url%">%home_url%</a> et les approuve sans aucune réserve.</b> 

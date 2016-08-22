@@ -16,6 +16,7 @@
 	<p><a href="{{path('_security_register')}}">{{faIco('user-plus')}} {{ 'menu.newuser'|trans }}</a></p>
 	<p><a href="{{path('_security_lost_password')}}">{{faIco('envelope')}} {{ 'menu.lostpassword'|trans }}</a></p>
 	<p><a href="{{path('_front_homepage')}}">{{faIco('home')}} {{ 'menu.home'|trans }}</a></p>
+	<p style="text-align: justify;">{{ 'security.cgu'|trans({'%login_url%': url('_security_login'), '%cgu_url%': '/CGU.pdf', '%home_url%': url('_front_homepage')})|raw }}</p>
 </div>
 {{form_end(LoginForm)}}
 {%endblock content%}
