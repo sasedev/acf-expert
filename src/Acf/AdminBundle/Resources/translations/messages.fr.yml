@@ -2174,42 +2174,6 @@ BiDoc.mail.success: Succès de l'envoi de <b>%sendmail%</b> emails
 _mail.newbiDoc.subject: '[Acf-expert.tn] Bulletin d''informations %biDoc%'
 _mail.newbiDoc.body: 'Bonjour <u><i>%user%</i></u>,<br><br>Vous avez reçu un bulletin d’information ACF Info intitulé <b>%biDoc%</b>.<br>Pour le consulter, cliquez sur le lien : <a href="%url%">%url%</a><br><br><br><small>Cordialement,</small><br><small><i>ACF Info / Votre base de données en ligne 24h/24h</i></small>'
 
-# Order
-menu.admin.order: Commandes
-breadcrumb.order.list: Liste des Commandes
-breadcrumb.order.add: Ajouter Commande
-breadcrumb.order.edit: Commande <b>%order%</b>
-
-pagetitle.order.list: Liste des Commandes
-pagetitle.order.list.txt: Liste des Commandes
-pagetitle.order.add: Ajouter Commande
-pagetitle.order.add.txt: Ajouter Commande
-pagetitle.order.edit: Edition Commande <b>%order%</b>
-pagetitle.order.edit.txt: Edition Commande "%order%"
-
-Order.tab.overview: Détails
-Order.tab.edit: Edition
-
-Order.tlabel.list: Liste des Commandes
-Order.tlabel.add: Ajouter nouvelle Commande
-Order.tlabel.overview: Aperçu des détails de la Commande
-Order.tlabel.editVal: Modification du Montant de la Commande
-Order.tlabel.editStatus: Modification de l'Etat de la Commande
-Order.tlabel.editDescription: Modification de la Description de la Commande
-Order.tlabel.editUser: Modification de l'Utilisateur de la Commande
-
-Order.empty: Aucune Commande trouvée dans la base de donnée
-
-Order.add.success: Succès de l'ajout de la Commande <b>%order%</b>
-Order.add.failure: Echec de l'ajout de la Commande
-Order.delete.confirm.title: Demande de Confirmation
-Order.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Commande ?<br/> Cette action est irreversible!
-Order.delete.notfound: Commande inconnue
-Order.delete.success: Succès de la suppression de la Commande <b>%order%</b>
-Order.delete.failure: Echec de la suppression de la Commande
-Order.edit.notfound: Commande inconnue
-Order.edit.success: Succès de la modification de la Commande <b>%order%</b>
-Order.edit.failure: Echec de la modification de la Commande <b>%order%</b>
 
 
 
@@ -2325,3 +2289,158 @@ MSalary.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Fiche de 
 MSalary.delete.notfound: Fiche de Paye inconnue
 MSalary.delete.success: 'Succès de la suppression de la Fiche de Paye <b>%msalary%</b>'
 MSalary.delete.failure: 'Echec de la suppression de la Fiche de Paye'
+
+
+# Order
+menu.admin.product: Produits
+breadcrumb.product.list: Liste des Produits
+breadcrumb.product.add: Ajouter Produit
+breadcrumb.product.edit: Produit <b>%product%</b>
+
+pagetitle.product.list: Liste des Produits
+pagetitle.product.list.txt: Liste des Produits
+pagetitle.product.add: Ajouter Produit
+pagetitle.product.add.txt: Ajouter Produit
+pagetitle.product.edit: Edition Produit <b>%product%</b>
+pagetitle.product.edit.txt: Edition Produit "%product%"
+
+Product.tab.overview: Détails
+Product.tab.edit: Edition
+
+Product.tlabel.list: Liste des Produits
+Product.tlabel.add: Ajouter nouveau Produit
+Product.tlabel.overview: Aperçu des détails du Produit
+Product.tlabel.editPrice: Modification du Prix du Produit
+Product.tlabel.editDescription: Modification de la Description du Produit
+Product.tlabel.editVat: Modification de la TVA du Produit
+Product.tlabel.editLockout: Modification de l'Etat du Produit
+
+Product.empty: Aucun Produit trouvé dans la base de donnée
+
+Product.add.success: Succès de l'ajout du Produit <b>%product%</b>
+Product.add.failure: Echec de l'ajout du Produit
+Product.delete.confirm.title: Demande de Confirmation
+Product.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Produit ?<br/> Cette action est irreversible!
+Product.delete.notfound: Produit inconnu
+Product.delete.success: Succès de la suppression du Produit <b>%product%</b>
+Product.delete.failure: Echec de la suppression du Produit
+Product.edit.notfound: Produit inconnu
+Product.edit.success: Succès de la modification du Produit <b>%product%</b>
+Product.edit.failure: Echec de la modification du Produit <b>%product%</b>
+
+
+# Taxe
+menu.admin.taxe: Taxes
+breadcrumb.taxe.list: Liste des Taxes
+breadcrumb.taxe.add: Ajouter Taxe
+breadcrumb.taxe.edit: Taxe <b>%taxe%</b>
+
+pagetitle.taxe.list: Liste des Taxes
+pagetitle.taxe.list.txt: Liste des Taxes
+pagetitle.taxe.add: Ajouter Taxe
+pagetitle.taxe.add.txt: Ajouter Taxe
+pagetitle.taxe.edit: Edition Taxe <b>%taxe%</b>
+pagetitle.taxe.edit.txt: Edition Taxe "%taxe%"
+
+Taxe.tab.overview: Détails
+Taxe.tab.edit: Edition
+
+Taxe.tlabel.list: Liste des Taxes
+Taxe.tlabel.add: Ajouter nouvelle Taxe
+Taxe.tlabel.overview: Aperçu des détails de la Taxe
+Taxe.tlabel.editLabel: Modification du Libélé de la Taxe
+Taxe.tlabel.editType: Modification du Type de la Taxe
+Taxe.tlabel.editValue: Modification de la Valeur de la Taxe
+Taxe.tlabel.editVisible: Modification de la Visibilité de la Taxe
+Taxe.tlabel.editPriority: Modification de la Priorité de la Taxe
+
+Taxe.empty: Aucune Taxe trouvée dans la base de donnée
+
+Taxe.add.success: Succès de l'ajout de la Taxe <b>%taxe%</b>
+Taxe.add.failure: Echec de l'ajout de la Taxe
+Taxe.delete.confirm.title: Demande de Confirmation
+Taxe.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Taxe ?<br/> Cette action est irreversible!
+Taxe.delete.notfound: Taxe inconnue
+Taxe.delete.success: Succès de la suppression de la Taxe <b>%taxe%</b>
+Taxe.delete.failure: Echec de la suppression de la Taxe
+Taxe.edit.notfound: Taxe inconnue
+Taxe.edit.success: Succès de la modification de la Taxe <b>%taxe%</b>
+Taxe.edit.failure: Echec de la modification de la Taxe <b>%taxe%</b>
+
+
+# Order
+menu.admin.order: Commandes
+breadcrumb.order.list: Liste des Commandes
+breadcrumb.order.add: Ajouter Commande
+breadcrumb.order.edit: Commande <b>%order%</b>
+
+pagetitle.order.list: Liste des Commandes
+pagetitle.order.list.txt: Liste des Commandes
+pagetitle.order.add: Ajouter Commande
+pagetitle.order.add.txt: Ajouter Commande
+pagetitle.order.edit: Edition Commande <b>%order%</b>
+pagetitle.order.edit.txt: Edition Commande "%order%"
+
+Order.tab.overview: Détails
+Order.tab.edit: Edition
+
+Order.tlabel.list: Liste des Commandes
+Order.tlabel.add: Ajouter nouvelle Commande
+Order.tlabel.overview: Aperçu des détails de la Commande
+Order.tlabel.editVal: Modification du Montant de la Commande
+Order.tlabel.editStatus: Modification de l'Etat de la Commande
+Order.tlabel.editDescription: Modification de la Description de la Commande
+Order.tlabel.editUser: Modification de l'Utilisateur de la Commande
+
+Order.empty: Aucune Commande trouvée dans la base de donnée
+
+Order.add.success: Succès de l'ajout de la Commande <b>%order%</b>
+Order.add.failure: Echec de l'ajout de la Commande
+Order.delete.confirm.title: Demande de Confirmation
+Order.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Commande ?<br/> Cette action est irreversible!
+Order.delete.notfound: Commande inconnue
+Order.delete.success: Succès de la suppression de la Commande <b>%order%</b>
+Order.delete.failure: Echec de la suppression de la Commande
+Order.edit.notfound: Commande inconnue
+Order.edit.success: Succès de la modification de la Commande <b>%order%</b>
+Order.edit.failure: Echec de la modification de la Commande <b>%order%</b>
+
+
+# Invoice
+menu.admin.invoice: Factures
+breadcrumb.invoice.list: Liste des Factures
+breadcrumb.invoice.add: Ajouter Facture
+breadcrumb.invoice.edit: Facture <b>%invoice%</b>
+
+pagetitle.invoice.list: Liste des Factures
+pagetitle.invoice.list.txt: Liste des Factures
+pagetitle.invoice.add: Ajouter Facture
+pagetitle.invoice.add.txt: Ajouter Facture
+pagetitle.invoice.edit: Edition Facture <b>%invoice%</b>
+pagetitle.invoice.edit.txt: Edition Facture "%invoice%"
+
+Invoice.tab.overview: Détails
+Invoice.tab.edit: Edition
+
+Invoice.tlabel.list: Liste des Factures
+Invoice.tlabel.add: Ajouter nouvelle Facture
+Invoice.tlabel.overview: Aperçu des détails de la Facture
+Invoice.tlabel.editVal: Modification du Montant de la Facture
+Invoice.tlabel.editStatus: Modification de l'Etat de la Facture
+Invoice.tlabel.editDescription: Modification de la Description de la Facture
+Invoice.tlabel.editUser: Modification de l'Utilisateur de la Facture
+
+Invoice.empty: Aucune Facture trouvée dans la base de donnée
+
+Invoice.add.success: Succès de l'ajout de la Facture <b>%invoice%</b>
+Invoice.add.failure: Echec de l'ajout de la Facture
+Invoice.delete.confirm.title: Demande de Confirmation
+Invoice.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Facture ?<br/> Cette action est irreversible!
+Invoice.delete.notfound: Facture inconnue
+Invoice.delete.success: Succès de la suppression de la Facture <b>%invoice%</b>
+Invoice.delete.failure: Echec de la suppression de la Facture
+Invoice.edit.notfound: Facture inconnue
+Invoice.edit.success: Succès de la modification de la Facture <b>%invoice%</b>
+Invoice.edit.failure: Echec de la modification de la Facture <b>%invoice%</b>
+
+

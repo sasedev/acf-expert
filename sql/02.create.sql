@@ -960,8 +960,8 @@ CREATE TABLE "acf_msalaries" (
 	"nbrjwork"                                                          TEXT NULL,
 	"nbrjabsence"                                                       TEXT NULL,
 	"nbrjconge"                                                         TEXT NULL,
-	"nbrh075sup"                                                           TEXT NULL,
-	"nbrh100sup"                                                           TEXT NULL,
+	"nbrh075sup"                                                        TEXT NULL,
+	"nbrh100sup"                                                        TEXT NULL,
 	"nbrjsup"                                                           TEXT NULL,
 	"remboursement"                                                     TEXT NULL,
 	"achatste"                                                          TEXT NULL,
@@ -988,3 +988,97 @@ CREATE TABLE "acf_mpaye_docs" (
 	CONSTRAINT "fk_acf_mpaye_docs_doc" FOREIGN KEY ("doc_id") REFERENCES "acf_company_docs" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT "fk_acf_mpaye_docs_mpaye" FOREIGN KEY ("mpaye_id") REFERENCES "acf_mpayes" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE "acf_online_products" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"prd_label"                                                         TEXT NOT NULL,
+	"prd_price_ht"                                                      FLOAT8 NOT NULL DEFAULT 0,
+	"prd_vat"                                                           FLOAT8 NOT NULL DEFAULT 0,
+	"prd_lockout"                                                       INT8 NOT NULL DEFAULT 1,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_products" PRIMARY KEY ("id")
+);
+
+CREATE TABLE "acf_online_taxes" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"tx_label"                                                          TEXT NOT NULL,
+	"tx_val"                                                            FLOAT8 NOT NULL DEFAULT 0,
+	"tx_type"                                                           INT8 NOT NULL DEFAULT 1,
+	"tx_actif"                                                          INT8 NOT NULL DEFAULT 1,
+	"tx_priority"                                                       INT8 NOT NULL DEFAULT 0,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_taxes" PRIMARY KEY ("id")
+);
+
+CREATE TABLE "acf_online_orders" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"ref"                                                               TEXT NOT NULL,
+	"user_id"                                                           INT8 NOT NULL,
+	"auth"                                                              TEXT NULL,
+	"session_id"                                                        TEXT NULL,
+	"ip_addr"                                                           TEXT NULL,
+	"val"                                                               FLOAT8 NOT NULL DEFAULT 0,
+	"orderto"                                                           TEXT NULL,
+	"payment_type"                                                      INT8 NOT NULL DEFAULT 1,
+	"payment_status"                                                    INT8 NOT NULL DEFAULT 1,
+	"autorenew"                                                         INT8 NOT NULL DEFAULT 1,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_orders" PRIMARY KEY ("id")
+);
+
+CREATE TABLE "acf_online_invoices" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"ord_id"                                                            UUID NOT NULL,
+	"company_id"                                                        UUID NULL,
+	"ref"                                                               TEXT NOT NULL,
+	"user_id"                                                           INT8 NOT NULL,
+	"val"                                                               FLOAT8 NOT NULL DEFAULT 0,
+	"orderto"                                                           TEXT NULL,
+	"payment_type"                                                      INT8 NOT NULL DEFAULT 1,
+	"payment_status"                                                    INT8 NOT NULL DEFAULT 1,
+	"autorenew"                                                         INT8 NOT NULL DEFAULT 1,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_invoices" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_online_invoices_order" FOREIGN KEY ("ord_id") REFERENCES "acf_online_orders" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT "fk_acf_online_invoices_company" FOREIGN KEY ("company_id") REFERENCES "acf_companies" ("id") ON UPDATE CASCADE ON DELETE SET NULL
+);
+
+CREATE TABLE "acf_online_order_elements" (
+	"ord_id"                                                            UUID NOT NULL,
+	"prd_id"                                                            UUID NOT NULL,
+	CONSTRAINT "pk_acf_online_order_elements" PRIMARY KEY ("ord_id", "prd_id"),
+	CONSTRAINT "fk_acf_online_order_elements_order" FOREIGN KEY ("ord_id") REFERENCES "acf_online_orders" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT "fk_acf_online_order_elements_product" FOREIGN KEY ("prd_id") REFERENCES "acf_online_products" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE "acf_online_order_taxes" (
+	"ord_id"                                                            UUID NOT NULL,
+	"tx_id"                                                             UUID NOT NULL,
+	CONSTRAINT "pk_acf_online_order_taxes" PRIMARY KEY ("ord_id", "tx_id"),
+	CONSTRAINT "fk_acf_online_order_taxes_order" FOREIGN KEY ("ord_id") REFERENCES "acf_online_orders" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT "fk_acf_online_order_taxes_taxe" FOREIGN KEY ("tx_id") REFERENCES "acf_online_taxes" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE "acf_online_invoice_elements" (
+	"inv_id"                                                            UUID NOT NULL,
+	"prd_id"                                                            UUID NOT NULL,
+	CONSTRAINT "pk_acf_online_invoice_elements" PRIMARY KEY ("inv_id", "prd_id"),
+	CONSTRAINT "fk_acf_online_invoice_elements_order" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT "fk_acf_online_invoice_elements_product" FOREIGN KEY ("prd_id") REFERENCES "acf_online_products" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE "acf_online_invoice_taxes" (
+	"inv_id"                                                            UUID NOT NULL,
+	"tx_id"                                                             UUID NOT NULL,
+	CONSTRAINT "pk_acf_online_invoice_taxes" PRIMARY KEY ("inv_id", "tx_id"),
+	CONSTRAINT "fk_acf_online_invoice_taxes_order" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT "fk_acf_online_invoice_taxes_taxe" FOREIGN KEY ("tx_id") REFERENCES "acf_online_taxes" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+

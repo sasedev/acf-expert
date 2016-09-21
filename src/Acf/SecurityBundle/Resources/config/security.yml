@@ -82,7 +82,11 @@ security:
         - { path: ^/ACF-Payroll.*, role: ROLE_CLIENT3 }
         - { path: ^/myProfile.*, role: ROLE_USER }
         - { path: ^/Agenda.*, role: ROLE_USER }
+        - { path: ^/onlineProduct.*, role: ROLE_USER }
         - { path: ^/myAvatar.*, role: ROLE_USER }
+        - { path: ^/myCart.*, role: ROLE_USER }
+        - { path: ^/myOrder.*, role: ROLE_USER }
+        - { path: ^/myInvoice.*, role: ROLE_USER }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/lostPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }

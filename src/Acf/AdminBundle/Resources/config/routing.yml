@@ -1278,40 +1278,6 @@ _admin_biDoc_sendmail:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
-_admin_order_list:
-    path:     /orders
-    defaults: { _controller: "AcfAdminBundle:Order:list" }
-
-_admin_order_addGet:
-    path:     /order/add
-    defaults: { _controller: "AcfAdminBundle:Order:addGet" }
-    methods: [GET]
-
-_admin_order_addPost:
-    path:     /order/add
-    defaults: { _controller: "AcfAdminBundle:Order:addPost" }
-    methods: [POST]
-
-_admin_order_delete:
-    path:     /order/delete/{uid}
-    defaults: { _controller: "AcfAdminBundle:Order:delete" }
-    requirements:
-        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
-
-_admin_order_editGet:
-    path:     /order/edit/{uid}
-    defaults: { _controller: "AcfAdminBundle:Order:editGet" }
-    methods: [GET]
-    requirements:
-        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
-
-_admin_order_editPost:
-    path:     /order/edit/{uid}
-    defaults: { _controller: "AcfAdminBundle:Order:editPost" }
-    methods: [POST]
-    requirements:
-        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
-
 _admin_mpaye_editGet:
     path:     /mpaye/edit/{uid}
     defaults: { _controller: "AcfAdminBundle:MPaye:editGet" }
@@ -1351,3 +1317,156 @@ _admin_msalary_editPost:
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_product_list:
+    path:     /products
+    defaults: { _controller: "AcfAdminBundle:Product:list" }
+
+_admin_product_addGet:
+    path:     /product/add
+    defaults: { _controller: "AcfAdminBundle:Product:addGet" }
+    methods: [GET]
+
+_admin_product_addPost:
+    path:     /product/add
+    defaults: { _controller: "AcfAdminBundle:Product:addPost" }
+    methods: [POST]
+
+_admin_product_delete:
+    path:     /product/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Product:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_product_editGet:
+    path:     /product/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Product:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_product_editPost:
+    path:     /product/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Product:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_taxe_list:
+    path:     /taxes
+    defaults: { _controller: "AcfAdminBundle:Taxe:list" }
+
+_admin_taxe_addGet:
+    path:     /taxe/add
+    defaults: { _controller: "AcfAdminBundle:Taxe:addGet" }
+    methods: [GET]
+
+_admin_taxe_addPost:
+    path:     /taxe/add
+    defaults: { _controller: "AcfAdminBundle:Taxe:addPost" }
+    methods: [POST]
+
+_admin_taxe_delete:
+    path:     /taxe/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Taxe:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_taxe_editGet:
+    path:     /taxe/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Taxe:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_taxe_editPost:
+    path:     /taxe/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Taxe:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_order_list:
+    path:     /orders
+    defaults: { _controller: "AcfAdminBundle:Order:list" }
+
+_admin_order_addGet:
+    path:     /order/add
+    defaults: { _controller: "AcfAdminBundle:Order:addGet" }
+    methods: [GET]
+
+_admin_order_addPost:
+    path:     /order/add
+    defaults: { _controller: "AcfAdminBundle:Order:addPost" }
+    methods: [POST]
+
+_admin_order_delete:
+    path:     /order/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_order_editGet:
+    path:     /order/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_order_print:
+    path:     /order/print/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:print" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_order_editPost:
+    path:     /order/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_list:
+    path:     /invoices
+    defaults: { _controller: "AcfAdminBundle:Invoice:list" }
+
+_admin_invoice_addGet:
+    path:     /invoice/add
+    defaults: { _controller: "AcfAdminBundle:Invoice:addGet" }
+    methods: [GET]
+
+_admin_invoice_addPost:
+    path:     /invoice/add
+    defaults: { _controller: "AcfAdminBundle:Invoice:addPost" }
+    methods: [POST]
+
+_admin_invoice_delete:
+    path:     /invoice/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Invoice:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_editGet:
+    path:     /invoice/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Invoice:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_print:
+    path:     /invoice/print/{uid}
+    defaults: { _controller: "AcfAdminBundle:Invoice:print" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_editPost:
+    path:     /invoice/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Invoice:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+
+
+

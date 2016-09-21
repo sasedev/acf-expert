@@ -22,7 +22,11 @@
 									<li><a href="{{ path('_payroll_homepage') }}">{{ 'menu.top.client3'|trans }}</a>
 									</li>
 									{% endif %}
+									<li class="divider"></li>
 									<li><a href="{{ path('_security_logout') }}">{{ 'menu.top.logout'|trans }}</a>
+									</li>
+									<li class="divider"></li>
+									<li><a href="{{ path('_security_onlineProduct') }}">{{ faIco('shopping-bag') }} &nbsp; {{'menu.shopping'|trans}}</a>
 									</li>
 								</ul>
 							</li>

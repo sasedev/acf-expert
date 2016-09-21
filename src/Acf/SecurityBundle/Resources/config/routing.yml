@@ -88,16 +88,73 @@ _security_agenda_event_edit:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
-_security_order_editGet:
-    path:  /myProfile/order/{uid}
-    defaults: { _controller: "AcfSecurityBundle:Order:editGet" }
+_security_onlineProduct:
+    path:  /onlineProducts
+    defaults: { _controller: "AcfSecurityBundle:OnlineProduct:index" }
+
+_security_myCart:
+    path:  /myCart
+    defaults: { _controller: "AcfSecurityBundle:Cart:index" }
+    methods: [GET]
+
+_security_myCart_validate:
+    path:  /myCart
+    defaults: { _controller: "AcfSecurityBundle:Cart:validate" }
+    methods: [POST]
+
+_security_myCart_addGet:
+    path:  /myCart/add/{uid}
+    defaults: { _controller: "AcfSecurityBundle:Cart:addGet" }
     methods: [GET]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
-_security_order_editPost:
-    path:  /myProfile/order/{uid}
-    defaults: { _controller: "AcfSecurityBundle:Order:editPost" }
+_security_myCart_removeGet:
+    path:  /myCart/remove/{uid}
+    defaults: { _controller: "AcfSecurityBundle:Cart:removeGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_security_myOrders:
+    path:  /myOrders
+    defaults: { _controller: "AcfSecurityBundle:MyOrder:index" }
+
+_security_myOrder_editGet:
+    path:  /myOrder/{uid}
+    defaults: { _controller: "AcfSecurityBundle:MyOrder:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_security_myOrder_print:
+    path:  /myOrder/{uid}/print
+    defaults: { _controller: "AcfSecurityBundle:MyOrder:print" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_security_myOrder_editPost:
+    path:  /myOrder/{uid}
+    defaults: { _controller: "AcfSecurityBundle:MyOrder:editPost" }
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_security_myInvoices:
+    path:  /myInvoices
+    defaults: { _controller: "AcfSecurityBundle:MyInvoice:index" }
+
+_security_myInvoice_editGet:
+    path:  /myInvoice/{uid}
+    defaults: { _controller: "AcfSecurityBundle:MyInvoice:editGet" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_security_myInvoice_print:
+    path:  /myInvoice/{uid}/print
+    defaults: { _controller: "AcfSecurityBundle:MyInvoice:print" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+

@@ -91,7 +91,7 @@
 		"symfony-assets-install" : "relative",
 		"incenteev-parameters" : {
 			"file" : "app/config/parameters.yml",
-			"keep-outdated" : true
+			"keep-outdated" : "true"
 		},
 		"branch-alias" : {
 			"dev-master" : "3.0-dev"

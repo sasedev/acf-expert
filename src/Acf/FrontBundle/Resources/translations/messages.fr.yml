@@ -32,6 +32,11 @@ menu.top.client2: 'ACF Info'
 menu.top.client3: 'ACF Paie'
 menu.top.logout: 'Déconnexion'
 menu.top.devis: 'Devis'
+menu.shopping: 'Achats en Ligne'
+menu.shopping.products: 'Nos Produits'
+menu.shopping.cart: 'Mon Panier :'
+menu.shopping.orders: 'Mes Commandes'
+menu.shopping.invoices: 'Mes Fatures'
 
 menu.bottom.links: Liens
 menu.footer.home: Accueil

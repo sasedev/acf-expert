@@ -1,0 +1,70 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() { });
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_front_homepage') }}">{{ faIco('home') }}
+			&nbsp; {{'breadcrumb.home'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_security_onlineProduct') }}">{{faIco('shopping-basket')}}
+			&nbsp; {{'breadcrumb.onlineProduct'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	{% for product in products %}
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-lg-12">
+						{{product.label|raw}}
+						&nbsp;
+					</div>
+					<div class="col-lg-12"><hr></div>
+					<div class="col-lg-6 text-right">
+						{{'Product.price'|trans|raw}}
+						:
+					</div>
+					<div class="col-lg-6">
+						{{product.price|number_format(3, '.', ' ') }}
+						TND&nbsp;
+					</div>
+					<div class="col-lg-6 text-right">
+						{{'Product.vat'|trans|raw}}
+						:
+					</div>
+					<div class="col-lg-6">
+						{{product.vat|number_format(2, '.', ' ') }}
+						%&nbsp;
+					</div>
+				</div>
+			</div>
+			{% set prodInCard = false %}
+			{% for OnlineProduct in OnlineProducts %}
+			{% if OnlineProduct == product.id %}
+			{% set prodInCard = true %}
+			{% endif %}
+			{% endfor %}
+			<div class="box-footer">
+			{% if prodInCard == false %}
+			<a class="btn btn-primary btn-block" href="{{ path('_security_myCart_addGet', {'uid': product.id}) }}">{{ faIco('shopping-cart') }} Ajouter au Panier</a>
+			{% else %}
+			<a class="btn btn-danger btn-block" href="{{ path('_security_myCart_removeGet', {'uid': product.id}) }}">{{ faIco('shopping-cart') }} Enlever du Panier</a>
+			{% endif %}
+			</div>
+		</div>
+	</div>
+	{% else %}
+	<div class="col-lg-12">
+		{{ 'Product.empty'|trans|raw }}
+	</div>
+	{% endfor %}
+</div>
+{%endblock content%}

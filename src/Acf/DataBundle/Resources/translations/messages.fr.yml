@@ -1448,44 +1448,6 @@ BiDoc.title.label: "Titre :"
 BiDoc.folder.label: "Dossier :"
 
 
-# Order
-Order.id: ID
-Order.ref: Référence
-Order.user: Utilisateur
-Order.val: Valeur
-Order.status: Etat
-Order.status.1: "Nouveau"
-Order.status.2: "En Attente"
-Order.status.3: "Payée"
-Order.status.4: "Refusée"
-Order.status.5: "Annulée"
-Order.status.6: "Erreur"
-Order.description: Description
-Order.auth: "Numéro d'autorisation"
-Order.sessId: Session
-Order.ipAddr: "Adresse IP"
-Order.dtCrea: Date d'ajout
-Order.dtUpdate: Date de modification
-
-Order.id.label: "ID :"
-Order.ref.label: "Référence :"
-Order.user.label: "Utilisateur :"
-Order.val.label: "Valeur :"
-Order.status.label: "Etat :"
-Order.status.choice.1: "Nouveau"
-Order.status.choice.2: "En Attente"
-Order.status.choice.3: "Payé"
-Order.status.choice.4: "Refusé"
-Order.status.choice.5: "Annulé"
-Order.status.choice.6: "Erreur"
-Order.description.label: "Description :"
-Order.auth.label: "Numéro d'autorisation :"
-Order.sessId.label: "Session :"
-Order.ipAddr.label: "Adresse IP :"
-Order.dtCrea.label: "Date d'ajout :"
-Order.dtUpdate.label: "Date de modification :"
-
-
 
 #MPaye
 MPaye.month: Mois
@@ -1635,4 +1597,141 @@ MSalary.ticketCadeau.label: "TICKET CADEAU :"
 MSalary.lifeAssurance.label: "Montant Assurance vie (10 mD /an max) :"
 MSalary.ceaAccount.label: "Souscription compte CEA :"
 MSalary.others.label: "Remarques :"
+
+
+# Product
+Product.id: ID
+Product.label: Description
+Product.price: Prix HT
+Product.vat: TVA
+Product.lockout: Etat
+Product.lockout.1: "Visible"
+Product.lockout.2: "Invisible"
+Product.dtCrea: Date d'ajout
+Product.dtUpdate: Date de modification
+
+Product.id.label: "ID :"
+Product.label.label: "Description :"
+Product.price.label: "Prix HT :"
+Product.vat.label: "TVA :"
+Product.lockout.label: "Etat :"
+Product.lockout.choice.1: "Visible"
+Product.lockout.choice.2: "Invisible"
+Product.dtCrea.label: "Date d'ajout :"
+Product.dtUpdate.label: "Date de modification :"
+
+# OnlineProduct
+OnlineProduct.id: ID
+OnlineProduct.label: Description
+OnlineProduct.price: Prix HT
+OnlineProduct.vat: TVA
+OnlineProduct.lockout: Etat
+OnlineProduct.lockout.1: "Visible"
+OnlineProduct.lockout.2: "Invisible"
+OnlineProduct.dtCrea: Date d'ajout
+OnlineProduct.dtUpdate: Date de modification
+
+OnlineProduct.id.label: "ID :"
+OnlineProduct.label.label: "Description :"
+OnlineProduct.price.label: "Prix HT :"
+OnlineProduct.vat.label: "TVA :"
+OnlineProduct.lockout.label: "Etat :"
+OnlineProduct.lockout.choice.1: "Visible"
+OnlineProduct.lockout.choice.2: "Invisible"
+OnlineProduct.dtCrea.label: "Date d'ajout :"
+OnlineProduct.dtUpdate.label: "Date de modification :"
+
+
+
+# Taxe
+Taxe.id: ID
+Taxe.label: Libélé
+Taxe.value: Valeur
+Taxe.priority: Priorité
+Taxe.type: Type
+Taxe.type.1: "Fixe"
+Taxe.type.2: "Pourcentage"
+Taxe.visible: Etat
+Taxe.visible.1: "Visible"
+Taxe.visible.2: "Invisible"
+Taxe.dtCrea: Date d'ajout
+Taxe.dtUpdate: Date de modification
+
+Taxe.id.label: "ID :"
+Taxe.label.label: "Libélé :"
+Taxe.value.label: "Valeur :"
+Taxe.priority.label: "Priorité :"
+Taxe.type.label: "Type :"
+Taxe.type.choice.1: "Fixe"
+Taxe.type.choice.2: "Pourcentage"
+Taxe.visible.label: "Etat :"
+Taxe.visible.choice.1: "Visible"
+Taxe.visible.choice.2: "Invisible"
+Taxe.dtCrea.label: "Date d'ajout :"
+Taxe.dtUpdate.label: "Date de modification :"
+
+# OnlineTaxe
+OnlineTaxe.id: ID
+OnlineTaxe.label: Libélé
+OnlineTaxe.value: Valeur
+OnlineTaxe.priority: Priorité
+OnlineTaxe.type: Type
+OnlineTaxe.type.1: "Fixe"
+OnlineTaxe.type.2: "Pourcentage"
+OnlineTaxe.visible: Etat
+OnlineTaxe.visible.1: "Visible"
+OnlineTaxe.visible.2: "Invisible"
+OnlineTaxe.dtCrea: Date d'ajout
+OnlineTaxe.dtUpdate: Date de modification
+
+OnlineTaxe.id.label: "ID :"
+OnlineTaxe.label.label: "Libélé :"
+OnlineTaxe.value.label: "Valeur :"
+OnlineTaxe.priority.label: "Priorité :"
+OnlineTaxe.type.label: "Type :"
+OnlineTaxe.type.choice.1: "Fixe"
+OnlineTaxe.type.choice.2: "Pourcentage"
+OnlineTaxe.visible.label: "Etat :"
+OnlineTaxe.visible.choice.1: "Visible"
+OnlineTaxe.visible.choice.2: "Invisible"
+OnlineTaxe.dtCrea.label: "Date d'ajout :"
+OnlineTaxe.dtUpdate.label: "Date de modification :"
+
+
+# Order
+Order.id: ID
+Order.ref: Référence
+Order.user: Utilisateur
+Order.val: Valeur
+Order.status: Etat
+Order.status.1: "Nouveau"
+Order.status.2: "En Attente"
+Order.status.3: "Payée"
+Order.status.4: "Refusée"
+Order.status.5: "Annulée"
+Order.status.6: "Erreur"
+Order.description: Description
+Order.auth: "Numéro d'autorisation"
+Order.sessId: Session
+Order.ipAddr: "Adresse IP"
+Order.dtCrea: Date d'ajout
+Order.dtUpdate: Date de modification
+
+Order.id.label: "ID :"
+Order.ref.label: "Référence :"
+Order.user.label: "Utilisateur :"
+Order.val.label: "Valeur :"
+Order.status.label: "Etat :"
+Order.status.choice.1: "Nouveau"
+Order.status.choice.2: "En Attente"
+Order.status.choice.3: "Payé"
+Order.status.choice.4: "Refusé"
+Order.status.choice.5: "Annulé"
+Order.status.choice.6: "Erreur"
+Order.description.label: "Description :"
+Order.auth.label: "Numéro d'autorisation :"
+Order.sessId.label: "Session :"
+Order.ipAddr.label: "Adresse IP :"
+Order.dtCrea.label: "Date d'ajout :"
+Order.dtUpdate.label: "Date de modification :"
 
