@@ -119,10 +119,11 @@ pagetitle.myCart: Mon Panier
 breadcrumb.myCart: Mon Panier
 MyCart.tlabel: Details du Panier
 
-pagetitle.onlineProduct.txt: Nos Produits
-pagetitle.onlineProduct: Nos Produits
-breadcrumb.onlineProduct: Nos Produits
-
+pagetitle.myorder.list.txt: Mes Commandes
+pagetitle.myorder.list: Mes Commandes
+breadcrumb.myorder.list: Mes Commandes
+Order.tlabel.myorders: Mes Commandes
+breadcrumb.myorder.edit: "Commande : <b>%order%</b>"
 
 pagetitle.onlineProduct.txt: Nos Produits
 pagetitle.onlineProduct: Nos Produits

@@ -1702,7 +1702,7 @@ OnlineTaxe.dtUpdate.label: "Date de modification :"
 Order.id: ID
 Order.ref: Référence
 Order.user: Utilisateur
-Order.val: Valeur
+Order.val: Montant
 Order.status: Etat
 Order.status.1: "Nouveau"
 Order.status.2: "En Attente"
@@ -1710,6 +1710,13 @@ Order.status.3: "Payée"
 Order.status.4: "Refusée"
 Order.status.5: "Annulée"
 Order.status.6: "Erreur"
+Order.orderTo: "A l'Ordre de"
+Order.paymentType: "Moyen de Payement"
+Order.paymentType.1: "Par Virement"
+Order.paymentType.2: "Par Chèque"
+Order.paymentType.3: "En liquide"
+Order.paymentType.4: "En ligne"
+Order.invoice: "Facture"
 Order.description: Description
 Order.auth: "Numéro d'autorisation"
 Order.sessId: Session
@@ -1720,7 +1727,7 @@ Order.dtUpdate: Date de modification
 Order.id.label: "ID :"
 Order.ref.label: "Référence :"
 Order.user.label: "Utilisateur :"
-Order.val.label: "Valeur :"
+Order.val.label: "Montant :"
 Order.status.label: "Etat :"
 Order.status.choice.1: "Nouveau"
 Order.status.choice.2: "En Attente"
@@ -1728,6 +1735,13 @@ Order.status.choice.3: "Payé"
 Order.status.choice.4: "Refusé"
 Order.status.choice.5: "Annulé"
 Order.status.choice.6: "Erreur"
+Order.orderTo.label: "A l'Ordre de :"
+Order.paymentType.label: "Moyen de Payement :"
+Order.paymentType.choice.1: "Par Virement"
+Order.paymentType.choice.2: "Par Chèque"
+Order.paymentType.choice.3: "En liquide"
+Order.paymentType.choice.4: "En ligne"
+Order.invoice.label: "Facture :"
 Order.description.label: "Description :"
 Order.auth.label: "Numéro d'autorisation :"
 Order.sessId.label: "Session :"

@@ -1,0 +1,140 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() { });
+{%endblock end2_dynamic_jstxt%}
+{%block html_body%}
+<body onload="window.print();">
+<div class="wrapper">
+  <!-- Main content -->
+  <section class="invoice">
+
+	<!-- title row -->
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<img src="{{asset('bundles/acfres/images/logo_acf.jpg')}}"
+				alt="{{ sitename }}" class="icon img" style="width: 190px;"> <small class="pull-right">Date : {{order.dtCrea|date('Y-m-d')}}</small>
+			</h2>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- info row -->
+	<div class="row invoice-info">
+		<div class="col-sm-4 invoice-col">
+			<br>
+			<address>
+				<strong>ACF Expert.</strong>  Cabinet FAKHFAKH d'Expertise Comptable<br>
+				{{ faIco('globe') }} <strong>Adresse:</strong> 16 Rue de Syrie - EPI Center Bloc C - 3 ème étage - 1002 Tunis Tunisie<br> 
+				{{ faIco('phone') }} <strong>Tel:</strong> + 216 71 835 144<br>
+				{{ faIco('fax') }} <strong>Fax:</strong>  +216 71 835 312<br>
+				{{ faIco('envelope-o') }} <strong>Email:</strong>  +216 71 835 312
+			</address>
+		</div>
+		<!-- /.col -->
+		<div class="col-sm-4 invoice-col">
+			&nbsp;
+		</div>
+		<!-- /.col -->
+		<div class="col-sm-4 invoice-col">
+			<br>
+			<br> 
+			<b>{{ 'Order.ref'|trans }}:</b> {{ order.ref }}<br>
+		</div>
+		<!-- /.col -->
+	</div>
+	<div class="row invoice-info">
+		<div class="col-sm-12 invoice-col">
+			<b><u>A l'Ordre de :</u></b> 
+			<address>
+				{{ order.orderTo|raw }}
+			</address>
+		</div>
+		<br>
+		<br>
+	</div>
+	<!-- /.row -->
+
+	<!-- Table row -->
+	<div class="row">
+		<div class="col-xs-12 table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Produit</th>
+						<th>Prix HT</th>
+						<th>TVA</th>
+						<th>Prix TTC</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% set totht = 0 %}
+					{% for product in order.products %}
+					<tr>
+						<td>{{ product.label|raw }}</td>
+						<td class="text-right">{{ product.price|number_format(3, '.', ' ') }} TND</td>
+						<td class="text-right">{{ product.vat|number_format(2, '.', ' ') }} %</td>
+						{% set totht = totht + product.price + product.price * product.vat/100 %}
+						<td class="text-right">{{ (product.price + product.price * product.vat/100)|number_format(3, '.', ' ') }} TND</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<div class="row">
+		<!-- accepted payments column -->
+		<div class="col-xs-6">
+			<p class="lead">Moyen de Paiement:</p>
+			<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+			<br>
+			{{ ('Order.paymentType.'~order.paymentType)|trans|raw }}
+			<br>
+			</p>
+		</div>
+		<!-- /.col -->
+		<div class="col-xs-6">
+			<p class="lead">---</p>
+
+			<div class="table-responsive">
+				<table class="table">
+					<tr>
+						<th class="text-right" style="width: 50%">Sous-Total:</th>
+						<td class="text-right">{{ totht|number_format(3, '.', ' ') }} TND</td>
+					</tr>
+					{% for taxe in order.taxes %}
+					<tr>
+						<th class="text-right">{{ taxe.label|raw }}</th>
+						<td class="text-right">
+						{% if taxe.type == constant('TYPE_NUMERIC', taxe) %}
+							{{ taxe.value|number_format(3, '.', ' ') }} TND
+							{% set totht = totht + taxe.value %}
+						{% else %}
+							{{ (totht * taxe.value/100)|number_format(3, '.', ' ') }} TND
+							{% set totht = totht + totht * taxe.value/100 %}
+						{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+					<tr>
+						<th class="text-right">Total:</th>
+						<td class="text-right">{{ order.val|number_format(3, '.', ' ') }} TND</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- /.col -->
+	</div>
+</section>
+</div>
+</body>
+{%endblock html_body%}
+

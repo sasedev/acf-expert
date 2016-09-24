@@ -1,7 +1,7 @@
 <?php
 namespace Acf\FrontBundle\Controller;
 
-use Acf\DataBundle\Entity\Order;
+use Acf\DataBundle\Entity\OnlineOrder;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -46,25 +46,26 @@ class PaymentNotifController extends BaseController
 
     if (null != $ref && \trim($ref) != '') {
       $em = $this->getEntityManager();
-      $order = $em->getRepository('AcfDataBundle:Order')->findOneBy(array(
+      $order = $em->getRepository('AcfDataBundle:OnlineOrder')->findOneBy(array(
         'ref' => $ref
       ));
       if (null == $order) {
         throw new HttpException('404', 'Unknown Order');
       } else {
+        $order->setPaymentType(OnlineOrder::PTYPE_ONLINE);
         switch ($actionId) {
           case 'DETAIL':
-            if ($order->getStatus() == Order::ST_NEW) {
-              $order->setStatus(Order::ST_WAITING);
+            if ($order->getStatus() == OnlineOrder::ST_NEW) {
+              $order->setStatus(OnlineOrder::ST_WAITING);
               $em->persist($order);
               $em->flush();
             }
             $this->gvars['order'] = $order;
-            $this->gvars['action'] = Order::ST_WAITING;
+            $this->gvars['action'] = OnlineOrder::ST_WAITING;
             break;
           case 'ACCORD':
             // if ($order->getStatus() == Order::ST_NEW || $order->getStatus() == Order::ST_WAITING) {
-            $order->setStatus(Order::ST_OK);
+            $order->setStatus(OnlineOrder::ST_OK);
             // paramId à tester ?
             $order->setAuth($paramId);
             $em->persist($order);
@@ -76,11 +77,11 @@ class PaymentNotifController extends BaseController
              * }//
              */
             $this->gvars['order'] = $order;
-            $this->gvars['action'] = Order::ST_OK;
+            $this->gvars['action'] = OnlineOrder::ST_OK;
             break;
           case 'REFUS':
             // if ($order->getStatus() == Order::ST_NEW || $order->getStatus() == Order::ST_WAITING) {
-            $order->setStatus(Order::ST_REFUSAL);
+            $order->setStatus(OnlineOrder::ST_REFUSAL);
             // paramId à tester ?
             $order->setAuth($paramId);
             $em->persist($order);
@@ -92,11 +93,11 @@ class PaymentNotifController extends BaseController
              * }//
              */
             $this->gvars['order'] = $order;
-            $this->gvars['action'] = Order::ST_REFUSAL;
+            $this->gvars['action'] = OnlineOrder::ST_REFUSAL;
             break;
           case 'ANNULATION':
             // if ($order->getStatus() == Order::ST_NEW || $order->getStatus() == Order::ST_WAITING) {
-            $order->setStatus(Order::ST_CANCELED);
+            $order->setStatus(OnlineOrder::ST_CANCELED);
             // paramId à tester ?
             $order->setAuth($paramId);
             $em->persist($order);
@@ -108,11 +109,11 @@ class PaymentNotifController extends BaseController
              * }//
              */
             $this->gvars['order'] = $order;
-            $this->gvars['action'] = Order::ST_CANCELED;
+            $this->gvars['action'] = OnlineOrder::ST_CANCELED;
             break;
           case 'ERREUR':
             // if ($order->getStatus() == Order::ST_NEW || $order->getStatus() == Order::ST_WAITING) {
-            $order->setStatus(Order::ST_ERROR);
+            $order->setStatus(OnlineOrder::ST_ERROR);
             // paramId à tester ?
             $order->setAuth($paramId);
             $em->persist($order);
@@ -124,7 +125,7 @@ class PaymentNotifController extends BaseController
              * }//
              */
             $this->gvars['order'] = $order;
-            $this->gvars['action'] = Order::ST_ERROR;
+            $this->gvars['action'] = OnlineOrder::ST_ERROR;
             break;
           default:
             throw new HttpException('500', 'Wrong request');

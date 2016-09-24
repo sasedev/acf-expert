@@ -439,11 +439,13 @@
 				{%endblock breadcrumb%}
 			</section>
 			<!-- Main content -->
+			{%block sectioncontent%}
 			<section id="content" class="content">
 				{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': true }%}
 				{%block content%}
 				{%endblock content%}
 			</section>
+			{%endblock sectioncontent%}
 		</div>
 		{%endblock rightside%}
 		{%block footer%}

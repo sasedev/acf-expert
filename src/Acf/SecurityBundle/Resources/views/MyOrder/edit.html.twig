@@ -1,0 +1,192 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() { });
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_front_homepage') }}">{{ faIco('home') }} &nbsp; {{'breadcrumb.home'|trans|raw}}</a></li>
+	<li><a href="{{ path('_security_myOrders') }}">{{faIco('shopping-cart')}} &nbsp; {{'breadcrumb.myorder.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_security_myOrder_editGet', {'uid' : order.id}) }}">{{faIco('edit')}} &nbsp; {{'breadcrumb.myorder.edit'|trans({'%order%': order.ref})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block sectioncontent%}
+{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': true }%}
+<section id="content" class="content invoice">
+	{%block content%}
+
+	<!-- title row -->
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<img src="{{asset('bundles/acfres/images/logo_acf.jpg')}}"
+				alt="{{ sitename }}" class="icon img" style="width: 190px;"> <small class="pull-right">Date : {{order.dtCrea|date('Y-m-d')}}</small>
+			</h2>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- info row -->
+	<div class="row invoice-info">
+		<div class="col-sm-4 invoice-col">
+			<br>
+			<address>
+				<strong>ACF Expert.</strong>  Cabinet FAKHFAKH d'Expertise Comptable<br>
+				{{ faIco('globe') }} <strong>Adresse:</strong> 16 Rue de Syrie - EPI Center Bloc C - 3 ème étage - 1002 Tunis Tunisie<br> 
+				{{ faIco('phone') }} <strong>Tel:</strong> + 216 71 835 144<br>
+				{{ faIco('fax') }} <strong>Fax:</strong>  +216 71 835 312<br>
+				{{ faIco('envelope-o') }} <strong>Email:</strong>  +216 71 835 312
+			</address>
+		</div>
+		<!-- /.col -->
+		<div class="col-sm-4 invoice-col">
+			&nbsp;
+		</div>
+		<!-- /.col -->
+		<div class="col-sm-4 invoice-col">
+			<br> 
+			<b>{{ 'Order.ref'|trans }}:</b> {{ order.ref }}<br>
+			<br>
+			<b>Facture :  --</b><br> 
+		</div>
+		<!-- /.col -->
+	</div>
+	<div class="row invoice-info">
+		<div class="col-sm-12 invoice-col">
+			<b><u>A l'Ordre de :</u></b> 
+			<address>
+				{{ order.orderTo|raw }}
+			</address>
+		</div>
+		<br>
+		<br>
+	</div>
+	<!-- /.row -->
+
+	<!-- Table row -->
+	<div class="row">
+		<div class="col-xs-12 table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Produit</th>
+						<th>Prix HT</th>
+						<th>TVA</th>
+						<th>Prix TTC</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% set totht = 0 %}
+					{% for product in order.products %}
+					<tr>
+						<td>{{ product.label|raw }}</td>
+						<td class="text-right">{{ product.price|number_format(3, '.', ' ') }} TND</td>
+						<td class="text-right">{{ product.vat|number_format(2, '.', ' ') }} %</td>
+						{% set totht = totht + product.price + product.price * product.vat/100 %}
+						<td class="text-right">{{ (product.price + product.price * product.vat/100)|number_format(3, '.', ' ') }} TND</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<div class="row">
+		<!-- accepted payments column -->
+		<div class="col-xs-6">
+			<p class="lead">Moyen de Paiement:</p>
+			{% if order.status == constant('ST_NEW', order) %}
+			<ul class="nav nav-tabs">
+				<li{% if order.paymentType == constant('PTYPE_ONLINE', order) %} class="active"{% endif %}><a data-toggle="tab" href="#PTONLINE" aria-expanded="true">{{ ('Order.paymentType.4')|trans|raw }}</a></li>
+				<li{% if order.paymentType == constant('PTYPE_MONEY', order) %} class="active"{% endif %}><a data-toggle="tab" href="#PTMONEY" aria-expanded="true">{{ ('Order.paymentType.3')|trans|raw }}</a></li>
+				<li{% if order.paymentType == constant('PTYPE_CHECK', order) %} class="active"{% endif %}><a data-toggle="tab" href="#PTCHECK" aria-expanded="true">{{ ('Order.paymentType.2')|trans|raw }}</a></li>
+				<li{% if order.paymentType == constant('PTYPE_VRT', order) %} class="active"{% endif %}><a data-toggle="tab" href="#PTVRT" aria-expanded="true">{{ ('Order.paymentType.1')|trans|raw }}</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div id="PTONLINE" class="tab-pane fade{% if order.paymentType == constant('PTYPE_ONLINE', order) %} active in{% endif %}">
+				<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+				Payement en ligne
+				</p>
+				</div>
+				<div id="PTMONEY" class="tab-pane fade{% if order.paymentType == constant('PTYPE_MONEY', order) %} active in{% endif %}">
+				<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+				Payement en liquide
+				</p>
+				</div>
+				<div id="PTCHECK" class="tab-pane fade{% if order.paymentType == constant('PTYPE_CHECK', order) %} active in{% endif %}">
+				<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+				Payement par chèque
+				</p>
+				</div>
+				<div id="PTVRT" class="tab-pane fade{% if order.paymentType == constant('PTYPE_VRT', order) %} active in{% endif %}">
+				<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+				Payement par virement
+				</p>
+				</div>
+			</div>
+			{% else %}
+			<img src="../../dist/img/credit/visa.png" alt="Visa"> <img
+				src="../../dist/img/credit/mastercard.png" alt="Mastercard"> <img
+				src="../../dist/img/credit/american-express.png"
+				alt="American Express"> <img
+				src="../../dist/img/credit/paypal2.png" alt="Paypal">
+
+			<p class="text-muted well well-sm no-shadow"
+				style="margin-top: 10px;">Etsy doostang zoodles disqus groupon
+				greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
+				dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.</p>
+			{% endif %}
+		</div>
+		<!-- /.col -->
+		<div class="col-xs-6">
+			<p class="lead">---</p>
+
+			<div class="table-responsive">
+				<table class="table">
+					<tr>
+						<th class="text-right" style="width: 50%">Sous-Total:</th>
+						<td class="text-right">{{ totht|number_format(3, '.', ' ') }} TND</td>
+					</tr>
+					{% for taxe in order.taxes %}
+					<tr>
+						<th class="text-right">{{ taxe.label|raw }}</th>
+						<td class="text-right">
+						{% if taxe.type == constant('TYPE_NUMERIC', taxe) %}
+							{{ taxe.value|number_format(3, '.', ' ') }} TND
+							{% set totht = totht + taxe.value %}
+						{% else %}
+							{{ (totht * taxe.value/100)|number_format(3, '.', ' ') }} TND
+							{% set totht = totht + totht * taxe.value/100 %}
+						{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+					<tr>
+						<th class="text-right">Total:</th>
+						<td class="text-right">{{ order.val|number_format(3, '.', ' ') }} TND</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+
+	<!-- this row will not appear when printing -->
+	<div class="row no-print">
+		<div class="col-xs-12">
+			<a href="{{ path('_security_myOrder_print', {'uid' : order.id}) }}" target="_blank" class="btn btn-default"><i
+				class="fa fa-print"></i> Imprimer</a>
+		</div>
+	</div>
+	{%endblock content%}
+</section>
+<div class="clearfix"></div>
+{%endblock sectioncontent%}
+

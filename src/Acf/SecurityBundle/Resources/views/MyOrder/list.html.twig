@@ -1,0 +1,90 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+    {% if orders|length != 0 %}
+    $('#orderList').dataTable({
+        {%if app.request.locale != 'en'%}
+        	"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+        {% endif %}
+        "columns": [ 
+        	null, 
+        	null, 
+        	null, 
+        	null, 
+        	null, 
+        	null, 
+        	{ "searchable": false, "sortable": false } 
+        ], 
+        "pageLength": 10
+    });
+{% endif %}
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_front_homepage') }}">{{ faIco('home') }} &nbsp; {{'breadcrumb.home'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_security_myOrders') }}">{{faIco('shopping-cart')}} &nbsp; {{'breadcrumb.myorder.list'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">
+					{{ 'Order.tlabel.myorders'|trans|raw}}
+				</h3>
+			</div>
+			<div class="box-body table-responsive">
+				<table id="orderList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>{{ 'Order.dtCrea.label'|trans|raw }}</th>
+							<th>{{ 'Order.status.label'|trans|raw }}</th>
+							<th>{{ 'Order.orderTo.label'|trans|raw }}</th>
+							<th>{{ 'Order.val.label'|trans|raw }}</th>
+							<th>{{ 'Order.paymentType.label'|trans|raw }}</th>
+							<th>{{ 'Order.invoice.label'|trans|raw }}</th>
+							<th>{{ 'action'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% if orders|length != 0 %}
+						{% for order in orders %}
+						<tr>
+							<td align="right">{{order.dtCrea|date('Y-m-d')}} {{'_at'|trans}} {{order.dtCrea|localeDate('none', 'short')}}</td>
+							<td align="right">{{ ('Order.status.'~order.status)|trans|raw }}</td>
+							<td>{{ order.orderTo|raw }}</td>
+							<td align="right">{{ order.val|number_format(3, '.', ' ') }} TND</td>
+							<td align="right">{% if order.status == constant('ST_NEW', order) %}&nbsp;--&nbsp;{% else %}{{ ('Order.paymentType.'~order.paymentType)|trans|raw }}{% endif %}</td>
+							<td align="right">{% if order.invoice is not null %}<a href="{{ path('_security_myInvoice_editGet', {'uid': order.invoice.id}) }}">{{ order.invoice.ref }}</a>{% else %}&nbsp;--&nbsp;{% endif %}</td>
+							<td><a class="btn btn-sm btn-info"
+								href="{{path('_security_myOrder_editGet',{'uid':order.id})}}">{{ glyphIco('edit') }}
+									{{ 'action.edit'|trans }}</a></td>
+						</tr>
+						{% endfor %}
+						{% else %}
+						<tr>
+							<td colspan="7">{{ 'Order.empty'|trans|raw }}</td>
+						</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}
