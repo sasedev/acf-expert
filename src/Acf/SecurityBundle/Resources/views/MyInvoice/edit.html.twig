@@ -11,7 +11,7 @@ $(function() { });
 {%block breadcrumb%}
 <ol class="breadcrumb">
 	<li><a href="{{ path('_front_homepage') }}">{{ faIco('home') }} &nbsp; {{'breadcrumb.home'|trans|raw}}</a></li>
-	<li><a href="{{ path('_security_myInvoices') }}">{{faIco('shopping-cart')}} &nbsp; {{'breadcrumb.myinvoice.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_security_myInvoices') }}">{{faIco('file-text-o')}} &nbsp; {{'breadcrumb.myinvoice.list'|trans|raw}}</a></li>
 	<li class="active"><a href="{{ path('_security_myInvoice_editGet', {'uid' : invoice.id}) }}">{{faIco('edit')}} &nbsp; {{'breadcrumb.myinvoice.edit'|trans({'%invoice%': invoice.ref})|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}

@@ -38,7 +38,7 @@ $(function() {
 {%block breadcrumb%}
 <ol class="breadcrumb">
 	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
-	<li><a href="{{ path('_admin_invoice_list') }}">{{faIco('shopping-cart')}} &nbsp; {{'breadcrumb.invoice.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_invoice_list') }}">{{faIco('file-text-o')}} &nbsp; {{'breadcrumb.invoice.list'|trans|raw}}</a></li>
 	<li class="active"><a href="{{ path('_admin_invoice_editGet', {'uid': invoice.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.invoice.edit'|trans({'%invoice%': invoice.ref})|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}
