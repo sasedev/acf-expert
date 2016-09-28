@@ -4035,6 +4035,9 @@ Gradient Background colors
  * -----------
  */
 @media print {
+	body {
+	background-color: white !important;
+	}
 	.no-print,
 	.main-sidebar,
 	.left-side,
@@ -4061,6 +4064,7 @@ Gradient Background colors
 	border: 0;
 	margin: 0;
 	padding: 0;
+	background-color: white !important;
 	}
 	.invoice-col {
 	float: left;

@@ -1406,6 +1406,18 @@ _admin_order_delete:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_admin_order_sendmail:
+    path:     /order/sendmail/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:sendmail" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_order_removeproduct:
+    path:     /order/removeproduct/{uid}
+    defaults: { _controller: "AcfAdminBundle:Order:removeproduct" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _admin_order_editGet:
     path:     /order/edit/{uid}
     defaults: { _controller: "AcfAdminBundle:Order:editGet" }
@@ -1430,16 +1442,6 @@ _admin_invoice_list:
     path:     /invoices
     defaults: { _controller: "AcfAdminBundle:Invoice:list" }
 
-_admin_invoice_addGet:
-    path:     /invoice/add
-    defaults: { _controller: "AcfAdminBundle:Invoice:addGet" }
-    methods: [GET]
-
-_admin_invoice_addPost:
-    path:     /invoice/add
-    defaults: { _controller: "AcfAdminBundle:Invoice:addPost" }
-    methods: [POST]
-
 _admin_invoice_delete:
     path:     /invoice/delete/{uid}
     defaults: { _controller: "AcfAdminBundle:Invoice:delete" }
@@ -1456,6 +1458,12 @@ _admin_invoice_editGet:
 _admin_invoice_print:
     path:     /invoice/print/{uid}
     defaults: { _controller: "AcfAdminBundle:Invoice:print" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_sendmail:
+    path:     /invoice/sendmail/{uid}
+    defaults: { _controller: "AcfAdminBundle:Invoice:sendmail" }
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 

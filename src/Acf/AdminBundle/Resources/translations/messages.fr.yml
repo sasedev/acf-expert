@@ -2311,6 +2311,8 @@ Product.tlabel.list: Liste des Produits
 Product.tlabel.add: Ajouter nouveau Produit
 Product.tlabel.overview: Aperçu des détails du Produit
 Product.tlabel.editPrice: Modification du Prix du Produit
+Product.tlabel.editLabel: Modification du Libélé du Produit
+Product.tlabel.editTitle: Modification du Titre du Produit
 Product.tlabel.editDescription: Modification de la Description du Produit
 Product.tlabel.editVat: Modification de la TVA du Produit
 Product.tlabel.editLockout: Modification de l'Etat du Produit
@@ -2387,10 +2389,12 @@ Order.tab.edit: Edition
 Order.tlabel.list: Liste des Commandes
 Order.tlabel.add: Ajouter nouvelle Commande
 Order.tlabel.overview: Aperçu des détails de la Commande
-Order.tlabel.editVal: Modification du Montant de la Commande
+Order.tlabel.addProduct: Ajouter un Produit à la Commande
+Order.tlabel.editPaymentType: Modification du Moyen de Payement de la Commande
 Order.tlabel.editStatus: Modification de l'Etat de la Commande
-Order.tlabel.editDescription: Modification de la Description de la Commande
+Order.tlabel.editOrderTo: Modification du Destinataire de la Commande
 Order.tlabel.editUser: Modification de l'Utilisateur de la Commande
+Order.tlabel.generateInvoice: Generer une Facture
 
 Order.empty: Aucune Commande trouvée dans la base de donnée
 
@@ -2404,6 +2408,20 @@ Order.delete.failure: Echec de la suppression de la Commande
 Order.edit.notfound: Commande inconnue
 Order.edit.success: Succès de la modification de la Commande <b>%order%</b>
 Order.edit.failure: Echec de la modification de la Commande <b>%order%</b>
+Order.mail.success: Succès de l'envoi d'email de notification pour la Commande <b>%order%</b>
+Order.mail.failure: Echec de l'envoi d'email de notification pour la Commande <b>%order%</b>
+_mail.order.subject: Bon de Commande %order%
+_mail.order.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Le bon de commande <b>%order%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'
+_mail.myorder.body: 'Nouveau bon de commande <b>%order%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a> ajouté par  <u><i>%fullname%</i></u>'
+
+
+OrderProduct.add.success: Succès de l'ajout du Produit <b>%orderProduct%</b>
+OrderProduct.add.failure: Echec de l'ajout du Produit
+OrderProduct.delete.confirm.title: Demande de Confirmation
+OrderProduct.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Produit ?<br/> Cette action est irreversible!
+OrderProduct.delete.notfound: Produit inconnu
+OrderProduct.delete.success: Succès de la suppression du Produit <b>%orderProduct%</b>
+OrderProduct.delete.failure: Echec de la suppression du Produit
 
 
 # Invoice
@@ -2425,10 +2443,10 @@ Invoice.tab.edit: Edition
 Invoice.tlabel.list: Liste des Factures
 Invoice.tlabel.add: Ajouter nouvelle Facture
 Invoice.tlabel.overview: Aperçu des détails de la Facture
-Invoice.tlabel.editVal: Modification du Montant de la Facture
 Invoice.tlabel.editStatus: Modification de l'Etat de la Facture
-Invoice.tlabel.editDescription: Modification de la Description de la Facture
-Invoice.tlabel.editUser: Modification de l'Utilisateur de la Facture
+Invoice.tlabel.editPaymentType: Modification du Mode de Payement de la Facture
+Invoice.tlabel.editOrderTo: Modification du Destinataire de la Facture
+Invoice.tlabel.editRef: Modification de la Référence de la Facture
 
 Invoice.empty: Aucune Facture trouvée dans la base de donnée
 
@@ -2442,5 +2460,10 @@ Invoice.delete.failure: Echec de la suppression de la Facture
 Invoice.edit.notfound: Facture inconnue
 Invoice.edit.success: Succès de la modification de la Facture <b>%invoice%</b>
 Invoice.edit.failure: Echec de la modification de la Facture <b>%invoice%</b>
+Invoice.mail.success: Succès de l'envoi d'email de notification pour la Facture <b>%invoice%</b>
+Invoice.mail.failure: Echec de l'envoi d'email de notification pour la Facture <b>%invoice%</b>
+_mail.invoice.subject: Facture %invoice%
+_mail.invoice.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>La facture <b>%invoice%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'
+
 
 

@@ -1,0 +1,190 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$('#InvoiceUpdateStatusForm_status').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#InvoiceUpdatePaymentTypeForm_paymentType').chosen({width: "100%", disable_search_threshold: 10});
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_invoice_list') }}">{{faIco('shopping-cart')}} &nbsp; {{'breadcrumb.invoice.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_invoice_editGet', {'uid': invoice.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.invoice.edit'|trans({'%invoice%': invoice.ref})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_invoice_print', {'uid':invoice.id}) }}" target="_blank" class="btn btn-default">{{ faIco('print') }} {{ 'action.btnPrint'|trans }}</a>
+			<a href="{{ path('_admin_invoice_sendmail', {'uid':invoice.id}) }}" class="btn btn-success">{{ faIco('envelope-o') }} {{ 'action.btnSend'|trans }}</a>
+			<a href="{{ path('_admin_invoice_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Invoice.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Invoice.tab.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Invoice.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Invoice.ref'|trans|raw}} :</div>
+								<div class="col-lg-9">{{invoice.ref}}&nbsp;</div>
+								{% if invoice.order is not null %}
+								<div class="col-lg-3 text-right">{{'Invoice.order'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_order_editGet', {'uid': invoice.order.id}) }}">{{invoice.order.ref}}</a>&nbsp;</div>
+								{% endif %}
+								<div class="col-lg-3 text-right">{{'Invoice.user'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_user_editGet', {'id': invoice.user.id}) }}">{{invoice.user.fullName}}</a>&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Invoice.paymentType'|trans|raw}} :</div>
+								<div class="col-lg-9">{{('Invoice.paymentType.'~invoice.paymentType)|trans|raw}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Invoice.status'|trans|raw}} :</div>
+								<div class="col-lg-9">{{('Invoice.status.'~invoice.status)|trans|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Invoice.orderTo'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if invoice.orderTo is not empty%}{{invoice.orderTo|raw}}{%else%}{{bsLabel('_NA'|trans)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Invoice.products'|trans|raw}} :</div>
+								<div class="col-lg-9">&nbsp;</div>
+								<div class="col-lg-12 table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>{{ 'Product.label.label'|trans }}</th>
+												<th class="text-right">{{ 'Product.price.label'|trans }}</th>
+												<th class="text-right">{{ 'Product.vat.label'|trans }}</th>
+												<th class="text-right">{{ 'Product.pricettc.label'|trans }}</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% set totht = 0 %}
+											{% for product in invoice.products %}
+											<tr>
+												<td>{{ product.label|raw }}</td>
+												<td class="text-right">{{ product.price|number_format(3, '.', ' ') }} TND</td>
+												<td class="text-right">{{ product.vat|number_format(2, '.', ' ') }} %</td>
+												{% set totht = totht + product.price + product.price * product.vat/100 %}
+												<td class="text-right">{{ (product.price + product.price * product.vat/100)|number_format(3, '.', ' ') }} TND</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="col-lg-12 table-responsive">
+									<table class="table">
+										<tr>
+											<th class="text-right" style="width: 50%">Sous-Total:</th>
+											<td class="text-right">{{ totht|number_format(3, '.', ' ') }} TND</td>
+										</tr>
+										{% for taxe in invoice.taxes %}
+										<tr>
+											<th class="text-right">{{ taxe.label|raw }}</th>
+											<td class="text-right">
+											{% if taxe.type == constant('TYPE_NUMERIC', taxe) %}
+												{{ taxe.value|number_format(3, '.', ' ') }} TND
+												{% set totht = totht + taxe.value %}
+											{% else %}
+												{{ (totht * taxe.value/100)|number_format(3, '.', ' ') }} TND
+												{% set totht = totht + totht * taxe.value/100 %}
+											{% endif %}
+											</td>
+										</tr>
+										{% endfor %}
+										<tr>
+											<th class="text-right">Total:</th>
+											<td class="text-right">{{ invoice.val|number_format(3, '.', ' ') }} TND</td>
+										</tr>
+									</table>
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Invoice.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{invoice.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{invoice.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Invoice.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{invoice.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{invoice.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Invoice.tlabel.editStatus'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(InvoiceUpdateStatusForm, {'method':'POST', 'action': path('_admin_invoice_editPost', {'uid': invoice.id}), 'style': 'horizontal'})}}
+							{{form_row(InvoiceUpdateStatusForm.status, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(InvoiceUpdateStatusForm)}}
+						</div>
+					</div>
+					{% if invoice.status == constant('ST_NEW', invoice) %}
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Invoice.tlabel.editPaymentType'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(InvoiceUpdatePaymentTypeForm, {'method':'POST', 'action': path('_admin_invoice_editPost', {'uid': invoice.id}), 'style': 'horizontal'})}}
+							{{form_row(InvoiceUpdatePaymentTypeForm.paymentType, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(InvoiceUpdatePaymentTypeForm)}}
+						</div>
+					</div>
+					{% endif %}
+					{% if invoice.status == constant('ST_NEW', invoice) %}
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Invoice.tlabel.editOrderTo'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(InvoiceUpdateOrderToForm, {'method':'POST', 'action': path('_admin_invoice_editPost', {'uid': invoice.id}), 'style': 'horizontal'})}}
+							{{form_row(InvoiceUpdateOrderToForm.orderTo, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(InvoiceUpdateOrderToForm)}}
+						</div>
+					</div>
+					{% endif %}
+					{% if invoice.status == constant('ST_NEW', invoice) %}
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Invoice.tlabel.editRef'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(InvoiceUpdateRefForm, {'method':'POST', 'action': path('_admin_invoice_editPost', {'uid': invoice.id}), 'style': 'horizontal'})}}
+							{{form_row(InvoiceUpdateRefForm.ref, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(InvoiceUpdateRefForm)}}
+						</div>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

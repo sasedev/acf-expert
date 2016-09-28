@@ -26,6 +26,8 @@ $(function() {
         	null, 
         	null, 
         	null, 
+        	null, 
+        	null, 
         	{ "searchable": false, "sortable": false } 
         ], 
         "pageLength": 10
@@ -53,10 +55,12 @@ $(function() {
 					<thead>
 						<tr>
 							<th>{{ 'Order.dtCrea.label'|trans|raw }}</th>
+							<th>{{ 'Order.ref.label'|trans|raw }}</th>
 							<th>{{ 'Order.status.label'|trans|raw }}</th>
 							<th>{{ 'Order.orderTo.label'|trans|raw }}</th>
 							<th>{{ 'Order.val.label'|trans|raw }}</th>
 							<th>{{ 'Order.paymentType.label'|trans|raw }}</th>
+							<th>{{ 'Order.renew.label'|trans|raw }}</th>
 							<th>{{ 'Order.invoice.label'|trans|raw }}</th>
 							<th>{{ 'action'|trans|raw }}</th>
 						</tr>
@@ -66,11 +70,13 @@ $(function() {
 						{% for order in orders %}
 						<tr>
 							<td align="right">{{order.dtCrea|date('Y-m-d')}} {{'_at'|trans}} {{order.dtCrea|localeDate('none', 'short')}}</td>
+							<td>{{ order.ref }}</td>
 							<td align="right">{{ ('Order.status.'~order.status)|trans|raw }}</td>
 							<td>{{ order.orderTo|raw }}</td>
 							<td align="right">{{ order.val|number_format(3, '.', ' ') }} TND</td>
-							<td align="right">{% if order.status == constant('ST_NEW', order) %}&nbsp;--&nbsp;{% else %}{{ ('Order.paymentType.'~order.paymentType)|trans|raw }}{% endif %}</td>
-							<td align="right">{% if order.invoice is not null %}<a href="{{ path('_security_myInvoice_editGet', {'uid': order.invoice.id}) }}">{{ order.invoice.ref }}</a>{% else %}&nbsp;--&nbsp;{% endif %}</td>
+							<td align="right">{% if order.status == constant('ST_NEW', order) or order.status == constant('ST_REFUSAL', order) or order.status == constant('ST_CANCELED', order) or order.status == constant('ST_ERROR', order) %}&nbsp;---&nbsp;{% else %}{{ ('Order.paymentType.'~order.paymentType)|trans|raw }}{% endif %}</td>
+							<td align="right">{{ ('Order.renew.'~order.renew)|trans|raw }}</td>
+							<td align="right">{% if order.invoice is not null and order.invoice.status != constant('ST_NEW', order.invoice)%}<a href="{{ path('_security_myInvoice_editGet', {'uid': order.invoice.id}) }}">{{ order.invoice.ref }}</a>{% else %}&nbsp;---&nbsp;{% endif %}</td>
 							<td><a class="btn btn-sm btn-info"
 								href="{{path('_security_myOrder_editGet',{'uid':order.id})}}">{{ glyphIco('edit') }}
 									{{ 'action.edit'|trans }}</a></td>
@@ -78,7 +84,7 @@ $(function() {
 						{% endfor %}
 						{% else %}
 						<tr>
-							<td colspan="7">{{ 'Order.empty'|trans|raw }}</td>
+							<td colspan="9">{{ 'Order.empty'|trans|raw }}</td>
 						</tr>
 						{% endif %}
 					</tbody>

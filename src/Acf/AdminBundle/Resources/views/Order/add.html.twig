@@ -1,11 +1,13 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%} {{ parent() }}
 <link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
 <script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
@@ -29,10 +31,16 @@ $(function() {
 		}
 		$this.tinymce(options);
 	});
-
-    $('#OrderNewForm_user').chosen({width: "100%", disable_search_threshold: 10});
-
-    $('#OrderNewForm_status').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$('#OrderNewForm_oproducts').bootstrapDualListbox({
+		nonselectedlistlabel: 'Non-selected',
+		selectedlistlabel: 'Selected',
+		preserveselectiononmove: 'moved',
+		moveonselect: false,
+		initialfilterfrom: ''
+	});
+	
+	$('#OrderNewForm_user').chosen({width: "100%", disable_search_threshold: 10});
 });
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
@@ -55,9 +63,8 @@ $(function() {
 			<div class="box-body">
 				{{form_start(OrderNewForm, {'method':'POST', 'action': path('_admin_order_addPost'), 'style': 'horizontal'})}}
 				{{form_row(OrderNewForm.user, {'label_col': 3, 'widget_col': 8})}}
-				{{form_row(OrderNewForm.val, {'label_col': 3, 'widget_col': 8})}}
-				{{form_row(OrderNewForm.status, {'label_col': 3, 'widget_col': 8})}}
-				{{form_row(OrderNewForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+				{{form_row(OrderNewForm.orderTo, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+				{{form_row(OrderNewForm.oproducts, {'label_col': 3, 'widget_col': 8})}}
 				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
 				{{form_end(OrderNewForm)}}
 			</div>

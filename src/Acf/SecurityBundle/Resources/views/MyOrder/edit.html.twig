@@ -25,7 +25,9 @@ $(function() { });
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<img src="{{asset('bundles/acfres/images/logo_acf.jpg')}}"
-				alt="{{ sitename }}" class="icon img" style="width: 190px;"> <small class="pull-right">Date : {{order.dtCrea|date('Y-m-d')}}</small>
+				alt="{{ sitename }}" class="icon img" style="width: 190px;">
+				&nbsp; &nbsp; &nbsp; Bon de Commande
+				<small class="pull-right">Date : {{order.dtCrea|date('Y-m-d')}}</small>
 			</h2>
 		</div>
 		<!-- /.col -->
@@ -36,27 +38,27 @@ $(function() { });
 			<br>
 			<address>
 				<strong>ACF Expert.</strong>  Cabinet FAKHFAKH d'Expertise Comptable<br>
-				{{ faIco('globe') }} <strong>Adresse:</strong> 16 Rue de Syrie - EPI Center Bloc C - 3 ème étage - 1002 Tunis Tunisie<br> 
-				{{ faIco('phone') }} <strong>Tel:</strong> + 216 71 835 144<br>
-				{{ faIco('fax') }} <strong>Fax:</strong>  +216 71 835 312<br>
-				{{ faIco('envelope-o') }} <strong>Email:</strong>  +216 71 835 312
+				{{ faIco('globe') }} <strong>Adresse : </strong> 63, Rue Madinet El Maoussel, 2037 – Ennasr 2 – Ariana – Tunisie<br> 
+				{{ faIco('phone') }} <strong>Tel : </strong> + 216 71 835 144<br>
+				{{ faIco('fax') }} <strong>Fax : </strong>  +216 71 835 312<br>
+				{{ faIco('envelope-o') }} <strong>Email : </strong>  contact@acf-expert.tn
 			</address>
 		</div>
-		<!-- /.col -->
-		<div class="col-sm-4 invoice-col">
-			&nbsp;
-		</div>
-		<!-- /.col -->
 		<div class="col-sm-4 invoice-col">
 			<br> 
-			<b>{{ 'Order.ref'|trans }}:</b> {{ order.ref }}<br>
-			<br>
-			<b>Facture :  --</b><br> 
+			<b>Bon de Commande : </b> {{ order.ref }}<br>
+			<b>{{ 'Order.status'|trans }} : </b> {{ ('Order.status.'~order.status)|trans }}<br>
+			<b>{{ 'Order.renew'|trans }} : </b> {{ ('Order.renew.'~order.renew)|trans }}<br>
+			<b>Facture : </b>
+			{% if order.invoice is not null and order.invoice.status != constant('ST_NEW', order.invoice) %}
+			<a href="{{ path('_security_myInvoice_editGet', {'uid': order.invoice.id}) }}">{{ order.invoice.ref }}</a>
+			{% else %}
+			---
+			{% endif %}
+			<br> 
 		</div>
-		<!-- /.col -->
-	</div>
-	<div class="row invoice-info">
-		<div class="col-sm-12 invoice-col">
+		<div class="col-sm-4 invoice-col">
+			<br>
 			<b><u>A l'Ordre de :</u></b> 
 			<address>
 				{{ order.orderTo|raw }}
@@ -73,10 +75,10 @@ $(function() { });
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>Produit</th>
-						<th>Prix HT</th>
-						<th>TVA</th>
-						<th>Prix TTC</th>
+						<th>{{ 'Product.label.label'|trans }}</th>
+						<th class="text-right">{{ 'Product.price.label'|trans }}</th>
+						<th class="text-right">{{ 'Product.vat.label'|trans }}</th>
+						<th class="text-right">{{ 'Product.pricettc.label'|trans }}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -100,6 +102,7 @@ $(function() { });
 	<div class="row">
 		<!-- accepted payments column -->
 		<div class="col-xs-6">
+			{% if order.status != constant('ST_REFUSAL', order) and order.status != constant('ST_CANCELED', order) and order.status != constant('ST_ERROR', order)%}
 			<p class="lead">Moyen de Paiement:</p>
 			{% if order.status == constant('ST_NEW', order) %}
 			<ul class="nav nav-tabs">
@@ -109,43 +112,100 @@ $(function() { });
 				<li{% if order.paymentType == constant('PTYPE_VRT', order) %} class="active"{% endif %}><a data-toggle="tab" href="#PTVRT" aria-expanded="true">{{ ('Order.paymentType.1')|trans|raw }}</a></li>
 			</ul>
 			<div id="myTabContent" class="tab-content">
-				<div id="PTONLINE" class="tab-pane fade{% if order.paymentType == constant('PTYPE_ONLINE', order) %} active in{% endif %}">
-				<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-				Payement en ligne
-				</p>
+				<div id="PTONLINE" class="text-muted well tab-pane fade{% if order.paymentType == constant('PTYPE_ONLINE', order) %} active in{% endif %}">
+					<ol>
+						<li>
+							En cliquant sur « Payer », je certifie avoir validé et accepté le bon de commande sans réserve.
+						</li>
+						<li>
+							Je procède au paiement en ligne par carte bancaire.
+						</li>
+						<li>
+							J’envoie une copie scannée de ce bon de commande dûment signé et cacheté à l’adresse e-mail : contact@acf-expert.tn
+						</li>
+					</ol>
+					<form method="post" action="https://www.smt-sps.com.tn/clicktopay/" class="form-horizontal" role="form">
+						<input type="hidden" name="Reference" value="{{ order.ref }}">
+						<input type="hidden" name="Montant" value="{{ order.val|number_format(3, '.', ' ') }}">
+						<input type="hidden" name="Devise" value="TND">
+						<input type="hidden" name="sid" value="{{ order.sessId }}">
+						<input type="hidden" name="affilie" value="0870088010">
+						<div class="form-group"><div class="col-lg-12"><button class="btn-success btn btn-block" type="submit">{{faIco('money')}} {{'action.btnPay'|trans|raw}}</button></div></div>
+					</form>
 				</div>
-				<div id="PTMONEY" class="tab-pane fade{% if order.paymentType == constant('PTYPE_MONEY', order) %} active in{% endif %}">
-				<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-				Payement en liquide
-				</p>
+				<div id="PTMONEY" class="text-muted well tab-pane fade{% if order.paymentType == constant('PTYPE_MONEY', order) %} active in{% endif %}">
+					<ol>
+						<li>
+							En cliquant sur « Valider », je certifie avoir validé et accepté le bon de commande sans réserve.
+						</li>
+						<li>
+							Je joins mon règlement en espèces directement au secrétariat du cabinet sis à « 63, Rue Madinet El Maoussel, 2037 – Ennasr 2 – Ariana – Tunisie » 
+						</li>
+						<li>
+							J’envoie une copie scannée de ce bon de commande dûment signé et cacheté à l’adresse e-mail : contact@acf-expert.tn
+						</li>
+					</ol>
+					{{form_start(OnlineOrderSetTypeMONEYForm, {'method':'POST', 'action': path('_security_myOrder_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+						<div class="form-group"><div class="col-lg-12"><button class="btn-primary btn btn-block" type="submit" id="btnValidate">{{faIco('check')}} {{'action.btnValidate'|trans|raw}}</button></div></div>
+					{{form_end(OnlineOrderSetTypeMONEYForm)}}
 				</div>
-				<div id="PTCHECK" class="tab-pane fade{% if order.paymentType == constant('PTYPE_CHECK', order) %} active in{% endif %}">
-				<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-				Payement par chèque
-				</p>
+				<div id="PTCHECK" class="text-muted well tab-pane fade{% if order.paymentType == constant('PTYPE_CHECK', order) %} active in{% endif %}">
+					<ol>
+						<li>
+							En cliquant sur « Valider », je certifie avoir validé et accepté le bon de commande sans réserve.
+						</li>
+						<li>
+							Je joins mon règlement par chèque à l’ordre de « Faiez FAKHFAKH » par voie postale à l’adresse « 63, Rue Madinet El Maoussel, 2037 – Ennasr 2 – Ariana – Tunisie » ou bien directement au secrétariat du cabinet sis à la même adresse.
+						</li>
+						<li>
+							J’envoie une copie scannée de ce bon de commande dûment signé et cacheté à l’adresse e-mail : contact@acf-expert.tn
+						</li>
+					</ol>
+					{{form_start(OnlineOrderSetTypeCHECKForm, {'method':'POST', 'action': path('_security_myOrder_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+						<div class="form-group"><div class="col-lg-12"><button class="btn-primary btn btn-block" type="submit" id="btnValidate">{{faIco('check')}} {{'action.btnValidate'|trans|raw}}</button></div></div>
+					{{form_end(OnlineOrderSetTypeCHECKForm)}}
 				</div>
-				<div id="PTVRT" class="tab-pane fade{% if order.paymentType == constant('PTYPE_VRT', order) %} active in{% endif %}">
-				<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-				Payement par virement
-				</p>
+				<div id="PTVRT" class="text-muted well tab-pane fade{% if order.paymentType == constant('PTYPE_VRT', order) %} active in{% endif %}">
+					<ol>
+						<li>
+							En cliquant sur « Valider », je certifie avoir validé et accepté le bon de commande sans réserve.
+						</li>
+						<li>
+							Je joins mon règlement par virement bancaire au RIB n° 08 308 000 58 100 0515 955 Agence BIAT Rue de Syrie au nom de « Faiez FAKHFAKH »
+						</li>
+						<li>
+							J’envoie une copie scannée de ce bon de commande dûment signé et cacheté à l’adresse e-mail : contact@acf-expert.tn
+						</li>
+					</ol>
+					{{form_start(OnlineOrderSetTypeVRTForm, {'method':'POST', 'action': path('_security_myOrder_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+						<div class="form-group"><div class="col-lg-12"><button class="btn-primary btn btn-block" type="submit" id="btnValidate">{{faIco('check')}} {{'action.btnValidate'|trans|raw}}</button></div></div>
+					{{form_end(OnlineOrderSetTypeVRTForm)}}
 				</div>
 			</div>
 			{% else %}
-			<img src="../../dist/img/credit/visa.png" alt="Visa"> <img
-				src="../../dist/img/credit/mastercard.png" alt="Mastercard"> <img
-				src="../../dist/img/credit/american-express.png"
-				alt="American Express"> <img
-				src="../../dist/img/credit/paypal2.png" alt="Paypal">
-
-			<p class="text-muted well well-sm no-shadow"
-				style="margin-top: 10px;">Etsy doostang zoodles disqus groupon
-				greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
-				dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.</p>
+			<div class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+				{% if order.paymentType == constant('PTYPE_ONLINE', order) %}Payement en ligne
+					{% if order.status != constant('ST_OK', order) and order.status != constant('ST_CANCELED', order) %}
+					<form method="post" action="https://www.smt-sps.com.tn/clicktopay/" class="form-horizontal" role="form">
+						<input type="hidden" name="Reference" value="{{ order.ref }}">
+						<input type="hidden" name="Montant" value="{{ order.val|number_format(3, '.', ' ') }}">
+						<input type="hidden" name="Devise" value="TND">
+						<input type="hidden" name="sid" value="{{ order.sessId }}">
+						<input type="hidden" name="affilie" value="0870088010">
+						<div class="form-group"><div class="col-lg-12"><button class="btn-success btn btn-block" type="submit">{{faIco('money')}} {{'action.btnPay'|trans|raw}}</button></div></div>
+					</form>
+					{% endif %}
+				{% endif %}
+				{% if order.paymentType == constant('PTYPE_MONEY', order) %}Règlement en espèces directement au secrétariat du cabinet sis à « 63, Rue Madinet El Maoussel, 2037 – Ennasr 2 – Ariana – Tunisie »{% endif %}
+				{% if order.paymentType == constant('PTYPE_CHECK', order) %}Chèque à l’ordre de « Faiez FAKHFAKH » par voie postale à l’adresse « 63, Rue Madinet El Maoussel, 2037 – Ennasr 2 – Ariana – Tunisie » ou bien directement au secrétariat du cabinet sis à la même adresse.{% endif %}
+				{% if order.paymentType == constant('PTYPE_VRT', order) %}Virement bancaire au RIB n° 08 308 000 58 100 0515 955 Agence BIAT Rue de Syrie au nom de « Faiez FAKHFAKH »{% endif %}
+			</div>
+			{% endif %}
 			{% endif %}
 		</div>
 		<!-- /.col -->
 		<div class="col-xs-6">
-			<p class="lead">---</p>
+			<p class="lead">Total :</p>
 
 			<div class="table-responsive">
 				<table class="table">
@@ -181,8 +241,14 @@ $(function() { });
 	<!-- this row will not appear when printing -->
 	<div class="row no-print">
 		<div class="col-xs-12">
+			{% if order.status == constant('ST_NEW', order)%}
+			{{form_start(CancelOrderForm, {'method':'POST', 'action': path('_security_myOrder_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+				<div class="form-group"><div class="col-lg-6"><button class="btn-danger btn btn-block" type="submit" id="btnCanel">{{faIco('ban')}} {{'action.btnCancel'|trans|raw}}</button></div></div>
+			{{form_end(CancelOrderForm)}}
+			{% elseif order.status == constant('ST_WAITING', order) or order.status == constant('ST_OK', order)%}
 			<a href="{{ path('_security_myOrder_print', {'uid' : order.id}) }}" target="_blank" class="btn btn-default"><i
-				class="fa fa-print"></i> Imprimer</a>
+				class="fa fa-print"></i> {{ 'action.btnPrint'|trans }}</a>
+			{% endif %}
 		</div>
 	</div>
 	{%endblock content%}

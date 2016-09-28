@@ -53,31 +53,7 @@ class OnlineInvoice
    *
    * @var integer
    */
-  const ST_WAITING = 2;
-
-  /**
-   *
-   * @var integer
-   */
-  const ST_OK = 3;
-
-  /**
-   *
-   * @var integer
-   */
-  const ST_REFUSAL = 4;
-
-  /**
-   *
-   * @var integer
-   */
-  const ST_CANCELED = 5;
-
-  /**
-   *
-   * @var integer
-   */
-  const ST_ERROR = 6;
+  const ST_OK = 2;
 
   /**
    *
@@ -140,7 +116,7 @@ class OnlineInvoice
   /**
    *
    * @var integer @ORM\Column(name="payment_type", type="integer", nullable=false)
-   *      @Assert\Choice(callback="choicePaymentTypeCallback", groups={"type"})
+   *      @Assert\Choice(callback="choicePaymentTypeCallback", groups={"paymentType"})
    */
   protected $paymentType;
 
@@ -154,7 +130,7 @@ class OnlineInvoice
   /**
    *
    * @var integer @ORM\Column(name="autorenew", type="integer", nullable=false)
-   *      @Assert\Choice(callback="choiceRenewCallback", groups={"status"})
+   *      @Assert\Choice(callback="choiceRenewCallback", groups={"renew"})
    */
   protected $renew;
 
@@ -180,44 +156,49 @@ class OnlineInvoice
 
   /**
    *
-   * @var Collection @ORM\ManyToMany(targetEntity="OnlineProduct", inversedBy="invoices")
-   *      @ORM\JoinTable(name="acf_online_invoice_elements",
-   *      joinColumns={
-   *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
-   *      },
-   *      inverseJoinColumns={
-   *      @ORM\JoinColumn(name="prd_id", referencedColumnName="id")
-   *      }
-   *      )
+   * @var Collection @ORM\OneToMany(targetEntity="OnlineInvoiceProduct", mappedBy="invoice", cascade={"persist", "remove"})
+   *      @ORM\OrderBy({"dtCrea" = "ASC"})
    */
   protected $products;
 
   /**
    *
-   * @var Collection @ORM\ManyToMany(targetEntity="OnlineTaxe", inversedBy="invoices")
-   *      @ORM\JoinTable(name="acf_online_invoice_taxes",
-   *      joinColumns={
-   *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
-   *      },
-   *      inverseJoinColumns={
-   *      @ORM\JoinColumn(name="tx_id", referencedColumnName="id")
-   *      }
-   *      )
+   * @var Collection @ORM\OneToMany(targetEntity="OnlineInvoiceTaxe", mappedBy="invoice", cascade={"persist", "remove"})
+   *      @ORM\OrderBy({"priority" = "ASC"})
    */
   protected $taxes;
 
   /**
-   * Constructor
+   *
+   * @param OnlineOrder $order
+   *          Constructor
    */
-  public function __construct()
+  public function __construct(OnlineOrder $order = null)
   {
-    $this->val = 0;
+    if (null != $order) {
+      $this->val = $order->getVal();
+      $this->orderTo = $order->getOrderTo();
+      $this->paymentType = $order->getPaymentType();
+      $this->user = $order->getUser();
+      $this->renew = $order->getRenew();
+      foreach ($order->getProducts() as $product) {
+        $iproduct = new OnlineInvoiceProduct($product);
+        $this->addProduct($iproduct);
+      }
+      foreach ($order->getTaxes() as $taxe) {
+        $itaxe = new OnlineInvoiceTaxe($taxe);
+        $this->addTaxe($itaxe);
+      }
+      $this->setOrder($order);
+    } else {
+      $this->val = 0;
+      $this->paymentType = self::PTYPE_ONLINE;
+      $this->renew = self::RENEW_AUTO;
+      $this->products = new ArrayCollection();
+      $this->taxes = new ArrayCollection();
+    }
     $this->status = self::ST_NEW;
-    $this->paymentType = self::PTYPE_ONLINE;
-    $this->renew = self::RENEW_AUTO;
     $this->dtCrea = new \DateTime('now');
-    $this->products = new ArrayCollection();
-    $this->taxes = new ArrayCollection();
   }
 
   /**
@@ -464,12 +445,13 @@ class OnlineInvoice
   /**
    * Add product
    *
-   * @param OnlineProduct $product
+   * @param OnlineInvoiceProduct $product
    *
    * @return OnlineInvoice
    */
-  public function addProduct(OnlineProduct $product)
+  public function addProduct(OnlineInvoiceProduct $product)
   {
+    $product->setInvoice($this);
     $this->products[] = $product;
 
     return $this;
@@ -478,11 +460,11 @@ class OnlineInvoice
   /**
    * Remove product
    *
-   * @param OnlineProduct $product
+   * @param OnlineInvoiceProduct $product
    *
    * @return OnlineInvoice
    */
-  public function removeProduct(OnlineProduct $product)
+  public function removeProduct(OnlineInvoiceProduct $product)
   {
     $this->products->removeElement($product);
 
@@ -513,12 +495,13 @@ class OnlineInvoice
   /**
    * Add taxe
    *
-   * @param OnlineTaxe $taxe
+   * @param OnlineInvoiceTaxe $taxe
    *
    * @return OnlineInvoice
    */
-  public function addTaxe(OnlineTaxe $taxe)
+  public function addTaxe(OnlineInvoiceTaxe $taxe)
   {
+    $taxe->setInvoice($this);
     $this->taxes[] = $taxe;
 
     return $this;
@@ -527,11 +510,11 @@ class OnlineInvoice
   /**
    * Remove taxe
    *
-   * @param OnlineTaxe $taxe
+   * @param OnlineInvoiceTaxe $taxe
    *
    * @return OnlineInvoice
    */
-  public function removeTaxe(OnlineTaxe $taxe)
+  public function removeTaxe(OnlineInvoiceTaxe $taxe)
   {
     $this->taxes->removeElement($taxe);
 
@@ -598,11 +581,7 @@ class OnlineInvoice
   {
     return array(
       'OnlineInvoice.status.choice.' . self::ST_NEW => self::ST_NEW,
-      'OnlineInvoice.status.choice.' . self::ST_WAITING => self::ST_WAITING,
-      'OnlineInvoice.status.choice.' . self::ST_OK => self::ST_OK,
-      'OnlineInvoice.status.choice.' . self::ST_REFUSAL => self::ST_REFUSAL,
-      'OnlineInvoice.status.choice.' . self::ST_CANCELED => self::ST_CANCELED,
-      'OnlineInvoice.status.choice.' . self::ST_ERROR => self::ST_ERROR
+      'OnlineInvoice.status.choice.' . self::ST_OK => self::ST_OK
     );
   }
 
@@ -615,11 +594,7 @@ class OnlineInvoice
   {
     return array(
       self::ST_NEW,
-      self::ST_WAITING,
-      self::ST_OK,
-      self::ST_REFUSAL,
-      self::ST_CANCELED,
-      self::ST_ERROR
+      self::ST_OK
     );
   }
 

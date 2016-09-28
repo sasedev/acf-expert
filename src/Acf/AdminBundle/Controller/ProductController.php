@@ -4,6 +4,8 @@ namespace Acf\AdminBundle\Controller;
 use Acf\DataBundle\Entity\OnlineProduct;
 use Acf\AdminBundle\Form\Product\NewTForm as ProductNewTForm;
 use Acf\AdminBundle\Form\Product\UpdateLabelTForm as ProductUpdateLabelTForm;
+use Acf\AdminBundle\Form\Product\UpdateTitleTForm as ProductUpdateTitleTForm;
+use Acf\AdminBundle\Form\Product\UpdateDescriptionTForm as ProductUpdateDescriptionTForm;
 use Acf\AdminBundle\Form\Product\UpdatePriceTForm as ProductUpdatePriceTForm;
 use Acf\AdminBundle\Form\Product\UpdateVatTForm as ProductUpdateVatTForm;
 use Acf\AdminBundle\Form\Product\UpdateLockoutTForm as ProductUpdateLockoutTForm;
@@ -99,7 +101,7 @@ class ProductController extends BaseController
         $em->persist($product);
         $em->flush();
         $this->flashMsgSession('success', $this->translate('Product.add.success', array(
-          '%product%' => $product->getId()
+          '%product%' => $product->getTitle()
         )));
 
         return $this->redirect($this->generateUrl('_admin_product_editGet', array(
@@ -179,24 +181,28 @@ class ProductController extends BaseController
         $this->flashMsgSession('warning', $this->translate('Product.edit.notfound'));
       } else {
         $productUpdateLabelForm = $this->createForm(ProductUpdateLabelTForm::class, $product);
+        $productUpdateTitleForm = $this->createForm(ProductUpdateTitleTForm::class, $product);
+        $productUpdateDescriptionForm = $this->createForm(ProductUpdateDescriptionTForm::class, $product);
         $productUpdateVatForm = $this->createForm(ProductUpdateVatTForm::class, $product);
         $productUpdateLockoutForm = $this->createForm(ProductUpdateLockoutTForm::class, $product);
         $productUpdatePriceForm = $this->createForm(ProductUpdatePriceTForm::class, $product);
 
         $this->gvars['product'] = $product;
+        $this->gvars['ProductUpdateLabelForm'] = $productUpdateLabelForm->createView();
+        $this->gvars['ProductUpdateTitleForm'] = $productUpdateTitleForm->createView();
+        $this->gvars['ProductUpdateDescriptionForm'] = $productUpdateDescriptionForm->createView();
         $this->gvars['ProductUpdateVatForm'] = $productUpdateVatForm->createView();
         $this->gvars['ProductUpdateLockoutForm'] = $productUpdateLockoutForm->createView();
-        $this->gvars['ProductUpdateLabelForm'] = $productUpdateLabelForm->createView();
         $this->gvars['ProductUpdatePriceForm'] = $productUpdatePriceForm->createView();
 
         $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
         $this->getSession()->remove('tabActive');
 
         $this->gvars['pagetitle'] = $this->translate('pagetitle.product.edit', array(
-          '%product%' => $product->getId()
+          '%product%' => $product->getTitle()
         ));
         $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.product.edit.txt', array(
-          '%product%' => $product->getId()
+          '%product%' => $product->getTitle()
         ));
 
         return $this->renderResponse('AcfAdminBundle:Product:edit.html.twig', $this->gvars);
@@ -231,9 +237,11 @@ class ProductController extends BaseController
       if (null == $product) {
         $this->flashMsgSession('warning', $this->translate('Product.edit.notfound'));
       } else {
+        $productUpdateLabelForm = $this->createForm(ProductUpdateLabelTForm::class, $product);
+        $productUpdateTitleForm = $this->createForm(ProductUpdateTitleTForm::class, $product);
+        $productUpdateDescriptionForm = $this->createForm(ProductUpdateDescriptionTForm::class, $product);
         $productUpdateVatForm = $this->createForm(ProductUpdateVatTForm::class, $product);
         $productUpdateLockoutForm = $this->createForm(ProductUpdateLockoutTForm::class, $product);
-        $productUpdateLabelForm = $this->createForm(ProductUpdateLabelTForm::class, $product);
         $productUpdatePriceForm = $this->createForm(ProductUpdatePriceTForm::class, $product);
 
         $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
@@ -242,7 +250,64 @@ class ProductController extends BaseController
         $request = $this->getRequest();
         $reqData = $request->request->all();
 
-        if (isset($reqData['ProductUpdateVatForm'])) {
+        if (isset($reqData['ProductUpdateLabelForm'])) {
+          $this->gvars['tabActive'] = 2;
+          $this->getSession()->set('tabActive', 2);
+          $productUpdateLabelForm->handleRequest($request);
+          if ($productUpdateLabelForm->isValid()) {
+            $em->persist($product);
+            $em->flush();
+            $this->flashMsgSession('success', $this->translate('Product.edit.success', array(
+              '%product%' => $product->getId()
+            )));
+
+            return $this->redirect($urlFrom);
+          } else {
+            $em->refresh($product);
+
+            $this->flashMsgSession('error', $this->translate('Product.edit.failure', array(
+              '%product%' => $product->getId()
+            )));
+          }
+        } elseif (isset($reqData['ProductUpdateTitleForm'])) {
+          $this->gvars['tabActive'] = 2;
+          $this->getSession()->set('tabActive', 2);
+          $productUpdateTitleForm->handleRequest($request);
+          if ($productUpdateTitleForm->isValid()) {
+            $em->persist($product);
+            $em->flush();
+            $this->flashMsgSession('success', $this->translate('Product.edit.success', array(
+              '%product%' => $product->getId()
+            )));
+
+            return $this->redirect($urlFrom);
+          } else {
+            $em->refresh($product);
+
+            $this->flashMsgSession('error', $this->translate('Product.edit.failure', array(
+              '%product%' => $product->getId()
+            )));
+          }
+        } elseif (isset($reqData['ProductUpdateDescriptionForm'])) {
+          $this->gvars['tabActive'] = 2;
+          $this->getSession()->set('tabActive', 2);
+          $productUpdateDescriptionForm->handleRequest($request);
+          if ($productUpdateDescriptionForm->isValid()) {
+            $em->persist($product);
+            $em->flush();
+            $this->flashMsgSession('success', $this->translate('Product.edit.success', array(
+              '%product%' => $product->getId()
+            )));
+
+            return $this->redirect($urlFrom);
+          } else {
+            $em->refresh($product);
+
+            $this->flashMsgSession('error', $this->translate('Product.edit.failure', array(
+              '%product%' => $product->getId()
+            )));
+          }
+        } elseif (isset($reqData['ProductUpdateVatForm'])) {
           $this->gvars['tabActive'] = 2;
           $this->getSession()->set('tabActive', 2);
           $productUpdateVatForm->handleRequest($request);
@@ -280,25 +345,6 @@ class ProductController extends BaseController
               '%product%' => $product->getId()
             )));
           }
-        } elseif (isset($reqData['ProductUpdateLabelForm'])) {
-          $this->gvars['tabActive'] = 2;
-          $this->getSession()->set('tabActive', 2);
-          $productUpdateLabelForm->handleRequest($request);
-          if ($productUpdateLabelForm->isValid()) {
-            $em->persist($product);
-            $em->flush();
-            $this->flashMsgSession('success', $this->translate('Product.edit.success', array(
-              '%product%' => $product->getId()
-            )));
-
-            return $this->redirect($urlFrom);
-          } else {
-            $em->refresh($product);
-
-            $this->flashMsgSession('error', $this->translate('Product.edit.failure', array(
-              '%product%' => $product->getId()
-            )));
-          }
         } elseif (isset($reqData['ProductUpdatePriceForm'])) {
           $this->gvars['tabActive'] = 2;
           $this->getSession()->set('tabActive', 2);
@@ -321,16 +367,18 @@ class ProductController extends BaseController
         }
 
         $this->gvars['product'] = $product;
+        $this->gvars['ProductUpdateLabelForm'] = $productUpdateLabelForm->createView();
+        $this->gvars['ProductUpdateTitleForm'] = $productUpdateTitleForm->createView();
+        $this->gvars['ProductUpdateDescriptionForm'] = $productUpdateDescriptionForm->createView();
         $this->gvars['ProductUpdateVatForm'] = $productUpdateVatForm->createView();
         $this->gvars['ProductUpdateLockoutForm'] = $productUpdateLockoutForm->createView();
-        $this->gvars['ProductUpdateLabelForm'] = $productUpdateLabelForm->createView();
         $this->gvars['ProductUpdatePriceForm'] = $productUpdatePriceForm->createView();
 
         $this->gvars['pagetitle'] = $this->translate('pagetitle.product.edit', array(
-          '%product%' => $product->getId()
+          '%product%' => $product->getTitle()
         ));
         $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.product.edit.txt', array(
-          '%product%' => $product->getId()
+          '%product%' => $product->getTitle()
         ));
 
         return $this->renderResponse('AcfAdminBundle:Product:edit.html.twig', $this->gvars);

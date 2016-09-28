@@ -67,7 +67,7 @@ monolog:
 #    use_controller: true
 
 swiftmailer:
-    delivery_address: sasedev@fixi.sasedev.loc
+    delivery_address: sasedev@g3-710.predator.loc
 
 #services:
 #    debug.twig.extension:

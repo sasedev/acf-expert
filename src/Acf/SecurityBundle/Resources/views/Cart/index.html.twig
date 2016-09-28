@@ -1,12 +1,33 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
-{%block static_css%}
-{{ parent() }}
+{%block static_css%} {{ parent() }}
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
-$(function() { });
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+});
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
 <ol class="breadcrumb">
@@ -58,7 +79,8 @@ $(function() { });
 				</table>
 				<br>
 				{{form_start(OrderNewForm, {'method':'POST', 'action': path('_security_myCart_validate'), 'style': 'horizontal'})}}
-				{{form_row(OrderNewForm.orderTo, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(OrderNewForm.orderTo, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'} })}}
+				{{form_row(OrderNewForm.renew, {'label_col': 3, 'widget_col': 8 })}}
 				<div class="form-group">
 						<div class="col-lg-offset-3 col-lg-3">
 							<button class="btn-success btn btn-block" type="submit">

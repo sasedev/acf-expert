@@ -991,10 +991,12 @@ CREATE TABLE "acf_mpaye_docs" (
 
 CREATE TABLE "acf_online_products" (
 	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"prd_title"                                                         TEXT,
+	"prd_description"                                                   TEXT,
+	"prd_lockout"                                                       INT8 NOT NULL DEFAULT 1,
 	"prd_label"                                                         TEXT NOT NULL,
 	"prd_price_ht"                                                      FLOAT8 NOT NULL DEFAULT 0,
 	"prd_vat"                                                           FLOAT8 NOT NULL DEFAULT 0,
-	"prd_lockout"                                                       INT8 NOT NULL DEFAULT 1,
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	CONSTRAINT "pk_acf_online_products" PRIMARY KEY ("id")
@@ -1002,10 +1004,10 @@ CREATE TABLE "acf_online_products" (
 
 CREATE TABLE "acf_online_taxes" (
 	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"tx_actif"                                                          INT8 NOT NULL DEFAULT 1,
 	"tx_label"                                                          TEXT NOT NULL,
 	"tx_val"                                                            FLOAT8 NOT NULL DEFAULT 0,
 	"tx_type"                                                           INT8 NOT NULL DEFAULT 1,
-	"tx_actif"                                                          INT8 NOT NULL DEFAULT 1,
 	"tx_priority"                                                       INT8 NOT NULL DEFAULT 0,
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
@@ -1048,35 +1050,55 @@ CREATE TABLE "acf_online_invoices" (
 );
 
 CREATE TABLE "acf_online_order_elements" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
 	"ord_id"                                                            UUID NOT NULL,
-	"prd_id"                                                            UUID NOT NULL,
-	CONSTRAINT "pk_acf_online_order_elements" PRIMARY KEY ("ord_id", "prd_id"),
+	"prd_id"                                                            UUID NULL,
+	"prd_label"                                                         TEXT NOT NULL,
+	"prd_price_ht"                                                      FLOAT8 NOT NULL DEFAULT 0,
+	"prd_vat"                                                           FLOAT8 NOT NULL DEFAULT 0,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_order_elements" PRIMARY KEY ("id"),
 	CONSTRAINT "fk_acf_online_order_elements_order" FOREIGN KEY ("ord_id") REFERENCES "acf_online_orders" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT "fk_acf_online_order_elements_product" FOREIGN KEY ("prd_id") REFERENCES "acf_online_products" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+	CONSTRAINT "fk_acf_online_order_elements_product" FOREIGN KEY ("prd_id") REFERENCES "acf_online_products" ("id") ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE "acf_online_order_taxes" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
 	"ord_id"                                                            UUID NOT NULL,
-	"tx_id"                                                             UUID NOT NULL,
-	CONSTRAINT "pk_acf_online_order_taxes" PRIMARY KEY ("ord_id", "tx_id"),
-	CONSTRAINT "fk_acf_online_order_taxes_order" FOREIGN KEY ("ord_id") REFERENCES "acf_online_orders" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT "fk_acf_online_order_taxes_taxe" FOREIGN KEY ("tx_id") REFERENCES "acf_online_taxes" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+	"tx_label"                                                          TEXT NOT NULL,
+	"tx_val"                                                            FLOAT8 NOT NULL DEFAULT 0,
+	"tx_type"                                                           INT8 NOT NULL DEFAULT 1,
+	"tx_priority"                                                       INT8 NOT NULL DEFAULT 0,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_order_taxes" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_online_order_taxes_order" FOREIGN KEY ("ord_id") REFERENCES "acf_online_orders" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE "acf_online_invoice_elements" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
 	"inv_id"                                                            UUID NOT NULL,
-	"prd_id"                                                            UUID NOT NULL,
-	CONSTRAINT "pk_acf_online_invoice_elements" PRIMARY KEY ("inv_id", "prd_id"),
-	CONSTRAINT "fk_acf_online_invoice_elements_order" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT "fk_acf_online_invoice_elements_product" FOREIGN KEY ("prd_id") REFERENCES "acf_online_products" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+	"prd_label"                                                         TEXT NOT NULL,
+	"prd_price_ht"                                                      FLOAT8 NOT NULL DEFAULT 0,
+	"prd_vat"                                                           FLOAT8 NOT NULL DEFAULT 0,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_invoice_elements" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_online_invoice_elements_order" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE "acf_online_invoice_taxes" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
 	"inv_id"                                                            UUID NOT NULL,
-	"tx_id"                                                             UUID NOT NULL,
-	CONSTRAINT "pk_acf_online_invoice_taxes" PRIMARY KEY ("inv_id", "tx_id"),
-	CONSTRAINT "fk_acf_online_invoice_taxes_order" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT "fk_acf_online_invoice_taxes_taxe" FOREIGN KEY ("tx_id") REFERENCES "acf_online_taxes" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+	"tx_label"                                                          TEXT NOT NULL,
+	"tx_val"                                                            FLOAT8 NOT NULL DEFAULT 0,
+	"tx_type"                                                           INT8 NOT NULL DEFAULT 1,
+	"tx_priority"                                                       INT8 NOT NULL DEFAULT 0,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_invoice_taxes" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_online_invoice_taxes_order" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 

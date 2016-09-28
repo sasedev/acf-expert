@@ -48,6 +48,18 @@ class OnlineProduct
 
   /**
    *
+   * @var string @ORM\Column(name="prd_title", type="text", nullable=true)
+   */
+  protected $title;
+
+  /**
+   *
+   * @var string @ORM\Column(name="prd_description", type="text", nullable=true)
+   */
+  protected $description;
+
+  /**
+   *
    * @var float @ORM\Column(name="prd_price_ht", type="float", nullable=false)
    *      @Assert\GreaterThan(value="0", groups={"price"})
    */
@@ -83,31 +95,10 @@ class OnlineProduct
 
   /**
    *
-   * @var Collection @ORM\ManyToMany(targetEntity="OnlineOrder", mappedBy="products")
-   *      @ORM\JoinTable(name="acf_online_order_elements",
-   *      joinColumns={
-   *      @ORM\JoinColumn(name="prd_id", referencedColumnName="id")
-   *      },
-   *      inverseJoinColumns={
-   *      @ORM\JoinColumn(name="ord_id", referencedColumnName="id")
-   *      }
-   *      )
+   * @var Collection @ORM\OneToMany(targetEntity="OnlineOrderProduct", mappedBy="product", cascade={"persist", "remove"})
+   *      @ORM\OrderBy({"dtCrea" = "ASC"})
    */
   protected $orders;
-
-  /**
-   *
-   * @var Collection @ORM\ManyToMany(targetEntity="OnlineInvoice", mappedBy="products")
-   *      @ORM\JoinTable(name="acf_online_invoice_elements",
-   *      joinColumns={
-   *      @ORM\JoinColumn(name="prd_id", referencedColumnName="id")
-   *      },
-   *      inverseJoinColumns={
-   *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
-   *      }
-   *      )
-   */
-  protected $invoices;
 
   /**
    * Constructor
@@ -119,7 +110,6 @@ class OnlineProduct
     $this->lockout = self::LOCKOUT_UNLOCKED;
     $this->dtCrea = new \DateTime('now');
     $this->orders = new ArrayCollection();
-    $this->invoices = new ArrayCollection();
   }
 
   /**
@@ -150,6 +140,48 @@ class OnlineProduct
   public function setLabel($label)
   {
     $this->label = $label;
+    return $this;
+  }
+
+  /**
+   *
+   * @return string $title
+   */
+  public function getTitle()
+  {
+    return $this->title;
+  }
+
+  /**
+   *
+   * @param string $title
+   *
+   * @return OnlineProduct
+   */
+  public function setTitle($title)
+  {
+    $this->title = $title;
+    return $this;
+  }
+
+  /**
+   *
+   * @return string $description
+   */
+  public function getDescription()
+  {
+    return $this->description;
+  }
+
+  /**
+   *
+   * @param string $description
+   *
+   * @return OnlineProduct
+   */
+  public function setDescription($description)
+  {
+    $this->description = $description;
     return $this;
   }
 
@@ -261,12 +293,13 @@ class OnlineProduct
   /**
    * Add order
    *
-   * @param OnlineOrder $order
+   * @param OnlineOrderProduct $order
    *
    * @return OnlineProduct
    */
-  public function addOrder(OnlineOrder $order)
+  public function addOrder(OnlineOrderProduct $order)
   {
+    $order->setProduct($this);
     $this->orders[] = $order;
 
     return $this;
@@ -275,11 +308,11 @@ class OnlineProduct
   /**
    * Remove order
    *
-   * @param OnlineOrder $order
+   * @param OnlineOrderProduct $order
    *
    * @return OnlineProduct
    */
-  public function removeOrder(OnlineOrder $order)
+  public function removeOrder(OnlineOrderProduct $order)
   {
     $this->orders->removeElement($order);
 
@@ -288,7 +321,7 @@ class OnlineProduct
 
   /**
    *
-   * @return ArrayCollection
+   * @return ArrayCollection $products
    */
   public function getOrders()
   {
@@ -304,55 +337,6 @@ class OnlineProduct
   public function setOrders(Collection $orders)
   {
     $this->orders = $orders;
-    return $this;
-  }
-
-  /**
-   * Add invoice
-   *
-   * @param OnlineInvoice $invoice
-   *
-   * @return OnlineProduct
-   */
-  public function addInvoice(OnlineInvoice $invoice)
-  {
-    $this->invoices[] = $invoice;
-
-    return $this;
-  }
-
-  /**
-   * Remove invoice
-   *
-   * @param OnlineInvoice $invoice
-   *
-   * @return OnlineProduct
-   */
-  public function removeInvoice(OnlineInvoice $invoice)
-  {
-    $this->invoices->removeElement($invoice);
-
-    return $this;
-  }
-
-  /**
-   *
-   * @return ArrayCollection
-   */
-  public function getInvoices()
-  {
-    return $this->invoices;
-  }
-
-  /**
-   *
-   * @param Collection $invoices
-   *
-   * @return OnlineProduct
-   */
-  public function setInvoices(Collection $invoices)
-  {
-    $this->invoices = $invoices;
     return $this;
   }
 
@@ -380,6 +364,15 @@ class OnlineProduct
       self::LOCKOUT_UNLOCKED,
       self::LOCKOUT_LOCKED
     );
+  }
+
+  public function getOriginalName()
+  {
+    $str = $this->label . ' : ';
+    $str .= number_format($this->price, 3, '.', '');
+    $str .= ' TND (+' . number_format($this->vat, 2, '.', '');
+    $str .= '%)';
+    return $str;
   }
 
   /**

@@ -30,9 +30,13 @@ $(function() {
 		$this.tinymce(options);
 	});
 
-    $('#OrderUpdateStatusForm_status').chosen({width: "100%", disable_search_threshold: 10});
+	$('#OrderUpdateStatusForm_status').chosen({width: "100%", disable_search_threshold: 10});
 
-    $('#OrderUpdateUserForm_user').chosen({width: "100%", disable_search_threshold: 10});
+	$('#OrderUpdatePaymentTypeForm_paymentType').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#OrderUpdateUserForm_user').chosen({width: "100%", disable_search_threshold: 10});
+
+	$('#OrderAddProductForm_oproduct').chosen({width: "100%", disable_search_threshold: 10});
 });
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
@@ -46,6 +50,8 @@ $(function() {
 <div class="row">
 	<div class="col-lg-12">
 		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_order_print', {'uid':order.id}) }}" target="_blank" class="btn btn-default">{{ faIco('print') }} {{ 'action.btnPrint'|trans }}</a>
+			<a href="{{ path('_admin_order_sendmail', {'uid':order.id}) }}" class="btn btn-success">{{ faIco('envelope-o') }} {{ 'action.btnSend'|trans }}</a>
 			<a href="{{ path('_admin_order_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
 			<a href="{{ path('_admin_order_addGet') }}" class="btn btn-primary">{{ glyphIco('plus') }} {{ 'action.add'|trans }}</a>
 		</div>
@@ -62,21 +68,87 @@ $(function() {
 							<div class="row">
 								<div class="col-lg-3 text-right">{{'Order.ref'|trans|raw}} :</div>
 								<div class="col-lg-9">{{order.ref}}&nbsp;</div>
+								{% if order.invoice is not null %}
+								<div class="col-lg-3 text-right">{{'Order.invoice'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_invoice_editGet', {'uid': order.invoice.id}) }}">{{order.invoice.ref}}</a>&nbsp;</div>
+								{% endif %}
 								<div class="col-lg-3 text-right">{{'Order.user'|trans|raw}} :</div>
 								<div class="col-lg-9"><a href="{{ path('_admin_user_editGet', {'id': order.user.id}) }}">{{order.user.fullName}}</a>&nbsp;</div>
-								<div class="col-lg-3 text-right">{{'Order.val'|trans|raw}} :</div>
-								<div class="col-lg-9">{{order.val|number_format(3, '.', ' ') }}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Order.paymentType'|trans|raw}} :</div>
+								<div class="col-lg-9">{{('Order.paymentType.'~order.paymentType)|trans|raw}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Order.status'|trans|raw}} :</div>
 								<div class="col-lg-9">{{('Order.status.'~order.status)|trans|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Order.orderTo'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if order.orderTo is not empty%}{{order.orderTo|raw}}{%else%}{{bsLabel('_NA'|trans)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Order.products'|trans|raw}} :</div>
+								<div class="col-lg-9">&nbsp;</div>
+								<div class="col-lg-12 table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>{{ 'Product.label.label'|trans }}</th>
+												<th class="text-right">{{ 'Product.price.label'|trans }}</th>
+												<th class="text-right">{{ 'Product.vat.label'|trans }}</th>
+												<th class="text-right">{{ 'Product.pricettc.label'|trans }}</th>
+												{% if order.status == constant('ST_NEW', order) and order.products|length > 1%}
+												<th class="text-right">
+													{{ 'action'|trans }}
+												</th>
+												{% endif %}
+											</tr>
+										</thead>
+										<tbody>
+											{% set totht = 0 %}
+											{% for product in order.products %}
+											<tr>
+												<td>{{ product.label|raw }}</td>
+												<td class="text-right">{{ product.price|number_format(3, '.', ' ') }} TND</td>
+												<td class="text-right">{{ product.vat|number_format(2, '.', ' ') }} %</td>
+												{% set totht = totht + product.price + product.price * product.vat/100 %}
+												<td class="text-right">{{ (product.price + product.price * product.vat/100)|number_format(3, '.', ' ') }} TND</td>
+												{% if order.status == constant('ST_NEW', order) and order.products|length > 1 %}
+												<td class="text-right"><a href="{{ path('_admin_order_removeproduct', {'uid': product.id}) }}" class="btn btn-danger">{{ faIco('trash') }}</a></td>
+												{% endif %}
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="col-lg-12 table-responsive">
+									<table class="table">
+										<tr>
+											<th class="text-right" style="width: 50%">Sous-Total:</th>
+											<td class="text-right">{{ totht|number_format(3, '.', ' ') }} TND</td>
+										</tr>
+										{% for taxe in order.taxes %}
+										<tr>
+											<th class="text-right">{{ taxe.label|raw }}</th>
+											<td class="text-right">
+											{% if taxe.type == constant('TYPE_NUMERIC', taxe) %}
+												{{ taxe.value|number_format(3, '.', ' ') }} TND
+												{% set totht = totht + taxe.value %}
+											{% else %}
+												{{ (totht * taxe.value/100)|number_format(3, '.', ' ') }} TND
+												{% set totht = totht + totht * taxe.value/100 %}
+											{% endif %}
+											</td>
+										</tr>
+										{% endfor %}
+										<tr>
+											<th class="text-right">Total:</th>
+											<td class="text-right">{{ order.val|number_format(3, '.', ' ') }} TND</td>
+										</tr>
+									</table>
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Order.ipAddr'|trans|raw}} :</div>
 								<div class="col-lg-9">{%if order.ipAddr is not empty%}{{order.ipAddr|raw}}{%else%}{{bsLabel('_NA'|trans)}}{%endif%}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Order.sessId'|trans|raw}} :</div>
 								<div class="col-lg-9">{%if order.sessId is not empty%}{{order.sessId|raw}}{%else%}{{bsLabel('_NA'|trans)}}{%endif%}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Order.auth'|trans|raw}} :</div>
 								<div class="col-lg-9">{%if order.auth is not empty%}{{order.auth|raw}}{%else%}{{bsLabel('_NA'|trans)}}{%endif%}&nbsp;</div>
-								<div class="col-lg-12">&nbsp;</div>
-								<div class="col-lg-3 text-right">{{'Order.description'|trans|raw}} :</div>
-								<div class="col-lg-9">{%if order.description is not empty%}{{order.description|raw}}{%else%}{{bsLabel('_NA'|trans)}}{%endif%}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Order.dtCrea'|trans|raw}} :</div>
 								<div class="col-lg-9">{{order.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{order.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
@@ -89,41 +161,69 @@ $(function() {
 				</div>
 				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
 					<div class="panel box box-danger">
-						<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editVal'|trans}}</h3></div>
+						<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editStatus'|trans}}</h3></div>
 						<div class="box-body">
-							{{form_start(OrderUpdateValForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
-							{{form_row(OrderUpdateValForm.val, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_start(OrderUpdateStatusForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+							{{form_row(OrderUpdateStatusForm.status, {'label_col': 3, 'widget_col': 8 })}}
 							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-							{{form_end(OrderUpdateValForm)}}
+							{{form_end(OrderUpdateStatusForm)}}
 						</div>
 					</div>
+					{% if order.status == constant('ST_NEW', order) or order.status == constant('ST_WAITING', order) %}
 					<div class="panel box box-danger">
-					<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editStatus'|trans}}</h3></div>
-					    <div class="box-body">
-					       {{form_start(OrderUpdateStatusForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
-					       {{form_row(OrderUpdateStatusForm.status, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
-					       <div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-					       {{form_end(OrderUpdateStatusForm)}}
-					    </div>
+						<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editPaymentType'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(OrderUpdatePaymentTypeForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+							{{form_row(OrderUpdatePaymentTypeForm.paymentType, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(OrderUpdatePaymentTypeForm)}}
+						</div>
 					</div>
-                    <div class="panel box box-danger">
-                        <div class="box-header"><h3 class="box-title">{{'Order.tlabel.editUser'|trans}}</h3></div>
-                        <div class="box-body">
-                            {{form_start(OrderUpdateUserForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
-                            {{form_row(OrderUpdateUserForm.user, {'label_col': 3, 'widget_col': 8 })}}
-                            <div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-                            {{form_end(OrderUpdateUserForm)}}
-                        </div>
-                    </div>
+					{% endif %}
+					{% if order.status == constant('ST_NEW', order) or order.status == constant('ST_WAITING', order) %}
 					<div class="panel box box-danger">
-    					<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editDescription'|trans}}</h3></div>
-    					<div class="box-body">
-        					{{form_start(OrderUpdateDescriptionForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
-        					{{form_row(OrderUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
-        					<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-        					{{form_end(OrderUpdateDescriptionForm)}}
-    					</div>
+						<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editUser'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(OrderUpdateUserForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+							{{form_row(OrderUpdateUserForm.user, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(OrderUpdateUserForm)}}
+						</div>
 					</div>
+					{% endif %}
+					{% if order.status == constant('ST_NEW', order) or order.status == constant('ST_WAITING', order) %}
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Order.tlabel.editOrderTo'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(OrderUpdateOrderToForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+							{{form_row(OrderUpdateOrderToForm.orderTo, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(OrderUpdateOrderToForm)}}
+						</div>
+					</div>
+					{% endif %}
+					{% if order.status == constant('ST_NEW', order) %}
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Order.tlabel.addProduct'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(OrderAddProductForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+							{{form_row(OrderAddProductForm.oproduct, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+							{{form_end(OrderAddProductForm)}}
+						</div>
+					</div>
+					{% endif %}
+					{% if order.invoice is null%}
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Order.tlabel.generateInvoice'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(OrderGenerateInvoiceForm, {'method':'POST', 'action': path('_admin_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+							{{form_row(OrderGenerateInvoiceForm.ref, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+							{{form_end(OrderGenerateInvoiceForm)}}
+						</div>
+					</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>

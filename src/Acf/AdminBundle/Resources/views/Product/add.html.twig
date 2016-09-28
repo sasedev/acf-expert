@@ -52,7 +52,9 @@ $(function() {
 			</div>
 			<div class="box-body">
 				{{form_start(ProductNewForm, {'method':'POST', 'action': path('_admin_product_addPost'), 'style': 'horizontal'})}}
-				{{form_row(ProductNewForm.label, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+				{{form_row(ProductNewForm.label, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(ProductNewForm.title, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_row(ProductNewForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
 				{{form_row(ProductNewForm.price, {'label_col': 3, 'widget_col': 8})}}
 				{{form_row(ProductNewForm.vat, {'label_col': 3, 'widget_col': 8})}}
 				{{form_row(ProductNewForm.lockout, {'label_col': 3, 'widget_col': 8})}}

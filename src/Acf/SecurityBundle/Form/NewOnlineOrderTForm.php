@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  *
@@ -27,6 +28,16 @@ class NewOnlineOrderTForm extends AbstractType
   {
     $builder->add('orderTo', TextareaType::class, array(
       'label' => 'OnlineOrder.orderTo.label'
+    ));
+
+    $builder->add('renew', ChoiceType::class, array(
+      'label' => 'OnlineOrder.renew.label',
+      'choices_as_values' => true,
+      'choices' => OnlineOrder::choiceRenew(),
+      'expanded' => true,
+      'attr' => array(
+        'choice_label_trans' => true
+      )
     ));
   }
 

@@ -2,8 +2,6 @@
 namespace Acf\DataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -68,14 +66,14 @@ class OnlineTaxe
   /**
    *
    * @var integer @ORM\Column(name="tx_type", type="integer", nullable=false)
-   *      @Assert\Choice(callback="choiceTypeCallback", groups={"lockout"})
+   *      @Assert\Choice(callback="choiceTypeCallback", groups={"type"})
    */
   protected $type;
 
   /**
    *
    * @var integer @ORM\Column(name="tx_actif", type="integer", nullable=false)
-   *      @Assert\Choice(callback="choiceVisibleCallback", groups={"lockout"})
+   *      @Assert\Choice(callback="choiceVisibleCallback", groups={"visible"})
    */
   protected $visible;
 
@@ -99,34 +97,6 @@ class OnlineTaxe
   protected $dtUpdate;
 
   /**
-   *
-   * @var Collection @ORM\ManyToMany(targetEntity="OnlineOrder", mappedBy="taxes")
-   *      @ORM\JoinTable(name="acf_online_order_taxes",
-   *      joinColumns={
-   *      @ORM\JoinColumn(name="tx_id", referencedColumnName="id")
-   *      },
-   *      inverseJoinColumns={
-   *      @ORM\JoinColumn(name="ord_id", referencedColumnName="id")
-   *      }
-   *      )
-   */
-  protected $orders;
-
-  /**
-   *
-   * @var Collection @ORM\ManyToMany(targetEntity="OnlineInvoice", mappedBy="taxes")
-   *      @ORM\JoinTable(name="acf_online_invoice_taxes",
-   *      joinColumns={
-   *      @ORM\JoinColumn(name="tx_id", referencedColumnName="id")
-   *      },
-   *      inverseJoinColumns={
-   *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
-   *      }
-   *      )
-   */
-  protected $invoices;
-
-  /**
    * Constructor
    */
   public function __construct()
@@ -135,8 +105,6 @@ class OnlineTaxe
     $this->type = self::TYPE_NUMERIC;
     $this->visible = self::VISIBLE_SHOW;
     $this->dtCrea = new \DateTime('now');
-    $this->orders = new ArrayCollection();
-    $this->invoices = new ArrayCollection();
   }
 
   /**
@@ -293,104 +261,6 @@ class OnlineTaxe
   public function setDtUpdate(\DateTime $dtUpdate = null)
   {
     $this->dtUpdate = $dtUpdate;
-    return $this;
-  }
-
-  /**
-   * Add order
-   *
-   * @param OnlineOrder $order
-   *
-   * @return OnlineTaxe
-   */
-  public function addOrder(OnlineOrder $order)
-  {
-    $this->orders[] = $order;
-
-    return $this;
-  }
-
-  /**
-   * Remove order
-   *
-   * @param OnlineOrder $order
-   *
-   * @return OnlineTaxe
-   */
-  public function removeOrder(OnlineOrder $order)
-  {
-    $this->orders->removeElement($order);
-
-    return $this;
-  }
-
-  /**
-   *
-   * @return ArrayCollection
-   */
-  public function getOrders()
-  {
-    return $this->orders;
-  }
-
-  /**
-   *
-   * @param Collection $orders
-   *
-   * @return OnlineTaxe
-   */
-  public function setOrders(Collection $orders)
-  {
-    $this->orders = $orders;
-    return $this;
-  }
-
-  /**
-   * Add invoice
-   *
-   * @param OnlineInvoice $invoice
-   *
-   * @return OnlineTaxe
-   */
-  public function addInvoice(OnlineInvoice $invoice)
-  {
-    $this->invoices[] = $invoice;
-
-    return $this;
-  }
-
-  /**
-   * Remove invoice
-   *
-   * @param OnlineInvoice $invoice
-   *
-   * @return OnlineTaxe
-   */
-  public function removeInvoice(OnlineInvoice $invoice)
-  {
-    $this->invoices->removeElement($invoice);
-
-    return $this;
-  }
-
-  /**
-   *
-   * @return ArrayCollection
-   */
-  public function getInvoices()
-  {
-    return $this->invoices;
-  }
-
-  /**
-   *
-   * @param Collection $invoices
-   *
-   * @return OnlineTaxe
-   */
-  public function setInvoices(Collection $invoices)
-  {
-    $this->invoices = $invoices;
     return $this;
   }
 

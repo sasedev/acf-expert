@@ -149,7 +149,7 @@ class OnlineOrder
   /**
    *
    * @var integer @ORM\Column(name="payment_type", type="integer", nullable=false)
-   *      @Assert\Choice(callback="choicePaymentTypeCallback", groups={"type"})
+   *      @Assert\Choice(callback="choicePaymentTypeCallback", groups={"paymentType"})
    */
   protected $paymentType;
 
@@ -163,7 +163,7 @@ class OnlineOrder
   /**
    *
    * @var integer @ORM\Column(name="autorenew", type="integer", nullable=false)
-   *      @Assert\Choice(callback="choiceRenewCallback", groups={"status"})
+   *      @Assert\Choice(callback="choiceRenewCallback", groups={"renew"})
    */
   protected $renew;
 
@@ -188,29 +188,15 @@ class OnlineOrder
 
   /**
    *
-   * @var Collection @ORM\ManyToMany(targetEntity="OnlineProduct", inversedBy="orders")
-   *      @ORM\JoinTable(name="acf_online_order_elements",
-   *      joinColumns={
-   *      @ORM\JoinColumn(name="ord_id", referencedColumnName="id")
-   *      },
-   *      inverseJoinColumns={
-   *      @ORM\JoinColumn(name="prd_id", referencedColumnName="id")
-   *      }
-   *      )
+   * @var Collection @ORM\OneToMany(targetEntity="OnlineOrderProduct", mappedBy="order", cascade={"persist", "remove"})
+   *      @ORM\OrderBy({"dtCrea" = "ASC"})
    */
   protected $products;
 
   /**
    *
-   * @var Collection @ORM\ManyToMany(targetEntity="OnlineTaxe", inversedBy="orders")
-   *      @ORM\JoinTable(name="acf_online_order_taxes",
-   *      joinColumns={
-   *      @ORM\JoinColumn(name="ord_id", referencedColumnName="id")
-   *      },
-   *      inverseJoinColumns={
-   *      @ORM\JoinColumn(name="tx_id", referencedColumnName="id")
-   *      }
-   *      )
+   * @var Collection @ORM\OneToMany(targetEntity="OnlineOrderTaxe", mappedBy="order", cascade={"persist", "remove"})
+   *      @ORM\OrderBy({"priority" = "ASC"})
    */
   protected $taxes;
 
@@ -517,12 +503,13 @@ class OnlineOrder
   /**
    * Add product
    *
-   * @param OnlineProduct $product
+   * @param OnlineOrderProduct $product
    *
    * @return OnlineOrder
    */
-  public function addProduct(OnlineProduct $product)
+  public function addProduct(OnlineOrderProduct $product)
   {
+    $product->setOrder($this);
     $this->products[] = $product;
 
     return $this;
@@ -531,11 +518,11 @@ class OnlineOrder
   /**
    * Remove product
    *
-   * @param OnlineProduct $product
+   * @param OnlineOrderProduct $product
    *
    * @return OnlineOrder
    */
-  public function removeProduct(OnlineProduct $product)
+  public function removeProduct(OnlineOrderProduct $product)
   {
     $this->products->removeElement($product);
 
@@ -566,12 +553,13 @@ class OnlineOrder
   /**
    * Add taxe
    *
-   * @param OnlineTaxe $taxe
+   * @param OnlineOrderTaxe $taxe
    *
    * @return OnlineOrder
    */
-  public function addTaxe(OnlineTaxe $taxe)
+  public function addTaxe(OnlineOrderTaxe $taxe)
   {
+    $taxe->setOrder($this);
     $this->taxes[] = $taxe;
 
     return $this;
@@ -580,11 +568,11 @@ class OnlineOrder
   /**
    * Remove taxe
    *
-   * @param OnlineTaxe $taxe
+   * @param OnlineOrderTaxe $taxe
    *
    * @return OnlineOrder
    */
-  public function removeTaxe(OnlineTaxe $taxe)
+  public function removeTaxe(OnlineOrderTaxe $taxe)
   {
     $this->taxes->removeElement($taxe);
 
@@ -700,6 +688,22 @@ class OnlineOrder
       self::RENEW_NO,
       self::RENEW_AUTO
     );
+  }
+
+  public function updateVal()
+  {
+    $val = 0;
+    foreach ($this->getProducts() as $oproduct) {
+      $val += $oproduct->getPrice() + $oproduct->getPrice() * $oproduct->getVat() / 100;
+    }
+    foreach ($this->getTaxes() as $otaxe) {
+      if ($otaxe->getType() == OnlineOrderTaxe::TYPE_NUMERIC) {
+        $val += $otaxe->getValue();
+      } else {
+        $val = $val + $val * $otaxe->getValue() / 100;
+      }
+    }
+    $this->setVal($val);
   }
 
   /**

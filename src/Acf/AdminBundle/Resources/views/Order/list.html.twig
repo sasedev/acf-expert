@@ -26,6 +26,9 @@ $(function() {
 			null,
 			null,
 			null,
+			null,
+			null,
+			null,
 			{ "searchable": false, "sortable": false }
 		],
 		"pageLength": 10,
@@ -63,11 +66,14 @@ $(function() {
 					<thead>
 						<tr>
 							<th>{{ 'Order.dtCrea.label'|trans|raw }}</th>
-							<th>{{ 'Order.ref.label'|trans|raw }}</th>
 							<th>{{ 'Order.user.label'|trans|raw }}</th>
-							<th>{{ 'Order.val.label'|trans|raw }}</th>
+							<th>{{ 'Order.ref.label'|trans|raw }}</th>
 							<th>{{ 'Order.status.label'|trans|raw }}</th>
-							<th>{{ 'Order.description.label'|trans|raw }}</th>
+							<th>{{ 'Order.orderTo.label'|trans|raw }}</th>
+							<th>{{ 'Order.val.label'|trans|raw }}</th>
+							<th>{{ 'Order.paymentType.label'|trans|raw }}</th>
+							<th>{{ 'Order.renew.label'|trans|raw }}</th>
+							<th>{{ 'Order.invoice.label'|trans|raw }}</th>
 							<th>{{ 'action'|trans|raw }}</th>
 						</tr>
 					</thead>
@@ -76,12 +82,16 @@ $(function() {
 						{% for order in orders %}
 						<tr>
 							<td align="right">{{order.dtCrea|date('Y-m-d')}} {{'_at'|trans}} {{order.dtCrea|localeDate('none', 'short')}}</td>
-							<td align="right">{{ order.ref }}</td>
 							<td><a href="{{ path('_admin_user_editGet', {'id': order.user.id}) }}">{{ order.user.username }}</a></td>
-							<td align="right">{{ order.val|number_format(3, '.', ' ') }}</td>
+							<td align="right">{{ order.ref }}</td>
 							<td align="right">{{ ('Order.status.'~order.status)|trans|raw }}</td>
-							<td>{{ order.description|raw }}</td>
+							<td>{{ order.orderTo|raw }}</td>
+							<td align="right">{{ order.val|number_format(3, '.', ' ') }} TND</td>
+							<td align="right">{{ ('Order.paymentType.'~order.paymentType)|trans|raw }}</td>
+							<td align="right">{{ ('Order.renew.'~order.renew)|trans|raw }}</td>
+							<td align="right">{% if order.invoice is not null %}<a href="{{ path('_admin_invoice_editGet', {'uid': order.invoice.id}) }}">{{ order.invoice.ref }}</a>{% else %}&nbsp;---&nbsp;{% endif %}</td>
 							<td>
+								<a href="{{ path('_admin_order_print', {'uid':order.id}) }}" target="_blank" class="btn btn-default">{{ faIco('print') }} {{ 'action.btnPrint'|trans }}</a>
 								<a class="btn btn-sm btn-info" href="{{path('_admin_order_editGet',{'uid':order.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
 								<a class="btn btn-sm btn-danger deleteConfirmOrder" href="{{path('_admin_order_delete',{'uid':order.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
 							</td>

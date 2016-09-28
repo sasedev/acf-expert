@@ -1,0 +1,121 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	{% if invoices|length != 0 %}
+	$('#invoiceList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmInvoice').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmInvoice').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmInvoice').modal('show');
+			});
+		}
+	});
+	{% endif %}
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_invoice_list') }}">{{faIco('shopping-cart')}} &nbsp; {{'breadcrumb.invoice.list'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'Invoice.tlabel.list'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive">
+				<table id="invoiceList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>{{ 'Invoice.dtCrea.label'|trans|raw }}</th>
+							<th>{{ 'Invoice.user.label'|trans|raw }}</th>
+							<th>{{ 'Invoice.ref.label'|trans|raw }}</th>
+							<th>{{ 'Invoice.status.label'|trans|raw }}</th>
+							<th>{{ 'Invoice.orderTo.label'|trans|raw }}</th>
+							<th>{{ 'Invoice.val.label'|trans|raw }}</th>
+							<th>{{ 'Invoice.paymentType.label'|trans|raw }}</th>
+							<th>{{ 'Invoice.renew.label'|trans|raw }}</th>
+							<th>{{ 'Invoice.order.label'|trans|raw }}</th>
+							<th>{{ 'action'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% if invoices|length != 0 %}
+						{% for invoice in invoices %}
+						<tr>
+							<td align="right">{{invoice.dtCrea|date('Y-m-d')}} {{'_at'|trans}} {{invoice.dtCrea|localeDate('none', 'short')}}</td>
+							<td><a href="{{ path('_admin_user_editGet', {'id': invoice.user.id}) }}">{{ invoice.user.username }}</a></td>
+							<td align="right">{{ invoice.ref }}</td>
+							<td align="right">{{ ('Invoice.status.'~invoice.status)|trans|raw }}</td>
+							<td>{{ invoice.orderTo|raw }}</td>
+							<td align="right">{{ invoice.val|number_format(3, '.', ' ') }} TND</td>
+							<td align="right">{{ ('Invoice.paymentType.'~invoice.paymentType)|trans|raw }}</td>
+							<td align="right">{{ ('Invoice.renew.'~invoice.renew)|trans|raw }}</td>
+							<td align="right">{% if invoice.order is not null %}<a href="{{ path('_admin_order_editGet', {'uid': invoice.order.id}) }}">{{ invoice.order.ref }}</a>{% else %}&nbsp;---&nbsp;{% endif %}</td>
+							<td>
+								<a href="{{ path('_admin_invoice_print', {'uid':invoice.id}) }}" target="_blank" class="btn btn-default">{{ faIco('print') }} {{ 'action.btnPrint'|trans }}</a>
+								<a class="btn btn-sm btn-info" href="{{path('_admin_invoice_editGet',{'uid':invoice.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+								<a class="btn btn-sm btn-danger deleteConfirmInvoice" href="{{path('_admin_invoice_delete',{'uid':invoice.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+							</td>
+						</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan="7">{{ 'Invoice.empty'|trans|raw }}</td>
+						</tr>
+					{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmInvoice" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'Invoice.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'Invoice.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{%endblock content%}

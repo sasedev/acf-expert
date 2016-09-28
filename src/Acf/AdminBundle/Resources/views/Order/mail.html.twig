@@ -1,0 +1,5 @@
+<html>
+<body>
+{{'_mail.order.body'|trans({'%fullname%':order.user.fullName,'%url%':url('_security_myOrder_editGet', {'uid':order.id}),'%order%':order.ref}, "messages")|raw}}
+</body>
+</html>

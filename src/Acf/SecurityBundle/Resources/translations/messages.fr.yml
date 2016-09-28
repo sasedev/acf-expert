@@ -43,8 +43,6 @@ pagetitle.security.lostPassword: 'Mot de passe Perdu'
 pagetitle.security.lostPassword.txt: 'Récupération de mot de passe'
 pagetitle.security.register: 'Inscription'
 pagetitle.security.register.txt: 'Création d''un Nouveau Compte ACF'
-pagetitle.myorder.edit: 'Commande <b>%order%</b>'
-pagetitle.myorder.edit.txt: 'Commande "%order%"'
 
 myorder.validate: Payer ma commande
 myorder.cancel: Annuler ma commande
@@ -124,10 +122,16 @@ pagetitle.myorder.list: Mes Commandes
 breadcrumb.myorder.list: Mes Commandes
 Order.tlabel.myorders: Mes Commandes
 breadcrumb.myorder.edit: "Commande : <b>%order%</b>"
+pagetitle.myorder.edit: 'Commande <b>%order%</b>'
+pagetitle.myorder.edit.txt: 'Commande "%order%"'
 
-pagetitle.onlineProduct.txt: Nos Produits
-pagetitle.onlineProduct: Nos Produits
-breadcrumb.onlineProduct: Nos Produits
+pagetitle.myinvoice.list.txt: Mes Factures
+pagetitle.myinvoice.list: Mes Factures
+breadcrumb.myinvoice.list: Mes Factures
+Invoice.tlabel.myinvoices: Mes Factures
+breadcrumb.myinvoice.edit: "Facture : <b>%invoice%</b>"
+pagetitle.myinvoice.edit: 'Facture <b>%invoice%</b>'
+pagetitle.myinvoice.edit.txt: 'Facture "%invoice%"'
 
 
-
+action.btnPrint: Imprimer

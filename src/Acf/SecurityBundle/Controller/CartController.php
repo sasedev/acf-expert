@@ -6,6 +6,8 @@ use Acf\DataBundle\Entity\OnlineProduct;
 use Acf\DataBundle\Entity\OnlineOrder;
 use Acf\SecurityBundle\Form\NewOnlineOrderTForm as NewOnlineOrderTForm;
 use Acf\DataBundle\Entity\OnlineTaxe;
+use Acf\DataBundle\Entity\OnlineOrderTaxe;
+use Acf\DataBundle\Entity\OnlineOrderProduct;
 
 /**
  *
@@ -214,25 +216,18 @@ class CartController extends BaseController
     if (isset($reqData['NewOnlineOrderForm'])) {
       $orderNewForm->handleRequest($request);
       if ($orderNewForm->isValid()) {
-        $val = 0;
+
         foreach ($myProducts as $myProduct) {
-          $order->addProduct($myProduct);
-          $val += $myProduct->getPrice();
-          $vat = $myProduct->getPrice() * $myProduct->getVat() / 100;
-          $val += $vat;
+          $oproduct = new OnlineOrderProduct($myProduct);
+          $order->addProduct($oproduct);
         }
         $taxes = $em->getRepository('AcfDataBundle:OnlineTaxe')->getAllVisible();
         foreach ($taxes as $taxe) {
-          $order->addTaxe($taxe);
-          if ($taxe->getType() == OnlineTaxe::TYPE_NUMERIC) {
-            $val += $taxe->getValue();
-          } else {
-            $percent = $val * $taxe->getValue() / 100;
-            $val += $percent;
-          }
+          $otaxe = new OnlineOrderTaxe($taxe);
+          $order->addTaxe($otaxe);
         }
 
-        $order->setVal(\floatval($val));
+        $order->updateVal();
 
         $em->persist($order);
         $em->flush();
@@ -241,6 +236,22 @@ class CartController extends BaseController
         )));
 
         $session->set("OnlineProducts", array());
+
+        $from = $this->getParameter('mail_from');
+        $fromName = $this->getParameter('mail_from_name');
+        $subject = $this->translate('_mail.order.subject', array(
+          '%order%' => $order->getRef()
+        ), 'messages');
+        $mvars = array();
+        $mvars['order'] = $order;
+        $message = \Swift_Message::newInstance();
+        $message->setFrom($from, $fromName);
+        $message->setTo($order->getUser()
+          ->getEmail(), $order->getUser()
+          ->getFullname());
+        $message->setSubject($subject);
+        $message->setBody($this->renderView('AcfSecurityBundle:Mail:neworder.html.twig', $mvars), 'text/html');
+        $this->sendmail($message);
 
         return $this->redirect($this->generateUrl('_security_myOrder_editGet', array(
           'uid' => $order->getId()

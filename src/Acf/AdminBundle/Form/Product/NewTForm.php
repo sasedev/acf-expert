@@ -4,6 +4,7 @@ namespace Acf\AdminBundle\Form\Product;
 use Acf\DataBundle\Entity\OnlineProduct;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,6 +28,18 @@ class NewTForm extends AbstractType
    */
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
+    $builder->add('title', TextType::class, array(
+      'label' => 'Product.title.label'
+    ));
+
+    $builder->add('label', TextType::class, array(
+      'label' => 'Product.label.label'
+    ));
+
+    $builder->add('description', TextareaType::class, array(
+      'label' => 'Product.description.label'
+    ));
+
     $builder->add('price', NumberType::class, array(
       'label' => 'Product.price.label'
     ));
@@ -42,10 +55,6 @@ class NewTForm extends AbstractType
       'attr' => array(
         'choice_label_trans' => true
       )
-    ));
-
-    $builder->add('label', TextareaType::class, array(
-      'label' => 'Product.label.label'
     ));
   }
 
@@ -77,10 +86,12 @@ class NewTForm extends AbstractType
   {
     return array(
       'validation_groups' => array(
+        'label',
+        'title',
+        'description',
         'price',
         'vat',
-        'lockout',
-        'label'
+        'lockout'
       )
     );
   }

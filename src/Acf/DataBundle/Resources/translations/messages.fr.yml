@@ -1601,7 +1601,9 @@ MSalary.others.label: "Remarques :"
 
 # Product
 Product.id: ID
-Product.label: Description
+Product.label: Libélé
+Product.title: Titre
+Product.description: Description
 Product.price: Prix HT
 Product.vat: TVA
 Product.lockout: Etat
@@ -1611,7 +1613,9 @@ Product.dtCrea: Date d'ajout
 Product.dtUpdate: Date de modification
 
 Product.id.label: "ID :"
-Product.label.label: "Description :"
+Product.label.label: "Libélé :"
+Product.title.label: "Titre :"
+Product.description.label: "Description :"
 Product.price.label: "Prix HT :"
 Product.vat.label: "TVA :"
 Product.lockout.label: "Etat :"
@@ -1619,10 +1623,13 @@ Product.lockout.choice.1: "Visible"
 Product.lockout.choice.2: "Invisible"
 Product.dtCrea.label: "Date d'ajout :"
 Product.dtUpdate.label: "Date de modification :"
+Product.pricettc.label: "Prix TTC :"
 
 # OnlineProduct
 OnlineProduct.id: ID
-OnlineProduct.label: Description
+OnlineProduct.label: Libélé
+OnlineProduct.title: Titre
+OnlineProduct.description: Description
 OnlineProduct.price: Prix HT
 OnlineProduct.vat: TVA
 OnlineProduct.lockout: Etat
@@ -1632,7 +1639,9 @@ OnlineProduct.dtCrea: Date d'ajout
 OnlineProduct.dtUpdate: Date de modification
 
 OnlineProduct.id.label: "ID :"
-OnlineProduct.label.label: "Description :"
+OnlineProduct.label.label: "Libélé :"
+OnlineProduct.title.label: "Titre :"
+OnlineProduct.description.label: "Description :"
 OnlineProduct.price.label: "Prix HT :"
 OnlineProduct.vat.label: "TVA :"
 OnlineProduct.lockout.label: "Etat :"
@@ -1707,17 +1716,21 @@ Order.status: Etat
 Order.status.1: "Nouveau"
 Order.status.2: "En Attente"
 Order.status.3: "Payée"
-Order.status.4: "Refusée"
+Order.status.4: "Refusé"
 Order.status.5: "Annulée"
 Order.status.6: "Erreur"
 Order.orderTo: "A l'Ordre de"
 Order.paymentType: "Moyen de Payement"
 Order.paymentType.1: "Par Virement"
 Order.paymentType.2: "Par Chèque"
-Order.paymentType.3: "En liquide"
+Order.paymentType.3: "En espèces"
 Order.paymentType.4: "En ligne"
 Order.invoice: "Facture"
-Order.description: Description
+Order.renew: "Renouvellement Automatique"
+Order.renew.1: "Oui"
+Order.renew.2: "Non"
+Order.products: Produits
+Order.taxes: Taxes
 Order.auth: "Numéro d'autorisation"
 Order.sessId: Session
 Order.ipAddr: "Adresse IP"
@@ -1739,13 +1752,179 @@ Order.orderTo.label: "A l'Ordre de :"
 Order.paymentType.label: "Moyen de Payement :"
 Order.paymentType.choice.1: "Par Virement"
 Order.paymentType.choice.2: "Par Chèque"
-Order.paymentType.choice.3: "En liquide"
+Order.paymentType.choice.3: "En espèces"
 Order.paymentType.choice.4: "En ligne"
 Order.invoice.label: "Facture :"
-Order.description.label: "Description :"
+Order.renew.label: "Renouvellement Automatique :"
+Order.renew.choice.1: "Oui"
+Order.renew.choice.2: "Non"
+Order.products.label: "Produits :"
+Order.taxes.label: "Taxes :"
 Order.auth.label: "Numéro d'autorisation :"
 Order.sessId.label: "Session :"
 Order.ipAddr.label: "Adresse IP :"
 Order.dtCrea.label: "Date d'ajout :"
 Order.dtUpdate.label: "Date de modification :"
 
+# Order
+OnlineOrder.id: ID
+OnlineOrder.ref: Référence
+OnlineOrder.user: Utilisateur
+OnlineOrder.val: Montant
+OnlineOrder.status: Etat
+OnlineOrder.status.1: "Nouveau"
+OnlineOrder.status.2: "En Attente"
+OnlineOrder.status.3: "Payée"
+OnlineOrder.status.4: "Refusé"
+OnlineOrder.status.5: "Annulée"
+OnlineOrder.status.6: "Erreur"
+OnlineOrder.orderTo: "A l'Ordre de"
+OnlineOrder.paymentType: "Moyen de Payement"
+OnlineOrder.paymentType.1: "Par Virement"
+OnlineOrder.paymentType.2: "Par Chèque"
+OnlineOrder.paymentType.3: "En espèces"
+OnlineOrder.paymentType.4: "En ligne"
+OnlineOrder.invoice: "Facture"
+OnlineOrder.renew: "Renouvellement Automatique"
+OnlineOrder.renew.1: "Oui"
+OnlineOrder.renew.2: "Non"
+OnlineOrder.products: Produits
+OnlineOrder.taxes: Taxes
+OnlineOrder.auth: "Numéro d'autorisation"
+OnlineOrder.sessId: Session
+OnlineOrder.ipAddr: "Adresse IP"
+OnlineOrder.dtCrea: Date d'ajout
+OnlineOrder.dtUpdate: Date de modification
+
+OnlineOrder.id.label: "ID :"
+OnlineOrder.ref.label: "Référence :"
+OnlineOrder.user.label: "Utilisateur :"
+OnlineOrder.val.label: "Montant :"
+OnlineOrder.status.label: "Etat :"
+OnlineOrder.status.choice.1: "Nouveau"
+OnlineOrder.status.choice.2: "En Attente"
+OnlineOrder.status.choice.3: "Payé"
+OnlineOrder.status.choice.4: "Refusé"
+OnlineOrder.status.choice.5: "Annulé"
+OnlineOrder.status.choice.6: "Erreur"
+OnlineOrder.orderTo.label: "A l'Ordre de :"
+OnlineOrder.paymentType.label: "Moyen de Payement :"
+OnlineOrder.paymentType.choice.1: "Par Virement"
+OnlineOrder.paymentType.choice.2: "Par Chèque"
+OnlineOrder.paymentType.choice.3: "En espèces"
+OnlineOrder.paymentType.choice.4: "En ligne"
+OnlineOrder.invoice.label: "Facture :"
+OnlineOrder.products.label: "Produits :"
+OnlineOrder.renew.label: "Renouvellement Automatique :"
+OnlineOrder.renew.choice.1: "Oui"
+OnlineOrder.renew.choice.2: "Non"
+OnlineOrder.taxes.label: "Taxes :"
+OnlineOrder.auth.label: "Numéro d'autorisation :"
+OnlineOrder.sessId.label: "Session :"
+OnlineOrder.ipAddr.label: "Adresse IP :"
+OnlineOrder.dtCrea.label: "Date d'ajout :"
+OnlineOrder.dtUpdate.label: "Date de modification :"
+
+
+
+# Invoice
+Invoice.id: ID
+Invoice.ref: Référence
+Invoice.user: Utilisateur
+Invoice.val: Montant
+Invoice.status: Etat
+Invoice.status.1: "Nouveau"
+Invoice.status.2: "Publié"
+Invoice.orderTo: "A l'Ordre de"
+Invoice.paymentType: "Moyen de Payement"
+Invoice.paymentType.1: "Par Virement"
+Invoice.paymentType.2: "Par Chèque"
+Invoice.paymentType.3: "En espèces"
+Invoice.paymentType.4: "En ligne"
+Invoice.order: "Commande"
+Invoice.renew: "Renouvellement Automatique"
+Invoice.renew.1: "Oui"
+Invoice.renew.2: "Non"
+Invoice.products: Produits
+Invoice.taxes: Taxes
+Invoice.auth: "Numéro d'autorisation"
+Invoice.sessId: Session
+Invoice.ipAddr: "Adresse IP"
+Invoice.dtCrea: Date d'ajout
+Invoice.dtUpdate: Date de modification
+
+Invoice.id.label: "ID :"
+Invoice.ref.label: "Référence :"
+Invoice.user.label: "Utilisateur :"
+Invoice.val.label: "Montant :"
+Invoice.status.label: "Etat :"
+Invoice.status.choice.1: "Nouveau"
+Invoice.status.choice.2: "Publié"
+Invoice.orderTo.label: "A l'Ordre de :"
+Invoice.paymentType.label: "Moyen de Payement :"
+Invoice.paymentType.choice.1: "Par Virement"
+Invoice.paymentType.choice.2: "Par Chèque"
+Invoice.paymentType.choice.3: "En espèces"
+Invoice.paymentType.choice.4: "En ligne"
+Invoice.order.label: "Commande :"
+Invoice.renew.label: "Renouvellement Automatique :"
+Invoice.renew.choice.1: "Oui"
+Invoice.renew.choice.2: "Non"
+Invoice.products.label: "Produits :"
+Invoice.taxes.label: "Taxes :"
+Invoice.auth.label: "Numéro d'autorisation :"
+Invoice.sessId.label: "Session :"
+Invoice.ipAddr.label: "Adresse IP :"
+Invoice.dtCrea.label: "Date d'ajout :"
+Invoice.dtUpdate.label: "Date de modification :"
+
+# Invoice
+OnlineInvoice.id: ID
+OnlineInvoice.ref: Référence
+OnlineInvoice.user: Utilisateur
+OnlineInvoice.val: Montant
+OnlineInvoice.status: Etat
+OnlineInvoice.status.1: "Nouveau"
+OnlineInvoice.status.2: "Publié"
+OnlineInvoice.orderTo: "A l'Ordre de"
+OnlineInvoice.paymentType: "Moyen de Payement"
+OnlineInvoice.paymentType.1: "Par Virement"
+OnlineInvoice.paymentType.2: "Par Chèque"
+OnlineInvoice.paymentType.3: "En espèces"
+OnlineInvoice.paymentType.4: "En ligne"
+OnlineInvoice.order: "Commande"
+OnlineInvoice.renew: "Renouvellement Automatique"
+OnlineInvoice.renew.1: "Oui"
+OnlineInvoice.renew.2: "Non"
+OnlineInvoice.products: Produits
+OnlineInvoice.taxes: Taxes
+OnlineInvoice.auth: "Numéro d'autorisation"
+OnlineInvoice.sessId: Session
+OnlineInvoice.ipAddr: "Adresse IP"
+OnlineInvoice.dtCrea: Date d'ajout
+OnlineInvoice.dtUpdate: Date de modification
+
+OnlineInvoice.id.label: "ID :"
+OnlineInvoice.ref.label: "Référence :"
+OnlineInvoice.user.label: "Utilisateur :"
+OnlineInvoice.val.label: "Montant :"
+OnlineInvoice.status.label: "Etat :"
+OnlineInvoice.status.choice.1: "Nouveau"
+OnlineInvoice.status.choice.2: "Publié"
+OnlineInvoice.orderTo.label: "A l'Ordre de :"
+OnlineInvoice.paymentType.label: "Moyen de Payement :"
+OnlineInvoice.paymentType.choice.1: "Par Virement"
+OnlineInvoice.paymentType.choice.2: "Par Chèque"
+OnlineInvoice.paymentType.choice.3: "En espèces"
+OnlineInvoice.paymentType.choice.4: "En ligne"
+OnlineInvoice.order.label: "Commande :"
+OnlineInvoice.products.label: "Produits :"
+OnlineInvoice.renew.label: "Renouvellement Automatique :"
+OnlineInvoice.renew.choice.1: "Oui"
+OnlineInvoice.renew.choice.2: "Non"
+OnlineInvoice.taxes.label: "Taxes :"
+OnlineInvoice.auth.label: "Numéro d'autorisation :"
+OnlineInvoice.sessId.label: "Session :"
+OnlineInvoice.ipAddr.label: "Adresse IP :"
+OnlineInvoice.dtCrea.label: "Date d'ajout :"
+OnlineInvoice.dtUpdate.label: "Date de modification :"

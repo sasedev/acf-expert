@@ -37,7 +37,7 @@ $(function() {
 <ol class="breadcrumb">
 	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
 	<li><a href="{{ path('_admin_product_list') }}">{{faIco('shopping-basket')}} &nbsp; {{'breadcrumb.product.list'|trans|raw}}</a></li>
-	<li class="active"><a href="{{ path('_admin_product_editGet', {'uid': product.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.product.edit'|trans({'%product%': product.id})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_product_editGet', {'uid': product.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.product.edit'|trans({'%product%': product.title})|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}
 {%block content%}
@@ -58,11 +58,14 @@ $(function() {
 						<div class="box-header"><h3 class="box-title">{{'Product.tlabel.overview'|trans}}</h3></div>
 						<div class="box-body">
 							<div class="row">
-								<div class="col-lg-3 text-right">{{'Product.id'|trans|raw}} :</div>
-								<div class="col-lg-9">{{product.id|raw}}&nbsp;</div>
-								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Product.label'|trans|raw}} :</div>
 								<div class="col-lg-9">{{product.label|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Product.title'|trans|raw}} :</div>
+								<div class="col-lg-9">{{product.title|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Product.description'|trans|raw}} :</div>
+								<div class="col-lg-9">{{product.description|raw}}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Product.price'|trans|raw}} :</div>
 								<div class="col-lg-9">{{product.price|number_format(3, '.', ' ') }} TND&nbsp;</div>
@@ -109,12 +112,30 @@ $(function() {
 					    </div>
 					</div>
 					<div class="panel box box-danger">
-    					<div class="box-header"><h3 class="box-title">{{'Product.tlabel.editDescription'|trans}}</h3></div>
+    					<div class="box-header"><h3 class="box-title">{{'Product.tlabel.editLabel'|trans}}</h3></div>
     					<div class="box-body">
         					{{form_start(ProductUpdateLabelForm, {'method':'POST', 'action': path('_admin_product_editPost', {'uid': product.id}), 'style': 'horizontal'})}}
-        					{{form_row(ProductUpdateLabelForm.label, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+        					{{form_row(ProductUpdateLabelForm.label, {'label_col': 3, 'widget_col': 8 })}}
         					<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
         					{{form_end(ProductUpdateLabelForm)}}
+    					</div>
+					</div>
+					<div class="panel box box-danger">
+    					<div class="box-header"><h3 class="box-title">{{'Product.tlabel.editTitle'|trans}}</h3></div>
+    					<div class="box-body">
+        					{{form_start(ProductUpdateTitleForm, {'method':'POST', 'action': path('_admin_product_editPost', {'uid': product.id}), 'style': 'horizontal'})}}
+        					{{form_row(ProductUpdateTitleForm.title, {'label_col': 3, 'widget_col': 8 })}}
+        					<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+        					{{form_end(ProductUpdateTitleForm)}}
+    					</div>
+					</div>
+					<div class="panel box box-danger">
+    					<div class="box-header"><h3 class="box-title">{{'Product.tlabel.editDescription'|trans}}</h3></div>
+    					<div class="box-body">
+        					{{form_start(ProductUpdateDescriptionForm, {'method':'POST', 'action': path('_admin_product_editPost', {'uid': product.id}), 'style': 'horizontal'})}}
+        					{{form_row(ProductUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+        					<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+        					{{form_end(ProductUpdateDescriptionForm)}}
     					</div>
 					</div>
 				</div>
