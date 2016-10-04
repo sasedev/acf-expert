@@ -3,6 +3,11 @@ namespace Acf\SecurityBundle\Controller;
 
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 use Acf\DataBundle\Entity\OnlineInvoice;
+use Acf\DataBundle\Entity\OnlineInvoiceDocument;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
  *
@@ -60,6 +65,8 @@ class MyInvoiceController extends BaseController
 
         $this->gvars['invoice'] = $invoice;
 
+        $this->gvars['docs'] = $em->getRepository('AcfDataBundle:OnlineInvoiceDocument')->getAllByInvoice($invoice);
+
         $this->gvars['pagetitle'] = $this->translate('pagetitle.myinvoice.edit', array(
           '%invoice%' => $invoice->getRef()
         ));
@@ -108,6 +115,70 @@ class MyInvoiceController extends BaseController
     } catch (\Exception $e) {
       $logger = $this->getLogger();
       $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+    }
+
+    return $this->redirect($urlFrom);
+  }
+
+  /**
+   *
+   * @param string $uid
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
+   */
+  public function downloadAction($uid)
+  {
+    $urlFrom = $this->getReferer();
+    if (null == $urlFrom || trim($urlFrom) == '') {
+      $urlFrom = $this->generateUrl('_security_myInvoices');
+    }
+    $em = $this->getEntityManager();
+    try {
+      $invoiceDoc = $em->getRepository('AcfDataBundle:OnlineInvoiceDocument')->find($uid);
+
+      if (null == $invoiceDoc) {
+        $logger = $this->getLogger();
+        $logger->addError('Document inconnu');
+        $this->flashMsgSession('warning', $this->translate('InvoiceDocument.download.notfound'));
+      } else {
+        $invoiceDocDir = $this->getParameter('kernel.root_dir') . '/../web/res/invoiceDocuments';
+        $fileName = $invoiceDoc->getFileName();
+
+        try {
+          $dlFile = new File($invoiceDocDir . '/' . $fileName);
+          $response = new StreamedResponse(function () use ($dlFile) {
+            $handle = fopen($dlFile->getRealPath(), 'r');
+            while (!feof($handle)) {
+              $buffer = fread($handle, 1024);
+              echo $buffer;
+              flush();
+            }
+            fclose($handle);
+          });
+
+          $response->headers->set('Content-Type', $invoiceDoc->getMimeType());
+          $response->headers->set('Cache-Control', '');
+          $response->headers->set('Content-Length', $invoiceDoc->getSize());
+          $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $invoiceDoc->getDtUpdate()
+            ->getTimestamp()));
+          $fallback = $this->normalize($invoiceDoc->getOriginalName());
+
+          $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $invoiceDoc->getOriginalName(), $fallback);
+          $response->headers->set('Content-Disposition', $contentDisposition);
+
+          return $response;
+        } catch (FileNotFoundException $fnfex) {
+          $logger = $this->getLogger();
+          $logger->addError('Fichier introuvable ou autre erreur');
+          $logger->addError($fnfex->getMessage());
+          $this->flashMsgSession('error', $fnfex->getMessage());
+          $this->flashMsgSession('warning', $this->translate('InvoiceDocument.download.notfound'));
+        }
+      }
+    } catch (\Exception $e) {
+      $logger = $this->getLogger();
+      $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+      $this->flashMsgSession('error', $e->getMessage());
+      $this->flashMsgSession('warning', $this->translate('InvoiceDocument.download.notfound'));
     }
 
     return $this->redirect($urlFrom);

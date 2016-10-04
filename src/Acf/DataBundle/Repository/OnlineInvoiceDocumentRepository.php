@@ -3,12 +3,13 @@ namespace Acf\DataBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Acf\DataBundle\Entity\OnlineInvoice;
+use Acf\DataBundle\Entity\OnlineInvoiceDocument;
 
 /**
  *
  * @author sasedev <seif.salah@gmail.com>
  */
-class OnlineInvoiceTaxeRepository extends EntityRepository
+class OnlineInvoiceDocumentRepository extends EntityRepository
 {
 
   /**
@@ -19,7 +20,7 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
    */
   public function count()
   {
-    $qb = $this->createQueryBuilder('t')->select('count(t)');
+    $qb = $this->createQueryBuilder('d')->select('count(d)');
     $query = $qb->getQuery();
 
     return $query->getSingleScalarResult();
@@ -32,7 +33,7 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
    */
   public function getAllQuery()
   {
-    $qb = $this->createQueryBuilder('t')->orderBy('t.priority', 'ASC');
+    $qb = $this->createQueryBuilder('d')->orderBy('d.dtCrea', 'ASC');
     $query = $qb->getQuery();
 
     return $query;
@@ -59,11 +60,13 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
    */
   public function countByInvoice(OnlineInvoice $invoice)
   {
-    $qb = $this->createQueryBuilder('t')
-      ->select('count(t)')
-      ->join('t.invoice', 'i')
+    $qb = $this->createQueryBuilder('d')
+      ->select('count(d)')
+      ->join('d.invoice', 'i')
       ->where('i.id = :id')
-      ->setParameter('id', $invoice->getId());
+      ->andWhere('d.visible = :visible')
+      ->setParameter('id', $invoice->getId())
+      ->setParameter('visible', OnlineInvoiceDocument::ST_OK);
     $query = $qb->getQuery();
 
     return $query->getSingleScalarResult();
@@ -76,11 +79,13 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
    */
   public function getAllByInvoiceQuery(OnlineInvoice $invoice)
   {
-    $qb = $this->createQueryBuilder('t')
-      ->join('t.invoice', 'i')
+    $qb = $this->createQueryBuilder('d')
+      ->join('d.invoice', 'i')
       ->where('i.id = :id')
+      ->andWhere('d.visible = :visible')
       ->setParameter('id', $invoice->getId())
-      ->orderBy('t.priority', 'ASC');
+      ->setParameter('visible', OnlineInvoiceDocument::ST_OK)
+      ->orderBy('d.dtCrea', 'ASC');
     $query = $qb->getQuery();
 
     return $query;

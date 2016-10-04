@@ -1474,6 +1474,38 @@ _admin_invoice_editPost:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_admin_invoice_doc_delete:
+    path:     /invoiceDoc/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:InvoiceDocument:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_doc_download:
+    path:     /invoiceDoc/download/{uid}
+    defaults: { _controller: "AcfAdminBundle:InvoiceDocument:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_doc_sendmail:
+    path:     /invoiceDoc/sendmail/{uid}
+    defaults: { _controller: "AcfAdminBundle:InvoiceDocument:sendmail" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_doc_editGet:
+    path:     /invoiceDoc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:InvoiceDocument:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_invoice_doc_editPost:
+    path:     /invoiceDoc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:InvoiceDocument:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 
 
 

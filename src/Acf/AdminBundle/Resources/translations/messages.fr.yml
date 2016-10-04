@@ -2439,6 +2439,7 @@ pagetitle.invoice.edit.txt: Edition Facture "%invoice%"
 
 Invoice.tab.overview: Détails
 Invoice.tab.edit: Edition
+Invoice.tab.docs: Documents
 
 Invoice.tlabel.list: Liste des Factures
 Invoice.tlabel.add: Ajouter nouvelle Facture
@@ -2447,6 +2448,8 @@ Invoice.tlabel.editStatus: Modification de l'Etat de la Facture
 Invoice.tlabel.editPaymentType: Modification du Mode de Payement de la Facture
 Invoice.tlabel.editOrderTo: Modification du Destinataire de la Facture
 Invoice.tlabel.editRef: Modification de la Référence de la Facture
+Invoice.tlabel.docs.add: Ajouter un Document à la Facture
+Invoice.tlabel.docs.list: Liste des Documents de la Facture
 
 Invoice.empty: Aucune Facture trouvée dans la base de donnée
 
@@ -2466,4 +2469,33 @@ _mail.invoice.subject: Facture %invoice%
 _mail.invoice.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>La facture <b>%invoice%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'
 
 
+# InvoiceDocument
+breadcrumb.invoiceDocument.edit: Document de Facture <b>%invoiceDocument%</b>
 
+pagetitle.invoiceDocument.edit: Edition Document <b>%invoiceDocument%</b>
+pagetitle.invoiceDocument.edit.txt: Edition Document "%invoiceDocument%"
+
+InvoiceDocument.tab.overview: Détails
+InvoiceDocument.tab.edit: Edition
+
+InvoiceDocument.tlabel.overview: Aperçu des détails du Document
+InvoiceDocument.tlabel.editVisible: Modification de la Visibilité du Document
+InvoiceDocument.tlabel.editOriginalName: Modification du Nom du Document
+InvoiceDocument.tlabel.editContent: Modification du Contenu du Document
+
+InvoiceDocument.empty: Aucun Document de Facture trouvé dans la base de donnée
+
+InvoiceDocument.add.success: Succès de l'ajout du Document <b>%invoiceDocument%</b>
+InvoiceDocument.add.failure: Echec de l'ajout du Document
+InvoiceDocument.delete.confirm.title: Demande de Confirmation
+InvoiceDocument.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Document ?<br/> Cette action est irreversible!
+InvoiceDocument.delete.notfound: Document inconnu
+InvoiceDocument.delete.success: Succès de la suppression du Document <b>%invoiceDocument%</b>
+InvoiceDocument.delete.failure: Echec de la suppression du Document
+InvoiceDocument.edit.notfound: Document inconnu
+InvoiceDocument.edit.success: Succès de la modification du Document <b>%invoiceDocument%</b>
+InvoiceDocument.edit.failure: Echec de la modification du Document <b>%invoiceDocument%</b>
+InvoiceDocument.mail.success: Succès de l'envoi d'email de notification pour le Document <b>%invoiceDocument%</b>
+InvoiceDocument.mail.failure: Echec de l'envoi d'email de notification pour le Document  <b>%invoiceDocument%</b>
+_mail.invoiceDocument.subject: Facture %invoice% - Document %invoiceDocument%
+_mail.invoiceDocument.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Le document <b>%invoiceDocument%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'

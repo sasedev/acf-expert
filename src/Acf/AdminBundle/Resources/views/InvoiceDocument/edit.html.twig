@@ -1,0 +1,111 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+
+	$('#InvoiceDocumentUpdateVisibleForm_visible').chosen({width: "100%", disable_search_threshold: 10});
+
+	$("#InvoiceDocumentUpdateContentForm_doc").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_invoice_list') }}">{{faIco('file-text-o')}} &nbsp; {{'breadcrumb.invoice.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_invoice_editGet', {'uid': invoiceDocument.invoice.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.invoice.edit'|trans({'%invoice%': invoiceDocument.invoice.ref})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_invoice_doc_editGet', {'uid': invoiceDocument.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.invoiceDocument.edit'|trans({'%invoiceDocument%': invoiceDocument.originalName})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_invoice_doc_sendmail', {'uid':invoiceDocument.id}) }}" class="btn btn-success">{{ faIco('envelope-o') }} {{ 'action.btnSend'|trans }}</a>
+			<a href="{{ path('_admin_invoice_doc_download',{'uid':invoiceDocument.id})}}" class="btn btn-info">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'InvoiceDocument.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'InvoiceDocument.tab.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'InvoiceDocument.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'InvoiceDocument.invoice'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_invoice_editGet', {'uid': invoiceDocument.invoice.id}) }}">{{ invoiceDocument.invoice.ref}} &nbsp;</a>&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'InvoiceDocument.originalName'|trans|raw}} :</div>
+								<div class="col-lg-9">{{invoiceDocument.originalName}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'InvoiceDocument.visible'|trans|raw}} :</div>
+								<div class="col-lg-9">{{('InvoiceDocument.visible.'~invoiceDocument.visible)|trans}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'InvoiceDocument.size'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if invoiceDocument.size<1024%}
+									{{invoiceDocument.size}} o
+								{%elseif invoiceDocument.size<(1024*1024)%}
+									{{'%.2f'|format(invoiceDocument.size/1024)}} Ko
+								{%elseif invoiceDocument.size<(1024*1024*1024)%}
+									{{'%.2f'|format(invoiceDocument.size/1024/1024)}} Mo
+								{%else%}
+									{{'%.2f'|format(invoiceDocument.size/1024/1024/1024)}} Go
+								{% endif %}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'InvoiceDocument.mimeType'|trans|raw}} :</div>
+								<div class="col-lg-9">{{invoiceDocument.mimeType}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'InvoiceDocument.md5'|trans|raw}} :</div>
+								<div class="col-lg-9">{{invoiceDocument.md5}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+
+								<div class="col-lg-3 text-right">{{'InvoiceDocument.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{invoiceDocument.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{invoiceDocument.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'InvoiceDocument.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{invoiceDocument.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{invoiceDocument.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'InvoiceDocument.tlabel.editVisible'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(InvoiceDocumentUpdateVisibleForm, {'method':'POST', 'action': path('_admin_invoice_doc_editPost', {'uid': invoiceDocument.id}), 'style': 'horizontal'})}}
+							{{form_row(InvoiceDocumentUpdateVisibleForm.visible, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(InvoiceDocumentUpdateVisibleForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'InvoiceDocument.tlabel.editOriginalName'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(InvoiceDocumentUpdateOriginalNameForm, {'method':'POST', 'action': path('_admin_invoice_doc_editPost', {'uid': invoiceDocument.id}), 'style': 'horizontal'})}}
+							{{form_row(InvoiceDocumentUpdateOriginalNameForm.originalName, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(InvoiceDocumentUpdateOriginalNameForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'InvoiceDocument.tlabel.editContent'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(InvoiceDocumentUpdateContentForm, {'method':'POST', 'action': path('_admin_invoice_doc_editPost', {'uid': invoiceDocument.id}), 'style': 'horizontal'})}}
+							{{form_row(InvoiceDocumentUpdateContentForm.doc, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(InvoiceDocumentUpdateContentForm)}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

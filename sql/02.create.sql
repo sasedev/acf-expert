@@ -1085,7 +1085,7 @@ CREATE TABLE "acf_online_invoice_elements" (
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	CONSTRAINT "pk_acf_online_invoice_elements" PRIMARY KEY ("id"),
-	CONSTRAINT "fk_acf_online_invoice_elements_order" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+	CONSTRAINT "fk_acf_online_invoice_elements_invoice" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE "acf_online_invoice_taxes" (
@@ -1098,8 +1098,24 @@ CREATE TABLE "acf_online_invoice_taxes" (
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	CONSTRAINT "pk_acf_online_invoice_taxes" PRIMARY KEY ("id"),
-	CONSTRAINT "fk_acf_online_invoice_taxes_order" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+	CONSTRAINT "fk_acf_online_invoice_taxes_invoice" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE "acf_online_invoice_docs" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"inv_id"                                                            UUID NOT NULL,
+	"filename"                                                          TEXT NOT NULL,
+	"filesize"                                                          INT8 NOT NULL DEFAULT 0,
+	"filemimetype"                                                      TEXT NOT NULL,
+	"fileoname"                                                         TEXT NOT NULL,
+	"filemd5"                                                           TEXT NOT NULL,
+	"visible"                                                           INT8 NOT NULL DEFAULT 1,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_acf_online_invoice_docs" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_acf_online_invoice_docs_invoice" FOREIGN KEY ("inv_id") REFERENCES "acf_online_invoices" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 
 
 

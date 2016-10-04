@@ -1928,3 +1928,56 @@ OnlineInvoice.sessId.label: "Session :"
 OnlineInvoice.ipAddr.label: "Adresse IP :"
 OnlineInvoice.dtCrea.label: "Date d'ajout :"
 OnlineInvoice.dtUpdate.label: "Date de modification :"
+
+
+# OnlineInvoiceDocument
+OnlineInvoiceDocument.invoice: Facture
+OnlineInvoiceDocument.fileName: Fichier
+OnlineInvoiceDocument.originalName: Nom Original
+OnlineInvoiceDocument.mimeType: MimeType
+OnlineInvoiceDocument.size: Taille
+OnlineInvoiceDocument.md5: md5
+OnlineInvoiceDocument.visible: Visible
+OnlineInvoiceDocument.visible.1: Non
+OnlineInvoiceDocument.visible.2: Oui
+OnlineInvoiceDocument.dtCrea: Date d'ajout
+OnlineInvoiceDocument.dtUpdate: Date de modification
+
+OnlineInvoiceDocument.invoice.label: "Facture :"
+OnlineInvoiceDocument.fileName.label: "Fichier :"
+OnlineInvoiceDocument.originalName.label: "Nom du Fichier :"
+OnlineInvoiceDocument.mimeType.label: "Type :"
+OnlineInvoiceDocument.size.label: "Taille :"
+OnlineInvoiceDocument.md5.label: "md5 :"
+OnlineInvoiceDocument.visible.label: "Visible :"
+OnlineInvoiceDocument.visible.choice.1: "Non"
+OnlineInvoiceDocument.visible.choice.2: "Oui"
+OnlineInvoiceDocument.dtCrea.label: "Date d'ajout :"
+OnlineInvoiceDocument.dtUpdate.label: "Date de modification :"
+
+
+# InvoiceDocument
+InvoiceDocument.invoice: Facture
+InvoiceDocument.fileName: Fichier
+InvoiceDocument.originalName: Nom Original
+InvoiceDocument.mimeType: MimeType
+InvoiceDocument.size: Taille
+InvoiceDocument.md5: md5
+InvoiceDocument.visible: Visible
+InvoiceDocument.visible.1: Non
+InvoiceDocument.visible.2: Oui
+InvoiceDocument.dtCrea: Date d'ajout
+InvoiceDocument.dtUpdate: Date de modification
+
+InvoiceDocument.invoice.label: "Facture :"
+InvoiceDocument.fileName.label: "Fichier :"
+InvoiceDocument.originalName.label: "Nom du Fichier :"
+InvoiceDocument.mimeType.label: "Type :"
+InvoiceDocument.size.label: "Taille :"
+InvoiceDocument.md5.label: "md5 :"
+InvoiceDocument.visible.label: "Visible :"
+InvoiceDocument.visible.choice.1: "Non"
+InvoiceDocument.visible.choice.2: "Oui"
+InvoiceDocument.dtCrea.label: "Date d'ajout :"
+InvoiceDocument.dtUpdate.label: "Date de modification :"
+

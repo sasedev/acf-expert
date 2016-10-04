@@ -157,4 +157,10 @@ _security_myInvoice_print:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_security_myInvoiceDoc_download:
+    path:  /myInvoiceDoc/{uid}
+    defaults: { _controller: "AcfSecurityBundle:MyInvoice:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 

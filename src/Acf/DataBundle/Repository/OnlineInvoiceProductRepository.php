@@ -32,7 +32,7 @@ class OnlineInvoiceProductRepository extends EntityRepository
    */
   public function getAllQuery()
   {
-    $qb = $this->createQueryBuilder('p')->invoiceBy('p.dtCrea', 'ASC');
+    $qb = $this->createQueryBuilder('p')->orderBy('p.dtCrea', 'ASC');
     $query = $qb->getQuery();
 
     return $query;
@@ -80,7 +80,7 @@ class OnlineInvoiceProductRepository extends EntityRepository
       ->join('p.invoice', 'i')
       ->where('i.id = :id')
       ->setParameter('id', $invoice->getId())
-      ->invoiceBy('p.dtCrea', 'ASC');
+      ->orderBy('p.dtCrea', 'ASC');
     $query = $qb->getQuery();
 
     return $query;

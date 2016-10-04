@@ -140,7 +140,6 @@ $(function() { });
 		<!-- /.col -->
 	</div>
 	<!-- /.row -->
-
 	<!-- this row will not appear when printing -->
 	<div class="row no-print">
 		<div class="col-xs-12">
@@ -148,6 +147,26 @@ $(function() { });
 				class="fa fa-print"></i> {{ 'action.btnPrint'|trans }}</a>
 		</div>
 	</div>
+	{% if docs|length != 0 %}
+	<br>
+	<br>
+	<div class="row no-print">
+		{% for doc in docs %}
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-green">
+					<i class="fa fa-file"></i>
+				</span>
+				<div class="info-box-content">
+					<span class="info-box-text">{{ doc.originalName }}</span>
+					<br>
+					<span class="info-box-text"><a href="{{ path('_security_myInvoiceDoc_download',{'uid':doc.id})}}" class="btn btn-success btn-xs">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a></span>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
 	{%endblock content%}
 </section>
 <div class="clearfix"></div>

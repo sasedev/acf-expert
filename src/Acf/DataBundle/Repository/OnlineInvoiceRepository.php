@@ -4,6 +4,7 @@ namespace Acf\DataBundle\Repository;
 use Acf\DataBundle\Entity\Company;
 use Acf\DataBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Acf\DataBundle\Entity\OnlineInvoice;
 
 /**
  *
@@ -84,8 +85,10 @@ class OnlineInvoiceRepository extends EntityRepository
     $qb = $this->createQueryBuilder('i')
       ->join('i.user', 'u')
       ->where('u.id = :id')
+      ->andWhere('i.status = :status')
       ->orderBy('i.dtCrea', 'DESC')
-      ->setParameter('id', $user->getId());
+      ->setParameter('id', $user->getId())
+      ->setParameter('status', OnlineInvoice::ST_OK);
     $query = $qb->getQuery();
 
     return $query;

@@ -5,7 +5,9 @@ use Acf\AdminBundle\Form\Invoice\UpdateStatusTForm as InvoiceUpdateStatusTForm;
 use Acf\AdminBundle\Form\Invoice\UpdatePaymentTypeTForm as InvoiceUpdatePaymentTypeTForm;
 use Acf\AdminBundle\Form\Invoice\UpdateOrderToTForm as InvoiceUpdateOrderToTForm;
 use Acf\AdminBundle\Form\Invoice\UpdateRefTForm as InvoiceUpdateRefTForm;
+use Acf\AdminBundle\Form\InvoiceDocument\NewTForm as InvoiceDocumentNewTForm;
 use Acf\DataBundle\Entity\OnlineInvoice;
+use Acf\DataBundle\Entity\OnlineInvoiceDocument;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 
 /**
@@ -114,11 +116,19 @@ class InvoiceController extends BaseController
         $invoiceUpdateOrderToForm = $this->createForm(InvoiceUpdateOrderToTForm::class, $invoice);
         $invoiceUpdateRefForm = $this->createForm(InvoiceUpdateRefTForm::class, $invoice);
 
+        $invoiceDoc = new OnlineInvoiceDocument();
+        $invoiceDoc->setInvoice($invoice);
+        $invoiceDocumentNewForm = $this->createForm(InvoiceDocumentNewTForm::class, $invoiceDoc, array(
+          'invoice' => $invoice
+        ));
+
         $this->gvars['invoice'] = $invoice;
         $this->gvars['InvoiceUpdateStatusForm'] = $invoiceUpdateStatusForm->createView();
         $this->gvars['InvoiceUpdatePaymentTypeForm'] = $invoiceUpdatePaymentTypeForm->createView();
         $this->gvars['InvoiceUpdateOrderToForm'] = $invoiceUpdateOrderToForm->createView();
         $this->gvars['InvoiceUpdateRefForm'] = $invoiceUpdateRefForm->createView();
+        $this->gvars['invoiceDocument'] = $invoiceDoc;
+        $this->gvars['InvoiceDocumentNewForm'] = $invoiceDocumentNewForm->createView();
 
         $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
         $this->getSession()->remove('tabActive');
@@ -166,6 +176,12 @@ class InvoiceController extends BaseController
         $invoiceUpdatePaymentTypeForm = $this->createForm(InvoiceUpdatePaymentTypeTForm::class, $invoice);
         $invoiceUpdateOrderToForm = $this->createForm(InvoiceUpdateOrderToTForm::class, $invoice);
         $invoiceUpdateRefForm = $this->createForm(InvoiceUpdateRefTForm::class, $invoice);
+
+        $invoiceDoc = new OnlineInvoiceDocument();
+        $invoiceDoc->setInvoice($invoice);
+        $invoiceDocumentNewForm = $this->createForm(InvoiceDocumentNewTForm::class, $invoiceDoc, array(
+          'invoice' => $invoice
+        ));
 
         $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
         $this->getSession()->remove('tabActive');
@@ -249,6 +265,40 @@ class InvoiceController extends BaseController
               '%invoice%' => $invoice->getRef()
             )));
           }
+        } elseif (isset($reqData['InvoiceDocumentNewForm'])) {
+          $this->gvars['tabActive'] = 3;
+          $this->getSession()->set('tabActive', 3);
+          $invoiceDocumentNewForm->handleRequest($request);
+          if ($invoiceDocumentNewForm->isValid()) {
+            $invoiceDocumentFile = $invoiceDocumentNewForm['fileName']->getData();
+
+            $invoiceDocumentDir = $this->getParameter('kernel.root_dir') . '/../web/res/invoiceDocuments';
+
+            $originalName = $invoiceDocumentFile->getClientOriginalName();
+            $fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($invoiceDocumentFile->getClientOriginalExtension());
+            $mimeType = $invoiceDocumentFile->getMimeType();
+            $invoiceDocumentFile->move($invoiceDocumentDir, $fileName);
+
+            $size = filesize($invoiceDocumentDir . '/' . $fileName);
+            $md5 = md5_file($invoiceDocumentDir . '/' . $fileName);
+
+            $invoiceDoc->setFileName($fileName);
+            $invoiceDoc->setOriginalName($originalName);
+            $invoiceDoc->setSize($size);
+            $invoiceDoc->setMimeType($mimeType);
+            $invoiceDoc->setMd5($md5);
+            $em->persist($invoiceDoc);
+            $em->flush();
+            $this->flashMsgSession('success', $this->translate('InvoiceDocument.add.success', array(
+              '%invoiceDocument%' => $invoiceDoc->getOriginalName()
+            )));
+
+            return $this->redirect($urlFrom);
+          } else {
+            $em->refresh($invoice);
+
+            $this->flashMsgSession('error', $this->translate('InvoiceDocument.add.failure'));
+          }
         }
 
         $this->gvars['invoice'] = $invoice;
@@ -256,6 +306,8 @@ class InvoiceController extends BaseController
         $this->gvars['InvoiceUpdatePaymentTypeForm'] = $invoiceUpdatePaymentTypeForm->createView();
         $this->gvars['InvoiceUpdateOrderToForm'] = $invoiceUpdateOrderToForm->createView();
         $this->gvars['InvoiceUpdateRefForm'] = $invoiceUpdateRefForm->createView();
+        $this->gvars['invoiceDocument'] = $invoiceDoc;
+        $this->gvars['InvoiceDocumentNewForm'] = $invoiceDocumentNewForm->createView();
 
         $this->gvars['pagetitle'] = $this->translate('pagetitle.invoice.edit', array(
           '%invoice%' => $invoice->getRef()
@@ -341,8 +393,6 @@ class InvoiceController extends BaseController
       if (null == $invoice) {
         $this->flashMsgSession('warning', $this->translate('Invoice.edit.notfound'));
       } else {
-
-        $this->gvars['invoice'] = $invoice;
 
         $from = $this->getParameter('mail_from');
         $fromName = $this->getParameter('mail_from_name');

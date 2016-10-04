@@ -242,13 +242,17 @@ class CartController extends BaseController
         $subject = $this->translate('_mail.order.subject', array(
           '%order%' => $order->getRef()
         ), 'messages');
+
         $mvars = array();
         $mvars['order'] = $order;
+
+        $admins = $this->getParameter('mailtos');
+
         $message = \Swift_Message::newInstance();
         $message->setFrom($from, $fromName);
-        $message->setTo($order->getUser()
-          ->getEmail(), $order->getUser()
-          ->getFullname());
+        foreach ($admins as $admin) {
+          $message->addTo($admin['email'], $admin['name']);
+        }
         $message->setSubject($subject);
         $message->setBody($this->renderView('AcfSecurityBundle:Mail:neworder.html.twig', $mvars), 'text/html');
         $this->sendmail($message);

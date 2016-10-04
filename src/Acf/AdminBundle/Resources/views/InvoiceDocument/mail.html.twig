@@ -1,0 +1,5 @@
+<html>
+<body>
+{{'_mail.invoiceDocument.body'|trans({'%fullname%':invoiceDocument.invoice.user.fullName,'%url%':url('_security_myInvoiceDoc_download', {'uid':invoiceDocument.id}),'%invoiceDocument%':invoiceDocument.originalName}, "messages")|raw}}
+</body>
+</html>

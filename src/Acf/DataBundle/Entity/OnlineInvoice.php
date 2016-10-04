@@ -170,6 +170,13 @@ class OnlineInvoice
 
   /**
    *
+   * @var Collection @ORM\OneToMany(targetEntity="OnlineInvoiceDocument", mappedBy="invoice", cascade={"persist", "remove"})
+   *      @ORM\OrderBy({"dtCrea" = "ASC"})
+   */
+  protected $docs;
+
+  /**
+   *
    * @param OnlineOrder $order
    *          Constructor
    */
@@ -539,6 +546,58 @@ class OnlineInvoice
   public function setTaxes(Collection $taxes)
   {
     $this->taxes = $taxes;
+    return $this;
+  }
+
+  /**
+   * Add doc
+   *
+   * @param OnlineInvoiceDocument $doc
+   *
+   * @return OnlineInvoice
+   */
+  public function addDoc(OnlineInvoiceDocument $doc)
+  {
+    $this->docs[] = $doc;
+    $doc->setInvoice($this);
+
+    return $this;
+  }
+
+  /**
+   * Remove doc
+   *
+   * @param OnlineInvoiceDocument $doc
+   *
+   * @return OnlineInvoice
+   */
+  public function removeDoc(OnlineInvoiceDocument $doc)
+  {
+    $this->docs->removeElement($doc);
+
+    return $this;
+  }
+
+  /**
+   * Get docs
+   *
+   * @return ArrayCollection
+   */
+  public function getDocs()
+  {
+    return $this->docs;
+  }
+
+  /**
+   *
+   * @param Collection $docs
+   *
+   * @return OnlineInvoice
+   */
+  public function setDocs(Collection $docs)
+  {
+    $this->docs = $docs;
+
     return $this;
   }
 

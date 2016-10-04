@@ -126,9 +126,6 @@ class SecurityController extends BaseController
         $mvars['type'] = $newUserForm['type']->getData();
         $mvars['fisc'] = $newUserForm['fisc']->getData();
         $mvars['commercialRegister'] = $newUserForm['commercialRegister']->getData();
-        $mvars['oneYear'] = $newUserForm['oneYear']->getData();
-        $mvars['autoRenew'] = $newUserForm['autoRenew']->getData();
-        $mvars['paymentType'] = $newUserForm['paymentType']->getData();
 
         $from = $this->getParameter('mail_from');
         $fromName = $this->getParameter('mail_from_name');

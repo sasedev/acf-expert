@@ -73,7 +73,7 @@ $(function() {
 							<td align="right">{{ invoice.val|number_format(3, '.', ' ') }} TND</td>
 							<td align="right">{{ ('Invoice.paymentType.'~invoice.paymentType)|trans|raw }}</td>
 							<td align="right">{{ ('Invoice.renew.'~invoice.renew)|trans|raw }}</td>
-							<td align="right">{% if invoice.order is not null and invoice.order.status != constant('ST_NEW', invoice.order)%}<a href="{{ path('_security_myInvoice_editGet', {'uid': invoice.order.id}) }}">{{ invoice.order.ref }}</a>{% else %}&nbsp;---&nbsp;{% endif %}</td>
+							<td align="right">{% if invoice.order is not null and invoice.order.status != constant('ST_NEW', invoice.order)%}<a href="{{ path('_security_myOrder_editGet', {'uid': invoice.order.id}) }}">{{ invoice.order.ref }}</a>{% else %}&nbsp;---&nbsp;{% endif %}</td>
 							<td><a class="btn btn-sm btn-info"
 								href="{{path('_security_myInvoice_editGet',{'uid':invoice.id})}}">{{ glyphIco('edit') }}
 									{{ 'action.edit'|trans }}</a></td>

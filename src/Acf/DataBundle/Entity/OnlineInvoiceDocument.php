@@ -8,12 +8,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_goodfiles")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\GoodDocRepository")
+ *         @ORM\Table(name="acf_online_invoice_docs")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineInvoiceDocumentRepository")
  *         @ORM\HasLifecycleCallbacks
  */
-class GoodDoc
+class OnlineInvoiceDocument
 {
+
+  /**
+   *
+   * @var integer
+   */
+  const ST_NEW = 1;
+
+  /**
+   *
+   * @var integer
+   */
+  const ST_OK = 2;
 
   /**
    *
@@ -25,9 +37,12 @@ class GoodDoc
 
   /**
    *
-   * @var string @ORM\Column(name="title", type="text", nullable=false)
+   * @var OnlineInvoice @ORM\ManyToOne(targetEntity="OnlineInvoice", inversedBy="docs", cascade={"persist"})
+   *      @ORM\JoinColumns({
+   *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
+   *      })
    */
-  protected $title;
+  protected $invoice;
 
   /**
    *
@@ -62,15 +77,10 @@ class GoodDoc
 
   /**
    *
-   * @var string @ORM\Column(name="filedesc", type="text", nullable=true)
+   * @var integer @ORM\Column(name="visible", type="integer", nullable=false)
+   *      @Assert\Choice(callback="choiceVisibleCallback", groups={"visible"})
    */
-  protected $description;
-
-  /**
-   *
-   * @var integer @ORM\Column(name="filedls", type="bigint", nullable=false)
-   */
-  protected $nbrDownloads;
+  protected $visible;
 
   /**
    *
@@ -90,8 +100,8 @@ class GoodDoc
    */
   public function __construct()
   {
+    $this->visible = self::ST_NEW;
     $this->size = 0;
-    $this->nbrDownloads = 0;
     $this->dtCrea = new \DateTime('now');
   }
 
@@ -107,23 +117,22 @@ class GoodDoc
 
   /**
    *
-   * @return string
+   * @return OnlineInvoice $invoice
    */
-  public function getTitle()
+  public function getInvoice()
   {
-    return $this->title;
+    return $this->invoice;
   }
 
   /**
    *
-   * @param string $title
+   * @param OnlineInvoice $invoice
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
-  public function setTitle($title)
+  public function setInvoice(OnlineInvoice $invoice)
   {
-    $this->title = $title;
-
+    $this->invoice = $invoice;
     return $this;
   }
 
@@ -142,7 +151,7 @@ class GoodDoc
    *
    * @param string $fileName
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
   public function setFileName($fileName)
   {
@@ -166,7 +175,7 @@ class GoodDoc
    *
    * @param integer $size
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
   public function setSize($size)
   {
@@ -190,7 +199,7 @@ class GoodDoc
    *
    * @param string $mimeType
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
   public function setMimeType($mimeType)
   {
@@ -214,7 +223,7 @@ class GoodDoc
    *
    * @param string $md5
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
   public function setMd5($md5)
   {
@@ -238,7 +247,7 @@ class GoodDoc
    *
    * @param string $originalName
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
   public function setOriginalName($originalName)
   {
@@ -248,50 +257,23 @@ class GoodDoc
   }
 
   /**
-   * Get description
    *
-   * @return string
+   * @return integer $visible
    */
-  public function getDescription()
+  public function getVisible()
   {
-    return $this->description;
+    return $this->visible;
   }
 
   /**
-   * Set description
    *
-   * @param string $description
+   * @param integer $visible
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
-  public function setDescription($description)
+  public function setVisible($visible)
   {
-    $this->description = $description;
-
-    return $this;
-  }
-
-  /**
-   * Get nbrDownloads
-   *
-   * @return integer
-   */
-  public function getNbrDownloads()
-  {
-    return $this->nbrDownloads;
-  }
-
-  /**
-   * Set nbrDownloads
-   *
-   * @param integer $nbrDownloads
-   *
-   * @return GoodDoc
-   */
-  public function setNbrDownloads($nbrDownloads)
-  {
-    $this->nbrDownloads = $nbrDownloads;
-
+    $this->visible = $visible;
     return $this;
   }
 
@@ -310,9 +292,9 @@ class GoodDoc
    *
    * @param \DateTime $dtCrea
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
-  public function setDtCrea($dtCrea)
+  public function setDtCrea(\DateTime $dtCrea = null)
   {
     $this->dtCrea = $dtCrea;
 
@@ -334,9 +316,9 @@ class GoodDoc
    *
    * @param \DateTime $dtUpdate
    *
-   * @return GoodDoc
+   * @return OnlineInvoiceDocument
    */
-  public function setDtUpdate($dtUpdate)
+  public function setDtUpdate(\DateTime $dtUpdate = null)
   {
     $this->dtUpdate = $dtUpdate;
 
@@ -350,6 +332,32 @@ class GoodDoc
   public function __toString()
   {
     return $this->getId() . ' ' . $this->getFileName();
+  }
+
+  /**
+   * Choice Form renew
+   *
+   * @return multitype:string
+   */
+  public static function choiceVisible()
+  {
+    return array(
+      'OnlineInvoiceDocument.visible.choice.' . self::ST_NEW => self::ST_NEW,
+      'OnlineInvoiceDocument.visible.choice.' . self::ST_OK => self::ST_OK
+    );
+  }
+
+  /**
+   * Choice Validator renew
+   *
+   * @return multitype:string
+   */
+  public static function choiceVisibleCallback()
+  {
+    return array(
+      self::ST_NEW,
+      self::ST_OK
+    );
   }
 
   /**
