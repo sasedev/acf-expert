@@ -335,6 +335,5 @@ class BiFolder
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

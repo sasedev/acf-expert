@@ -200,10 +200,7 @@ class Stock
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

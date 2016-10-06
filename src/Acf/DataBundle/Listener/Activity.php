@@ -52,12 +52,12 @@ class Activity
         if ($event->getRequestType() !== HttpKernel::MASTER_REQUEST) {
             return;
         }
-        
+
         // We are checking a token authentification is available before using
         // the User
         if ($this->tokenStorage->getToken()) {
             $user = $this->tokenStorage->getToken()->getUser();
-            
+
             // We are using a delay during wich the user will be considered as
             // still active, in order to
             // avoid too much UPDATE in the
@@ -65,7 +65,7 @@ class Activity
             // $delay = new \DateTime ();
             // $delay
             // ->setTimestamp (strtotime ('2 minutes ago'));
-            
+
             // We are checking the Admin class in order to be certain we can
             // call "getLastActivity".
             // && $user->getLastActivity() < $delay) {

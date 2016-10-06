@@ -37,6 +37,7 @@ class Trace
      * @var string
      */
     const AE_SECTOR = '04Sector';
+
     /**
      *
      * @var string

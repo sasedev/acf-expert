@@ -257,10 +257,7 @@ class Notification
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

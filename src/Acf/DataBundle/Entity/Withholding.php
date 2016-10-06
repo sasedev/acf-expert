@@ -332,9 +332,7 @@ class Withholding
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-    }
+    {}
 }

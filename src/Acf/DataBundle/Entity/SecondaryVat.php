@@ -331,10 +331,7 @@ class SecondaryVat
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

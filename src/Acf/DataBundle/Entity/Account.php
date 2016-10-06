@@ -558,7 +558,6 @@ abstract class Account
     }
 
     /**
-     *
      */
     public function __clone()
     {

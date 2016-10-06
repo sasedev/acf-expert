@@ -693,10 +693,7 @@ class CompanyFrame
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

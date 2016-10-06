@@ -398,7 +398,6 @@ class Docgroup
     }
 
     /**
-     *
      */
     public function __clone()
     {

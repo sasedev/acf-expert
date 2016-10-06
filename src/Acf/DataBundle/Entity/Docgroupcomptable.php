@@ -398,7 +398,6 @@ class Docgroupcomptable
     }
 
     /**
-     *
      */
     public function __clone()
     {

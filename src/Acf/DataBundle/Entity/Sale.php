@@ -115,7 +115,8 @@ class Sale extends Transaction
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @see \Acf\DataBundle\Entity\Transaction::__clone()
      */
     public function __clone()

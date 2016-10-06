@@ -1,7 +1,4 @@
 services:
-#    acf_data.example:
-#        class: Acf\DataBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
     AcfDataBundle.TraceListener:
         class:  Acf\DataBundle\Listener\TraceListener
         arguments: ["@service_container"]

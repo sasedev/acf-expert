@@ -1309,10 +1309,7 @@ abstract class Transaction
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

@@ -277,10 +277,7 @@ class BulletinInfo
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

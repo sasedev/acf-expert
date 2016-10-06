@@ -955,7 +955,6 @@ abstract class Relation
     }
 
     /**
-     *
      */
     public function __clone()
     {

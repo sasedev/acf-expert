@@ -1230,6 +1230,5 @@ class MSalary
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

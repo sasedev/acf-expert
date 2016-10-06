@@ -1290,6 +1290,5 @@ class Doc
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

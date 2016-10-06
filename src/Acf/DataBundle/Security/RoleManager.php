@@ -21,7 +21,7 @@ class RoleManager implements RoleManagerInterface
     /**
      *
      * @param ManagerRegistry $managerRegistry
-     * @param unknown         $class
+     * @param unknown $class
      */
     public function __construct(ManagerRegistry $managerRegistry, $class)
     {

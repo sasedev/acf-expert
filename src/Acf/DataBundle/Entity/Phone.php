@@ -226,10 +226,7 @@ class Phone
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

@@ -462,7 +462,6 @@ abstract class MonthlyBalance
     }
 
     /**
-     *
      */
     public function __clone()
     {

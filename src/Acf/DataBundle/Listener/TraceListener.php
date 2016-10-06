@@ -133,9 +133,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Address) {
             $trace->setActionEntity(Trace::AE_ADDRESS);
@@ -144,9 +146,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Phone) {
             $trace->setActionEntity(Trace::AE_PHONE);
@@ -155,9 +159,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyFrame) {
             $trace->setActionEntity(Trace::AE_FRAME);
@@ -166,9 +172,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyNature) {
             $trace->setActionEntity(Trace::AE_NATURE);
@@ -177,9 +185,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyLabel) {
             $trace->setActionEntity(Trace::AE_LABEL);
@@ -188,9 +198,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Customer) {
             $trace->setActionEntity(Trace::AE_CUSTOMER);
@@ -199,9 +211,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Supplier) {
             $trace->setActionEntity(Trace::AE_SUPPLIER);
@@ -210,9 +224,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Bank) {
             $trace->setActionEntity(Trace::AE_BANK);
@@ -221,9 +237,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Fund) {
             $trace->setActionEntity(Trace::AE_FUND);
@@ -232,9 +250,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Withholding) {
             $trace->setActionEntity(Trace::AE_WHITHHOLDING);
@@ -243,9 +263,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof MBSale) {
             $trace->setActionEntity(Trace::AE_MBSALE);
@@ -254,9 +276,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof MBPurchase) {
             $trace->setActionEntity(Trace::AE_MBPURCHASE);
@@ -265,9 +289,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Sale) {
             $trace->setActionEntity(Trace::AE_SALE);
@@ -278,11 +304,14 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $trace->setActionEntity3(Trace::AE_MBSALE);
-            $trace->setActionId3($entity->getMonthlyBalance()->getId());
+            $trace->setActionId3($entity->getMonthlyBalance()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Buy) {
             $trace->setActionEntity(Trace::AE_BUY);
@@ -293,11 +322,14 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $trace->setActionEntity3(Trace::AE_MBPURCHASE);
-            $trace->setActionId3($entity->getMonthlyBalance()->getId());
+            $trace->setActionId3($entity->getMonthlyBalance()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof SecondaryVat) {
             $trace->setActionEntity(Trace::AE_SECONDARYVAT);
@@ -313,13 +345,17 @@ class TraceListener implements EventSubscriber
                     ->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $trace->setActionEntity3(Trace::AE_MBSALE);
-            $trace->setActionId3($entity->getMonthlyBalance()->getId());
+            $trace->setActionId3($entity->getMonthlyBalance()
+                ->getId());
             $trace->setActionEntity4(Trace::AE_SALE);
-            $trace->setActionId4($entity->getSale()->getId());
+            $trace->setActionId4($entity->getSale()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Shareholder) {
             $trace->setActionEntity(Trace::AE_SHAREHOLDER);
@@ -328,9 +364,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Pilot) {
             $trace->setActionEntity(Trace::AE_PILOT);
@@ -339,9 +377,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyUser) {
             $trace->setActionEntity(Trace::AE_CUSER);
@@ -351,9 +391,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyAdmin) {
             $trace->setActionEntity(Trace::AE_CADMIN);
@@ -363,9 +405,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Doc) {
             $trace->setActionEntity(Trace::AE_DOC);
@@ -374,9 +418,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupcomptable) {
             $trace->setActionEntity(Trace::AE_DOCGROUPCOMPTABLE);
@@ -385,9 +431,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupbank) {
             $trace->setActionEntity(Trace::AE_DOCGROUPBANK);
@@ -396,9 +444,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroup) {
             $trace->setActionEntity(Trace::AE_DOCGROUP);
@@ -407,9 +457,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupfiscal) {
             $trace->setActionEntity(Trace::AE_DOCGROUPFISCAL);
@@ -418,9 +470,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupperso) {
             $trace->setActionEntity(Trace::AE_DOCGROUPPERSO);
@@ -429,9 +483,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupsyst) {
             $trace->setActionEntity(Trace::AE_DOCGROUPSYST);
@@ -440,9 +496,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupaudit) {
             $trace->setActionEntity(Trace::AE_DOCGROUPAUDIT);
@@ -451,9 +509,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         }
     }
@@ -509,9 +569,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Address) {
             $trace->setActionEntity(Trace::AE_ADDRESS);
@@ -520,9 +582,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Phone) {
             $trace->setActionEntity(Trace::AE_PHONE);
@@ -531,9 +595,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyFrame) {
             $trace->setActionEntity(Trace::AE_FRAME);
@@ -542,9 +608,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyNature) {
             $trace->setActionEntity(Trace::AE_NATURE);
@@ -553,9 +621,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyLabel) {
             $trace->setActionEntity(Trace::AE_LABEL);
@@ -564,9 +634,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Customer) {
             $trace->setActionEntity(Trace::AE_CUSTOMER);
@@ -575,9 +647,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Supplier) {
             $trace->setActionEntity(Trace::AE_SUPPLIER);
@@ -586,9 +660,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Bank) {
             $trace->setActionEntity(Trace::AE_BANK);
@@ -597,9 +673,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Fund) {
             $trace->setActionEntity(Trace::AE_FUND);
@@ -608,9 +686,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Withholding) {
             $trace->setActionEntity(Trace::AE_WHITHHOLDING);
@@ -619,9 +699,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof MBSale) {
             $trace->setActionEntity(Trace::AE_MBSALE);
@@ -630,9 +712,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof MBPurchase) {
             $trace->setActionEntity(Trace::AE_MBPURCHASE);
@@ -641,9 +725,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Sale) {
             $trace->setActionEntity(Trace::AE_SALE);
@@ -654,11 +740,14 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $trace->setActionEntity3(Trace::AE_MBSALE);
-            $trace->setActionId3($entity->getMonthlyBalance()->getId());
+            $trace->setActionId3($entity->getMonthlyBalance()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Buy) {
             $trace->setActionEntity(Trace::AE_BUY);
@@ -669,11 +758,14 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $trace->setActionEntity3(Trace::AE_MBPURCHASE);
-            $trace->setActionId3($entity->getMonthlyBalance()->getId());
+            $trace->setActionId3($entity->getMonthlyBalance()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof SecondaryVat) {
             $trace->setActionEntity(Trace::AE_SECONDARYVAT);
@@ -689,13 +781,17 @@ class TraceListener implements EventSubscriber
                     ->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $trace->setActionEntity3(Trace::AE_MBSALE);
-            $trace->setActionId3($entity->getMonthlyBalance()->getId());
+            $trace->setActionId3($entity->getMonthlyBalance()
+                ->getId());
             $trace->setActionEntity4(Trace::AE_SALE);
-            $trace->setActionId4($entity->getSale()->getId());
+            $trace->setActionId4($entity->getSale()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Shareholder) {
             $trace->setActionEntity(Trace::AE_SHAREHOLDER);
@@ -704,9 +800,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Pilot) {
             $trace->setActionEntity(Trace::AE_PILOT);
@@ -715,9 +813,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyUser) {
             $trace->setActionEntity(Trace::AE_CUSER);
@@ -727,9 +827,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof CompanyAdmin) {
             $trace->setActionEntity(Trace::AE_CADMIN);
@@ -739,9 +841,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Doc) {
             $trace->setActionEntity(Trace::AE_DOC);
@@ -750,9 +854,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupcomptable) {
             $trace->setActionEntity(Trace::AE_DOCGROUPCOMPTABLE);
@@ -761,9 +867,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupbank) {
             $trace->setActionEntity(Trace::AE_DOCGROUPBANK);
@@ -772,9 +880,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroup) {
             $trace->setActionEntity(Trace::AE_DOCGROUP);
@@ -783,9 +893,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupfiscal) {
             $trace->setActionEntity(Trace::AE_DOCGROUPFISCAL);
@@ -794,9 +906,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupperso) {
             $trace->setActionEntity(Trace::AE_DOCGROUPPERSO);
@@ -805,9 +919,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupsyst) {
             $trace->setActionEntity(Trace::AE_DOCGROUPSYST);
@@ -816,9 +932,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         } elseif ($entity instanceof Docgroupaudit) {
             $trace->setActionEntity(Trace::AE_DOCGROUPAUDIT);
@@ -827,9 +945,11 @@ class TraceListener implements EventSubscriber
                 '%company%' => $entity->getCompany()
                     ->getCorporateName()
             )));
-            $trace->setCompanyId($entity->getCompany()->getId());
+            $trace->setCompanyId($entity->getCompany()
+                ->getId());
             $trace->setActionEntity2(Trace::AE_COMPANY);
-            $trace->setActionId2($entity->getCompany()->getId());
+            $trace->setActionId2($entity->getCompany()
+                ->getId());
             $this->persist($trace, $em);
         }
     }

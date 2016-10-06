@@ -419,6 +419,5 @@ class MPaye
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

@@ -286,10 +286,7 @@ class CompanyNature
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

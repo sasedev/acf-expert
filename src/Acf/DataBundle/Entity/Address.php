@@ -514,10 +514,7 @@ class Address
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

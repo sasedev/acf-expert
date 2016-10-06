@@ -398,7 +398,6 @@ class Docgroupperso
     }
 
     /**
-     *
      */
     public function __clone()
     {

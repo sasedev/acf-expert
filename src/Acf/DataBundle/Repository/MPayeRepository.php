@@ -23,7 +23,11 @@ class MPayeRepository extends EntityRepository
      */
     public function countByCompany(Company $c)
     {
-        $qb = $this->createQueryBuilder('m')->select('count(m)')->join('m.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('m')
+            ->select('count(m)')
+            ->join('m.company', 'c')
+            ->where('c.id = :id')
+            ->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -38,7 +42,12 @@ class MPayeRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $c)
     {
-        $qb = $this->createQueryBuilder('m')->join('m.company', 'c')->where('c.id = :id')->orderBy('m.year', 'DESC')->addOrderBy('m.month', 'DESC')->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('m')
+            ->join('m.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('m.year', 'DESC')
+            ->addOrderBy('m.month', 'DESC')
+            ->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -69,7 +78,13 @@ class MPayeRepository extends EntityRepository
      */
     public function getAllByYearCompanyQuery($year, Company $c)
     {
-        $qb = $this->createQueryBuilder('m')->join('m.company', 'c')->where('c.id = :id')->andWhere('m.year = :year')->orderBy('m.month', 'ASC')->setParameter('id', $c->getId())->setParameter('year', $year);
+        $qb = $this->createQueryBuilder('m')
+            ->join('m.company', 'c')
+            ->where('c.id = :id')
+            ->andWhere('m.year = :year')
+            ->orderBy('m.month', 'ASC')
+            ->setParameter('id', $c->getId())
+            ->setParameter('year', $year);
         $query = $qb->getQuery();
 
         return $query;
@@ -100,7 +115,14 @@ class MPayeRepository extends EntityRepository
      */
     public function getAllYearByCompanyQuery(Company $c)
     {
-        $qb = $this->createQueryBuilder('m')->select('m.year')->distinct()->join('m.company', 'c')->where('c.id = :id')->groupBy('m.year')->orderBy('m.year', 'DESC')->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('m')
+            ->select('m.year')
+            ->distinct()
+            ->join('m.company', 'c')
+            ->where('c.id = :id')
+            ->groupBy('m.year')
+            ->orderBy('m.year', 'DESC')
+            ->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query;

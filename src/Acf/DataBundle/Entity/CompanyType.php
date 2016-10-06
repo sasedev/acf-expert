@@ -195,10 +195,7 @@ class CompanyType
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

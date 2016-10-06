@@ -297,10 +297,7 @@ class Shareholder
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

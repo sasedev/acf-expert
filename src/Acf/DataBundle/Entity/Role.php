@@ -441,10 +441,7 @@ class Role implements RoleInterface, \Serializable
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }

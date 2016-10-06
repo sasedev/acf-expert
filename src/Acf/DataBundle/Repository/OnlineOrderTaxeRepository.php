@@ -11,91 +11,91 @@ use Acf\DataBundle\Entity\OnlineOrder;
 class OnlineOrderTaxeRepository extends EntityRepository
 {
 
-  /**
-   * All count
-   *
-   * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-   *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
-   */
-  public function count()
-  {
-    $qb = $this->createQueryBuilder('t')->select('count(t)');
-    $query = $qb->getQuery();
+    /**
+     * All count
+     *
+     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
+     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     */
+    public function count()
+    {
+        $qb = $this->createQueryBuilder('t')->select('count(t)');
+        $query = $qb->getQuery();
 
-    return $query->getSingleScalarResult();
-  }
+        return $query->getSingleScalarResult();
+    }
 
-  /**
-   * Get Query for All Entities
-   *
-   * @return \Doctrine\ORM\Query
-   */
-  public function getAllQuery()
-  {
-    $qb = $this->createQueryBuilder('t')->orderBy('t.priority', 'ASC');
-    $query = $qb->getQuery();
+    /**
+     * Get Query for All Entities
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getAllQuery()
+    {
+        $qb = $this->createQueryBuilder('t')->orderBy('t.priority', 'ASC');
+        $query = $qb->getQuery();
 
-    return $query;
-  }
+        return $query;
+    }
 
-  /**
-   * Get All Entities
-   *
-   * @return Ambigous <\Doctrine\ORM\mixed,
-   *         \Doctrine\ORM\Internal\Hydration\mixed,
-   *         \Doctrine\DBAL\Driver\Statement,
-   *         \Doctrine\Common\Cache\mixed>
-   */
-  public function getAll()
-  {
-    return $this->getAllQuery()->execute();
-  }
+    /**
+     * Get All Entities
+     *
+     * @return Ambigous <\Doctrine\ORM\mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed>
+     */
+    public function getAll()
+    {
+        return $this->getAllQuery()->execute();
+    }
 
-  /**
-   * All count
-   *
-   * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-   *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
-   */
-  public function countByOrder(OnlineOrder $order)
-  {
-    $qb = $this->createQueryBuilder('t')
-      ->select('count(t)')
-      ->join('t.order', 'o')
-      ->where('o.id = :id')
-      ->setParameter('id', $order->getId());
-    $query = $qb->getQuery();
+    /**
+     * All count
+     *
+     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
+     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     */
+    public function countByOrder(OnlineOrder $order)
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('count(t)')
+            ->join('t.order', 'o')
+            ->where('o.id = :id')
+            ->setParameter('id', $order->getId());
+        $query = $qb->getQuery();
 
-    return $query->getSingleScalarResult();
-  }
+        return $query->getSingleScalarResult();
+    }
 
-  /**
-   * Get Query for All Entities
-   *
-   * @return \Doctrine\ORM\Query
-   */
-  public function getAllByOrderQuery(OnlineOrder $order)
-  {
-    $qb = $this->createQueryBuilder('t')
-      ->join('t.order', 'o')
-      ->where('o.id = :id')
-      ->setParameter('id', $order->getId())
-      ->orderBy('t.priority', 'ASC');
-    $query = $qb->getQuery();
+    /**
+     * Get Query for All Entities
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getAllByOrderQuery(OnlineOrder $order)
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->join('t.order', 'o')
+            ->where('o.id = :id')
+            ->setParameter('id', $order->getId())
+            ->orderBy('t.priority', 'ASC');
+        $query = $qb->getQuery();
 
-    return $query;
-  }
+        return $query;
+    }
 
-  /**
-   * Get All Entities
-   *
-   * @return Ambigous <\Doctrine\ORM\mixed,
-   *         \Doctrine\ORM\Internal\Hydration\mixed,
-   *         \Doctrine\DBAL\Driver\Statement,
-   *         \Doctrine\Common\Cache\mixed>
-   */
-  public function getAllByOrder(OnlineOrder $order)
-  {
-    return $this->getAllByOrderQuery($order)->execute();
-  }
+    /**
+     * Get All Entities
+     *
+     * @return Ambigous <\Doctrine\ORM\mixed,
+     *         \Doctrine\ORM\Internal\Hydration\mixed,
+     *         \Doctrine\DBAL\Driver\Statement,
+     *         \Doctrine\Common\Cache\mixed>
+     */
+    public function getAllByOrder(OnlineOrder $order)
+    {
+        return $this->getAllByOrderQuery($order)->execute();
+    }
 }

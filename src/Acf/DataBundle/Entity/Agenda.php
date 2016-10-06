@@ -336,10 +336,7 @@ class Agenda extends FCEventClass
     }
 
     /**
-     *
      */
     public function __clone()
-    {
-
-    }
+    {}
 }
