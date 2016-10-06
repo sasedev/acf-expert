@@ -157,7 +157,8 @@ class BaseDocController extends BaseController
                     $response->headers->set('Content-Type', $goodDoc->getMimeType());
                     $response->headers->set('Cache-Control', '');
                     $response->headers->set('Content-Length', $goodDoc->getSize());
-                    $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $goodDoc->getDtUpdate()->getTimestamp()));
+                    $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $goodDoc->getDtUpdate()
+                        ->getTimestamp()));
                     $fallback = $this->normalize($goodDoc->getTitle());
 
                     $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $goodDoc->getOriginalName(), $fallback);
