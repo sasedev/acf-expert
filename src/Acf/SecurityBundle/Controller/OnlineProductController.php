@@ -11,40 +11,40 @@ use Acf\DataBundle\Entity\OnlineProduct;
 class OnlineProductController extends BaseController
 {
 
-  /**
-   *
-   * @var array
-   */
-  protected $gvars = array();
+    /**
+     *
+     * @var array
+     */
+    protected $gvars = array();
 
-  /**
-   * Constructor
-   */
-  public function __construct()
-  {
-    $this->gvars['menu_active'] = 'shopping';
-  }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gvars['menu_active'] = 'shopping';
+    }
 
-  /**
-   *
-   * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
-   */
-  public function indexAction()
-  {
-    $session = $this->getSession();
+    /**
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function indexAction()
+    {
+        $session = $this->getSession();
 
-    $prods = $session->get("OnlineProducts", array());
-    $this->gvars['OnlineProducts'] = $prods;
-    $session->set("OnlineProducts", $prods);
+        $prods = $session->get("OnlineProducts", array());
+        $this->gvars['OnlineProducts'] = $prods;
+        $session->set("OnlineProducts", $prods);
 
-    $em = $this->getEntityManager();
-    $products = $em->getRepository("AcfDataBundle:OnlineProduct")->getAllVisible();
+        $em = $this->getEntityManager();
+        $products = $em->getRepository("AcfDataBundle:OnlineProduct")->getAllVisible();
 
-    $this->gvars['products'] = $products;
+        $this->gvars['products'] = $products;
 
-    $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.onlineProduct.txt');
-    $this->gvars['pagetitle'] = $this->translate('pagetitle.onlineProduct');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.onlineProduct.txt');
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.onlineProduct');
 
-    return $this->renderResponse('AcfSecurityBundle:Product:index.html.twig', $this->gvars);
-  }
+        return $this->renderResponse('AcfSecurityBundle:Product:index.html.twig', $this->gvars);
+    }
 }

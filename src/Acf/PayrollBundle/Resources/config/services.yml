@@ -1,4 +1,1 @@
 services:
-#    acf_payroll.example:
-#        class: Acf\PayrollBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]

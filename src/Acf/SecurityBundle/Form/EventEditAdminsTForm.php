@@ -19,7 +19,7 @@ class EventEditAdminsTForm extends AbstractType
      * Form builder
      *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      *
      * @return null
      */
@@ -33,10 +33,9 @@ class EventEditAdminsTForm extends AbstractType
                     ->leftJoin('u.userRoles', 'r')
                     ->where('r.name IN (:roles)')
                     ->setParameter('roles', array(
-                        'ROLE_ADMIN',
-                        'ROLE_SUPERADMIN'
-                        )
-                    )
+                    'ROLE_ADMIN',
+                    'ROLE_SUPERADMIN'
+                ))
                     ->orderBy('u.username', 'ASC');
             },
             'choice_label' => 'fullName',

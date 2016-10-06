@@ -16,70 +16,70 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class NewOnlineOrderTForm extends AbstractType
 {
 
-  /**
-   * Form builder
-   *
-   * @param FormBuilderInterface $builder
-   * @param array $options
-   *
-   * @return null
-   */
-  public function buildForm(FormBuilderInterface $builder, array $options)
-  {
-    $builder->add('orderTo', TextareaType::class, array(
-      'label' => 'OnlineOrder.orderTo.label'
-    ));
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return null
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('orderTo', TextareaType::class, array(
+            'label' => 'OnlineOrder.orderTo.label'
+        ));
 
-    $builder->add('renew', ChoiceType::class, array(
-      'label' => 'OnlineOrder.renew.label',
-      'choices_as_values' => true,
-      'choices' => OnlineOrder::choiceRenew(),
-      'expanded' => true,
-      'attr' => array(
-        'choice_label_trans' => true
-      )
-    ));
-  }
+        $builder->add('renew', ChoiceType::class, array(
+            'label' => 'OnlineOrder.renew.label',
+            'choices_as_values' => true,
+            'choices' => OnlineOrder::choiceRenew(),
+            'expanded' => true,
+            'attr' => array(
+                'choice_label_trans' => true
+            )
+        ));
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see FormTypeInterface::getName()
-   * @return string
-   */
-  public function getName()
-  {
-    return 'NewOnlineOrderForm';
-  }
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'NewOnlineOrderForm';
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::getBlockPrefix()
-   */
-  public function getBlockPrefix()
-  {
-    return $this->getName();
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-  /**
-   * get the default options
-   *
-   * @return multitype:string multitype:string
-   */
-  public function getDefaultOptions()
-  {
-    return array(
-      'validation_groups' => array(
-        'orderTo'
-      )
-    );
-  }
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'orderTo'
+            )
+        );
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::configureOptions()
-   */
-  public function configureOptions(OptionsResolver $resolver)
-  {
-    $resolver->setDefaults($this->getDefaultOptions());
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

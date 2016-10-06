@@ -17,9 +17,9 @@ class UploadAvatarTForm extends AbstractType
 
     /**
      * Form builder
-     * 
+     *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      *
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -61,7 +61,7 @@ class UploadAvatarTForm extends AbstractType
 
     /**
      * get the default options
-     * 
+     *
      * @return multitype:string multitype:string
      */
     public function getDefaultOptions()
