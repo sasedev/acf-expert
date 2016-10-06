@@ -324,7 +324,7 @@ class DocgroupfiscalController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($docgroupfiscal->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -345,7 +345,7 @@ class DocgroupfiscalController extends BaseController
 
         $trace->setActionEntity(Trace::AE_DOCGROUPFISCAL);
         $trace->setActionId2($docgroupfiscal->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

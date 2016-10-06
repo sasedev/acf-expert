@@ -1034,7 +1034,7 @@ class BuyController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($buy->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -1056,10 +1056,10 @@ class BuyController extends BaseController
         $trace->setActionEntity(Trace::AE_BUY);
         $trace->setActionId2($buy->getMonthlyBalance()
             ->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
         $trace->setActionId3($buy->getMonthlyBalance()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_MBPURCHASE);
 
         $msg = '';

@@ -26,7 +26,7 @@ class UpdateDocsTForm extends AbstractType
      * Form builder
      *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      *
      * @return null
      */

@@ -32,8 +32,6 @@ use Acf\DataBundle\Entity\Supplier;
 use Acf\DataBundle\Entity\Address;
 use Acf\DataBundle\Entity\Phone;
 use Acf\DataBundle\Entity\ConstantStr;
-use Acf\DataBundle\Entity\MBSale;
-use Acf\DataBundle\Entity\MBPurchase;
 use Acf\DataBundle\Entity\Docgroupcomptable;
 use Acf\DataBundle\Entity\Docgroup;
 use Acf\DataBundle\Entity\Docgroupfiscal;
@@ -42,6 +40,8 @@ use Acf\DataBundle\Entity\Docgroupsyst;
 use Acf\DataBundle\Entity\Docgroupbank;
 use Acf\DataBundle\Entity\Docgroupaudit;
 use Acf\DataBundle\Entity\Doc;
+use Acf\DataBundle\Entity\MBSale;
+use Acf\DataBundle\Entity\MBPurchase;
 use Acf\DataBundle\Entity\CompanyUser;
 use Acf\DataBundle\Entity\Trace;
 

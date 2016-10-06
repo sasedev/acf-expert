@@ -34,7 +34,7 @@ class NewTForm extends AbstractType
      * Form builder
      *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      *
      * @return null
      */
@@ -71,8 +71,6 @@ class NewTForm extends AbstractType
                 'by_reference' => true,
                 'required' => true
             ));
-
-
         }
 
         $builder->add('label', TextType::class, array(

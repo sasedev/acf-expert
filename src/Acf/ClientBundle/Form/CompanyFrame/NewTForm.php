@@ -40,7 +40,7 @@ class NewTForm extends AbstractType
      * Form builder
      *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      *
      * @return null
      */
@@ -78,8 +78,6 @@ class NewTForm extends AbstractType
                 'by_reference' => true,
                 'required' => true
             ));
-
-
         }
         if (null == $this->job) {
             $builder->add('job', EntityType::class, array(
@@ -110,8 +108,6 @@ class NewTForm extends AbstractType
                 'by_reference' => true,
                 'required' => true
             ));
-
-
         }
 
         $builder->add('sexe', ChoiceType::class, array(
