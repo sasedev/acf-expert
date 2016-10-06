@@ -528,7 +528,17 @@ class MPayeController extends BaseController
                 $modelExist = false;
             }
 
-            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.mpaye.list'))->setSubject($this->translate('pagetitle.mpaye.list'))->setDescription($this->translate('pagetitle.mpaye.list'))->setKeywords($this->translate('pagetitle.mpaye.list'))->setCategory('ACF mpaye');
+            $phpExcelObject->getProperties()
+                ->setCreator('Salah Abdelkader Seif Eddine')
+                ->setLastModifiedBy($this->getSecurityTokenStorage()
+                ->getToken()
+                ->getUser()
+                ->getFullname())
+                ->setTitle($this->translate('pagetitle.mpaye.list'))
+                ->setSubject($this->translate('pagetitle.mpaye.list'))
+                ->setDescription($this->translate('pagetitle.mpaye.list'))
+                ->setKeywords($this->translate('pagetitle.mpaye.list'))
+                ->setCategory('ACF mpaye');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -539,85 +549,165 @@ class MPayeController extends BaseController
 
             if (!$modelExist) {
                 $workSheet->setCellValue('A1', $this->translate('MSalary.matricule.label'));
-                $workSheet->getStyle('A1')->getFont()->setBold(true);
+                $workSheet->getStyle('A1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('B1', $this->translate('MSalary.nom.label'));
-                $workSheet->getStyle('B1')->getFont()->setBold(true);
+                $workSheet->getStyle('B1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('C1', $this->translate('MSalary.prenom.label'));
-                $workSheet->getStyle('C1')->getFont()->setBold(true);
+                $workSheet->getStyle('C1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('D1', $this->translate('MSalary.actif.label'));
-                $workSheet->getStyle('D1')->getFont()->setBold(true);
+                $workSheet->getStyle('D1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('E1', $this->translate('MSalary.fonction.label'));
-                $workSheet->getStyle('E1')->getFont()->setBold(true);
+                $workSheet->getStyle('E1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('F1', $this->translate('MSalary.regime.label'));
-                $workSheet->getStyle('F1')->getFont()->setBold(true);
+                $workSheet->getStyle('F1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('G1', $this->translate('MSalary.dtStartContrat.label'));
-                $workSheet->getStyle('G1')->getFont()->setBold(true);
+                $workSheet->getStyle('G1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('H1', $this->translate('MSalary.dtEndContrat.label'));
-                $workSheet->getStyle('H1')->getFont()->setBold(true);
+                $workSheet->getStyle('H1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('I1', $this->translate('MSalary.departement.label'));
-                $workSheet->getStyle('I1')->getFont()->setBold(true);
+                $workSheet->getStyle('I1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('J1', $this->translate('MSalary.categorie.label'));
-                $workSheet->getStyle('J1')->getFont()->setBold(true);
+                $workSheet->getStyle('J1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('K1', $this->translate('MSalary.echelon.label'));
-                $workSheet->getStyle('K1')->getFont()->setBold(true);
+                $workSheet->getStyle('K1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('L1', $this->translate('MSalary.cin.label'));
-                $workSheet->getStyle('L1')->getFont()->setBold(true);
+                $workSheet->getStyle('L1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('M1', $this->translate('MSalary.cnss.label'));
-                $workSheet->getStyle('M1')->getFont()->setBold(true);
+                $workSheet->getStyle('M1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('N1', $this->translate('MSalary.birthday.label'));
-                $workSheet->getStyle('N1')->getFont()->setBold(true);
+                $workSheet->getStyle('N1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('O1', $this->translate('MSalary.adresse.label'));
-                $workSheet->getStyle('O1')->getFont()->setBold(true);
+                $workSheet->getStyle('O1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('P1', $this->translate('MSalary.tel.label'));
-                $workSheet->getStyle('P1')->getFont()->setBold(true);
+                $workSheet->getStyle('P1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('Q1', $this->translate('MSalary.email.label'));
-                $workSheet->getStyle('Q1')->getFont()->setBold(true);
+                $workSheet->getStyle('Q1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('R1', $this->translate('MSalary.banque.label'));
-                $workSheet->getStyle('R1')->getFont()->setBold(true);
+                $workSheet->getStyle('R1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('S1', $this->translate('MSalary.rib.label'));
-                $workSheet->getStyle('S1')->getFont()->setBold(true);
+                $workSheet->getStyle('S1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('T1', $this->translate('MSalary.familyChef.label'));
-                $workSheet->getStyle('T1')->getFont()->setBold(true);
+                $workSheet->getStyle('T1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('U1', $this->translate('MSalary.familySituation.label'));
-                $workSheet->getStyle('U1')->getFont()->setBold(true);
+                $workSheet->getStyle('U1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('V1', $this->translate('MSalary.handicap.label'));
-                $workSheet->getStyle('V1')->getFont()->setBold(true);
+                $workSheet->getStyle('V1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('W1', $this->translate('MSalary.childWoBourse.label'));
-                $workSheet->getStyle('W1')->getFont()->setBold(true);
+                $workSheet->getStyle('W1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('X1', $this->translate('MSalary.nbrDaysWork.label'));
-                $workSheet->getStyle('X1')->getFont()->setBold(true);
+                $workSheet->getStyle('X1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('Y1', $this->translate('MSalary.nbrDaysAbs.label'));
-                $workSheet->getStyle('Y1')->getFont()->setBold(true);
+                $workSheet->getStyle('Y1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('Z1', $this->translate('MSalary.nbrDaysFerry.label'));
-                $workSheet->getStyle('Z1')->getFont()->setBold(true);
+                $workSheet->getStyle('Z1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AA1', $this->translate('MSalary.nbrH075Sup.label'));
-                $workSheet->getStyle('AA1')->getFont()->setBold(true);
+                $workSheet->getStyle('AA1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AB1', $this->translate('MSalary.nbrH100Sup.label'));
-                $workSheet->getStyle('AB1')->getFont()->setBold(true);
+                $workSheet->getStyle('AB1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AC1', $this->translate('MSalary.nbrDSup.label'));
-                $workSheet->getStyle('AC1')->getFont()->setBold(true);
+                $workSheet->getStyle('AC1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AD1', $this->translate('MSalary.remboursement.label'));
-                $workSheet->getStyle('AD1')->getFont()->setBold(true);
+                $workSheet->getStyle('AD1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AE1', $this->translate('MSalary.buysFromCompany.label'));
-                $workSheet->getStyle('AE1')->getFont()->setBold(true);
+                $workSheet->getStyle('AE1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AF1', $this->translate('MSalary.salaryAdvance.label'));
-                $workSheet->getStyle('AF1')->getFont()->setBold(true);
+                $workSheet->getStyle('AF1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AG1', $this->translate('MSalary.salaryBrut.label'));
-                $workSheet->getStyle('AG1')->getFont()->setBold(true);
+                $workSheet->getStyle('AG1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AH1', $this->translate('MSalary.salaryNet.label'));
-                $workSheet->getStyle('AH1')->getFont()->setBold(true);
+                $workSheet->getStyle('AH1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AI1', $this->translate('MSalary.advantageNature.label'));
-                $workSheet->getStyle('AI1')->getFont()->setBold(true);
+                $workSheet->getStyle('AI1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AJ1', $this->translate('MSalary.ticketResto.label'));
-                $workSheet->getStyle('AJ1')->getFont()->setBold(true);
+                $workSheet->getStyle('AJ1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AK1', $this->translate('MSalary.ticketCadeau.label'));
-                $workSheet->getStyle('AK1')->getFont()->setBold(true);
+                $workSheet->getStyle('AK1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AL1', $this->translate('MSalary.lifeAssurance.label'));
-                $workSheet->getStyle('AL1')->getFont()->setBold(true);
+                $workSheet->getStyle('AL1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AM1', $this->translate('MSalary.ceaAccount.label'));
-                $workSheet->getStyle('AM1')->getFont()->setBold(true);
+                $workSheet->getStyle('AM1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('AN1', $this->translate('MSalary.others.label'));
-                $workSheet->getStyle('AN1')->getFont()->setBold(true);
+                $workSheet->getStyle('AN1')
+                    ->getFont()
+                    ->setBold(true);
 
                 $workSheet->getStyle('A1:AN1')->applyFromArray(array(
                     'fill' => array(
@@ -744,7 +834,8 @@ class MPayeController extends BaseController
 
             $filename = $this->normalize($this->translate('pagetitle.msalary.listByMPaye', array(
                 '%mpaye%' => $mpaye->getRef(),
-                '%company%' => $mpaye->getCompany()->getCorporateName()
+                '%company%' => $mpaye->getCompany()
+                    ->getCorporateName()
             )));
             $filename = str_ireplace('"', '|', $filename);
             $filename = str_ireplace(' ', '_', $filename);

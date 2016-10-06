@@ -31,7 +31,8 @@ class UpdateParentTForm extends AbstractType
             'label' => 'BiFolder.parent.label',
             'class' => 'AcfDataBundle:BiFolder',
             'query_builder' => function (BiFolderRepository $dgr) use ($selfUrl) {
-                $qb = $dgr->createQueryBuilder('d')->where('d.pageUrlFull NOT LIKE :url');
+                $qb = $dgr->createQueryBuilder('d')
+                    ->where('d.pageUrlFull NOT LIKE :url');
                 $qb->setParameter('url', $selfUrl . '%');
 
                 return $qb->addOrderBy('d.pageUrlFull', 'ASC');

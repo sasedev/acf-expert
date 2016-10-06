@@ -36,6 +36,7 @@ class MBPurchaseController extends BaseController
     }
 
     /**
+     *
      * @param string $uid
      *
      * @return Response
@@ -118,8 +119,8 @@ class MBPurchaseController extends BaseController
         return $this->redirect($urlFrom);
     }
 
-
     /**
+     *
      * @param string $uid
      *
      * @return Response
@@ -282,7 +283,7 @@ class MBPurchaseController extends BaseController
                             if ($supplierNum == '' || $supplierNum <= 0) {
                                 $haserror = true;
                                 $oldsuppnum = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                                $log .= 'ligne ' . $lineRead . ', erreur : Numéro Fournisseur ('.$oldsuppnum.')<br>';
+                                $log .= 'ligne ' . $lineRead . ', erreur : Numéro Fournisseur (' . $oldsuppnum . ')<br>';
                             } else {
                                 $supplier = null;
                                 $knownSupplier = false;
@@ -347,7 +348,7 @@ class MBPurchaseController extends BaseController
 
                             if ($knownWithholding == false) {
                                 $haserror = true;
-                                $log .= 'ligne ' . $lineRead . ', erreur : Retenue Inconnue '.$withholdingValue.'<br>';
+                                $log .= 'ligne ' . $lineRead . ', erreur : Retenue Inconnue ' . $withholdingValue . '<br>';
                             }
 
                             if ($balanceNet < 0) {
@@ -706,8 +707,8 @@ class MBPurchaseController extends BaseController
             $phpExcelObject->getProperties()
                 ->setCreator('Salah Abdelkader Seif Eddine')
                 ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
+                ->getToken()
+                ->getUser()
                 ->getFullname())
                 ->setTitle($this->translate('pagetitle.buy.list'))
                 ->setSubject($this->translate('pagetitle.buy.list'))
@@ -840,7 +841,7 @@ class MBPurchaseController extends BaseController
                     ->setFormatCode('dd/mm/yyyy');
                 $workSheet->setCellValue('C' . $i, $buy->getBill(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('D' . $i, $buy->getRelation()
-                ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $numb = $suppliersPrefix . $buy->getRelation()->getNumberFormated();
                 $workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('F' . $i, $buy->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -870,7 +871,7 @@ class MBPurchaseController extends BaseController
                     ->getNumberFormat()
                     ->setFormatCode('#,##0.000');
                 $workSheet->setCellValue('M' . $i, $buy->getWithholding()
-                ->getValue() / 100);
+                    ->getValue() / 100);
                 $workSheet->getStyle('M' . $i)
                     ->getNumberFormat()
                     ->setFormatCode('#,##0.00%');
@@ -884,12 +885,12 @@ class MBPurchaseController extends BaseController
                     ->getNumberFormat()
                     ->setFormatCode('dd/mm/yyyy');
                 $workSheet->setCellValue('Q' . $i, $buy->getAccount()
-                ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 if (null == $buy->getNature()) {
                     $workSheet->setCellValue('R' . $i, 'ACHATS DE MARCHANDISES', \PHPExcel_Cell_DataType::TYPE_STRING2);
                 } else {
                     $workSheet->setCellValue('R' . $i, $buy->getNature()
-                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 }
                 $workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $buy->getTransactionStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('T' . $i, $buy->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -965,7 +966,7 @@ class MBPurchaseController extends BaseController
     /**
      *
      * @param integer $year
-     * @param string  $uid
+     * @param string $uid
      *
      * @return unknown|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -995,8 +996,8 @@ class MBPurchaseController extends BaseController
                 $phpExcelObject->getProperties()
                     ->setCreator('Salah Abdelkader Seif Eddine')
                     ->setLastModifiedBy($this->getSecurityTokenStorage()
-                        ->getToken()
-                        ->getUser()
+                    ->getToken()
+                    ->getUser()
                     ->getFullname())
                     ->setTitle($this->translate('pagetitle.buy.list'))
                     ->setSubject($this->translate('pagetitle.buy.list'))
@@ -1129,7 +1130,7 @@ class MBPurchaseController extends BaseController
                         ->setFormatCode('dd/mm/yyyy');
                     $workSheet->setCellValue('C' . $i, $buy->getBill(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('D' . $i, $buy->getRelation()
-                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $numb = $suppliersPrefix . $buy->getRelation()->getNumberFormated();
                     $workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('F' . $i, $buy->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -1159,7 +1160,7 @@ class MBPurchaseController extends BaseController
                         ->getNumberFormat()
                         ->setFormatCode('#,##0.000');
                     $workSheet->setCellValue('M' . $i, $buy->getWithholding()
-                    ->getValue() / 100);
+                        ->getValue() / 100);
                     $workSheet->getStyle('M' . $i)
                         ->getNumberFormat()
                         ->setFormatCode('#,##0.00%');
@@ -1173,12 +1174,12 @@ class MBPurchaseController extends BaseController
                         ->getNumberFormat()
                         ->setFormatCode('dd/mm/yyyy');
                     $workSheet->setCellValue('Q' . $i, $buy->getAccount()
-                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     if (null == $buy->getNature()) {
                         $workSheet->setCellValue('R' . $i, 'ACHATS DE MARCHANDISES', \PHPExcel_Cell_DataType::TYPE_STRING2);
                     } else {
                         $workSheet->setCellValue('R' . $i, $buy->getNature()
-                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                            ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     }
                     $workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $buy->getTransactionStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('T' . $i, $buy->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -1261,7 +1262,8 @@ class MBPurchaseController extends BaseController
         $trace->setActionId($mbpurchase->getId());
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
-        $trace->setCompanyId($mbpurchase->getCompany()->getId());
+        $trace->setCompanyId($mbpurchase->getCompany()
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -1281,7 +1283,8 @@ class MBPurchaseController extends BaseController
         $tableEnd = '</tbody></table>';
 
         $trace->setActionEntity(Trace::AE_MBPURCHASE);
-        $trace->setActionId2($mbpurchase->getCompany()->getId());
+        $trace->setActionId2($mbpurchase->getCompany()
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

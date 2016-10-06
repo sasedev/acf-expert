@@ -220,7 +220,7 @@ class GoodDocController extends BaseController
                     $response->headers->set('Cache-Control', '');
                     $response->headers->set('Content-Length', $goodDoc->getSize());
                     $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $goodDoc->getDtUpdate()
-                    ->getTimestamp()));
+                        ->getTimestamp()));
                     $fallback = $this->normalize($goodDoc->getTitle());
 
                     $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $goodDoc->getOriginalName(), $fallback);

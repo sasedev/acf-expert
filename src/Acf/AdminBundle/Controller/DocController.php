@@ -72,7 +72,7 @@ class DocController extends BaseController
                     $response->headers->set('Cache-Control', '');
                     $response->headers->set('Content-Length', $doc->getSize());
                     $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $doc->getDtUpdate()
-                    ->getTimestamp()));
+                        ->getTimestamp()));
                     $fallback = $this->normalize($doc->getOriginalName());
 
                     $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $doc->getOriginalName(), $fallback);
@@ -333,7 +333,7 @@ class DocController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($doc->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -354,7 +354,7 @@ class DocController extends BaseController
 
         $trace->setActionEntity(Trace::AE_DOC);
         $trace->setActionId2($doc->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

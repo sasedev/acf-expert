@@ -42,7 +42,8 @@ class NewTForm extends AbstractType
                 'label' => 'CompanyFrame.company.label',
                 'class' => 'AcfDataBundle:Company',
                 'query_builder' => function (CompanyRepository $br) {
-                    return $br->createQueryBuilder('c')->orderBy('c.corporateName', 'ASC');
+                    return $br->createQueryBuilder('c')
+                        ->orderBy('c.corporateName', 'ASC');
                 },
                 'choice_label' => 'corporateName',
                 'multiple' => false,
@@ -55,7 +56,10 @@ class NewTForm extends AbstractType
                 'label' => 'CompanyFrame.company.label',
                 'class' => 'AcfDataBundle:Company',
                 'query_builder' => function (CompanyRepository $br) use ($companyId) {
-                    return $br->createQueryBuilder('c')->where('c.id = :id')->setParameter('id', $companyId)->orderBy('c.corporateName', 'ASC');
+                    return $br->createQueryBuilder('c')
+                        ->where('c.id = :id')
+                        ->setParameter('id', $companyId)
+                        ->orderBy('c.corporateName', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,

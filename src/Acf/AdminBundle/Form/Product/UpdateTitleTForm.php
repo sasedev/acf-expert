@@ -14,58 +14,58 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UpdateTitleTForm extends AbstractType
 {
 
-  /**
-   * Form builder
-   *
-   * @param FormBuilderInterface $builder
-   * @param array $options
-   */
-  public function buildForm(FormBuilderInterface $builder, array $options)
-  {
-    $builder->add('title', TextType::class, array(
-      'label' => 'Product.title.label'
-    ));
-  }
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('title', TextType::class, array(
+            'label' => 'Product.title.label'
+        ));
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see FormTypeInterface::getName()
-   * @return string
-   */
-  public function getName()
-  {
-    return 'ProductUpdateTitleForm';
-  }
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'ProductUpdateTitleForm';
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::getBlockPrefix()
-   */
-  public function getBlockPrefix()
-  {
-    return $this->getName();
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-  /**
-   * get the default options
-   *
-   * @return multitype:string multitype:string
-   */
-  public function getDefaultOptions()
-  {
-    return array(
-      'validation_groups' => array(
-        'title'
-      )
-    );
-  }
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'title'
+            )
+        );
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::configureOptions()
-   */
-  public function configureOptions(OptionsResolver $resolver)
-  {
-    $resolver->setDefaults($this->getDefaultOptions());
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

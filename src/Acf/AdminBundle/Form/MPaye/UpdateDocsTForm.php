@@ -39,7 +39,8 @@ class UpdateDocsTForm extends AbstractType
                 'label' => 'MPaye.docs.label',
                 'class' => 'AcfDataBundle:Doc',
                 'query_builder' => function (DocRepository $dr) {
-                    return $dr->createQueryBuilder('d')->orderBy('d.originalName', 'ASC');
+                    return $dr->createQueryBuilder('d')
+                        ->orderBy('d.originalName', 'ASC');
                 },
                 'choice_label' => 'originalName',
                 'multiple' => true,
@@ -52,7 +53,11 @@ class UpdateDocsTForm extends AbstractType
                 'label' => 'MPaye.docs.label',
                 'class' => 'AcfDataBundle:Doc',
                 'query_builder' => function (DocRepository $dr) use ($companyId) {
-                    return $dr->createQueryBuilder('d')->join('d.company', 'c')->where('c.id = :cid')->orderBy('d.originalName', 'ASC')->setParameter('cid', $companyId);
+                    return $dr->createQueryBuilder('d')
+                        ->join('d.company', 'c')
+                        ->where('c.id = :cid')
+                        ->orderBy('d.originalName', 'ASC')
+                        ->setParameter('cid', $companyId);
                 },
                 'choice_label' => 'originalName',
                 'multiple' => true,

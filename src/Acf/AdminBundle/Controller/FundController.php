@@ -385,7 +385,7 @@ class FundController extends BaseController
         $trace->setUserId($curUser->getId());
         $trace->setUserFullname($curUser->getFullName());
         $trace->setCompanyId($fund->getCompany()
-        ->getId());
+            ->getId());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
                 $trace->setUserType(Trace::UT_CLIENT);
@@ -405,7 +405,7 @@ class FundController extends BaseController
 
         $trace->setActionEntity(Trace::AE_FUND);
         $trace->setActionId2($fund->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

@@ -37,10 +37,12 @@ class MBSaleController extends BaseController
     }
 
     /**
+     *
      * @param string $uid
      *
      * @return Response
-     **/
+     *
+     */
     public function editGetAction($uid)
     {
         $urlFrom = $this->getReferer();
@@ -120,10 +122,12 @@ class MBSaleController extends BaseController
     }
 
     /**
+     *
      * @param string $uid
      *
      * @return Response
-     **/
+     *
+     */
     public function editPostAction($uid)
     {
         $urlFrom = $this->getReferer();
@@ -284,7 +288,7 @@ class MBSaleController extends BaseController
                             if ($customerNum == '' || $customerNum <= 0) {
                                 $haserror = true;
                                 $oldcustomnum = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                                $log .= 'ligne ' . $lineRead . ', erreur : Numéro Client ('.$oldcustomnum.')<br>';
+                                $log .= 'ligne ' . $lineRead . ', erreur : Numéro Client (' . $oldcustomnum . ')<br>';
                             } else {
                                 $customer = null;
                                 $knownCustomer = false;
@@ -358,7 +362,7 @@ class MBSaleController extends BaseController
 
                             if ($knownWithholding == false) {
                                 $haserror = true;
-                                $log .= 'ligne ' . $lineRead . ', erreur : Retenue Inconnue '.$withholdingValue.'<br>';
+                                $log .= 'ligne ' . $lineRead . ', erreur : Retenue Inconnue ' . $withholdingValue . '<br>';
                             }
 
                             if ($balanceNet < 0) {
@@ -729,8 +733,8 @@ class MBSaleController extends BaseController
             $phpExcelObject->getProperties()
                 ->setCreator('Salah Abdelkader Seif Eddine')
                 ->setLastModifiedBy($this->getSecurityTokenStorage()
-                    ->getToken()
-                    ->getUser()
+                ->getToken()
+                ->getUser()
                 ->getFullname())
                 ->setTitle($this->translate('pagetitle.sale.list'))
                 ->setSubject($this->translate('pagetitle.sale.list'))
@@ -863,7 +867,7 @@ class MBSaleController extends BaseController
                     ->setFormatCode('dd/mm/yyyy');
                 $workSheet->setCellValue('C' . $i, $sale->getBill(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('D' . $i, $sale->getRelation()
-                ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $numb = $customersPrefix . $sale->getRelation()->getNumberFormated();
                 $workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('F' . $i, $sale->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -894,7 +898,7 @@ class MBSaleController extends BaseController
                     ->getNumberFormat()
                     ->setFormatCode('#,##0.000');
                 $workSheet->setCellValue('N' . $i, $sale->getWithholding()
-                ->getValue() / 100);
+                    ->getValue() / 100);
                 $workSheet->getStyle('N' . $i)
                     ->getNumberFormat()
                     ->setFormatCode('#,##0.00%');
@@ -908,7 +912,7 @@ class MBSaleController extends BaseController
                     ->getNumberFormat()
                     ->setFormatCode('dd/mm/yyyy');
                 $workSheet->setCellValue('R' . $i, $sale->getAccount()
-                ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('T' . $i, $sale->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 
@@ -942,7 +946,7 @@ class MBSaleController extends BaseController
                         ->setFormatCode('dd/mm/yyyy');
                     $workSheet->setCellValue('C' . $i, $sale->getBill(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('D' . $i, $sale->getRelation()
-                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     // $numb = $customersPrefix . $sale->getRelation()->getNumberFormated();
                     $workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('F' . $i, $sale->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -969,7 +973,7 @@ class MBSaleController extends BaseController
                         ->getNumberFormat()
                         ->setFormatCode('#,##0.000');
                     $workSheet->setCellValue('N' . $i, $sale->getWithholding()
-                    ->getValue() / 100);
+                        ->getValue() / 100);
                     $workSheet->getStyle('N' . $i)
                         ->getNumberFormat()
                         ->setFormatCode('#,##0.00%');
@@ -983,7 +987,7 @@ class MBSaleController extends BaseController
                         ->getNumberFormat()
                         ->setFormatCode('dd/mm/yyyy');
                     $workSheet->setCellValue('R' . $i, $sale->getAccount()
-                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('T' . $i, $sale->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 
@@ -1059,7 +1063,7 @@ class MBSaleController extends BaseController
     /**
      *
      * @param integer $year
-     * @param string  $uid
+     * @param string $uid
      *
      * @return unknown|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -1089,8 +1093,8 @@ class MBSaleController extends BaseController
                 $phpExcelObject->getProperties()
                     ->setCreator('Salah Abdelkader Seif Eddine')
                     ->setLastModifiedBy($this->getSecurityTokenStorage()
-                        ->getToken()
-                        ->getUser()
+                    ->getToken()
+                    ->getUser()
                     ->getFullname())
                     ->setTitle($this->translate('pagetitle.sale.list'))
                     ->setSubject($this->translate('pagetitle.sale.list'))
@@ -1223,7 +1227,7 @@ class MBSaleController extends BaseController
                         ->setFormatCode('dd/mm/yyyy');
                     $workSheet->setCellValue('C' . $i, $sale->getBill(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('D' . $i, $sale->getRelation()
-                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $numb = $customersPrefix . $sale->getRelation()->getNumberFormated();
                     $workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('F' . $i, $sale->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -1254,7 +1258,7 @@ class MBSaleController extends BaseController
                         ->getNumberFormat()
                         ->setFormatCode('#,##0.000');
                     $workSheet->setCellValue('N' . $i, $sale->getWithholding()
-                    ->getValue() / 100);
+                        ->getValue() / 100);
                     $workSheet->getStyle('N' . $i)
                         ->getNumberFormat()
                         ->setFormatCode('#,##0.00%');
@@ -1268,7 +1272,7 @@ class MBSaleController extends BaseController
                         ->getNumberFormat()
                         ->setFormatCode('dd/mm/yyyy');
                     $workSheet->setCellValue('R' . $i, $sale->getAccount()
-                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('T' . $i, $sale->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 
@@ -1302,7 +1306,7 @@ class MBSaleController extends BaseController
                             ->setFormatCode('dd/mm/yyyy');
                         $workSheet->setCellValue('C' . $i, $sale->getBill(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                         $workSheet->setCellValue('D' . $i, $sale->getRelation()
-                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                            ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                         // $numb = $customersPrefix . $sale->getRelation()->getNumberFormated();
                         $workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
                         $workSheet->setCellValue('F' . $i, $sale->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -1329,7 +1333,7 @@ class MBSaleController extends BaseController
                             ->getNumberFormat()
                             ->setFormatCode('#,##0.000');
                         $workSheet->setCellValue('N' . $i, $sale->getWithholding()
-                        ->getValue() / 100);
+                            ->getValue() / 100);
                         $workSheet->getStyle('N' . $i)
                             ->getNumberFormat()
                             ->setFormatCode('#,##0.00%');
@@ -1343,7 +1347,7 @@ class MBSaleController extends BaseController
                             ->getNumberFormat()
                             ->setFormatCode('dd/mm/yyyy');
                         $workSheet->setCellValue('R' . $i, $sale->getAccount()
-                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                            ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                         $workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $sale->getTransactionStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                         $workSheet->setCellValue('T' . $i, $sale->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 
@@ -1427,7 +1431,7 @@ class MBSaleController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($mbsale->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -1448,7 +1452,7 @@ class MBSaleController extends BaseController
 
         $trace->setActionEntity(Trace::AE_MBSALE);
         $trace->setActionId2($mbsale->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

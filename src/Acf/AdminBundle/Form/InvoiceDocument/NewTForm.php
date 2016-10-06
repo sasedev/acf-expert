@@ -20,109 +20,109 @@ use Acf\DataBundle\Entity\OnlineInvoiceDocument;
 class NewTForm extends AbstractType
 {
 
-  /**
-   *
-   * @var OnlineInvoice
-   */
-  private $invoice;
+    /**
+     *
+     * @var OnlineInvoice
+     */
+    private $invoice;
 
-  /**
-   * Form builder
-   *
-   * @param FormBuilderInterface $builder
-   * @param array $options
-   *
-   * @return null
-   */
-  public function buildForm(FormBuilderInterface $builder, array $options)
-  {
-    $this->invoice = $options['invoice'];
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return null
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this->invoice = $options['invoice'];
 
-    if (null == $this->invoice) {
-      $builder->add('invoice', EntityType::class, array(
-        'label' => 'InvoiceDocument.invoice.label',
-        'class' => 'AcfDataBundle:OnlineInvoice',
-        'query_builder' => function (OnlineInvoiceRepository $ir) {
-          return $ir->createQueryBuilder('i')
-            ->orderBy('i.dtCrea', 'ASC');
-        },
-        'choice_label' => 'ref',
-        'multiple' => false,
-        'by_reference' => true,
-        'required' => true
-      ));
-    } else {
-      $invoiceId = $this->invoice->getId();
-      $builder->add('invoice', EntityidType::class, array(
-        'label' => 'InvoiceDocument.invoice.label',
-        'class' => 'AcfDataBundle:OnlineInvoice',
-        'query_builder' => function (OnlineInvoiceRepository $br) use ($invoiceId) {
-          return $br->createQueryBuilder('i')
-            ->where('i.id = :id')
-            ->setParameter('id', $invoiceId)
-            ->orderBy('i.dtCrea', 'ASC');
-        },
-        'choice_label' => 'id',
-        'multiple' => false,
-        'by_reference' => true,
-        'required' => true
-      ));
+        if (null == $this->invoice) {
+            $builder->add('invoice', EntityType::class, array(
+                'label' => 'InvoiceDocument.invoice.label',
+                'class' => 'AcfDataBundle:OnlineInvoice',
+                'query_builder' => function (OnlineInvoiceRepository $ir) {
+                    return $ir->createQueryBuilder('i')
+                        ->orderBy('i.dtCrea', 'ASC');
+                },
+                'choice_label' => 'ref',
+                'multiple' => false,
+                'by_reference' => true,
+                'required' => true
+            ));
+        } else {
+            $invoiceId = $this->invoice->getId();
+            $builder->add('invoice', EntityidType::class, array(
+                'label' => 'InvoiceDocument.invoice.label',
+                'class' => 'AcfDataBundle:OnlineInvoice',
+                'query_builder' => function (OnlineInvoiceRepository $br) use ($invoiceId) {
+                    return $br->createQueryBuilder('i')
+                        ->where('i.id = :id')
+                        ->setParameter('id', $invoiceId)
+                        ->orderBy('i.dtCrea', 'ASC');
+                },
+                'choice_label' => 'id',
+                'multiple' => false,
+                'by_reference' => true,
+                'required' => true
+            ));
+        }
+
+        $builder->add('fileName', FileType::class, array(
+            'label' => 'InvoiceDocument.fileName.label'
+        ));
+
+        $builder->add('visible', ChoiceType::class, array(
+            'label' => 'InvoiceDocument.visible.label',
+            'choices_as_values' => true,
+            'choices' => OnlineInvoiceDocument::choiceVisible(),
+            'attr' => array(
+                'choice_label_trans' => true
+            )
+        ));
     }
 
-    $builder->add('fileName', FileType::class, array(
-      'label' => 'InvoiceDocument.fileName.label'
-    ));
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'InvoiceDocumentNewForm';
+    }
 
-    $builder->add('visible', ChoiceType::class, array(
-      'label' => 'InvoiceDocument.visible.label',
-      'choices_as_values' => true,
-      'choices' => OnlineInvoiceDocument::choiceVisible(),
-      'attr' => array(
-        'choice_label_trans' => true
-      )
-    ));
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see FormTypeInterface::getName()
-   * @return string
-   */
-  public function getName()
-  {
-    return 'InvoiceDocumentNewForm';
-  }
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'fileName'
+            ),
+            'invoice' => null
+        );
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::getBlockPrefix()
-   */
-  public function getBlockPrefix()
-  {
-    return $this->getName();
-  }
-
-  /**
-   * get the default options
-   *
-   * @return multitype:string multitype:string
-   */
-  public function getDefaultOptions()
-  {
-    return array(
-      'validation_groups' => array(
-        'fileName'
-      ),
-      'invoice' => null
-    );
-  }
-
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::configureOptions()
-   */
-  public function configureOptions(OptionsResolver $resolver)
-  {
-    $resolver->setDefaults($this->getDefaultOptions());
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

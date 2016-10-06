@@ -192,7 +192,7 @@ class CompanyLabelController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($companyLabel->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -213,7 +213,7 @@ class CompanyLabelController extends BaseController
 
         $trace->setActionEntity(Trace::AE_LABEL);
         $trace->setActionId2($companyLabel->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

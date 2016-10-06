@@ -192,7 +192,7 @@ class CompanyFrameController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($companyFrame->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -213,7 +213,7 @@ class CompanyFrameController extends BaseController
 
         $trace->setActionEntity(Trace::AE_FRAME);
         $trace->setActionId2($companyFrame->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

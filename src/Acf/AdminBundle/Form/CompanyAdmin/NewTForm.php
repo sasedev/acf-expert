@@ -29,7 +29,7 @@ class NewTForm extends AbstractType
      * Form builder
      *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      *
      * @return null
      */
@@ -51,9 +51,8 @@ class NewTForm extends AbstractType
             'multiple' => false,
             'by_reference' => true,
             'required' => true
-        ))
+        ));
 
-        ;
         $builder->add('user', EntityType::class, array(
             'label' => 'CompanyAdmin.user.label',
             'class' => 'AcfDataBundle:User',
@@ -80,9 +79,7 @@ class NewTForm extends AbstractType
             'multiple' => false,
             'by_reference' => true,
             'required' => true
-        ))
-
-        ;
+        ));
     }
 
     /**

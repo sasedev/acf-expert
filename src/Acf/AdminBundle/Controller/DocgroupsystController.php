@@ -386,7 +386,7 @@ class DocgroupsystController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($docgroupsyst->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -407,7 +407,7 @@ class DocgroupsystController extends BaseController
 
         $trace->setActionEntity(Trace::AE_DOCGROUPSYST);
         $trace->setActionId2($docgroupsyst->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

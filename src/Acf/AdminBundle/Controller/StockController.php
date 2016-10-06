@@ -112,7 +112,7 @@ class StockController extends BaseController
     /**
      *
      * @param Request $request
-     * @param string  $uid
+     * @param string $uid
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editPostAction(Request $request, $uid)
@@ -193,7 +193,7 @@ class StockController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($stock->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -214,7 +214,7 @@ class StockController extends BaseController
 
         $trace->setActionEntity(Trace::AE_STOCK);
         $trace->setActionId2($stock->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';

@@ -27,12 +27,13 @@ class NewTForm extends AbstractType
         $builder->add('title', TextType::class, array(
             'label' => 'BiFolder.title.label'
         ));
-        
+
         $builder->add('parent', EntityType::class, array(
             'label' => 'BiFolder.parent.label',
             'class' => 'AcfDataBundle:BiFolder',
             'query_builder' => function (BiFolderRepository $dgr) {
-                return $dgr->createQueryBuilder('d')->orderBy('d.pageUrlFull', 'ASC');
+                return $dgr->createQueryBuilder('d')
+                    ->orderBy('d.pageUrlFull', 'ASC');
             },
             'choice_label' => 'pageUrlFull',
             'multiple' => false,

@@ -27,7 +27,8 @@ class UpdateUserTForm extends AbstractType
             'label' => 'Order.user.label',
             'class' => 'AcfDataBundle:User',
             'query_builder' => function (UserRepository $ur) {
-                return $ur->createQueryBuilder('u')->orderBy('u.username', 'ASC');
+                return $ur->createQueryBuilder('u')
+                    ->orderBy('u.username', 'ASC');
             },
             'choice_label' => 'fullName',
             'multiple' => false,

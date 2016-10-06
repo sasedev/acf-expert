@@ -1,4 +1,1 @@
 services:
-#    acf_admin.example:
-#        class: Acf\AdminBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]

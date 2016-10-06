@@ -18,90 +18,90 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class NewTForm extends AbstractType
 {
 
-  /**
-   * Form builder
-   *
-   * @param FormBuilderInterface $builder
-   * @param array $options
-   *
-   * @return null
-   */
-  public function buildForm(FormBuilderInterface $builder, array $options)
-  {
-    $builder->add('title', TextType::class, array(
-      'label' => 'Product.title.label'
-    ));
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return null
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('title', TextType::class, array(
+            'label' => 'Product.title.label'
+        ));
 
-    $builder->add('label', TextType::class, array(
-      'label' => 'Product.label.label'
-    ));
+        $builder->add('label', TextType::class, array(
+            'label' => 'Product.label.label'
+        ));
 
-    $builder->add('description', TextareaType::class, array(
-      'label' => 'Product.description.label'
-    ));
+        $builder->add('description', TextareaType::class, array(
+            'label' => 'Product.description.label'
+        ));
 
-    $builder->add('price', NumberType::class, array(
-      'label' => 'Product.price.label'
-    ));
+        $builder->add('price', NumberType::class, array(
+            'label' => 'Product.price.label'
+        ));
 
-    $builder->add('vat', NumberType::class, array(
-      'label' => 'Product.vat.label'
-    ));
+        $builder->add('vat', NumberType::class, array(
+            'label' => 'Product.vat.label'
+        ));
 
-    $builder->add('lockout', ChoiceType::class, array(
-      'label' => 'Product.lockout.label',
-      'choices_as_values' => true,
-      'choices' => OnlineProduct::choiceLockout(),
-      'attr' => array(
-        'choice_label_trans' => true
-      )
-    ));
-  }
+        $builder->add('lockout', ChoiceType::class, array(
+            'label' => 'Product.lockout.label',
+            'choices_as_values' => true,
+            'choices' => OnlineProduct::choiceLockout(),
+            'attr' => array(
+                'choice_label_trans' => true
+            )
+        ));
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see FormTypeInterface::getName()
-   * @return string
-   */
-  public function getName()
-  {
-    return 'ProductNewForm';
-  }
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'ProductNewForm';
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::getBlockPrefix()
-   */
-  public function getBlockPrefix()
-  {
-    return $this->getName();
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-  /**
-   * get the default options
-   *
-   * @return multitype:string multitype:string
-   */
-  public function getDefaultOptions()
-  {
-    return array(
-      'validation_groups' => array(
-        'label',
-        'title',
-        'description',
-        'price',
-        'vat',
-        'lockout'
-      )
-    );
-  }
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'label',
+                'title',
+                'description',
+                'price',
+                'vat',
+                'lockout'
+            )
+        );
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::configureOptions()
-   */
-  public function configureOptions(OptionsResolver $resolver)
-  {
-    $resolver->setDefaults($this->getDefaultOptions());
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

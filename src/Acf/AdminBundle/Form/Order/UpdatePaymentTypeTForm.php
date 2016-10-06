@@ -15,63 +15,63 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UpdatePaymentTypeTForm extends AbstractType
 {
 
-  /**
-   * Form builder
-   *
-   * @param FormBuilderInterface $builder
-   * @param array $options
-   */
-  public function buildForm(FormBuilderInterface $builder, array $options)
-  {
-    $builder->add('paymentType', ChoiceType::class, array(
-      'label' => 'Order.paymentType.label',
-      'choices_as_values' => true,
-      'choices' => OnlineOrder::choicePaymentType(),
-      'attr' => array(
-        'choice_label_trans' => true
-      )
-    ));
-  }
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('paymentType', ChoiceType::class, array(
+            'label' => 'Order.paymentType.label',
+            'choices_as_values' => true,
+            'choices' => OnlineOrder::choicePaymentType(),
+            'attr' => array(
+                'choice_label_trans' => true
+            )
+        ));
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see FormTypeInterface::getName()
-   * @return string
-   */
-  public function getName()
-  {
-    return 'OrderUpdatePaymentTypeForm';
-  }
+    /**
+     *
+     * {@inheritdoc} @see FormTypeInterface::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'OrderUpdatePaymentTypeForm';
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::getBlockPrefix()
-   */
-  public function getBlockPrefix()
-  {
-    return $this->getName();
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-  /**
-   * get the default options
-   *
-   * @return multitype:string multitype:string
-   */
-  public function getDefaultOptions()
-  {
-    return array(
-      'validation_groups' => array(
-        'paymentType'
-      )
-    );
-  }
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'paymentType'
+            )
+        );
+    }
 
-  /**
-   *
-   * {@inheritdoc} @see AbstractType::configureOptions()
-   */
-  public function configureOptions(OptionsResolver $resolver)
-  {
-    $resolver->setDefaults($this->getDefaultOptions());
-  }
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

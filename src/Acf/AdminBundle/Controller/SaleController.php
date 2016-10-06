@@ -968,7 +968,7 @@ class SaleController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($sale->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -990,10 +990,10 @@ class SaleController extends BaseController
         $trace->setActionEntity(Trace::AE_SALE);
         $trace->setActionId2($sale->getMonthlyBalance()
             ->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
         $trace->setActionId3($sale->getMonthlyBalance()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_MBSALE);
 
         $msg = '';

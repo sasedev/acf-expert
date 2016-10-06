@@ -377,7 +377,7 @@ class DocgroupbankController extends BaseController
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
         $trace->setCompanyId($docgroupbank->getCompany()
-        ->getId());
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -398,7 +398,7 @@ class DocgroupbankController extends BaseController
 
         $trace->setActionEntity(Trace::AE_DOCGROUPBANK);
         $trace->setActionId2($docgroupbank->getCompany()
-        ->getId());
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';
