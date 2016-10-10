@@ -554,16 +554,16 @@
 {%block end2_dynamic_jstxt%}
 	{{ parent() }}
 	function initialisation() {
-		var centreCarte = new google.maps.LatLng(36.809900, 10.183600);
+		var centreCarte = new google.maps.LatLng(36.8635703, 10.1569505);
 		var optionsCarte = {
-			zoom: 16,
+			zoom: 17,
 			center: centreCarte,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
 		var maCarte = new google.maps.Map(document.getElementById("map"), optionsCarte);
 		var optionsMarqueur = {
-			position: new google.maps.LatLng(36.8552697, 10.1500583),
-			title: '63, Rue Madinet El Maoussel, 2037 – Ennasr 2 – Ariana – Tunisie',
+			position: new google.maps.LatLng(36.8635703, 10.1569505),
+			title: 'ACEF Expert',
 			map: maCarte
 		};
 		var marqueur = new google.maps.Marker(optionsMarqueur);
