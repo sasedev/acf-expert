@@ -12,17 +12,17 @@ acf_front:
 
 acf_admin:
     resource: "@AcfAdminBundle/Resources/config/routing.yml"
-    prefix:   /ACF-Admin
+    prefix:   /ACEF-Admin
 
 acf_client:
     resource: "@AcfClientBundle/Resources/config/routing.yml"
-    prefix:   /ACF-Cloud
+    prefix:   /ACEF-Cloud
 
 acf_info:
     resource: "@AcfInfoBundle/Resources/config/routing.yml"
-    prefix:   /ACF-Info
+    prefix:   /ACEF-Info
     
 acf_payroll:
     resource: "@AcfPayrollBundle/Resources/config/routing.yml"
-    prefix:   /ACF-Payroll
+    prefix:   /ACEF-Payroll
 

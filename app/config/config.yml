@@ -47,7 +47,7 @@ twig:
         - 'SasedevCommonsBootstrapBundle::form.html.twig'
     globals:
         default_locale: "%locale%"
-        sitename: "ACF Expert"
+        sitename: "ACEF Expert"
 
 # Assetic Configuration
 assetic:

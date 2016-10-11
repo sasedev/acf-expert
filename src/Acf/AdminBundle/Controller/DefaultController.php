@@ -49,6 +49,9 @@ class DefaultController extends BaseController
         $activeUser = $em->getRepository('AcfDataBundle:User')->getAllActiveNow('30 minutes ago');
         $this->gvars['activeUsers'] = $activeUser;
 
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.dasboard');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.dasboard');
+
         return $this->renderResponse('AcfAdminBundle:Default:index.html.twig', $this->gvars);
     }
 }

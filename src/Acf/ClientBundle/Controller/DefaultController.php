@@ -341,6 +341,9 @@ class DefaultController extends BaseController
 
         $this->gvars['companies'] = $renderCompanies;
 
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.dasboard');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.dasboard');
+
         return $this->renderResponse('AcfClientBundle:Default:index.html.twig', $this->gvars);
     }
 }
