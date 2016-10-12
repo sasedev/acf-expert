@@ -19,6 +19,7 @@ menu.top.contact: 'Contact'
 menu.top.contact1: 'Contactez-nous'
 menu.top.contact2: 'Coordonnées'
 menu.top.contact3: 'Position géographique'
+menu.top.contact4: 'Joindre nos équipes'
 menu.top.basedoc: 'Base documentaire'
 menu.top.basedoc1: 'Fils d''actualités'
 menu.top.basedoc2: 'Liens et informations utiles'
@@ -92,3 +93,6 @@ Devis.otherInfos.label: 'Indiquez-nous ci-dessous toute information complémenta
 _mail.devis.subject: Demande de Devis
 _front.devis.error: 'Une erreur s''est produite lors de la tentative de sauvegrarde de votre devis'
 _front.devis.success: 'Votre demande de Devis a été sauvegardée avec succès'
+
+_mail.join.subject: 'Joindre nos équipes : '
+_mail.contact.subject: 'Contactez Nous : ' 

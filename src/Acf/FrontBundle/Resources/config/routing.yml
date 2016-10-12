@@ -6,6 +6,21 @@ _front_smtnotif:
     path:     /smtspsnotifs
     defaults: { _controller: "AcfFrontBundle:PaymentNotif:paymentnotif" }
 
+_front_contact:
+    path:     /contact
+    defaults: { _controller: "AcfFrontBundle:Default:contact" }
+    methods: [POST]
+
+_front_join:
+    path:     /join
+    defaults: { _controller: "AcfFrontBundle:Default:join" }
+    methods: [POST]
+
+_front_devis:
+    path:     /devis
+    defaults: { _controller: "AcfFrontBundle:Devis:index" }
+    methods: [GET]
+
 _front_devis:
     path:     /devis
     defaults: { _controller: "AcfFrontBundle:Devis:index" }

@@ -1141,6 +1141,10 @@ input[type="submit"] {
 .widget-search input[type="search"],
 #contact-form input[type="text"],
 #contact-form textarea,
+#join-form input[type="text"],
+#join-form input[type="file"],
+#join-form textarea,
+#join-form select,
 #respond input[type="text"],
 #respond textarea, .email {
 	color: #666fb5;
@@ -1166,6 +1170,10 @@ input[type="submit"] {
 .widget-search input[type="search"]:focus,
 #contact-form input[type="text"]:focus,
 #contact-form textarea:focus,
+#join-form input[type="text"]:focus,
+#join-form input[type="file"]:focus,
+#join-form textarea:focus,
+#join-form select:focus,
 #respond input[type="text"]:focus,
 #respond textarea:focus {
 	border-color: #ddd;

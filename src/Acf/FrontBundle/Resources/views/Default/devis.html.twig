@@ -45,7 +45,7 @@ $(function() {
 					<div class="row">
 						<div class="col-md-12">
 							<ul class="contact-details">
-								<li><a>Cabinet FAKHFAKH d'Expertise Comptable</a>
+								<li><a>Société d'Expertise Comptable et de Commissariat aux Comptes</a>
 								</li>
 								<li><a href="{{ 'site.global.mailto'|trans }}"><i class="fa fa-envelope-o"></i> {{ 'site.global.mail'|trans }}</a>
 								</li>
@@ -54,6 +54,15 @@ $(function() {
 								<li><a href="{{ 'site.global.fax.call'|trans }}"><i class="fa fa-fax"></i> {{ 'site.global.fax'|trans }}</a>
 								</li>
 								<li><a>Votre Cabinet d'Expertise Comptable en ligne</a>
+								</li>
+								<li>
+									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+								</li>
+								<li>
+									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -72,7 +81,7 @@ $(function() {
 						</button>
 						<!-- End Toggle Nav Link For Mobiles -->
 						<a class="navbar-brand" href="{{ path('_front_homepage') }}">
-							<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{asset('bundles/acfres/images/logo_acf.jpg')}}">
+							<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{asset('bundles/acfres/images/logo_acf.jpg')}}" width="220">
 						</a>
 					</div>
 					<div class="navbar-collapse collapse">
@@ -107,6 +116,8 @@ $(function() {
 									<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact1'|trans }}</a>
 									</li>
 									<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact2'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_homepage')}}#join">{{ 'menu.top.contact4'|trans }}</a>
 									</li>
 									<li><a href="{{ path('_front_homepage')}}#map0">{{ 'menu.top.contact3'|trans }}</a>
 									</li>

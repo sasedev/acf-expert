@@ -11,6 +11,9 @@
 <script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/easing/1.3.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/layerslider/kreaturamedia.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/script.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/form/20130711.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/validate/jquery.validate.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/validate/localization/messages_fr.min.js')}}"></script>
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
 {%endblock end_static_js%}
 {%block html_body_content%}
@@ -63,7 +66,7 @@
 						</button>
 						<!-- End Toggle Nav Link For Mobiles -->
 						<a class="navbar-brand" href="{{ path('_front_homepage') }}">
-							<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{asset('bundles/acfres/images/logo_acf.jpg')}}">
+							<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{asset('bundles/acfres/images/logo_acf.jpg')}}" width="220">
 						</a>
 					</div>
 					<div class="navbar-collapse collapse">
@@ -98,6 +101,8 @@
 									<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact1'|trans }}</a>
 									</li>
 									<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact2'|trans }}</a>
+									</li>
+									<li><a href="{{ path('_front_homepage')}}#join">{{ 'menu.top.contact4'|trans }}</a>
 									</li>
 									<li><a href="{{ path('_front_homepage')}}#map0">{{ 'menu.top.contact3'|trans }}</a>
 									</li>
@@ -208,19 +213,138 @@
 						<br>
 						<br>
 						<h4 class="classic-title"><span>Acceuil</span></h4>
-						<p>
-						Dans le souci d'être à l'écoute des clients les plus exigeants et d'être dans l'ère numérique, le cabinet ACEF Expert a développé une infrastructure logicielle qui permet de gérer les documents en ligne.
+						<br>
+						<h5 class="classic-title">« ACEF Expert » : le cabinet numérique, Zéro papier</h5>
+						<p class="text-justify">
+						<b>ACEF Expert</b> est un cabinet d’Expertise Comptable, de conseil, d’audit, de commissariat aux comptes et d’assurance, conseils en financement et évaluation financière, basé à Tunis. Notre cabinet est membre de l’Ordre des Experts Comptables de Tunisie, dirigé par son fondateur Faïez FAKHFAKH, expert-comptable.
 						</p>
-						<p>
-						L'infrastructure logicielle assure les fonctionnalités suivantes :
+						<p class="text-justify">
+						<b>ACEF Expert</b> a développé une panoplie de e-services :
 						</p>
 						<ul>
-							<li>Gérer, via le net, les documents comptables et juridiques de votre entreprise ;</li>
+							<li>Un service de délocalisation comptable via la plateforme web multi-sociétés multi-utilisateurs ACF Cloud. Un tel service est la résultante d’une demande sans cesse croissante d’expertise comptable en ligne, de dématérialisation des supports papier, de réduction des coûts et au progrès des communications à très haut débit. </li>
+							<li>Un tableau de bord mensuel ACF Dashboard pour chacune de vos sociétés incluant vos chiffres clés et des graphiques dressant l’évolutions de votre chiffre d’affaires et de vos différentes dépenses.</li>
+							<li>Une base d’information en ligne accessible 24h/24h 7j/7j ACF Info : bulletin d’information comptable, juridique, fiscal et social assurant une veille réglementaire de votre entreprise ainsi qu’une riche base de données.</li>
+							<li>Un agenda collaboratif ACF Agenda partagé entre le client et le cabinet permettant et permettant une notification automatique de vos échéances fiscales et sociales.</li>
+							<li>Une plateforme paie ACF Paie permettant au client de télécharger les fiches de paie de son personnel et de communiquer au cabinet les caractériels de la rémunération mensuelle de son personnel.</li>
+							<li>Un service sécurisé ACF Invoice de consultation de vos contrats conclus avec notre cabinet et de paiement de vos factures via internet. Ce service vous garantit un paiement en toute confiance et en toute sécutité.</li>
+						</ul>
+						<br>
+						<h5 class="classic-title">« ACEF Expert » : le spécialiste de la dématérialisation et de l’outsourcing</h5>
+						<p class="text-justify">
+							Face aux mutations de l’environnement économique imposant une réduction des coûts (notamment ceux liés aux fonctions Finance, Comptabilité et Paie), nous avons développé une plateforme web spécialisée <a href="http://www.norlineoutsourcing.com/externalisation-comptable" target="_blank">d’externalisation</a>.
+						</p>
+						<p class="text-justify">
+							Que vous exerciez une activité de service, commerciale, de profession libérale, d’artisan, d’association, médecin, pharmacien, avocat, ingénieur ou autres, l’externalisation de votre fonction comptable et financière est notre métier. 
+						</p>
+						<p class="text-justify">
+							<b>Notre idée :</b> profiter des innovations technologiques en matière de dématérialisation des supports écrits afin de développer une plateforme qui permet d’être connecté à son expert-comptable avec un accès facile, rapide, sécurisé et en temps réel.
+						</p>
+						<p class="text-justify">
+							Ainsi, dans le souci d’être à l’écoute de ses clients les plus exigeants et d’être dans l’ère du numérique, <b>ACEF Expert</b> a développé une infrastructure logicielle permettant la gestion les documents en ligne et offrant un service performant et de qualité aboutissant au traitement, à l’analyse et à la sauvegarde des données que vous souhaitez sous-traiter.
+						</p>
+						<p class="text-justify">
+							L'infrastructure logicielle assure les fonctionnalités suivantes :
+						</p>
+						<ul>
+							<li>Gérer, via le net, les documents comptables, juridiques, fiscaux et sociaux de votre entreprise ;</li>
 							<li>Assurer une communication bi-directionnelle entre le cabinet et ses clients locaux et étrangers via leur espace client réservé ;</li>
 							<li>Communiquer les pièces comptables et autres documents au cabinet via l'espace client réservé ;</li>
-							<li>Scanner, stocker et consulter à tout moment les pièces comptables et les documents juridiques ;</li>
+							<li>Scanner, stocker et consulter à tout moment les pièces comptables et les documents juridiques, fiscaux et sociaux ;</li>
 							<li>GED par lot : envoyer un lot de pièces scannées en même temps et en une seule action.</li>
 						</ul>
+						<br>
+						<h5 class="classic-title">Processus d’externalisation : Scannez, Envoyez, C’est fait !</h5>
+						<p class="text-justify">
+							Votre temps est précieux, plus besoin de vous déplacez périodiquement au cabinet de votre expert-comptable pour l’acheminement de vos pièces comptables : afin de pouvoir vous consacrer entièrement à votre clientèle, externalisez vos tâches comptables. Maximisez votre valeur ajoutée en vous concentrant sur votre cœur de métier.
+						</p>
+						<p class="text-justify">
+							Il vous suffit de conclure une convention de prestation de services avec notre cabinet pour piloter en toute quiétude votre comptabilité et accéder à un service confortable de haute qualité.
+						</p>
+						<h6 class="classic-title">Numérisation et envoi en ligne des documents par le client</h6>
+						<p class="text-justify">
+							Cette tâche peut être effectuée par l’assistante de direction de votre entreprise. Deux méthodes vous sont proposées :
+						</p>
+						<p class="text-justify">
+							<u>1ère méthode</u> : A partir de l’interface sécurisée de notre interface web <b>ACF Cloud</b>, le client conventionné avec notre cabinet transmet toutes ses pièces comptables numérisées (factures, relevés de comptes bancaires…).
+						</p>
+						<p class="text-justify">
+							<u>2ème méthode</u> : L’équipe <b>ACEF Expert</b> envoi au client un lien par voie électronique permettant à ce dernier d’installer à distance dans son PC un dossier modèle (comprenant un dossier comptable, juridique, social et fiscal).
+						</p>
+						<p class="text-justify">
+							Ce dossier modèle sera partagée en temps réel d’une manière sécurisée avec l’équipe <b>ACEF Expert</b>.
+						</p>
+						<p class="text-justify">
+							Ainsi, à chaque fois que le client scanne et ajoute un document au dossier modèle, celui-ci sera communiqué automatiquement et instantanément au collaborateur chargé de l’équipe <b>ACEF Expert</b>.
+						</p>
+						<h6 class="classic-title">Classement physique des documents par le client</h6>
+						<p class="text-justify">
+							Une fois les documents scannés et transmis en ligne à votre expert-comptable, classez et archivez chronologiquement vos documents originaux sous format papier dans classeurs dédiés (achats, ventes, banques, caisses, opérations diverses, paie…). 
+						</p>
+						<h6 class="classic-title">Saisie comptable par l’équipe ACEF Expert</h6>
+						<p class="text-justify">
+							Les pièces comptables-images communiquées par le client via internet sont saisies dans le logiciel de comptabilité conformément aux instructions de saisie et en conformité avec les normes comptables. 
+						</p>
+						<p class="text-justify">
+							La comptabilité est revue systématiquement et de nombreux contrôles sont effectués afin d’en garantir la qualité. 
+						</p>
+						<p class="text-justify">
+							Toutes les données sont stockées dans nos serveurs qui sont soumis à une sauvegarde journalière. 
+						</p>
+						<h6 class="classic-title">Etablissement des déclarations, des états financiers et de la liasse fiscale par l’équipe ACEF Expert </h6>
+						<p class="text-justify">
+							L’équipe ACEF Expert procède à l’établissement des déclarations fiscales et sociales, des états financiers et de la liasse fiscale et les communique sous format PDF au client.  
+						</p>
+						<br>
+						<h5 class="classic-title">Avantages de l’externalisation </h5>
+						<h6 class="classic-title">Réduction des coûts </h6>
+						<p class="text-justify">
+							La diminution des coûts augmente en parallèle avec la hausse du volume et du niveau des opérations comptables externalisées.  
+						</p>
+						<h6 class="classic-title">Rapidité d’exécution et transparence totale  </h6>
+						<p class="text-justify">
+							Comptabilité tenue au jour le jour avec un délai de traitement réduit.
+						</p>
+						<p class="text-justify">
+							Réduction des délais par transmission des documents via Internet.
+						</p>
+						<p class="text-justify">
+							Consultation à tout moment de l’intégralité de vos documents.  
+						</p>
+						<h6 class="classic-title">Recentrage sur votre métier de base</h6>
+						<h6 class="classic-title">Sécurité</h6>
+						<p class="text-justify">
+							Envoi sécurisé des documents par Internet. Notre site utilise le protocole de communication SSL (Secure Socket Layer) qui assure l’authentification, la confidentialité et l’intégrité des données échangées. Notre serveur web attribue une clé de cryptage personnelle et unique qui transforme les données transmises en codes illisibles pour les autres.
+						</p>
+						<p class="text-justify">
+							Gestion à distance et de manière sécurisée vos données. 
+						</p>
+						<h6 class="classic-title">Gain de temps</h6>
+						<p class="text-justify">
+							Fini les déplacements périodiques pour l’acheminement des pièces comptables au cabinet de votre expert-comptable.
+						</p>
+						<p class="text-justify">
+							L’externalisation de la comptabilité à une structure spécialisée entraine automatiquement un gain de temps énorme. Grâce au gain de temps obtenu, vous pouvez effectuer soit un recentrage vers une activité plus intéressante, à plus forte valeur ajoutée soit un recentrage vers votre domaine de compétence.
+						</p>
+						<h6 class="classic-title">Flexibilité</h6>
+						<p class="text-justify">
+							Scanner vos documents sur place, ils ne sont à aucun moment déplacés.<br>Le volume et le niveau d’externalisation de saisie comptable étant à votre entière disposition, en fonction de vos besoins, vous bénéficiez d’une flexibilité au niveau de votre organisation. 
+						</p>
+						<h6 class="classic-title">Professionnalisme</h6>
+						<p class="text-justify">
+							Respect du secret professionnel et de la confidentialité de vos documents conformément à la déontologie des experts-comptables. 
+						</p>
+						<br>
+						<h5 class="classic-title">Ressources humaines</h5>
+						<p class="text-justify">
+							Notre équipe constituée de comptables qualifiés, consciencieux, motivés et expérimentés en traitement et en externalisation de la comptabilité. L’encadrement est assuré par des managers rompus aux spécificités de la profession comptable. Ensemble, nous constituons une équipe soudée ayant montré à plusieurs reprises notre capacité à remplir correctement les missions de tenue comptable qui nous ont été confiées par nos clients.  
+						</p>
+						<p class="text-justify">
+							Quel que soit l’activité exercée et la structure juridique adoptée, notre équipe est en mesure de vous faire bénéficier d’un service de qualité et respectant les délais légaux.  
+						</p>
+						<p class="text-justify">
+							Tous les collaborateurs à tous les niveaux bénéficient régulièrement de formation en comptabilité, fiscalité et sociale à travers des réunions de formation-partage bimensuelles.   
+						</p>
 					</div>
 					<div class="col-md-12 page-content" id="cabinet">
 						<br>
@@ -363,28 +487,28 @@
 						<img class="img" alt="Contactez-nous" src="/res/contact/01.jpg">
 						<br>
 						<br>
-						<form role="form" class="contact-form" id="contact-form" method="post">
+						<form role="form" class="contact-form" id="contact-form" name="contact-form" method="post" action="{{ path('_front_contact') }}">
 							<div class="form-group">
 								<div class="controls">
-									<input type="text" placeholder="Nom" name="name">
+									<input type="text" placeholder="Nom" name="name" required="required">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="controls">
-									<input type="email" class="email" placeholder="Email" name="email">
+									<input type="email" class="email" placeholder="Email" name="email" required="required">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="controls">
-									<input type="text" class="requiredField" placeholder="Sujet" name="subject">
+									<input type="text" class="requiredField" placeholder="Sujet" name="subject" required="required">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="controls">
-									<textarea rows="7"  placeholder="Message" name="message"></textarea>
+									<textarea rows="7"  placeholder="Message" name="message" required="required"></textarea>
 								</div>
 							</div>
-							<button type="submit" id="submit" class="btn-system btn-large">Envoyer</button><div id="success" style="color:#34495e;"></div>
+							<button type="submit" id="button" class="btn-system btn-large">Envoyer</button><div id="success" style="color:#34495e;"></div>
 						</form>
 					</div>
 					<div class="col-md-4" id="infos">
@@ -414,6 +538,75 @@
 							<li><strong>Samedi</strong> - 8h à 12h</li>
 							<li><strong>Dimanche</strong> - Fermé</li>
 						</ul>
+					</div>
+					<div class="col-md-12" id="join">
+						<br>
+						<br>
+						<br>
+						<h4 class="classic-title"><span>Joindre nos équipes</span></h4>
+						<p class="text-justify">
+							Rejoindre « ACEF Expert », c’est intégrer un cadre professionnel, dynamique, jeune et ouvert.<br>
+							Notre organisation et la croissance de notre activité vous offrent des perspectives de carrières adaptées à vos ambitions professionnelles.<br>
+							Rejoignez-nous en remplissant le formulaire suivant :
+						</p>
+						<br>
+						<br>
+						<form role="form" class="join-form" id="join-form" name="join-form" method="post" enctype="multipart/form-data" action="{{ path('_front_join') }}">
+							<div class="form-group">
+									<label for="civ">Civilité :</label>
+								<div class="controls">
+									<select class="requiredField"  name="civ">
+										<option value="Mlle">Mlle</option>
+										<option value="Mme">Mme</option>
+										<option value="Mr">Mr</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<label for="fname">Prénom :</label>
+									<input type="text" class="requiredField" placeholder="Prénom" name="fname" required="required">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<label for="lname">Nom :</label>
+									<input type="text" class="requiredField" placeholder="Nom" name="lname" required="required">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<label for="email">Email :</label>
+									<input type="email" class="email requiredField" placeholder="Email" name="email" required="required">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<label for="cv">CV :</label>
+									<input type="file" class="file" placeholder="CV" name="cv">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<label for="motiv">Lettre de Motivation :</label>
+									<input type="file" class="file" placeholder="Lettre de Motivation" name="motiv">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<label for="subject">Objet :</label>
+									<input type="text" class="requiredField" placeholder="Objet" name="subject" required="required">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="controls">
+									<label for="message">Message :</label>
+									<textarea rows="7"  placeholder="Message" name="message" required="required"></textarea>
+								</div>
+							</div>
+							<button type="submit" id="submit" class="btn-system btn-large">Envoyer</button><div id="success" style="color:#34495e;"></div>
+						</form>
+						
 					</div>
 				</div>
 			</div>
@@ -579,6 +772,22 @@
 	}
 	google.maps.event.addDomListener(window, 'load', initialisation);
 	$(document).ready(function() {
+		$('#contact-form').validate({
+			submitHandler: function(form) {
+				$(form).ajaxSubmit({
+					success:       showResponseContact,
+					resetForm: true
+				});
+			}
+		});
+		$('#join-form').validate({
+			submitHandler: function(form) {
+				$(form).ajaxSubmit({
+					success:       showResponseJoin,
+					resetForm: true
+				});
+			}
+		});
 		$('#layerslider').layerSlider({
 			navStartStop		: false,
 			thumbnailNavigation : 'hover',
@@ -589,4 +798,10 @@
 			sublayerContainer : 1200
 		});
 	});
+	function showResponseContact(responseText, statusText, xhr, $form)  {
+		alert(responseText);
+	}
+	function showResponseJoin(responseText, statusText, xhr, $form)  {
+		alert(responseText);
+	}
 {%endblock end2_dynamic_jstxt%}
