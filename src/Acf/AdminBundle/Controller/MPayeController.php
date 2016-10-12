@@ -381,6 +381,7 @@ class MPayeController extends BaseController
                         $docs = array();
 
                         $docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
+                        $docs = array();
 
                         $docNames = '';
 
@@ -429,19 +430,26 @@ class MPayeController extends BaseController
                             'name' => 'ROLE_CLIENT3'
                         ));
 
-                        if (\count($acfPayrollRole->getUsers()) != 0) {
-                            $mvars = array();
-                            $mvars['mpaye'] = $mpaye;
-                            $mvars['company'] = $company;
-                            $mvars['docs'] = $docs;
-                            $message = \Swift_Message::newInstance();
-                            $message->setFrom($from, $fromName);
-                            foreach ($acfPayrollRole->getUsers() as $user) {
-                                $message->addTo($user->getEmail(), $user->getFullname());
+                        $users = array();
+                        foreach ($company->getUsers() as $user) {
+                            if ($user->hasRole($acfPayrollRole)) {
+                                $users[] = $user;
                             }
-                            $message->setSubject($subject);
-                            $message->setBody($this->renderView('AcfAdminBundle:MPaye:newdoc.mail.html.twig', $mvars), 'text/html');
-                            $this->sendmail($message);
+                        }
+
+                        if (\count($users) != 0) {
+                            foreach ($users as $user) {
+                                $mvars = array();
+                                $mvars['mpaye'] = $mpaye;
+                                $mvars['company'] = $company;
+                                $mvars['docs'] = $docs;
+                                $message = \Swift_Message::newInstance();
+                                $message->setFrom($from, $fromName);
+                                $message->addTo($user->getEmail(), $user->getFullname());
+                                $message->setSubject($subject);
+                                $message->setBody($this->renderView('AcfAdminBundle:MPaye:newdoc.mail.html.twig', $mvars), 'text/html');
+                                $this->sendmail($message);
+                            }
                         }
 
                         return $this->redirect($urlFrom);

@@ -598,6 +598,7 @@ class MBSaleController extends BaseController
                     $docNewForm->handleRequest($request);
                     if ($docNewForm->isValid()) {
                         $docFiles = $docNewForm['fileName']->getData();
+                        $docs = array();
 
                         $docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
 
@@ -626,6 +627,8 @@ class MBSaleController extends BaseController
                             $mbsale->addDoc($doc);
 
                             $docNames .= $doc->getOriginalName() . ' ';
+
+                            $docs[] = $doc;
                         }
 
                         $em->persist($mbsale);
@@ -633,6 +636,36 @@ class MBSaleController extends BaseController
                         $this->flashMsgSession('success', $this->translate('Doc.add.success', array(
                             '%doc%' => $docNames
                         )));
+
+                        $from = $this->getParameter('mail_from');
+                        $fromName = $this->getParameter('mail_from_name');
+                        $subject = $this->translate('_mail.newdocsCloud.subject', array(), 'messages');
+
+                        $company = $mbsale->getCompany();
+                        $acfCloudRole = $em->getRepository('AcfDataBundle:Role')->findOneBy(array(
+                            'name' => 'ROLE_CLIENT1'
+                        ));
+
+                        $users = array();
+                        foreach ($company->getUsers() as $user) {
+                            if ($user->hasRole($acfCloudRole)) {
+                                $users[] = $user;
+                            }
+                        }
+
+                        if (\count($users) != 0) {
+                            foreach ($users as $user) {
+                                $mvars = array();
+                                $mvars['company'] = $company;
+                                $mvars['docs'] = $docs;
+                                $message = \Swift_Message::newInstance();
+                                $message->setFrom($from, $fromName);
+                                $message->addTo($user->getEmail(), $user->getFullname());
+                                $message->setSubject($subject);
+                                $message->setBody($this->renderView('AcfAdminBundle:Doc:sendmail.html.twig', $mvars), 'text/html');
+                                $this->sendmail($message);
+                            }
+                        }
                         $this->gvars['stabActive'] = 3;
                         $this->getSession()->set('stabActive', 3);
 

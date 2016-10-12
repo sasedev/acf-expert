@@ -1,0 +1,8 @@
+<html>
+<body>
+{{'_mail.newdocs.bodyDocCloud'|trans({'%companyurl%':url('_client_company_editGet', {'uid': company.id}), '%company%':company.corporateName }, "messages")|raw}}<br>
+{% for doc in docs %}
+- <a href="{{ url('_client_doc_download', {'uid': doc.id}) }}">{{ doc.originalName }}</a><br>
+{% endfor %}
+</body>
+</html>

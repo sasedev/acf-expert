@@ -1587,6 +1587,21 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     *
+     * {@inheritdoc} @see UserInterface::getRoles()
+     */
+    public function hasRole(Role $userRole)
+    {
+        foreach ($this->getRoles() as $role) {
+            if ($userRole->getName() == $role) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Get calculated fullName From username, firstName and lastName
      *
      * @return string
