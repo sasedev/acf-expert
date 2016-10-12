@@ -148,6 +148,14 @@ _security_myInvoices:
 _security_myInvoice_editGet:
     path:  /myInvoice/{uid}
     defaults: { _controller: "AcfSecurityBundle:MyInvoice:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_security_myInvoice_editPost:
+    path:  /myInvoice/{uid}
+    defaults: { _controller: "AcfSecurityBundle:MyInvoice:editPost" }
+    methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 

@@ -1,0 +1,5 @@
+<html>
+<body>
+{{'_mail.invoicedoc.body'|trans({'%fullname%':invoiceDoc.invoice.user.fullName,'%url%':url('_admin_invoice_doc_editGet', {'uid':invoiceDoc.id}),'%invoiceDocument%':invoiceDoc.originalName}, "messages")|raw}}
+</body>
+</html>

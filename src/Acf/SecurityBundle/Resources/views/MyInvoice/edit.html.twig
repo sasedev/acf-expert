@@ -1,12 +1,17 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%}
 {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
-$(function() { });
+$(function() {
+	$('#NewInvoiceDocumentForm_fileName').fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Document", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'}); 
+});
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
 <ol class="breadcrumb">
@@ -167,6 +172,19 @@ $(function() { });
 		{% endfor %}
 	</div>
 	{% endif %}
+	<br>
+	<br>
+	<div class="row no-print">
+		<div class="col-md-12">
+			<div class="text-center">Joindre un fichier :</div>
+			<br>
+			{{form_start(InvoiceDocumentNewForm, {'method':'POST', 'action': path('_security_myInvoice_editPost', {'uid': invoice.id}), 'style': 'horizontal'})}}
+			{{form_row(InvoiceDocumentNewForm.invoice, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+			{{form_row(InvoiceDocumentNewForm.fileName, {'label_col': 3, 'widget_col': 8 })}}
+			<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+			{{form_end(InvoiceDocumentNewForm)}}
+		</div>
+	</div>
 	{%endblock content%}
 </section>
 <div class="clearfix"></div>

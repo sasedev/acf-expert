@@ -135,3 +135,6 @@ pagetitle.myinvoice.edit.txt: 'Facture "%invoice%"'
 
 
 action.btnPrint: Imprimer
+
+_mail.invoicedoc.subject: Facture %invoice% - Document %invoiceDocument%
+_mail.invoicedoc.body: 'Nouveau Document de Facture ajouté par  <u><i>%fullname%</i></u>,<br><br>Le document <b>%invoiceDocument%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'

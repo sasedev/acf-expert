@@ -859,6 +859,12 @@ _admin_doc_download:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_admin_doc_sendmail:
+    path:     /doc/download/{uid}
+    defaults: { _controller: "AcfAdminBundle:Doc:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _admin_doc_editGet:
     path:     /doc/edit/{uid}
     defaults: { _controller: "AcfAdminBundle:Doc:editGet" }
