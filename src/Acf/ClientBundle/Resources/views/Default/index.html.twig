@@ -6,8 +6,8 @@
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
-	{% if companies | length != 0 %}
-	{% for cmp in companies %}
+{% if companies | length != 0 %}
+{% for cmp in companies %}
 
 	{% if cmp.nature_list|length !=0 %}
 	var datanature_{{ cmp.company.idn }} = [
@@ -23,6 +23,23 @@ $(function() {
 
 	var contx1_{{ cmp.company.idn }} = $("#buysByNatureDonutChart_{{ cmp.company.idn }}").get(0).getContext("2d");
 	var buysByNatureDonutChart_{{ cmp.company.idn }} = new Chart(contx1_{{ cmp.company.idn }}).Doughnut(datanature_{{ cmp.company.idn }});
+	{% endif %}
+
+	{% if cmp.nature_list_prev_year|length !=0 %}
+	
+	var datanaturepy_{{ cmp.company.idn }} = [
+	{% for nat in cmp.nature_list_prev_year %}
+		{
+		value: {{ nat.val|number_format(3, '.', '') }},
+		color:"rgba({{ nat.nature.colorRGB.r }}, {{ nat.nature.colorRGB.g }}, {{ nat.nature.colorRGB.b }},0.5)",
+		highlight: "rgba({{ nat.nature.colorRGB.r }}, {{ nat.nature.colorRGB.g }}, {{ nat.nature.colorRGB.b }},0.75)",
+		label: "{{ nat.nature.label|e('js') }}"
+	}{% if not loop.last %},{% endif %}
+	{% endfor %}
+	];
+
+	var contx1py_{{ cmp.company.idn }} = $("#buysByNatureDonutChartpy_{{ cmp.company.idn }}").get(0).getContext("2d");
+	var buysByNatureDonutChartpy_{{ cmp.company.idn }} = new Chart(contx1py_{{ cmp.company.idn }}).Doughnut(datanaturepy_{{ cmp.company.idn }});
 	{% endif %}
 
 
@@ -122,99 +139,10 @@ $(function() {
 		}]
 	});
 
-	$('#hiChart2_{{ cmp.company.idn }}').highcharts({
-		chart: {
-			plotBackgroundColor: null,
-			plotBorderWidth: 0,
-			plotShadow: false
-		},
-		credits: {
-			enabled: false
-		},
-		title: {
-			text: 'Chiffre <br>encaissé<br>{{ year }}',
-			align: 'center',
-			verticalAlign: 'middle',
-			y: 40
-		},
-		tooltip: {
-			pointFormat: '<b>{point.percentage:.1f}%</b> / <b>{point.y:.3f} TND</b>'
-		},
-		plotOptions: {
-			pie: {
-				dataLabels: {
-					enabled: true,
-					distance: -50,
-					style: {
-						fontWeight: 'bold',
-						color: 'white',
-						textShadow: '0px 1px 2px black'
-					}
-				},
-				startAngle: -90,
-				endAngle: 90,
-				center: ['50%', '75%']
-			}
-		},
-		series: [{
-			name: 'Chiffre',
-			type: 'pie',
-			innerSize: '50%',
-			data: [
-				['encaissé',   {{ cmp.year_ca_enc_net|number_format(3, '.', '') }}],
-				['non encaissé',       {{ cmp.year_ca_not_enc_net|number_format(3, '.', '') }}]
-			]
-		}]
-	});
+	
 
-	$('#hiChart3_{{ cmp.company.idn }}').highcharts({
-		chart: {
-			plotBackgroundColor: null,
-			plotBorderWidth: 0,
-			plotShadow: false
-		},
-		credits: {
-			enabled: false
-		},
-		title: {
-			text: 'Achats <br>payés<br>{{ year }}',
-			align: 'center',
-			verticalAlign: 'middle',
-			y: 40
-		},
-		tooltip: {
-			pointFormat: '<b>{point.percentage:.1f}%</b> / <b>{point.y:.3f} TND</b>'
-		},
-		plotOptions: {
-			pie: {
-				dataLabels: {
-					enabled: true,
-					distance: -50,
-					style: {
-						fontWeight: 'bold',
-						color: 'white',
-						textShadow: '0px 1px 2px black'
-					}
-				},
-				startAngle: -90,
-				endAngle: 90,
-				center: ['50%', '75%']
-			}
-		},
-		series: [{
-			name: 'Chiffre',
-			type: 'pie',
-			innerSize: '50%',
-			data: [
-				['payés',   {{ cmp.year_achat_payed|number_format(3, '.', '') }}],
-				['non payés',       {{ cmp.year_achat_not_payed|number_format(3, '.', '') }}]
-			]
-		}]
-	});
-
-
-	{% endfor %}
-	{% endif %}
+{% endfor %}
+{% endif %}
 
 });
 {%endblock end2_dynamic_jstxt%}
@@ -252,28 +180,12 @@ $(function() {
 						<a class="pull-right">{{ cmp.monthly_ca_ht|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
-						<b>Chiffre d'affaire encaissé :</b>
-						<a class="pull-right">{{ cmp.monthly_ca_enc_net|number_format(3, '.', ' ') }} TND</a>
-					</li>
-					<li class="list-group-item">
-						<b>Chiffre d'affaire non encaissé :</b>
-						<a class="pull-right">{{ cmp.monthly_ca_not_enc_net|number_format(3, '.', ' ') }} TND</a>
-					</li>
-					<li class="list-group-item">
 						<b>Achat HT :</b>
 						<a class="pull-right">{{ cmp.monthly_achat_ht|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
 						<b>Achat Marchandise HT :</b>
 						<a class="pull-right">{{ cmp.monthly_achat_marchandise_ht|number_format(3, '.', ' ') }} TND</a>
-					</li>
-					<li class="list-group-item">
-						<b>Achat Payés :</b>
-						<a class="pull-right">{{ cmp.monthly_achat_payed|number_format(3, '.', ' ') }} TND</a>
-					</li>
-					<li class="list-group-item">
-						<b>Achat Non Payés :</b>
-						<a class="pull-right">{{ cmp.monthly_achat_not_payed|number_format(3, '.', ' ') }} TND</a>
 					</li>
 				</ul>
 			</div>
@@ -283,7 +195,7 @@ $(function() {
 	<div class="col-lg-4">
 		<div class="box box-primary">
 			<div class="box-header no-border">
-				<h4 class="box-title">Chiffres Cumulés du 01/01/{{ year_prev }} au
+				<h4 class="box-title">Chiffres Cumulés du 01/01/{{ year }} au
 				{% if year == current_year and month == current_monthsz %}
 				{{ 'now'|date('d/m/Y') }}
 				{% else  %}
@@ -298,28 +210,12 @@ $(function() {
 						<a class="pull-right">{{ (cmp.year_prev_ca_ht + cmp.year_ca_ht)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
-						<b>Chiffre d'affaire encaissé :</b>
-						<a class="pull-right">{{ (cmp.year_prev_ca_enc_net + cmp.year_ca_enc_net)|number_format(3, '.', ' ') }} TND</a>
-					</li>
-					<li class="list-group-item">
-						<b>Chiffre d'affaire non encaissé :</b>
-						<a class="pull-right">{{ (cmp.year_prev_ca_not_enc_net + cmp.year_ca_not_enc_net)|number_format(3, '.', ' ') }} TND</a>
-					</li>
-					<li class="list-group-item">
 						<b>Achat HT :</b>
 						<a class="pull-right">{{ (cmp.year_prev_achat_ht + cmp.year_achat_ht)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
 						<b>Achat Marchandise HT :</b>
 						<a class="pull-right">{{ (cmp.year_prev_achat_marchandise_ht + cmp.year_achat_marchandise_ht)|number_format(3, '.', ' ') }} TND</a>
-					</li>
-					<li class="list-group-item">
-						<b>Achat Payés :</b>
-						<a class="pull-right">{{ (cmp.year_prev_achat_payed + cmp.year_achat_payed)|number_format(3, '.', ' ') }} TND</a>
-					</li>
-					<li class="list-group-item">
-						<b>Achat Non Payés :</b>
-						<a class="pull-right">{{ (cmp.year_prev_achat_not_payed + cmp.year_achat_not_payed)|number_format(3, '.', ' ') }} TND</a>
 					</li>
 				</ul>
 			</div>
@@ -357,44 +253,7 @@ $(function() {
 		</div>
 	</div>
 	<div class="col-lg-12"></div>
-	<div class="col-lg-4">
-		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Evolution Chiffre d'affaire du {{ year_prev }} - {{ year }}</h4></div>
-			<div class="box-body">
-				<div id="hiChart1_{{ cmp.company.idn }}" style="width:100%; height:100%;"></div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-4">
-		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Chiffre d’affaires encaissé {{ year }}</h4></div>
-			<div class="box-body">
-				<div id="hiChart2_{{ cmp.company.idn }}" style="width:100%; height:100%;"></div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-4">
-		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Achats payés {{ year }}</h4></div>
-			<div class="box-body">
-				<div id="hiChart3_{{ cmp.company.idn }}" style="width:100%; height:100%;"></div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-12"></div>
-	{% if cmp.nature_list|length !=0 %}
-	<div class="col-lg-4">
-		<div class="box box-primary">
-			<div class="box-header with-border"><h4 class="box-title">Achats {{ year }}</h4></div>
-			<div class="box-body">
-				<div class="chart">
-					<canvas id="buysByNatureDonutChart_{{ cmp.company.idn }}"></canvas>
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endif %}
-	<div class="col-lg-{% if cmp.nature_list|length !=0 %}4{% else %}6{% endif %}">
+	<div class="col-lg-6">
 		<div class="box box-primary">
 			<div class="box-header with-border"><h4 class="box-title">Evolution Chiffre d'affaire du 01/01/{{ year_prev }} au
 				{% if year == current_year and month == current_monthsz %}
@@ -409,7 +268,7 @@ $(function() {
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-{% if cmp.nature_list|length !=0 %}4{% else %}6{% endif %}">
+	<div class="col-lg-6">
 		<div class="box box-primary">
 			<div class="box-header with-border"><h4 class="box-title">Evolution Achats du 01/01/{{ year_prev }} au
 				{% if year == current_year and month == current_monthsz %}
@@ -424,6 +283,39 @@ $(function() {
 			</div>
 		</div>
 	</div>
+	<div class="col-lg-12"></div>
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-header with-border"><h4 class="box-title">Evolution Chiffre d'affaire du {{ year_prev }} - {{ year }}</h4></div>
+			<div class="box-body">
+				<div id="hiChart1_{{ cmp.company.idn }}" style="width:100%; height:100%;"></div>
+			</div>
+		</div>
+	</div>
+	{% if cmp.nature_list|length !=0 %}
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-header with-border"><h4 class="box-title">Achats {{ year }}</h4></div>
+			<div class="box-body">
+				<div class="chart">
+					<canvas id="buysByNatureDonutChart_{{ cmp.company.idn }}"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% if cmp.nature_list_prev_year|length !=0 %}
+	<div class="col-lg-4">
+		<div class="box box-primary">
+			<div class="box-header with-border"><h4 class="box-title">Achats {{ year_prev }}</h4></div>
+			<div class="box-body">
+				<div class="chart">
+					<canvas id="buysByNatureDonutChartpy_{{ cmp.company.idn }}"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
 </div>
 <hr/>
 <br/>

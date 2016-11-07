@@ -62,24 +62,14 @@ security:
             security: true
             anonymous:    true
     access_control:
-        # Liste des pages accessibles à tous les utilisateurs (ne pas toucher)
-#        - { path: ^/_wdt/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/_profiler/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/login_check, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/lostPassword, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/genNewPassword.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/resseting$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/AdmSetup, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/ACF-Admin/autoinc.*, role: ROLE_SUPERSUPERADMIN }
-        - { path: ^/ACF-Admin/constant.*, role: ROLE_SUPERSUPERADMIN }
-        - { path: ^/ACF-Admin/lang.*, role: ROLE_SUPERSUPERADMIN }
-        - { path: ^/ACF-Admin/role.*, role: ROLE_SUPERSUPERADMIN }
-        - { path: ^/ACF-Admin.*, role: ROLE_ADMIN }
-        - { path: ^/ACF-Cloud.*, role: ROLE_CLIENT1 }
-        - { path: ^/ACF-Info.*, role: ROLE_CLIENT2 }
-        - { path: ^/ACF-Payroll.*, role: ROLE_CLIENT3 }
+        - { path: ^/ACEF-Admin/autoinc.*, role: ROLE_SUPERSUPERADMIN }
+        - { path: ^/ACEF-Admin/constant.*, role: ROLE_SUPERSUPERADMIN }
+        - { path: ^/ACEF-Admin/lang.*, role: ROLE_SUPERSUPERADMIN }
+        - { path: ^/ACEF-Admin/role.*, role: ROLE_SUPERSUPERADMIN }
+        - { path: ^/ACEF-Admin.*, role: ROLE_ADMIN }
+        - { path: ^/ACEF-Cloud.*, role: ROLE_CLIENT1 }
+        - { path: ^/ACEF-Info.*, role: ROLE_CLIENT2 }
+        - { path: ^/ACEF-Payroll.*, role: ROLE_CLIENT3 }
         - { path: ^/myProfile.*, role: ROLE_USER }
         - { path: ^/Agenda.*, role: ROLE_USER }
         - { path: ^/onlineProduct.*, role: ROLE_USER }
