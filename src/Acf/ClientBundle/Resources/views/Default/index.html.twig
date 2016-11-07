@@ -155,6 +155,11 @@ $(function() {
 {% if companies | length != 0 %}
 <div class="row">
 	<div class="col-lg-12">
+		<h1 class="text-center">{{ ('MonthlyBalance.month.'~month)|trans }}  {{ year }}</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
 		<ul class="pager centred">
 			<li class="previous"><a href="{{ path('_client_homepage_my', {'month':lnk_prev_month, 'year':lnk_prev_year}) }}">&laquo;&nbsp;{{ ('MonthlyBalance.month.'~lnk_prev_month)|trans }}  {{ lnk_prev_year }}</a></li>
 			{% if null != lnk_next_month and null!= lnk_next_year %}
@@ -168,7 +173,7 @@ $(function() {
 	<div class="col-lg-12">
 		<h3><a href="{{ path('_client_company_editGet', {'uid': cmp.company.id}) }}">{{ cmp.company.corporateName }}</a></h3>
 	</div>
-	<div class="col-lg-4">
+	<div class="col-lg-3">
 		<div class="box box-primary">
 			<div class="box-header no-border">
 				<h4 class="box-title">Chiffres du Mois de {{ ('MonthlyBalance.month.'~month)|trans }}  {{ year }}</h4>
@@ -192,36 +197,58 @@ $(function() {
 		</div>
 	</div>
 
-	<div class="col-lg-4">
+	<div class="col-lg-3">
 		<div class="box box-primary">
 			<div class="box-header no-border">
-				<h4 class="box-title">Chiffres Cumulés du 01/01/{{ year }} au
-				{% if year == current_year and month == current_monthsz %}
-				{{ 'now'|date('d/m/Y') }}
-				{% else  %}
-				{{ last_day~'/'~month~'/'~year }}
-				{% endif %}
+				<h4 class="box-title">Chiffres Cumulés du 01/01/{{ year_prev }} au
+				31/12/{{ year_prev }}
 				</h4>
 			</div>
 			<div class="box-body box-profile">
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">
 						<b>Chiffre d'affaire HT :</b>
-						<a class="pull-right">{{ (cmp.year_prev_ca_ht + cmp.year_ca_ht)|number_format(3, '.', ' ') }} TND</a>
+						<a class="pull-right">{{ cmp.year_prev_ca_ht|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
 						<b>Achat HT :</b>
-						<a class="pull-right">{{ (cmp.year_prev_achat_ht + cmp.year_achat_ht)|number_format(3, '.', ' ') }} TND</a>
+						<a class="pull-right">{{ cmp.year_prev_achat_ht|number_format(3, '.', ' ') }} TND</a>
 					</li>
 					<li class="list-group-item">
 						<b>Achat Marchandise HT :</b>
-						<a class="pull-right">{{ (cmp.year_prev_achat_marchandise_ht + cmp.year_achat_marchandise_ht)|number_format(3, '.', ' ') }} TND</a>
+						<a class="pull-right">{{ cmp.year_prev_achat_marchandise_ht|number_format(3, '.', ' ') }} TND</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-4">
+
+	<div class="col-lg-3">
+		<div class="box box-primary">
+			<div class="box-header no-border">
+				<h4 class="box-title">Chiffres Cumulés du 01/01/{{ year }} au 
+				{{ 'now'|date('d/m/Y') }}
+				</h4>
+			</div>
+			<div class="box-body box-profile">
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b>Chiffre d'affaire HT :</b>
+						<a class="pull-right">{{ cmp.year_ca_ht|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat HT :</b>
+						<a class="pull-right">{{ cmp.year_achat_ht|number_format(3, '.', ' ') }} TND</a>
+					</li>
+					<li class="list-group-item">
+						<b>Achat Marchandise HT :</b>
+						<a class="pull-right">{{ cmp.year_achat_marchandise_ht|number_format(3, '.', ' ') }} TND</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3">
 		<div class="box box-primary">
 			<div class="box-header no-border">
 				<h4 class="box-title">RATIOS (POUR LES SOCIETES COMMERCIALES)</h4>

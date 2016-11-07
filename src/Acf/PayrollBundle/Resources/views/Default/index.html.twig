@@ -8,6 +8,11 @@
 {% if companies | length != 0 %}
 <div class="row">
 	<div class="col-lg-12">
+		<h1 class="text-center">{{ ('MonthlyBalance.month.'~month)|trans }}  {{ year }}</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
 		<ul class="pager centred">
 			<li class="previous"><a href="{{ path('_payroll_homepage_my', {'month':lnk_prev_month, 'year':lnk_prev_year}) }}">&laquo;&nbsp;{{ ('MPaye.month.'~lnk_prev_month)|trans }}  {{ lnk_prev_year }}</a></li>
 			{% if null != lnk_next_month and null!= lnk_next_year %}

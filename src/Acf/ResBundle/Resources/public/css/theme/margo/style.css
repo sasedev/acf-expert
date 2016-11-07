@@ -2834,9 +2834,21 @@ ul.icons-list li i {
 
 .classic-title {
 	margin-bottom: 16px;
-	padding-bottom: 8px;
+	padding-bottom: 13px;
 	border-bottom: 1px solid #eee;
 	font-weight: 300;
+}
+
+h4.classic-title {
+	font-size: 24px;
+}
+
+h5.classic-title {
+	font-size: 22px;
+}
+
+h6.classic-title {
+	font-size: 20px;
 }
 
 

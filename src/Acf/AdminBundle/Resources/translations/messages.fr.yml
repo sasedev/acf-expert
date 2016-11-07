@@ -2225,6 +2225,7 @@ MPaye.traceDel: 'Suppression Mois de Paye <b>%mpaye%</b><br/>Société <b>%compa
 
 _mail.newdocs.bodyMPayeUser: 'Le(s) document(s) a/ont été ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%mpayeurl%"><b>%mpaye%</b></a>) :'
 
+_mail.newdocsCloud.subject: Ajout document ESPACE CLIENT www.acf-expert.tn
 _mail.newdocs.bodyDocCloud: 'Le(s) document(s) a/ont été ajouté à la société <a href="%companyurl%"><b>%company%</b></a> :'
 
 
