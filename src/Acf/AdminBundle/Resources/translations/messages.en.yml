@@ -1,7 +1,7 @@
 action.excel: Export Excel
 action.btnExcel: Import Excel
-menu.admin: ACF-Admin
-breadcrumb.admin: ACF-Admin
+menu.admin: ACEF-Admin
+breadcrumb.admin: ACEF-Admin
 action.changeMonth: 'Aller Au Mois'
 
 

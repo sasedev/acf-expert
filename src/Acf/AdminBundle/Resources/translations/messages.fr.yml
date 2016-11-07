@@ -44,8 +44,8 @@ Entity.newVal: Nouvelle Valeur
 
 menu.list: Liste
 menu.add: Ajouter
-menu.admin: ACF-Admin
-breadcrumb.admin: ACF-Admin
+menu.admin: ACEF-Admin
+breadcrumb.admin: ACEF-Admin
 
 # Autoinc
 menu.admin.autoinc: Incrémental
@@ -2035,7 +2035,7 @@ BulletinInfo.edit.failure: 'Echec de la modification du Bulletin d''Informations
 BulletinInfo.mail.success: Succès de l'envoi de <b>%sendmail%</b> emails
 
 _mail.newbi.subject: '[Acf-expert.tn] Bulletin d''informations %bulletinInfo%'
-_mail.newbi.body: 'Bonjour <u><i>%user%</i></u>,<br><br>Vous avez reçu un bulletin d’information ACF Info intitulé <b>%bulletinInfo%</b>.<br>Pour le consulter, cliquez sur le lien : <a href="%url%">%url%</a><br><br><br><small>Cordialement,</small><br><small><i>ACF Info / Votre base de données en ligne 24h/24h</i></small>'
+_mail.newbi.body: 'Bonjour <u><i>%user%</i></u>,<br><br>Vous avez reçu un bulletin d’information ACEF Info intitulé <b>%bulletinInfo%</b>.<br>Pour le consulter, cliquez sur le lien : <a href="%url%">%url%</a><br><br><br><small>Cordialement,</small><br><small><i>ACEF Info / Votre base de données en ligne 24h/24h</i></small>'
 
 # BulletinInfoTitle
 breadcrumb.bulletinInfoTitle.edit: '<b>%bulletinInfoTitle%</b>'
@@ -2172,7 +2172,7 @@ BiDoc.mail.success: Succès de l'envoi de <b>%sendmail%</b> emails
 
 
 _mail.newbiDoc.subject: '[Acf-expert.tn] Bulletin d''informations %biDoc%'
-_mail.newbiDoc.body: 'Bonjour <u><i>%user%</i></u>,<br><br>Vous avez reçu un bulletin d’information ACF Info intitulé <b>%biDoc%</b>.<br>Pour le consulter, cliquez sur le lien : <a href="%url%">%url%</a><br><br><br><small>Cordialement,</small><br><small><i>ACF Info / Votre base de données en ligne 24h/24h</i></small>'
+_mail.newbiDoc.body: 'Bonjour <u><i>%user%</i></u>,<br><br>Vous avez reçu un bulletin d’information ACEF Info intitulé <b>%biDoc%</b>.<br>Pour le consulter, cliquez sur le lien : <a href="%url%">%url%</a><br><br><br><small>Cordialement,</small><br><small><i>ACEF Info / Votre base de données en ligne 24h/24h</i></small>'
 
 
 

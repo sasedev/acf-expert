@@ -1,4 +1,4 @@
-_mail.newdocs.subject: ACF-Cloud - Notification Nouveaux Documents
+_mail.newdocs.subject: ACEF-Cloud - Notification Nouveaux Documents
 _mail.newdocs.bodyCompany: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> le(s) document(s) Système(s) suivant(s) :'
 _mail.newdocs.bodyDgbank: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%dgurl%"><b>%dg%</b></a>) le(s) document(s) Bancaire(s) suivant(s) :'
 _mail.newdocs.bodyDgcomptable: 'Le Client <b>%user%</b> a ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%dgurl%"><b>%dg%</b></a>) le(s) document(s) Comptable(s) suivant(s) :'

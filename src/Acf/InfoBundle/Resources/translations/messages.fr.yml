@@ -1,5 +1,5 @@
-menu.info: ACF-Info
-breadcrumb.info: ACF-Info
+menu.info: ACEF-Info
+breadcrumb.info: ACEF-Info
 breadcrumb.info.bulletinInfo.edit: 'Bulletins d''Information <b>%bulletinInfo%</b>'
 
 pagetitle.info.bulletinInfo.list: 'Bulletins d''Informations'
