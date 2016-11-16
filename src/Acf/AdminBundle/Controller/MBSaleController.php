@@ -1253,7 +1253,7 @@ class MBSaleController extends BaseController
 
 				$filename = $this->normalize($this->translate('pagetitle.sale.listByYear', array(
 					'%year%' => $year,
-					'%company%' => $mbsale->getCompany()->getCorporateName()
+					'%company%' => $company->getCorporateName()
 				)));
 				$filename = str_ireplace('"', '|', $filename);
 				$filename = str_ireplace(' ', '_', $filename);

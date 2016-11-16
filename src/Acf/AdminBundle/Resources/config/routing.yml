@@ -1298,6 +1298,14 @@ _admin_mpaye_excel:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+
+_admin_mpaye_excelYear:
+    path:     /mpaye/excel/{year}/{uid}
+    defaults: { _controller: "AcfAdminBundle:MPaye:excelYear" }
+    requirements:
+        year: \d+
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _admin_msalary_delete:
     path:     /msalary/delete/{uid}
     defaults: { _controller: "AcfAdminBundle:MSalary:delete" }
