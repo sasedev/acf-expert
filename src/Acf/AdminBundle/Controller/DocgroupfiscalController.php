@@ -32,6 +32,16 @@ class DocgroupfiscalController extends BaseController
 		$this->gvars['menu_active'] = 'company';
 	}
 
+	public function addDocAction($uid)
+	{
+		$this->getSession()->set('tabActive', 3);
+		$this->getSession()->set('stabActive', 1);
+
+		return $this->redirect($this->generateUrl('_admin_docgroupfiscal_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
 	/**
 	 *
 	 * @param string $uid
