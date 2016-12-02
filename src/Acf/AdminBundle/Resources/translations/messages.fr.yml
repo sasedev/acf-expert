@@ -2225,7 +2225,7 @@ MPaye.traceDel: 'Suppression Mois de Paye <b>%mpaye%</b><br/>Société <b>%compa
 
 _mail.newdocs.bodyMPayeUser: 'Le(s) document(s) a/ont été ajouté à la société <a href="%companyurl%"><b>%company%</b></a> (<a href="%mpayeurl%"><b>%mpaye%</b></a>) :'
 
-_mail.newdocsCloud.subject: Ajout document ESPACE CLIENT www.acf-expert.tn
+_mail.newdocsCloud.subject: '[Acf-expert.tn] Ajout document ESPACE CLIENT'
 _mail.newdocs.bodyDocCloud: 'Le(s) document(s) a/ont été ajouté à la société <a href="%companyurl%"><b>%company%</b></a> :'
 
 
@@ -2414,7 +2414,7 @@ Order.edit.success: Succès de la modification de la Commande <b>%order%</b>
 Order.edit.failure: Echec de la modification de la Commande <b>%order%</b>
 Order.mail.success: Succès de l'envoi d'email de notification pour la Commande <b>%order%</b>
 Order.mail.failure: Echec de l'envoi d'email de notification pour la Commande <b>%order%</b>
-_mail.order.subject: Bon de Commande %order%
+_mail.order.subject: '[Acf-expert.tn] Bon de Commande %order%'
 _mail.order.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Le bon de commande que vous venez d’éditer ayant comme référence <b>%order%</b> disponible à l’adresse suivante <a href="%url%">%url%</a>, a été validé par l’administrateur du site.<br><br>Vous pouvez dès à présent vous connecter à votre compte et utiliser les services que vous avez choisis.'
 _mail.myorder.body: 'Nouveau bon de commande <b>%order%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a> ajouté par  <u><i>%fullname%</i></u>'
 
@@ -2469,7 +2469,7 @@ Invoice.edit.success: Succès de la modification de la Facture <b>%invoice%</b>
 Invoice.edit.failure: Echec de la modification de la Facture <b>%invoice%</b>
 Invoice.mail.success: Succès de l'envoi d'email de notification pour la Facture <b>%invoice%</b>
 Invoice.mail.failure: Echec de l'envoi d'email de notification pour la Facture <b>%invoice%</b>
-_mail.invoice.subject: Facture %invoice%
+_mail.invoice.subject: '[Acf-expert.tn] Facture %invoice%'
 _mail.invoice.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Votre facture n° <b>%invoice%</b> est disponible à l''adresse suivante <a href="%url%">%url%</a>'
 
 
@@ -2501,5 +2501,5 @@ InvoiceDocument.edit.success: Succès de la modification du Document <b>%invoice
 InvoiceDocument.edit.failure: Echec de la modification du Document <b>%invoiceDocument%</b>
 InvoiceDocument.mail.success: Succès de l'envoi d'email de notification pour le Document <b>%invoiceDocument%</b>
 InvoiceDocument.mail.failure: Echec de l'envoi d'email de notification pour le Document  <b>%invoiceDocument%</b>
-_mail.invoiceDocument.subject: Facture %invoice% - Document %invoiceDocument%
+_mail.invoiceDocument.subject: '[Acf-expert.tn] Facture %invoice% - Document %invoiceDocument%'
 _mail.invoiceDocument.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Le document <b>%invoiceDocument%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'

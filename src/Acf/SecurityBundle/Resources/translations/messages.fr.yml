@@ -136,10 +136,10 @@ pagetitle.myinvoice.edit.txt: 'Facture "%invoice%"'
 
 action.btnPrint: Imprimer
 
-_mail.invoicedoc.subject: Facture %invoice% - Document %invoiceDocument%
+_mail.invoicedoc.subject: '[Acf-expert.tn] Facture %invoice% - Document %invoiceDocument%'
 _mail.invoicedoc.body: 'Nouveau Document de Facture ajouté par  <u><i>%fullname%</i></u>,<br><br>Le document <b>%invoiceDocument%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'
 
 
 User.lockout.success: 'Envoie d''une notification pour <b>%mail%</b>'
-_mail.register.lock.subject: Verrouillage de Compte
-_mail.register.unlock.subject: Activation de Compte
+_mail.register.lock.subject: '[Acf-expert.tn] Verrouillage de Compte'
+_mail.register.unlock.subject: '[Acf-expert.tn] Activation de Compte'
