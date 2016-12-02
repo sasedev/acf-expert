@@ -1,5 +1,11 @@
 <html>
 <body>
 {{'_mail.myorder.body'|trans({'%fullname%':order.user.fullName,'%url%':url('_admin_order_editGet', {'uid':order.id}),'%order%':order.ref}, "messages")|raw}}
+<br>
+<br>
+<b>Nous vous remercions pour votre confiance</b><br><small><b>L’Equipe ACEF Expert</b></small><br>
+<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{ logo }}"><br>
+<small>REMARQUE : Ce courriel a été généré automatiquement par <a href="https://www.acf-expert.tn">https://www.acf-expert.tn</a>.<br>
+Ne répondez pas à ce courriel.</small>
 </body>
 </html>

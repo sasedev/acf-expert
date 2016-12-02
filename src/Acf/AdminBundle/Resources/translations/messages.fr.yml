@@ -2415,7 +2415,7 @@ Order.edit.failure: Echec de la modification de la Commande <b>%order%</b>
 Order.mail.success: Succès de l'envoi d'email de notification pour la Commande <b>%order%</b>
 Order.mail.failure: Echec de l'envoi d'email de notification pour la Commande <b>%order%</b>
 _mail.order.subject: Bon de Commande %order%
-_mail.order.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Le bon de commande <b>%order%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'
+_mail.order.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Le bon de commande que vous venez d’éditer ayant comme référence <b>%order%</b> disponible à l’adresse suivante <a href="%url%">%url%</a>, a été validé par l’administrateur du site.<br><br>Vous pouvez dès à présent vous connecter à votre compte et utiliser les services que vous avez choisis.'
 _mail.myorder.body: 'Nouveau bon de commande <b>%order%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a> ajouté par  <u><i>%fullname%</i></u>'
 
 
@@ -2470,7 +2470,7 @@ Invoice.edit.failure: Echec de la modification de la Facture <b>%invoice%</b>
 Invoice.mail.success: Succès de l'envoi d'email de notification pour la Facture <b>%invoice%</b>
 Invoice.mail.failure: Echec de l'envoi d'email de notification pour la Facture <b>%invoice%</b>
 _mail.invoice.subject: Facture %invoice%
-_mail.invoice.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>La facture <b>%invoice%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'
+_mail.invoice.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Votre facture n° <b>%invoice%</b> est disponible à l''adresse suivante <a href="%url%">%url%</a>'
 
 
 # InvoiceDocument

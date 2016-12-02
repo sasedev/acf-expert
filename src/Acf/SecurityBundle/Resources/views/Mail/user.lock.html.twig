@@ -1,6 +1,9 @@
 <html>
 <body>
-{{'_mail.invoicedoc.body'|trans({'%fullname%':invoiceDoc.invoice.user.fullName,'%url%':url('_admin_invoice_doc_editGet', {'uid':invoiceDoc.id}),'%invoiceDocument%':invoiceDoc.originalName}, "messages")|raw}}
+Bonjour <u><i>{{ user.fullName }}</i></u>,<br><br>
+Bienvenue sur le site web <a href="https://acf-expert.tn">Acf-expert.tn</a>.<br><br>
+Votre compte ACEF Expert a été désactivé par l’administrateur du site.<br><br>
+Pour réactiver votre compte, veuillez contacter l’administrateur du site par mail à l’adresse : <a href="mailto:contact@acf-expert.tn">contact@acf-expert.tn</a>
 <br>
 <br>
 <b>Nous vous remercions pour votre confiance</b><br><small><b>L’Equipe ACEF Expert</b></small><br>

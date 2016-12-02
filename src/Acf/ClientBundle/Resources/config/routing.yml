@@ -255,6 +255,13 @@ _client_docgroup_editGet:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_client_docgroup_addDoc:
+    path:     /docgroup/addDoc/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroup:addDoc" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _client_docgroup_editPost:
     path:     /docgroup/edit/{uid}
     defaults: { _controller: "AcfClientBundle:Docgroup:editPost" }
@@ -265,6 +272,13 @@ _client_docgroup_editPost:
 _client_docgroupcomptable_editGet:
     path:     /docgroupcomptable/edit/{uid}
     defaults: { _controller: "AcfClientBundle:Docgroupcomptable:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupcomptable_addDoc:
+    path:     /docgroupcomptable/addDoc/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupcomptable:addDoc" }
     methods: [GET]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
@@ -283,6 +297,13 @@ _client_docgroupfiscal_editGet:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_client_docgroupfiscal_addDoc:
+    path:     /docgroupfiscal/addDoc/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupfiscal:addDoc" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _client_docgroupfiscal_editPost:
     path:     /docgroupfiscal/edit/{uid}
     defaults: { _controller: "AcfClientBundle:Docgroupfiscal:editPost" }
@@ -293,6 +314,13 @@ _client_docgroupfiscal_editPost:
 _client_docgroupperso_editGet:
     path:     /docgroupperso/edit/{uid}
     defaults: { _controller: "AcfClientBundle:Docgroupperso:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupperso_addDoc:
+    path:     /docgroupperso/addDoc/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupperso:addDoc" }
     methods: [GET]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
@@ -311,6 +339,13 @@ _client_docgroupsyst_editGet:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_client_docgroupsyst_addDoc:
+    path:     /docgroupsyst/addDoc/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupsyst:addDoc" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _client_docgroupsyst_editPost:
     path:     /docgroupsyst/edit/{uid}
     defaults: { _controller: "AcfClientBundle:Docgroupsyst:editPost" }
@@ -321,6 +356,13 @@ _client_docgroupsyst_editPost:
 _client_docgroupbank_editGet:
     path:     /docgroupbank/edit/{uid}
     defaults: { _controller: "AcfClientBundle:Docgroupbank:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_client_docgroupbank_addDoc:
+    path:     /docgroupbank/addDoc/{uid}
+    defaults: { _controller: "AcfClientBundle:Docgroupbank:addDoc" }
     methods: [GET]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

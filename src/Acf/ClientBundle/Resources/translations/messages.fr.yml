@@ -19,3 +19,6 @@ breadcrumb.client: ACEF-Cloud
 
 CompanyUser.accessForbidden: Accès non autorisé
 pagetitle.dasboard: ACEF Dashboard
+
+btn.addDoc: Nouveau Doc
+lastdeclaredmonth: dernier mois déclaré

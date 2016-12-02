@@ -1,0 +1,24 @@
+<html>
+<body>
+Bonjour <u><i>{{ user.fullName }}</i></u>,<br><br>
+Bienvenue sur le site web <a href="https://acf-expert.tn">Acf-expert.tn</a>.<br><br>
+Votre compte <b>ACEF Expert</b> a été activé par l’administrateur du site.<br><br>
+Vous pouvez dès à présent vous connecter à votre compte.<br><br>
+Vos paramètres de connexion à la page <a href="{{ url('_security_login') }}">suivante</a> sont:<br>
+Identifiant: <b>{{ user.username }}</b><br>
+Mot de Passe: <b>{{ user.clearPassword }}</b><br><br><br>
+Avec votre compte, choisissez un ou plusieurs services proposés par la plateforme internet ACEF-Expert et procéder au paiement selon le moyen qui vous convient :<br>
+<ul>
+	<li>Paiement en ligne sécurisé par carte bancaire,</li>
+	<li>Paiement en espèces, </li>
+	<li>Paiement par chèque, </li>
+	<li>Paiement par virement.</li>
+</ul>
+<br>
+<br>
+<b>Nous vous remercions pour votre confiance</b><br><small><b>L’Equipe ACEF Expert</b></small><br>
+<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{ logo }}"><br>
+<small>REMARQUE : Ce courriel a été généré automatiquement par <a href="https://www.acf-expert.tn">https://www.acf-expert.tn</a>.<br>
+Ne répondez pas à ce courriel.</small>
+</body>
+</html>

@@ -1,5 +1,11 @@
 <html>
 <body>
 {{'_mail.newEvent.body'|trans({'%user%':user.fullName,'%iuser%':iuser.fullName, '%title%': event.title, '%dtStart%': event.dtStart|localeDate('medium'), '%tStart%': event.dtStart|localeDate('none', 'short'), '%dtEnd%': event.dtEnd|localeDate('medium'), '%tEnd%': event.dtEnd|localeDate('none', 'short'), '%comment%': event.comment|raw}, "messages")|raw}}
+<br>
+<br>
+<b>Nous vous remercions pour votre confiance</b><br><small><b>L’Equipe ACEF Expert</b></small><br>
+<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{ logo }}"><br>
+<small>REMARQUE : Ce courriel a été généré automatiquement par <a href="https://www.acf-expert.tn">https://www.acf-expert.tn</a>.<br>
+Ne répondez pas à ce courriel.</small>
 </body>
 </html>

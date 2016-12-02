@@ -139,6 +139,7 @@ class SecurityController extends BaseController
 						$message->addTo($admin['email'], $admin['name']);
 					}
 					$message->setSubject($subject);
+					$mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
 					$message->setBody($this->renderView('AcfSecurityBundle:Mail:registeradmin.html.twig', $mvars), 'text/html');
 
 					$this->sendmail($message);
@@ -149,6 +150,7 @@ class SecurityController extends BaseController
 				$message = \Swift_Message::newInstance()->setFrom($from, $fromName);
 				$message->setTo($user->getEmail(), $user->getFullname());
 				$message->setSubject($subject);
+				$mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
 				$message->setBody($this->renderView('AcfSecurityBundle:Mail:register.html.twig', $mvars), 'text/html');
 
 				$this->sendmail($message);
@@ -208,7 +210,12 @@ class SecurityController extends BaseController
 						$from = $this->getParameter('mail_from');
 						$fromName = $this->getParameter('mail_from_name');
 						$subject = $this->translate('_mail.lostPassword.subject', array(), 'messages');
-						$message = \Swift_Message::newInstance()->setFrom($from, $fromName)->setTo($user->getEmail(), $user->getFullname())->setSubject($subject)->setBody($this->renderView('AcfSecurityBundle:Mail:getPasswordResetLink.html.twig', $mvars), 'text/html');
+						$message = \Swift_Message::newInstance();
+						$message->setFrom($from, $fromName);
+						$message->setTo($user->getEmail(), $user->getFullname());
+						$message->setSubject($subject);
+						$mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
+						$message->setBody($this->renderView('AcfSecurityBundle:Mail:getPasswordResetLink.html.twig', $mvars), 'text/html');
 
 						$this->sendmail($message);
 
@@ -271,7 +278,12 @@ class SecurityController extends BaseController
 					$fromName = $this->getParameter('mail_from_name');
 					$subject = $this->translate('_mail.genNewPassword.subject', array(), 'messages');
 
-					$message = \Swift_Message::newInstance()->setFrom($from, $fromName)->setTo($user->getEmail(), $user->getFullname())->setSubject($subject)->setBody($this->renderView('AcfSecurityBundle:Mail:genNewPassword.html.twig', $mvars), 'text/html');
+					$message = \Swift_Message::newInstance();
+					$message->setFrom($from, $fromName);
+					$message->setTo($user->getEmail(), $user->getFullname());
+					$message->setSubject($subject);
+					$mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
+					$message->setBody($this->renderView('AcfSecurityBundle:Mail:genNewPassword.html.twig', $mvars), 'text/html');
 
 					$this->sendmail($message);
 

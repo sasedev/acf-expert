@@ -367,6 +367,7 @@ class MPayeController extends BaseController
 								$message->addTo($admin->getEmail(), $admin->getFullname());
 							}
 							$message->setSubject($subject);
+							$mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
 							$message->setBody($this->renderView('AcfPayrollBundle:Mail:MPayenew.html.twig', $mvars), 'text/html');
 							$this->sendmail($message);
 						}
@@ -454,6 +455,7 @@ class MPayeController extends BaseController
 								$message->addTo($admin->getEmail(), $admin->getFullname());
 							}
 							$message->setSubject($subject);
+							$mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
 							$message->setBody($this->renderView('AcfPayrollBundle:Mail:MPayenewdoc.html.twig', $mvars), 'text/html');
 							$this->sendmail($message);
 						}

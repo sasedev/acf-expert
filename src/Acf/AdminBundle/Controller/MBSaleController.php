@@ -662,6 +662,7 @@ class MBSaleController extends BaseController
 								$message->setFrom($from, $fromName);
 								$message->addTo($user->getEmail(), $user->getFullname());
 								$message->setSubject($subject);
+								$mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
 								$message->setBody($this->renderView('AcfAdminBundle:Doc:sendmail.html.twig', $mvars), 'text/html');
 								$this->sendmail($message);
 							}

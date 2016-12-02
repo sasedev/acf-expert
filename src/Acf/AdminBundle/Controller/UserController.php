@@ -517,6 +517,29 @@ class UserController extends BaseController
 
 						$this->traceEntity($cloneUser, $user);
 
+						$from = $this->getParameter('mail_from');
+						$fromName = $this->getParameter('mail_from_name');
+						$message = \Swift_Message::newInstance()->setFrom($from, $fromName);
+						$message->setTo($user->getEmail(), $user->getFullname());
+						$mvars = array();
+						$mvars['user'] = $user;
+						$mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
+
+						if ($user->getLockout() == User::LOCKOUT_LOCKED) {
+							$subject = $this->translate('_mail.register.lock.subject', array(), 'messages');
+							$message->setSubject($subject);
+							$message->setBody($this->renderView('AcfSecurityBundle:Mail:user.lock.html.twig', $mvars), 'text/html');
+						} else {
+							$subject = $this->translate('_mail.register.unlock.subject', array(), 'messages');
+							$message->setSubject($subject);
+							$message->setBody($this->renderView('AcfSecurityBundle:Mail:user.unlock.html.twig', $mvars), 'text/html');
+						}
+						$this->sendmail($message);
+
+						$this->flashMsgSession('success', $this->translate('User.lockout.success', array(
+							'%mail%' => $user->getEmail()
+						)));
+
 						return $this->redirect($urlFrom);
 					} else {
 						$em->refresh($user);

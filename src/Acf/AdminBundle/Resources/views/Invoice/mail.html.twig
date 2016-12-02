@@ -1,5 +1,11 @@
 <html>
 <body>
 {{'_mail.invoice.body'|trans({'%fullname%':invoice.user.fullName,'%url%':url('_security_myInvoice_editGet', {'uid':invoice.id}),'%invoice%':invoice.ref}, "messages")|raw}}
+<br>
+<br>
+<b>Nous vous remercions pour votre confiance</b><br><small><b>L’Equipe ACEF Expert</b></small><br>
+<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{ logo }}"><br>
+<small>REMARQUE : Ce courriel a été généré automatiquement par <a href="https://www.acf-expert.tn">https://www.acf-expert.tn</a>.<br>
+Ne répondez pas à ce courriel.</small>
 </body>
 </html>
