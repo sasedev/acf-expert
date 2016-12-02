@@ -66,6 +66,136 @@ class CompanyController extends BaseController
 		$this->gvars['menu_active'] = 'clienthome';
 	}
 
+	public function backtoAddressAction($uid)
+	{
+		$this->getSession()->set('tabActive', 3);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoPhoneAction($uid)
+	{
+		$this->getSession()->set('tabActive', 4);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoCompanyFrameAction($uid)
+	{
+		$this->getSession()->set('tabActive', 5);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoCustomerAction($uid)
+	{
+		$this->getSession()->set('tabActive', 22);
+		$this->getSession()->set('stabActive', 3);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoSupplierAction($uid)
+	{
+		$this->getSession()->set('tabActive', 23);
+		$this->getSession()->set('stabActive', 3);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoMBSaleAction($uid)
+	{
+		$this->getSession()->set('tabActive', 27);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoMBPurchaseAction($uid)
+	{
+		$this->getSession()->set('tabActive', 28);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoDocgroupcomptableAction($uid)
+	{
+		$this->getSession()->set('tabActive', 29);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoDocgroupbankAction($uid)
+	{
+		$this->getSession()->set('tabActive', 30);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoDocgroupAction($uid)
+	{
+		$this->getSession()->set('tabActive', 41);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoDocgroupfiscalAction($uid)
+	{
+		$this->getSession()->set('tabActive', 51);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoDocgrouppersoAction($uid)
+	{
+		$this->getSession()->set('tabActive', 61);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
+	public function backtoDocgroupsystAction($uid)
+	{
+		$this->getSession()->set('tabActive', 71);
+		$this->getSession()->set('stabActive', 2);
+
+		return $this->redirect($this->generateUrl('_client_company_editGet', array(
+			'uid' => $uid
+		)));
+	}
+
 	/**
 	 *
 	 * @param string $uid

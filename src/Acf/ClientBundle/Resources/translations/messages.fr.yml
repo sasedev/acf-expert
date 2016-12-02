@@ -22,3 +22,17 @@ pagetitle.dasboard: ACEF Dashboard
 
 btn.addDoc: Nouveau Doc
 lastdeclaredmonth: dernier mois déclaré
+
+Supplier.tab.back: Retour aux Fournisseurs
+Phone.tab.back: Retour aux Téléphones
+Address.tab.back: Retour aux Adresses
+CompanyFrame.tab.back: Retour aux Cadres
+Customer.tab.back: Retour aux Clients
+Docgroup.tab.back: Retour aux Dossiers Juridiques
+Docgroupbank.tab.back: Retour aux Dossiers Bancaires
+Docgroupcomptable.tab.back: Retour aux Dossiers Comptables
+Docgroupfiscal.tab.back: Retour aux Dossiers Fiscaux
+Docgroupperso.tab.back: Retour aux Dossiers Sociaux/Personnels
+Docgroupsyst.tab.back: Retour aux Dossiers Systémes
+MBSale.tab.back: Retour aux Ventes
+MBPurchase.tab.back: Retour aux Achats

@@ -126,6 +126,7 @@ $(function() {
 				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Supplier.tab.edit'|trans|raw}}</a></li>
 				{% endif %}
 				<li {%if tabActive==3%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'Supplier.tab.docs'|trans|raw}}</a></li>
+				<li><a href="{{ path('_client_company_backtoSupplier', {'uid': supplier.company.id}) }}">{{'Supplier.tab.back'|trans|raw}}</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">

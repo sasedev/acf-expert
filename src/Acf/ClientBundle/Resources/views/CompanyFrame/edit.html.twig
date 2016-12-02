@@ -56,6 +56,7 @@ $(function() {
 				{% if companyUser.editFrames == constant('CAN', companyUser) %}
 				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'CompanyFrame.tab.edit'|trans|raw}}</a></li>
 				{% endif %}
+				<li><a href="{{ path('_client_company_backtoCompanyFrame', {'uid': companyFrame.company.id}) }}">{{'CompanyFrame.tab.back'|trans|raw}}</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">

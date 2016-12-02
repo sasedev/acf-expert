@@ -370,6 +370,7 @@ $(function() {
 				<li {%if tabActive==2%} class="active"{%endif%}><a href="#addSale" data-toggle="tab">{{'MBSale.tab.addSale'|trans|raw}}</a></li>
 				{% endif %}
 				<li {%if tabActive==4%} class="active"{%endif%}><a href="#Docs" data-toggle="tab">{{'MBSale.tab.docs'|trans|raw}}</a></li>
+				<li><a href="{{ path('_client_company_backtoMBSale', {'uid': mbsale.company.id}) }}">{{'MBSale.tab.back'|trans|raw}}</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
