@@ -148,8 +148,18 @@ $(function() {
 	<!-- this row will not appear when printing -->
 	<div class="row no-print">
 		<div class="col-xs-12">
-			<a href="{{ path('_security_myInvoice_print', {'uid' : invoice.id}) }}" target="_blank" class="btn btn-default"><i
-				class="fa fa-print"></i> {{ 'action.btnPrint'|trans }}</a>
+			<a href="{{ path('_security_myInvoice_print', {'uid' : invoice.id}) }}" target="_blank" class="btn btn-default">
+				<i class="fa fa-print"></i> {{ 'action.btnPrint'|trans }}
+			</a>
+			<br>
+			<br>
+			<p style="color: red; font-weight: bolder;">NB : Nous vous prions de bien vouloir :
+				<ol style="color: red; font-weight: bolder;">
+					<li>Imprimer l'attestation de retenue à la source jointe à cette facture en double exemplaire.</li>
+					<li>Signer et mettre votre cachet sur l’attestation.</li>
+					<li>Scanner l’attestation et la joindre en cliquant sur l’icône verte « Document » puis sur l’icône « Ajouter ».</li>
+				</ol>
+			</p>
 		</div>
 	</div>
 	{% if docs|length != 0 %}
