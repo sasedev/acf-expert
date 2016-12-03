@@ -384,6 +384,192 @@ _admin_company_editGet:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+
+_admin_company_backtoStock:
+    path:     /company/edit/{uid}/backtoStock
+    defaults: { _controller: "AcfAdminBundle:Company:backtoStock" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_admin_company_backtoAddress:
+    path:     /company/edit/{uid}/backtoAddress
+    defaults: { _controller: "AcfAdminBundle:Company:backtoAddress" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_admin_company_backtoPhone:
+    path:     /company/edit/{uid}/backtoPhone
+    defaults: { _controller: "AcfAdminBundle:Company:backtoPhone" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_admin_company_backtoCompanyFrame:
+    path:     /company/edit/{uid}/backtoCompanyFrame
+    defaults: { _controller: "AcfAdminBundle:Company:backtoCompanyFrame" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoCompanyNature:
+    path:     /company/edit/{uid}/backtoCompanyNature
+    defaults: { _controller: "AcfAdminBundle:Company:backtoCompanyNature" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoDoc:
+    path:     /company/edit/{uid}/backtoDoc
+    defaults: { _controller: "AcfAdminBundle:Company:backtoDoc" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoPilot:
+    path:     /company/edit/{uid}/backtoPilot
+    defaults: { _controller: "AcfAdminBundle:Company:backtoPilot" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoCompanyUser:
+    path:     /company/edit/{uid}/backtoCompanyUser
+    defaults: { _controller: "AcfAdminBundle:Company:backtoCompanyUser" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoCompanyAdmin:
+    path:     /company/edit/{uid}/backtoCompanyAdmin
+    defaults: { _controller: "AcfAdminBundle:Company:backtoCompanyAdmin" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoCompanyLabel:
+    path:     /company/edit/{uid}/backtoCompanyLabel
+    defaults: { _controller: "AcfAdminBundle:Company:backtoCompanyLabel" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoCustomer:
+    path:     /company/edit/{uid}/backtoCustomer
+    defaults: { _controller: "AcfAdminBundle:Company:backtoCustomer" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoSupplier:
+    path:     /company/edit/{uid}/backtoSupplier
+    defaults: { _controller: "AcfAdminBundle:Company:backtoSupplier" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoBank:
+    path:     /company/edit/{uid}/backtoBank
+    defaults: { _controller: "AcfAdminBundle:Company:backtoBank" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoFund:
+    path:     /company/edit/{uid}/backtoFund
+    defaults: { _controller: "AcfAdminBundle:Company:backtoFund" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoWithholding:
+    path:     /company/edit/{uid}/backtoWithholding
+    defaults: { _controller: "AcfAdminBundle:Company:backtoWithholding" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoMBSale:
+    path:     /company/edit/{uid}/backtoMBSale
+    defaults: { _controller: "AcfAdminBundle:Company:backtoMBSale" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoMBPurchase:
+    path:     /company/edit/{uid}/backtoMBPurchase
+    defaults: { _controller: "AcfAdminBundle:Company:backtoMBPurchase" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoDocgroupcomptable:
+    path:     /company/edit/{uid}/backtoDocgroupcomptable
+    defaults: { _controller: "AcfAdminBundle:Company:backtoDocgroupcomptable" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoDocgroupbank:
+    path:     /company/edit/{uid}/backtoDocgroupbank
+    defaults: { _controller: "AcfAdminBundle:Company:backtoDocgroupbank" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoDocgroup:
+    path:     /company/edit/{uid}/backtoDocgroup
+    defaults: { _controller: "AcfAdminBundle:Company:backtoDocgroup" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoShareholder:
+    path:     /company/edit/{uid}/backtoShareholder
+    defaults: { _controller: "AcfAdminBundle:Company:backtoShareholder" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoDocgroupfiscal:
+    path:     /company/edit/{uid}/backtoDocgroupfiscal
+    defaults: { _controller: "AcfAdminBundle:Company:backtoDocgroupfiscal" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoDocgroupperso:
+    path:     /company/edit/{uid}/backtoDocgroupperso
+    defaults: { _controller: "AcfAdminBundle:Company:backtoDocgroupperso" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoDocgroupsyst:
+    path:     /company/edit/{uid}/backtoDocgroupsyst
+    defaults: { _controller: "AcfAdminBundle:Company:backtoDocgroupsyst" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoDocgroupaudit:
+    path:     /company/edit/{uid}/backtoDocgroupaudit
+    defaults: { _controller: "AcfAdminBundle:Company:backtoDocgroupaudit" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_company_backtoMPaye:
+    path:     /company/edit/{uid}/backtoMPaye
+    defaults: { _controller: "AcfAdminBundle:Company:backtoMPaye" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _admin_company_editPost:
     path:     /company/edit/{uid}
     defaults: { _controller: "AcfAdminBundle:Company:editPost" }

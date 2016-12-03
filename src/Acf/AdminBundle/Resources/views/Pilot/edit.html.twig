@@ -16,6 +16,7 @@
 				<li  {%if tabActive==1%} class="active" {%endif%}><a href="#overview" data-toggle="tab">{{'Pilot.tab.overview'|trans|raw}}</a></li>
 				<li  {%if tabActive==2%} class="active" {%endif%}><a href="#edit" data-toggle="tab">{{'Pilot.tab.edit'|trans|raw}}</a></li>
 				<li {%if tabActive==11%} class="active"{%endif%}><a href="#Logs" data-toggle="tab">{{'tab.logs'|trans|raw}}</a></li>
+				<li><a href="{{ path('_admin_company_backtoPilot', {'uid': pilot.company.id}) }}">{{'Pilot.tab.back'|trans|raw}}</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">

@@ -2285,7 +2285,7 @@ $(function() {
 											<div class="box-header">
 												<h4 class="box-title"><a href="#collapse253" data-parent="#accordion25" data-toggle="collapse">{{'Company.tlabel.funds.list'|trans}}</a></h4>
 											</div>
-											<div id="collapse253" class="panel-collapse collapse{%if (tabActive==25 and stabActive==3) or tabActive!=15%} in{%endif%}">
+											<div id="collapse253" class="panel-collapse collapse{%if (tabActive==25 and stabActive==3) or tabActive!=25%} in{%endif%}">
 												<div class="box-body table-responsive">
 													<div class="well well-sm text-right">
 														<a href="{{ path('_admin_company_fundExcel', {'uid': company.id}) }}" class="btn btn-success">{{ faIco('file-excel-o') }} {{ 'action.excel'|trans }}</a>

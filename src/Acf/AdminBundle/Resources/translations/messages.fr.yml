@@ -2503,3 +2503,28 @@ InvoiceDocument.mail.success: Succès de l'envoi d'email de notification pour le
 InvoiceDocument.mail.failure: Echec de l'envoi d'email de notification pour le Document  <b>%invoiceDocument%</b>
 _mail.invoiceDocument.subject: '[Acf-expert.tn] Facture %invoice% - Document %invoiceDocument%'
 _mail.invoiceDocument.body: 'Bonjour <u><i>%fullname%</i></u>,<br><br>Le document <b>%invoiceDocument%</b> est disponible à l''addresse suivante <a href="%url%">%url%</a>'
+
+Stock.tab.back: "Retour aux Stocks"
+Address.tab.back: "Retour aux Adresses"
+Phone.tab.back: "Retour aux Téléphones"
+CompanyFrame.tab.back: "Retour aux Cadres"
+CompanyNature.tab.back: "Retour aux Natures d'achat"
+Doc.tab.back: "Retour aux Documents"
+Pilot.tab.back: "Retour aux Pilotages"
+CompanyUser.tab.back: "Retour aux Utilisateurs/Clients"
+CompanyLabel.tab.back: "Retour aux Journaux"
+Customer.tab.back: "Retour aux Clients"
+Supplier.tab.back: "Retour aux Fournisseurs"
+Bank.tab.back: "Retour aux Banques"
+Fund.tab.back: "Retour aux Caisses"
+Withholding.tab.back: "Retour aux Retenues"
+MBSale.tab.back: "Retour aux Ventes"
+MBPurchase.tab.back: "Retour aux Achats"
+Docgroupcomptable.tab.back: "Retour aux Documents Comptable"
+Docgroupbank.tab.back: "Retour aux Documents Bancaires"
+Docgroup.tab.back: "Retour aux Documents Juridiques"
+Docgroupfiscal.tab.back: "Retour aux Documents Fiscaux"
+Docgroupperso.tab.back: "Retour aux Documents Personnels"
+Docgroupsyst.tab.back: "Retour aux Documents Sytème"
+Docgroupaudit.tab.back: "Retour aux Documents Audit"
+MPaye.tab.back: "Retour aux Payes"
