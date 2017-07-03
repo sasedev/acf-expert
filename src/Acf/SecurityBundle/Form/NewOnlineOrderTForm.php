@@ -43,7 +43,7 @@ class NewOnlineOrderTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see FormTypeInterface::getName()
+     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

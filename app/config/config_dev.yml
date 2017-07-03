@@ -2,20 +2,10 @@ imports:
     - { resource: config.yml }
 
 framework:
-#    validation:
-#        cache: validator.mapping.cache.apc
-#    serializer:
-#        cache: serializer.mapping.cache.apc
     router:
-        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        resource: '%kernel.project_dir%/app/config/routing_dev.yml'
         strict_requirements: true
     profiler: { only_exceptions: false }
-
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
 
 web_profiler:
     toolbar: true
@@ -24,9 +14,10 @@ web_profiler:
 monolog:
     handlers:
 #        main:
-#            type:   stream
-#            path:   "%kernel.logs_dir%/%kernel.environment%.log"
-#            level:  debug
+#            type: stream
+#            path: '%kernel.logs_dir%/%kernel.environment%.log'
+#            level: debug
+#            channels: ['!event']
         syslog_error:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%_error.log"
@@ -40,36 +31,25 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%_debug.log"
             level: debug
         console:
-            type:   console
-            bubble: false
-            verbosity_levels:
-                VERBOSITY_VERBOSE: INFO
-                VERBOSITY_VERY_VERBOSE: DEBUG
-            channels: ["!doctrine"]
-        console_very_verbose:
-            type:   console
-            bubble: false
-            verbosity_levels:
-                VERBOSITY_VERBOSE: NOTICE
-                VERBOSITY_VERY_VERBOSE: NOTICE
-                VERBOSITY_DEBUG: DEBUG
-            channels: ["doctrine"]
+            type:  console
+        console:
+            type: console
+            process_psr_3_messages: false
+            channels: ['!event', '!doctrine', '!console']
+        # To follow logs in real time, execute the following command:
+        # `bin/console server:log -vv`
+        server_log:
+            type: server_log
+            process_psr_3_messages: false
+            host: 127.0.0.1:9911
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:
-        #    type:   firephp
-        #    level:  info
+        #    type: firephp
+        #    level: info
         #chromephp:
-        #    type:   chromephp
-        #    level:  info
-
-#assetic:
-#    use_controller: true
+        #    type: chromephp
+        #    level: info
 
 swiftmailer:
-    delivery_address: sasedev@g3-710.predator.loc
-
-#services:
-#    debug.twig.extension:
-#        class: Twig_Extension_Debug
-#        tags: [{ name: 'twig.extension' }]
+    delivery_addresses: ['sasedev@predator.loc']

@@ -1,0 +1,83 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+    <li><a href="{{ path('_front_homepage') }}">{{ faIco('home') }} &nbsp; {{'breadcrumb.home'|trans|raw}}</a></li>
+    <li><a href="{{ path('_security_profile') }}">{{glyphIco('user')}} &nbsp; {{'breadcrumb.profile'|trans|raw}}</a></li>
+    <li class="active"><a href="{{ path('_security_order_editGet', {'uid': order.id}) }}">{{faIco('shopping-cart')}} &nbsp; {{'breadcrumb.order.edit'|trans({'%order%': order.id})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box">
+            <div class="box-header"><h3 class="box-title">{{'Order.tlabel.overview'|trans}}</h3></div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-3 text-right">{{'Order.id'|trans|raw}} :</div>
+                    <div class="col-lg-9">{{order.id}}&nbsp;</div>
+                    {% if order.status == constant('ST_OK', order) %}
+                    <div class="col-lg-3 text-right">{{'Order.ref'|trans|raw}} :</div>
+                    <div class="col-lg-9">{{order.ref}}&nbsp;</div>
+                    {% endif %}
+                    <div class="col-lg-3 text-right">{{'Order.val'|trans|raw}} :</div>
+                    <div class="col-lg-9">{{order.val|number_format(3, '.', ' ') }} TND&nbsp;</div>
+                    <div class="col-lg-3 text-right">{{'Order.status'|trans|raw}} :</div>
+                    <div class="col-lg-9">{{('Order.status.'~order.status)|trans|raw}}&nbsp;</div>
+                    {%if order.description is not empty%}
+                    <div class="col-lg-12">&nbsp;</div>
+                    <div class="col-lg-3 text-right">{{'Order.description'|trans|raw}} :</div>
+                    <div class="col-lg-9">{{order.description|raw}}&nbsp;</div>
+                    {%endif%}
+                    <div class="col-lg-12">&nbsp;</div>
+                    <div class="col-lg-3 text-right">{{'Order.dtCrea'|trans|raw}} :</div>
+                    <div class="col-lg-9">{{order.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{order.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+                    <div class="col-lg-3 text-right">{{'Order.dtUpdate'|trans|raw}} :</div>
+                    <div class="col-lg-9">{{order.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{order.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+    {% if order.status != constant('ST_OK', order) and  order.status != constant('ST_CANCELED', order)  and order.status != constant('ST_ERROR', order) %}
+    <div class="col-lg-6">
+        <div class="box box-success">
+            <div class="box-header"><h3 class="box-title">{{'myorder.validate'|trans}}</h3></div>
+            <div class="box-body">
+                 <form method="post" action="https://www.smt-sps.com.tn/clicktopay/" class="form-horizontal" role="form">
+                    <input type="hidden" name="Reference" value="{{ order.ref }}">
+                    <input type="hidden" name="Montant" value="{{ order.val|number_format(3, '.', ' ') }}">
+                    <input type="hidden" name="Devise" value="TND">
+                    <input type="hidden" name="sid" value="{{ order.sessId }}">
+                    <input type="hidden" name="affilie" value="0870088010">
+                    <div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-success btn" type="submit">{{faIco('money')}} {{'action.btnPay'|trans|raw}}</button></div></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="box box-danger">
+            <div class="box-header"><h3 class="box-title">{{'myorder.cancel'|trans}}</h3></div>
+            <div class="box-body">
+                {{form_start(CancelOrderForm, {'method':'POST', 'action': path('_security_order_editPost', {'uid': order.id}), 'style': 'horizontal'})}}
+                    <div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-danger btn" type="submit" id="btnCanel">{{faIco('ban')}} {{'action.btnCancel'|trans|raw}}</button></div></div>
+                {{form_end(CancelOrderForm)}}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{%endblock content%}

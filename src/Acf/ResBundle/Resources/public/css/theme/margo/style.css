@@ -2839,23 +2839,23 @@ ul.icons-list li i {
 	font-weight: 300;
 }
 
+
+.classic-title span {
+	padding-bottom: 0px;
+	border-bottom: 1px solid #00AFD1;
+	font-weight: 400;
+}
+
 h4.classic-title {
-	font-size: 24px;
+	font-size: 36px;
 }
 
 h5.classic-title {
-	font-size: 22px;
+	font-size: 28px;
 }
 
 h6.classic-title {
-	font-size: 20px;
-}
-
-
-.classic-title span {
-	padding-bottom: 8px;
-	border-bottom: 1px solid;
-	font-weight: 400;
+	font-size: 22px;
 }
 
 .big-title {

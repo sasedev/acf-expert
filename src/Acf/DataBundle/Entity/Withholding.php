@@ -197,7 +197,7 @@ class Withholding
     /**
      * Set value
      *
-     * @param value $value
+     * @param float $value
      *
      * @return Withholding
      */
@@ -334,5 +334,6 @@ class Withholding
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

@@ -1,27 +1,27 @@
 imports:
     - { resource: config.yml }
 
-framework:
-    validation:
-        cache: validator.mapping.cache.doctrine
-    serializer:
-        cache: serializer.mapping.cache.apc
+#framework:
+#    validation:
+#        cache: validator.mapping.cache.doctrine.apc
+#    serializer:
+#        cache: serializer.mapping.cache.apc
 
-doctrine:
-    orm:
-        metadata_cache_driver: apc
-        result_cache_driver: apc
-        query_cache_driver: apc
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
 
 monolog:
     handlers:
 #        main:
-#            type:         fingers_crossed
+#            type: fingers_crossed
 #            action_level: error
-#            handler:      nested
+#            handler: nested
 #        nested:
-#            type:  stream
-#            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+#            type: stream
+#            path: '%kernel.logs_dir%/%kernel.environment%.log'
 #            level: debug
         syslog_error:
             type: stream
@@ -36,5 +36,5 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%_debug.log"
             level: debug
         console:
-            type:  console
-
+            type: console
+            process_psr_3_messages: false

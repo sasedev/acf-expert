@@ -1,6 +1,7 @@
 <?php
 namespace Acf\AdminBundle\Form\Order;
 
+use Acf\DataBundle\Entity\User;
 use Acf\DataBundle\Repository\UserRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -41,8 +42,7 @@ class NewTForm extends AbstractType
                 'label' => 'Order.user.label',
                 'class' => 'AcfDataBundle:User',
                 'query_builder' => function (UserRepository $ur) {
-                    return $ur->createQueryBuilder('u')
-                        ->orderBy('u.username', 'ASC');
+                    return $ur->createQueryBuilder('u')->orderBy('u.username', 'ASC');
                 },
                 'choice_label' => 'fullName',
                 'multiple' => false,
@@ -55,10 +55,7 @@ class NewTForm extends AbstractType
                 'label' => 'Order.user.label',
                 'class' => 'AcfDataBundle:User',
                 'query_builder' => function (UserRepository $ur) use ($userId) {
-                    return $ur->createQueryBuilder('u')
-                        ->where('u.id = :id')
-                        ->setParameter('id', $userId)
-                        ->orderBy('u.username', 'ASC');
+                    return $ur->createQueryBuilder('u')->where('u.id = :id')->setParameter('id', $userId)->orderBy('u.username', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -86,7 +83,7 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see FormTypeInterface::getName()
+     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

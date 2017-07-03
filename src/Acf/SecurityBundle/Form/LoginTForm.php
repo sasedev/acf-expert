@@ -55,7 +55,7 @@ class LoginTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see FormTypeInterface::getName()
+     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      */
     public function getName()
     {
