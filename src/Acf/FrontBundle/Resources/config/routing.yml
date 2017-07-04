@@ -21,10 +21,6 @@ _front_devis:
     defaults: { _controller: "AcfFrontBundle:Devis:index" }
     methods: [GET]
 
-_front_devis:
-    path:     /devis
-    defaults: { _controller: "AcfFrontBundle:Devis:index" }
-    methods: [GET]
 
 _front_devis_post:
     path:     /devis

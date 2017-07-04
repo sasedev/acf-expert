@@ -3,7 +3,7 @@ namespace Acf\DataBundle\Security;
 
 use Acf\DataBundle\Model\RoleManagerInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\Role\Role;
 
 /**
  *
@@ -93,7 +93,7 @@ class RoleManager implements RoleManagerInterface
      *
      * {@inheritdoc} @see RoleManagerInterface::saveRole()
      */
-    public function saveRole(RoleInterface $role)
+    public function saveRole(Role $role)
     {
         $this->getEntityManager()->persist($role);
         $this->getEntityManager()->flush();

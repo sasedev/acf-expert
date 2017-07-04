@@ -3,7 +3,7 @@ namespace Acf\DataBundle\Model;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
-use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\Role\Role;
 
 /**
  *
@@ -38,15 +38,15 @@ interface RoleManagerInterface
 
     /**
      *
-     * @return RoleInterface
+     * @return Role
      */
     public function createRole();
 
     /**
      *
-     * @param RoleInterface $role
+     * @param Role $role
      *
      * @return self
      */
-    public function saveRole(RoleInterface $role);
+    public function saveRole(Role $role);
 }

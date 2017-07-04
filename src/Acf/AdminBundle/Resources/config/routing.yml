@@ -1422,7 +1422,6 @@ _admin_bulletinInfoTitle_editPost:
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
-    methods: [POST]
 
 _admin_bulletinInfoContent_delete:
     path:     /bulletinInfoContent/delete/{uid}
