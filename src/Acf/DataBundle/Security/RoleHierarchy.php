@@ -11,6 +11,10 @@ use Symfony\Component\Security\Core\Role\RoleHierarchy as BaseRoleHierarchy;
 class RoleHierarchy extends BaseRoleHierarchy
 {
 
+    /**
+     *
+     * @var RoleManagerInterface
+     */
     protected $rm;
 
     /**

@@ -1,7 +1,7 @@
 <?php
 namespace Acf\AdminBundle\Form\Pilot;
 
-use Acf\DataBundle\Entity\Pilot;
+use Acf\DataBundle\Entity\Company;
 use Acf\DataBundle\Repository\CompanyRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -9,7 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -42,8 +41,7 @@ class NewTForm extends AbstractType
                 'label' => 'Pilot.company.label',
                 'class' => 'AcfDataBundle:Company',
                 'query_builder' => function (CompanyRepository $br) {
-                    return $br->createQueryBuilder('c')
-                        ->orderBy('c.corporateName', 'ASC');
+                    return $br->createQueryBuilder('c')->orderBy('c.corporateName', 'ASC');
                 },
                 'choice_label' => 'corporateName',
                 'multiple' => false,
@@ -56,10 +54,7 @@ class NewTForm extends AbstractType
                 'label' => 'Pilot.company.label',
                 'class' => 'AcfDataBundle:Company',
                 'query_builder' => function (CompanyRepository $br) use ($companyId) {
-                    return $br->createQueryBuilder('c')
-                        ->where('c.id = :id')
-                        ->setParameter('id', $companyId)
-                        ->orderBy('c.corporateName', 'ASC');
+                    return $br->createQueryBuilder('c')->where('c.id = :id')->setParameter('id', $companyId)->orderBy('c.corporateName', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -226,7 +221,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

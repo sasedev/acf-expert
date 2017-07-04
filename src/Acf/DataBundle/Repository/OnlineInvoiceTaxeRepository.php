@@ -14,8 +14,7 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -41,10 +40,7 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -54,16 +50,11 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByInvoice(OnlineInvoice $invoice)
     {
-        $qb = $this->createQueryBuilder('t')
-            ->select('count(t)')
-            ->join('t.invoice', 'i')
-            ->where('i.id = :id')
-            ->setParameter('id', $invoice->getId());
+        $qb = $this->createQueryBuilder('t')->select('count(t)')->join('t.invoice', 'i')->where('i.id = :id')->setParameter('id', $invoice->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -76,11 +67,7 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
      */
     public function getAllByInvoiceQuery(OnlineInvoice $invoice)
     {
-        $qb = $this->createQueryBuilder('t')
-            ->join('t.invoice', 'i')
-            ->where('i.id = :id')
-            ->setParameter('id', $invoice->getId())
-            ->orderBy('t.priority', 'ASC');
+        $qb = $this->createQueryBuilder('t')->join('t.invoice', 'i')->where('i.id = :id')->setParameter('id', $invoice->getId())->orderBy('t.priority', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -89,10 +76,7 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByInvoice(OnlineInvoice $invoice)
     {

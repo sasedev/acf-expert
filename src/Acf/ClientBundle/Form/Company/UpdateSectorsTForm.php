@@ -5,7 +5,6 @@ use Acf\DataBundle\Repository\SectorRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -29,8 +28,7 @@ class UpdateSectorsTForm extends AbstractType
             'label' => 'Company.sectors.label',
             'class' => 'AcfDataBundle:Sector',
             'query_builder' => function (SectorRepository $sr) {
-                return $sr->createQueryBuilder('s')
-                    ->orderBy('s.label', 'ASC');
+                return $sr->createQueryBuilder('s')->orderBy('s.label', 'ASC');
             },
             'choice_label' => 'label',
             'multiple' => true,
@@ -41,7 +39,6 @@ class UpdateSectorsTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

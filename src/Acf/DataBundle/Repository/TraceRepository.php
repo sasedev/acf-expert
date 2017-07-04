@@ -28,19 +28,9 @@ class TraceRepository extends EntityRepository
     public function getAllQuery(\DateTime $minDtCrea = null)
     {
         if (null == $minDtCrea) {
-            return $this->createQueryBuilder('t')
-                ->orderBy('t.dtCrea', 'ASC')
-                ->addOrderBy('t.actionType', 'ASC')
-                ->addOrderBy('t.actionEntity', 'ASC')
-                ->getQuery();
+            return $this->createQueryBuilder('t')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->getQuery();
         } else {
-            return $this->createQueryBuilder('t')
-                ->where('t.dtCrea >= :minDate')
-                ->orderBy('t.dtCrea', 'ASC')
-                ->addOrderBy('t.actionType', 'ASC')
-                ->addOrderBy('t.actionEntity', 'ASC')
-                ->setParameter('minDate', $minDtCrea)
-                ->getQuery();
+            return $this->createQueryBuilder('t')->where('t.dtCrea >= :minDate')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('minDate', $minDtCrea)->getQuery();
         }
     }
 
@@ -49,10 +39,7 @@ class TraceRepository extends EntityRepository
      *
      * @param \DateTime $minDtCrea
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll(\DateTime $minDtCrea = null)
     {
@@ -73,41 +60,23 @@ class TraceRepository extends EntityRepository
         $companies = $user->getAdmCompanies();
         if (null == $companies || \count($companies) == 0) {
             if (null == $minDtCrea) {
-                return $this->createQueryBuilder('t')
-                    ->where('t.companyId IN (:companyIds)')
-                    ->andWhere('t.actionEntity NOT IN (:entities)')
-                    ->orderBy('t.dtCrea', 'ASC')
-                    ->addOrderBy('t.actionType', 'ASC')
-                    ->addOrderBy('t.actionEntity', 'ASC')
-                    ->setParameter('companyIds', null)
-                    ->setParameter('entities', array(
+                return $this->createQueryBuilder('t')->where('t.companyId IN (:companyIds)')->andWhere('t.actionEntity NOT IN (:entities)')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('companyIds', null)->setParameter('entities', array(
                     Trace::AE_DOCGROUPSYST,
                     Trace::AE_DOCGROUPAUDIT,
                     Trace::AE_SHAREHOLDER,
                     Trace::AE_PILOT,
                     Trace::AE_CUSER,
                     Trace::AE_CADMIN
-                ))
-                    ->getQuery();
+                ))->getQuery();
             } else {
-                return $this->createQueryBuilder('t')
-                    ->where('t.companyId IN (:companyIds)')
-                    ->andWhere('t.actionEntity NOT IN (:entities)')
-                    ->andWhere('t.dtCrea >= :minDate')
-                    ->orderBy('t.dtCrea', 'ASC')
-                    ->addOrderBy('t.actionType', 'ASC')
-                    ->addOrderBy('t.actionEntity', 'ASC')
-                    ->setParameter('companyIds', null)
-                    ->setParameter('entities', array(
+                return $this->createQueryBuilder('t')->where('t.companyId IN (:companyIds)')->andWhere('t.actionEntity NOT IN (:entities)')->andWhere('t.dtCrea >= :minDate')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('companyIds', null)->setParameter('entities', array(
                     Trace::AE_DOCGROUPSYST,
                     Trace::AE_DOCGROUPAUDIT,
                     Trace::AE_SHAREHOLDER,
                     Trace::AE_PILOT,
                     Trace::AE_CUSER,
                     Trace::AE_CADMIN
-                ))
-                    ->setParameter('minDate', $minDtCrea)
-                    ->getQuery();
+                ))->setParameter('minDate', $minDtCrea)->getQuery();
             }
         } else {
             $cIds = array();
@@ -115,41 +84,23 @@ class TraceRepository extends EntityRepository
                 $cIds[] = $company->getId();
             }
             if (null == $minDtCrea) {
-                return $this->createQueryBuilder('t')
-                    ->where('t.companyId IN (:companyIds)')
-                    ->andWhere('t.actionEntity NOT IN (:entities)')
-                    ->orderBy('t.dtCrea', 'ASC')
-                    ->addOrderBy('t.actionType', 'ASC')
-                    ->addOrderBy('t.actionEntity', 'ASC')
-                    ->setParameter('companyIds', $cIds)
-                    ->setParameter('entities', array(
+                return $this->createQueryBuilder('t')->where('t.companyId IN (:companyIds)')->andWhere('t.actionEntity NOT IN (:entities)')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('companyIds', $cIds)->setParameter('entities', array(
                     Trace::AE_DOCGROUPSYST,
                     Trace::AE_DOCGROUPAUDIT,
                     Trace::AE_SHAREHOLDER,
                     Trace::AE_PILOT,
                     Trace::AE_CUSER,
                     Trace::AE_CADMIN
-                ))
-                    ->getQuery();
+                ))->getQuery();
             } else {
-                return $this->createQueryBuilder('t')
-                    ->where('t.companyId IN (:companyIds)')
-                    ->andWhere('t.actionEntity NOT IN (:entities)')
-                    ->andWhere('t.dtCrea >= :minDate')
-                    ->orderBy('t.dtCrea', 'ASC')
-                    ->addOrderBy('t.actionType', 'ASC')
-                    ->addOrderBy('t.actionEntity', 'ASC')
-                    ->setParameter('companyIds', $cIds)
-                    ->setParameter('entities', array(
+                return $this->createQueryBuilder('t')->where('t.companyId IN (:companyIds)')->andWhere('t.actionEntity NOT IN (:entities)')->andWhere('t.dtCrea >= :minDate')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('companyIds', $cIds)->setParameter('entities', array(
                     Trace::AE_DOCGROUPSYST,
                     Trace::AE_DOCGROUPAUDIT,
                     Trace::AE_SHAREHOLDER,
                     Trace::AE_PILOT,
                     Trace::AE_CUSER,
                     Trace::AE_CADMIN
-                ))
-                    ->setParameter('minDate', $minDtCrea)
-                    ->getQuery();
+                ))->setParameter('minDate', $minDtCrea)->getQuery();
             }
         }
     }
@@ -161,10 +112,7 @@ class TraceRepository extends EntityRepository
      *
      * @param \DateTime $minDtCrea
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByAdmin(User $user, \DateTime $minDtCrea = null)
     {
@@ -180,15 +128,7 @@ class TraceRepository extends EntityRepository
      */
     public function getAllByUserQuery(User $entity)
     {
-        return $this->createQueryBuilder('t')
-            ->where('t.actionEntity = :entityType')
-            ->andWhere('t.actionId = :aId')
-            ->orderBy('t.dtCrea', 'ASC')
-            ->addOrderBy('t.actionType', 'ASC')
-            ->addOrderBy('t.actionEntity', 'ASC')
-            ->setParameter('entityType', Trace::AE_USER)
-            ->setParameter('aId', $entity->getId())
-            ->getQuery();
+        return $this->createQueryBuilder('t')->where('t.actionEntity = :entityType')->andWhere('t.actionId = :aId')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('entityType', Trace::AE_USER)->setParameter('aId', $entity->getId())->getQuery();
     }
 
     /**
@@ -196,10 +136,7 @@ class TraceRepository extends EntityRepository
      *
      * @param User $entity
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByUser(User $entity)
     {
@@ -215,15 +152,7 @@ class TraceRepository extends EntityRepository
      */
     public function getAllByJobQuery(Job $entity)
     {
-        return $this->createQueryBuilder('t')
-            ->where('t.actionEntity = :entityType')
-            ->andWhere('t.actionId = :aId')
-            ->orderBy('t.dtCrea', 'ASC')
-            ->addOrderBy('t.actionType', 'ASC')
-            ->addOrderBy('t.actionEntity', 'ASC')
-            ->setParameter('entityType', Trace::AE_JOB)
-            ->setParameter('aId', $entity->getId())
-            ->getQuery();
+        return $this->createQueryBuilder('t')->where('t.actionEntity = :entityType')->andWhere('t.actionId = :aId')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('entityType', Trace::AE_JOB)->setParameter('aId', $entity->getId())->getQuery();
     }
 
     /**
@@ -231,10 +160,7 @@ class TraceRepository extends EntityRepository
      *
      * @param Job $entity
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByJob(Job $entity)
     {
@@ -250,15 +176,7 @@ class TraceRepository extends EntityRepository
      */
     public function getAllByCompanyTypeQuery(CompanyType $entity)
     {
-        return $this->createQueryBuilder('t')
-            ->where('t.actionEntity = :entityType')
-            ->andWhere('t.actionId = :aId')
-            ->orderBy('t.dtCrea', 'ASC')
-            ->addOrderBy('t.actionType', 'ASC')
-            ->addOrderBy('t.actionEntity', 'ASC')
-            ->setParameter('entityType', Trace::AE_TYPE)
-            ->setParameter('aId', $entity->getId())
-            ->getQuery();
+        return $this->createQueryBuilder('t')->where('t.actionEntity = :entityType')->andWhere('t.actionId = :aId')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('entityType', Trace::AE_TYPE)->setParameter('aId', $entity->getId())->getQuery();
     }
 
     /**
@@ -266,10 +184,7 @@ class TraceRepository extends EntityRepository
      *
      * @param CompanyType $entity
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByCompanyType(CompanyType $entity)
     {
@@ -285,15 +200,7 @@ class TraceRepository extends EntityRepository
      */
     public function getAllBySectorQuery(Sector $entity)
     {
-        return $this->createQueryBuilder('t')
-            ->where('t.actionEntity = :entityType')
-            ->andWhere('t.actionId = :aId')
-            ->orderBy('t.dtCrea', 'ASC')
-            ->addOrderBy('t.actionType', 'ASC')
-            ->addOrderBy('t.actionEntity', 'ASC')
-            ->setParameter('entityType', Trace::AE_SECTOR)
-            ->setParameter('aId', $entity->getId())
-            ->getQuery();
+        return $this->createQueryBuilder('t')->where('t.actionEntity = :entityType')->andWhere('t.actionId = :aId')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('entityType', Trace::AE_SECTOR)->setParameter('aId', $entity->getId())->getQuery();
     }
 
     /**
@@ -301,10 +208,7 @@ class TraceRepository extends EntityRepository
      *
      * @param Sector $entity
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllBySector(Sector $entity)
     {
@@ -321,12 +225,7 @@ class TraceRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $company, $showall = true)
     {
-        $qb = $this->createQueryBuilder('t')
-            ->where('t.companyId = :companyId')
-            ->orderBy('t.dtCrea', 'ASC')
-            ->addOrderBy('t.actionType', 'ASC')
-            ->addOrderBy('t.actionEntity', 'ASC')
-            ->setParameter('companyId', $company->getId());
+        $qb = $this->createQueryBuilder('t')->where('t.companyId = :companyId')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('companyId', $company->getId());
         if ($showall == false) {
             $qb->andWhere('t.actionEntity NOT IN (:entities)');
             $qb->setParameter('entities', array(
@@ -348,10 +247,7 @@ class TraceRepository extends EntityRepository
      * @param Company $company
      * @param boolean $showall
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByCompany(Company $company, $showall = true)
     {
@@ -369,15 +265,7 @@ class TraceRepository extends EntityRepository
      */
     public function getAllByEntityIdQuery($entityId, $entityType)
     {
-        return $this->createQueryBuilder('t')
-            ->where('t.actionEntity = :entityType OR t.actionEntity2 = :entityType OR t.actionEntity3 = :entityType OR t.actionEntity4 = :entityType')
-            ->andWhere('t.actionId = :aId OR t.actionId2 = :aId OR t.actionId3 = :aId OR t.actionId4 = :aId')
-            ->orderBy('t.dtCrea', 'ASC')
-            ->addOrderBy('t.actionType', 'ASC')
-            ->addOrderBy('t.actionEntity', 'ASC')
-            ->setParameter('entityType', $entityType)
-            ->setParameter('aId', $entityId)
-            ->getQuery();
+        return $this->createQueryBuilder('t')->where('t.actionEntity = :entityType OR t.actionEntity2 = :entityType OR t.actionEntity3 = :entityType OR t.actionEntity4 = :entityType')->andWhere('t.actionId = :aId OR t.actionId2 = :aId OR t.actionId3 = :aId OR t.actionId4 = :aId')->orderBy('t.dtCrea', 'ASC')->addOrderBy('t.actionType', 'ASC')->addOrderBy('t.actionEntity', 'ASC')->setParameter('entityType', $entityType)->setParameter('aId', $entityId)->getQuery();
     }
 
     /**
@@ -387,10 +275,7 @@ class TraceRepository extends EntityRepository
      *
      * @param string $entityType
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByEntityId($entityId, $entityType)
     {

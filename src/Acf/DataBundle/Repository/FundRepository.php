@@ -18,16 +18,11 @@ class FundRepository extends EntityRepository
      *
      * @param Company $c
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByCompany(Company $c)
     {
-        $qb = $this->createQueryBuilder('f')
-            ->select('count(f)')
-            ->join('f.company', 'c')
-            ->where('c.id = :id')
-            ->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('f')->select('count(f)')->join('f.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -42,11 +37,7 @@ class FundRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $c)
     {
-        $qb = $this->createQueryBuilder('f')
-            ->join('f.company', 'c')
-            ->where('c.id = :id')
-            ->orderBy('f.label', 'ASC')
-            ->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('f')->join('f.company', 'c')->where('c.id = :id')->orderBy('f.label', 'ASC')->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -57,10 +48,7 @@ class FundRepository extends EntityRepository
      *
      * @param Company $c
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByCompany(Company $c)
     {

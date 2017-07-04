@@ -16,8 +16,7 @@ class AcfInfoExtension extends Extension
 
     /**
      *
-     * {@inheritdoc}
-     *
+     * {@inheritdoc} @see \Symfony\Component\DependencyInjection\Extension\ExtensionInterface::load()
      */
     public function load(array $configs, ContainerBuilder $container)
     {

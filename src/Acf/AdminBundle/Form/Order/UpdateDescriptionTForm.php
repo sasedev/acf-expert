@@ -4,7 +4,6 @@ namespace Acf\AdminBundle\Form\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -18,11 +17,10 @@ class UpdateDescriptionTForm extends AbstractType
      * Form builder
      *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->add('description', TextareaType::class, array(
             'label' => 'Order.description.label',
             'required' => false
@@ -31,7 +29,6 @@ class UpdateDescriptionTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

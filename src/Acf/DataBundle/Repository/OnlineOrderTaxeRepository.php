@@ -14,8 +14,7 @@ class OnlineOrderTaxeRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -41,10 +40,7 @@ class OnlineOrderTaxeRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -54,16 +50,11 @@ class OnlineOrderTaxeRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByOrder(OnlineOrder $order)
     {
-        $qb = $this->createQueryBuilder('t')
-            ->select('count(t)')
-            ->join('t.order', 'o')
-            ->where('o.id = :id')
-            ->setParameter('id', $order->getId());
+        $qb = $this->createQueryBuilder('t')->select('count(t)')->join('t.order', 'o')->where('o.id = :id')->setParameter('id', $order->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -76,11 +67,7 @@ class OnlineOrderTaxeRepository extends EntityRepository
      */
     public function getAllByOrderQuery(OnlineOrder $order)
     {
-        $qb = $this->createQueryBuilder('t')
-            ->join('t.order', 'o')
-            ->where('o.id = :id')
-            ->setParameter('id', $order->getId())
-            ->orderBy('t.priority', 'ASC');
+        $qb = $this->createQueryBuilder('t')->join('t.order', 'o')->where('o.id = :id')->setParameter('id', $order->getId())->orderBy('t.priority', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -89,10 +76,7 @@ class OnlineOrderTaxeRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByOrder(OnlineOrder $order)
     {

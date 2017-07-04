@@ -13,8 +13,7 @@ class RoleRepository extends EntityRepository
     /**
      * Count All
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:, \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -31,11 +30,7 @@ class RoleRepository extends EntityRepository
      */
     public function getAllQuery()
     {
-        $qb = $this->createQueryBuilder('r')
-            ->leftJoin('r.parents', 'p')
-            ->leftJoin('r.childs', 'c')
-            ->orderBy('p.name', 'ASC')
-            ->addOrderBy('r.name', 'ASC');
+        $qb = $this->createQueryBuilder('r')->leftJoin('r.parents', 'p')->leftJoin('r.childs', 'c')->orderBy('p.name', 'ASC')->addOrderBy('r.name', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -44,10 +39,7 @@ class RoleRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {

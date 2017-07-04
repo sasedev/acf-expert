@@ -10,7 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -100,7 +99,6 @@ class UpdateProfileTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

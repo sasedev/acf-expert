@@ -5,7 +5,6 @@ use Acf\DataBundle\Repository\BiFolderRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -31,8 +30,7 @@ class UpdateParentTForm extends AbstractType
             'label' => 'BiFolder.parent.label',
             'class' => 'AcfDataBundle:BiFolder',
             'query_builder' => function (BiFolderRepository $dgr) use ($selfUrl) {
-                $qb = $dgr->createQueryBuilder('d')
-                    ->where('d.pageUrlFull NOT LIKE :url');
+                $qb = $dgr->createQueryBuilder('d')->where('d.pageUrlFull NOT LIKE :url');
                 $qb->setParameter('url', $selfUrl . '%');
 
                 return $qb->addOrderBy('d.pageUrlFull', 'ASC');
@@ -48,7 +46,6 @@ class UpdateParentTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

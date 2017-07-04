@@ -8,7 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -58,8 +57,7 @@ class EventAddAdminTForm extends AbstractType
             'label' => 'Agenda.users.label',
             'class' => 'AcfDataBundle:User',
             'query_builder' => function (UserRepository $ur) {
-                return $ur->createQueryBuilder('u')
-                    ->orderBy('u.username', 'ASC');
+                return $ur->createQueryBuilder('u')->orderBy('u.username', 'ASC');
             },
             'choice_label' => 'fullName',
             'multiple' => true,
@@ -70,7 +68,6 @@ class EventAddAdminTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

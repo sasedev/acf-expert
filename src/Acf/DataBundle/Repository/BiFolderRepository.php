@@ -16,14 +16,11 @@ class BiFolderRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countRoots()
     {
-        $qb = $this->createQueryBuilder('d')
-            ->select('count(d)')
-            ->where('d.parent is NULL');
+        $qb = $this->createQueryBuilder('d')->select('count(d)')->where('d.parent is NULL');
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -36,9 +33,7 @@ class BiFolderRepository extends EntityRepository
      */
     public function getRootsQuery()
     {
-        $qb = $this->createQueryBuilder('d')
-            ->where('d.parent is NULL')
-            ->orderBy('d.title', 'ASC');
+        $qb = $this->createQueryBuilder('d')->where('d.parent is NULL')->orderBy('d.title', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -47,10 +42,7 @@ class BiFolderRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getRoots()
     {
@@ -60,8 +52,7 @@ class BiFolderRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -87,10 +78,7 @@ class BiFolderRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -102,18 +90,11 @@ class BiFolderRepository extends EntityRepository
      *
      * @param BiFolder $dg
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countAllChilds(BiFolder $dg)
     {
-        $qb = $this->createQueryBuilder('d')
-            ->select('count(d)')
-            ->join('d.company', 'c')
-            ->where('d.pageUrlFull LIKE :url')
-            ->andWhere('d.id != :did')
-            ->setParameter('url', $dg->getPageUrlFull() . '%')
-            ->setParameter('did', $dg->getId());
+        $qb = $this->createQueryBuilder('d')->select('count(d)')->join('d.company', 'c')->where('d.pageUrlFull LIKE :url')->andWhere('d.id != :did')->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -128,12 +109,7 @@ class BiFolderRepository extends EntityRepository
      */
     public function getAllChildsQuery(BiFolder $dg)
     {
-        $qb = $this->createQueryBuilder('d')
-            ->where('d.pageUrlFull LIKE :url')
-            ->andWhere('d.id != :did')
-            ->orderBy('d.pageUrlFull', 'ASC')
-            ->setParameter('url', $dg->getPageUrlFull() . '%')
-            ->setParameter('did', $dg->getId());
+        $qb = $this->createQueryBuilder('d')->where('d.pageUrlFull LIKE :url')->andWhere('d.id != :did')->orderBy('d.pageUrlFull', 'ASC')->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -144,10 +120,7 @@ class BiFolderRepository extends EntityRepository
      *
      * @param BiFolder $dg
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllChilds(BiFolder $dg)
     {

@@ -27,7 +27,7 @@ class DefaultController extends BaseController
 
     /**
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -48,7 +48,7 @@ class DefaultController extends BaseController
      *
      * @param string $uid
      *
-     * @return Response|RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editGetAction($uid)
     {

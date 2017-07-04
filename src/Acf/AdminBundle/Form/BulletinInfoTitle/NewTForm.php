@@ -8,7 +8,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -41,8 +40,7 @@ class NewTForm extends AbstractType
                 'label' => 'BulletinInfoTitle.bulletinInfo.label',
                 'class' => 'AcfDataBundle:BulletinInfo',
                 'query_builder' => function (BulletinInfoRepository $bir) {
-                    return $bir->createQueryBuilder('bi')
-                        ->orderBy('bi.num', 'ASC');
+                    return $bir->createQueryBuilder('bi')->orderBy('bi.num', 'ASC');
                 },
                 'choice_label' => 'num',
                 'multiple' => false,
@@ -55,10 +53,7 @@ class NewTForm extends AbstractType
                 'label' => 'BulletinInfoTitle.bulletinInfo.label',
                 'class' => 'AcfDataBundle:BulletinInfo',
                 'query_builder' => function (BulletinInfoRepository $bir) use ($biId) {
-                    return $bir->createQueryBuilder('bi')
-                        ->where('bi.id = :id')
-                        ->setParameter('id', $biId)
-                        ->orderBy('bi.num', 'ASC');
+                    return $bir->createQueryBuilder('bi')->where('bi.id = :id')->setParameter('id', $biId)->orderBy('bi.num', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -74,7 +69,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

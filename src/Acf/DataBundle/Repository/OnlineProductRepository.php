@@ -14,8 +14,7 @@ class OnlineProductRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -41,10 +40,7 @@ class OnlineProductRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -54,15 +50,11 @@ class OnlineProductRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countVisible()
     {
-        $qb = $this->createQueryBuilder('p')
-            ->select('count(p)')
-            ->where('p.lockout = :lockout')
-            ->setParameter('lockout', OnlineProduct::LOCKOUT_UNLOCKED);
+        $qb = $this->createQueryBuilder('p')->select('count(p)')->where('p.lockout = :lockout')->setParameter('lockout', OnlineProduct::LOCKOUT_UNLOCKED);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -75,10 +67,7 @@ class OnlineProductRepository extends EntityRepository
      */
     public function getAllVisibleQuery()
     {
-        $qb = $this->createQueryBuilder('p')
-            ->where('p.lockout = :lockout')
-            ->orderBy('p.dtCrea', 'DESC')
-            ->setParameter('lockout', OnlineProduct::LOCKOUT_UNLOCKED);
+        $qb = $this->createQueryBuilder('p')->where('p.lockout = :lockout')->orderBy('p.dtCrea', 'DESC')->setParameter('lockout', OnlineProduct::LOCKOUT_UNLOCKED);
         $query = $qb->getQuery();
 
         return $query;
@@ -87,10 +76,7 @@ class OnlineProductRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllVisible()
     {

@@ -20,21 +20,16 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     /**
      * Used for Authentification Security
      *
-     * {@inheritdoc} @see UserProviderInterface::loadUserByUsername()
-     * @param string $username
+     * {@inheritdoc}
+     * @see \Symfony\Component\Security\Core\User\UserProviderInterface::loadUserByUsername()
      *
      * @throws UsernameNotFoundException
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return UserInterface
      */
     public function loadUserByUsername($username)
     {
-        $qb = $this->createQueryBuilder('u')
-            ->where('u.username = :username')
-            ->andWhere('u.lockout = :lockout')
-            ->setParameter('username', $username)
-            ->setParameter('lockout', User::LOCKOUT_UNLOCKED);
+        $qb = $this->createQueryBuilder('u')->where('u.username = :username')->andWhere('u.lockout = :lockout')->setParameter('username', $username)->setParameter('lockout', User::LOCKOUT_UNLOCKED);
         $query = $qb->getQuery();
 
         try {
@@ -108,8 +103,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -121,26 +115,11 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      *
      * @param string $q
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:, \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countSearch($q)
     {
-        $qb = $this->createQueryBuilder('u')
-            ->select('count(u)')
-            ->distinct()
-            ->where('LOWER(u.username) LIKE :key')
-            ->orWhere('LOWER(u.email) LIKE :key')
-            ->orWhere('LOWER(u.firstName) LIKE :key')
-            ->orWhere('LOWER(u.lastName) LIKE :key')
-            ->orWhere('LOWER(u.streetNum) LIKE :key')
-            ->orWhere('LOWER(u.address) LIKE :key')
-            ->orWhere('LOWER(u.address2) LIKE :key')
-            ->orWhere('LOWER(u.town) LIKE :key')
-            ->orWhere('LOWER(u.zipCode) LIKE :key')
-            ->orWhere('LOWER(u.mobile) LIKE :key')
-            ->orWhere('LOWER(u.phone) LIKE :key')
-            ->setParameter('key', '%' . strtolower($q) . '%');
+        $qb = $this->createQueryBuilder('u')->select('count(u)')->distinct()->where('LOWER(u.username) LIKE :key')->orWhere('LOWER(u.email) LIKE :key')->orWhere('LOWER(u.firstName) LIKE :key')->orWhere('LOWER(u.lastName) LIKE :key')->orWhere('LOWER(u.streetNum) LIKE :key')->orWhere('LOWER(u.address) LIKE :key')->orWhere('LOWER(u.address2) LIKE :key')->orWhere('LOWER(u.town) LIKE :key')->orWhere('LOWER(u.zipCode) LIKE :key')->orWhere('LOWER(u.mobile) LIKE :key')->orWhere('LOWER(u.phone) LIKE :key')->setParameter('key', '%' . strtolower($q) . '%');
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -155,21 +134,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      */
     public function getAllSearchQuery($q)
     {
-        $qb = $this->createQueryBuilder('u')
-            ->distinct()
-            ->where('LOWER(u.username) LIKE :key')
-            ->orWhere('LOWER(u.email) LIKE :key')
-            ->orWhere('LOWER(u.firstName) LIKE :key')
-            ->orWhere('LOWER(u.lastName) LIKE :key')
-            ->orWhere('LOWER(u.streetNum) LIKE :key')
-            ->orWhere('LOWER(u.address) LIKE :key')
-            ->orWhere('LOWER(u.address2) LIKE :key')
-            ->orWhere('LOWER(u.town) LIKE :key')
-            ->orWhere('LOWER(u.zipCode) LIKE :key')
-            ->orWhere('LOWER(u.mobile) LIKE :key')
-            ->orWhere('LOWER(u.phone) LIKE :key')
-            ->orderBy('u.username', 'ASC')
-            ->setParameter('key', '%' . strtolower($q) . '%');
+        $qb = $this->createQueryBuilder('u')->distinct()->where('LOWER(u.username) LIKE :key')->orWhere('LOWER(u.email) LIKE :key')->orWhere('LOWER(u.firstName) LIKE :key')->orWhere('LOWER(u.lastName) LIKE :key')->orWhere('LOWER(u.streetNum) LIKE :key')->orWhere('LOWER(u.address) LIKE :key')->orWhere('LOWER(u.address2) LIKE :key')->orWhere('LOWER(u.town) LIKE :key')->orWhere('LOWER(u.zipCode) LIKE :key')->orWhere('LOWER(u.mobile) LIKE :key')->orWhere('LOWER(u.phone) LIKE :key')->orderBy('u.username', 'ASC')->setParameter('key', '%' . strtolower($q) . '%');
         $query = $qb->getQuery();
 
         return $query;
@@ -180,8 +145,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      *
      * @param string $q
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllSearch($q)
     {
@@ -193,8 +157,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      *
      * @param string $strtotime
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:, \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countAllActiveNow($strtotime = null)
     {
@@ -205,11 +168,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         $delay = new \DateTime();
         $delay->setTimestamp(strtotime($strtotime));
 
-        $qb = $this->createQueryBuilder('u')
-            ->select('count(u)')
-            ->where('u.lastActivity > :delay')
-            ->orderBy('u.lastActivity', 'ASC')
-            ->setParameter('delay', $delay);
+        $qb = $this->createQueryBuilder('u')->select('count(u)')->where('u.lastActivity > :delay')->orderBy('u.lastActivity', 'ASC')->setParameter('delay', $delay);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -231,10 +190,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         $delay = new \DateTime();
         $delay->setTimestamp(strtotime($strtotime));
 
-        $qb = $this->createQueryBuilder('u')
-            ->where('u.lastActivity > :delay')
-            ->setParameter('delay', $delay)
-            ->orderBy('u.lastActivity', 'DESC');
+        $qb = $this->createQueryBuilder('u')->where('u.lastActivity > :delay')->setParameter('delay', $delay)->orderBy('u.lastActivity', 'DESC');
         $query = $qb->getQuery();
 
         return $query;
@@ -245,8 +201,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      *
      * @param string $strtotime
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllActiveNow($strtotime = null)
     {
@@ -256,15 +211,11 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     /**
      * Count All Unlocked
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:, \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countAllUnlocked()
     {
-        $qb = $this->createQueryBuilder('u')
-            ->select('count(u)')
-            ->where('u.lockout = :lockout')
-            ->setParameter('lockout', User::LOCKOUT_UNLOCKED);
+        $qb = $this->createQueryBuilder('u')->select('count(u)')->where('u.lockout = :lockout')->setParameter('lockout', User::LOCKOUT_UNLOCKED);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -277,10 +228,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      */
     public function getAllUnlockedQuery()
     {
-        $qb = $this->createQueryBuilder('u')
-            ->where('u.lockout = :lockout')
-            ->orderBy('u.username', 'ASC')
-            ->setParameter('lockout', User::LOCKOUT_UNLOCKED);
+        $qb = $this->createQueryBuilder('u')->where('u.lockout = :lockout')->orderBy('u.username', 'ASC')->setParameter('lockout', User::LOCKOUT_UNLOCKED);
         $query = $qb->getQuery();
 
         return $query;
@@ -289,8 +237,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     /**
      * Get All Entities where lockout is unlocked
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllUnlocked()
     {

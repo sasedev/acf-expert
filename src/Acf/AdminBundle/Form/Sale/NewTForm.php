@@ -3,6 +3,7 @@ namespace Acf\AdminBundle\Form\Sale;
 
 use Acf\AdminBundle\Form\Sale\Doc\SaleDocTForm;
 use Acf\AdminBundle\Form\Sale\SecondaryVat\SaleSecondaryVatTForm;
+use Acf\DataBundle\Entity\MBSale;
 use Acf\DataBundle\Entity\Sale;
 use Acf\DataBundle\Repository\AccountRepository;
 use Acf\DataBundle\Repository\CustomerRepository;
@@ -19,7 +20,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
 
@@ -53,8 +53,7 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.monthlyBalance.label',
                 'class' => 'AcfDataBundle:MBSale',
                 'query_builder' => function (MBSaleRepository $mbsr) {
-                    return $mbsr->createQueryBuilder('mbs')
-                        ->orderBy('mbs.ref', 'ASC');
+                    return $mbsr->createQueryBuilder('mbs')->orderBy('mbs.ref', 'ASC');
                 },
                 'choice_label' => 'ref',
                 'multiple' => false,
@@ -67,10 +66,7 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.monthlyBalance.label',
                 'class' => 'AcfDataBundle:MBSale',
                 'query_builder' => function (MBSaleRepository $mbsr) use ($mbsaleId) {
-                    return $mbsr->createQueryBuilder('mbs')
-                        ->where('mbs.id = :id')
-                        ->setParameter('id', $mbsaleId)
-                        ->orderBy('mbs.ref', 'ASC');
+                    return $mbsr->createQueryBuilder('mbs')->where('mbs.id = :id')->setParameter('id', $mbsaleId)->orderBy('mbs.ref', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -94,8 +90,7 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.relation.label',
                 'class' => 'AcfDataBundle:Customer',
                 'query_builder' => function (CustomerRepository $sr) {
-                    return $sr->createQueryBuilder('s')
-                        ->orderBy('s.label', 'ASC');
+                    return $sr->createQueryBuilder('s')->orderBy('s.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -108,11 +103,7 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.relation.label',
                 'class' => 'AcfDataBundle:Customer',
                 'query_builder' => function (CustomerRepository $sr) use ($companyId) {
-                    return $sr->createQueryBuilder('s')
-                        ->join('s.company', 'c')
-                        ->where('c.id = :cid')
-                        ->setParameter('cid', $companyId)
-                        ->orderBy('s.label', 'ASC');
+                    return $sr->createQueryBuilder('s')->join('s.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('s.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -188,8 +179,7 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.withholding.label',
                 'class' => 'AcfDataBundle:Withholding',
                 'query_builder' => function (WithholdingRepository $wr) {
-                    return $wr->createQueryBuilder('w')
-                        ->orderBy('w.label', 'ASC');
+                    return $wr->createQueryBuilder('w')->orderBy('w.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -202,11 +192,7 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.withholding.label',
                 'class' => 'AcfDataBundle:Withholding',
                 'query_builder' => function (WithholdingRepository $wr) use ($companyId) {
-                    return $wr->createQueryBuilder('w')
-                        ->join('w.company', 'c')
-                        ->where('c.id = :cid')
-                        ->setParameter('cid', $companyId)
-                        ->orderBy('w.label', 'ASC');
+                    return $wr->createQueryBuilder('w')->join('w.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('w.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -245,8 +231,7 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.account.label',
                 'class' => 'AcfDataBundle:Account',
                 'query_builder' => function (AccountRepository $ar) {
-                    return $ar->createQueryBuilder('a')
-                        ->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -259,11 +244,7 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.account.label',
                 'class' => 'AcfDataBundle:Account',
                 'query_builder' => function (AccountRepository $ar) use ($companyId) {
-                    return $ar->createQueryBuilder('a')
-                        ->join('a.company', 'c')
-                        ->where('c.id = :cid')
-                        ->setParameter('cid', $companyId)
-                        ->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')->join('a.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -309,7 +290,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

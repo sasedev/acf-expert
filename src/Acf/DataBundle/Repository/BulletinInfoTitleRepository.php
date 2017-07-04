@@ -16,8 +16,7 @@ class BulletinInfoTitleRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -34,10 +33,7 @@ class BulletinInfoTitleRepository extends EntityRepository
      */
     public function getAllQuery()
     {
-        $qb = $this->createQueryBuilder('bt')
-            ->join('bt.bulletinInfo', 'bi')
-            ->orderBy('bi.num', 'ASC')
-            ->addOrderBy('bt.title', 'ASC');
+        $qb = $this->createQueryBuilder('bt')->join('bt.bulletinInfo', 'bi')->orderBy('bi.num', 'ASC')->addOrderBy('bt.title', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -46,10 +42,7 @@ class BulletinInfoTitleRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -61,16 +54,11 @@ class BulletinInfoTitleRepository extends EntityRepository
      *
      * @param BulletinInfo $bi
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByBulletinInfo(BulletinInfo $bi)
     {
-        $qb = $this->createQueryBuilder('bt')
-            ->select('count(bt)')
-            ->join('bt.bulletinInfo', 'bi')
-            ->where('bi.id = :id')
-            ->setParameter('id', $bi->getId());
+        $qb = $this->createQueryBuilder('bt')->select('count(bt)')->join('bt.bulletinInfo', 'bi')->where('bi.id = :id')->setParameter('id', $bi->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -85,11 +73,7 @@ class BulletinInfoTitleRepository extends EntityRepository
      */
     public function getAllByBulletinInfoQuery(BulletinInfo $bi)
     {
-        $qb = $this->createQueryBuilder('bt')
-            ->join('bt.bulletinInfo', 'bi')
-            ->where('bi.id = :id')
-            ->orderBy('bt.title', 'ASC')
-            ->setParameter('id', $bi->getId());
+        $qb = $this->createQueryBuilder('bt')->join('bt.bulletinInfo', 'bi')->where('bi.id = :id')->orderBy('bt.title', 'ASC')->setParameter('id', $bi->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -100,10 +84,7 @@ class BulletinInfoTitleRepository extends EntityRepository
      *
      * @param BulletinInfo $bi
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByBulletinInfo(BulletinInfo $bi)
     {

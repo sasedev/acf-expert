@@ -2,7 +2,6 @@
 namespace Acf\PayrollBundle\Controller;
 
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
-use Acf\DataBundle\Entity\Company;
 
 /**
  *

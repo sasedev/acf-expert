@@ -10,7 +10,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -43,8 +42,7 @@ class NewTForm extends AbstractType
                 'label' => 'SecondatVat.sale.label',
                 'class' => 'AcfDataBundle:Sale',
                 'query_builder' => function (SaleRepository $sr) {
-                    return $sr->createQueryBuilder('s')
-                        ->orderBy('s.number', 'ASC');
+                    return $sr->createQueryBuilder('s')->orderBy('s.number', 'ASC');
                 },
                 'choice_label' => 'number',
                 'multiple' => false,
@@ -57,10 +55,7 @@ class NewTForm extends AbstractType
                 'label' => 'SecondatVat.sale.label',
                 'class' => 'AcfDataBundle:Sale',
                 'query_builder' => function (SaleRepository $sr) use ($saleId) {
-                    return $sr->createQueryBuilder('s')
-                        ->where('s.id = :id')
-                        ->setParameter('id', $saleId)
-                        ->orderBy('s.number', 'ASC');
+                    return $sr->createQueryBuilder('s')->where('s.id = :id')->setParameter('id', $saleId)->orderBy('s.number', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -93,7 +88,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

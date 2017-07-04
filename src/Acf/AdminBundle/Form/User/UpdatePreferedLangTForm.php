@@ -5,7 +5,6 @@ use Acf\DataBundle\Repository\LangRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -29,8 +28,7 @@ class UpdatePreferedLangTForm extends AbstractType
             'label' => 'User.preferedLang.label',
             'class' => 'AcfDataBundle:Lang',
             'query_builder' => function (LangRepository $lr) {
-                return $lr->createQueryBuilder('l')
-                    ->orderBy('l.locale', 'ASC');
+                return $lr->createQueryBuilder('l')->orderBy('l.locale', 'ASC');
             },
             'choice_label' => 'name',
             'multiple' => false,
@@ -43,7 +41,6 @@ class UpdatePreferedLangTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

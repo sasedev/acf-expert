@@ -18,16 +18,11 @@ class MSalaryRepository extends EntityRepository
      *
      * @param MPaye $p
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByMPaye(MPaye $p)
     {
-        $qb = $this->createQueryBuilder('s')
-            ->select('count(s)')
-            ->join('s.paye', 'p')
-            ->where('p.id = :id')
-            ->setParameter('id', $p->getId());
+        $qb = $this->createQueryBuilder('s')->select('count(s)')->join('s.paye', 'p')->where('p.id = :id')->setParameter('id', $p->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -42,11 +37,7 @@ class MSalaryRepository extends EntityRepository
      */
     public function getAllByMPayeQuery(MPaye $p)
     {
-        $qb = $this->createQueryBuilder('s')
-            ->join('s.paye', 'p')
-            ->where('p.id = :id')
-            ->orderBy('m.matricule', 'ASC')
-            ->setParameter('id', $p->getId());
+        $qb = $this->createQueryBuilder('s')->join('s.paye', 'p')->where('p.id = :id')->orderBy('m.matricule', 'ASC')->setParameter('id', $p->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -57,10 +48,7 @@ class MSalaryRepository extends EntityRepository
      *
      * @param MPaye $p
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByMPaye(MPaye $p)
     {

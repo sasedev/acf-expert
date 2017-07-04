@@ -1,11 +1,11 @@
 <?php
 namespace Acf\ClientBundle\Form\Buy;
 
+use Acf\DataBundle\Entity\MBPurchase;
 use Acf\DataBundle\Repository\CompanyNatureRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -38,8 +38,7 @@ class UpdateNatureTForm extends AbstractType
                 'label' => 'Buy.nature.label',
                 'class' => 'AcfDataBundle:CompanyNature',
                 'query_builder' => function (CompanyNatureRepository $ar) {
-                    return $ar->createQueryBuilder('a')
-                        ->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -52,11 +51,7 @@ class UpdateNatureTForm extends AbstractType
                 'label' => 'Buy.nature.label',
                 'class' => 'AcfDataBundle:CompanyNature',
                 'query_builder' => function (CompanyNatureRepository $ar) use ($companyId) {
-                    return $ar->createQueryBuilder('a')
-                        ->join('a.company', 'c')
-                        ->where('c.id = :cid')
-                        ->setParameter('cid', $companyId)
-                        ->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')->join('a.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -68,7 +63,6 @@ class UpdateNatureTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

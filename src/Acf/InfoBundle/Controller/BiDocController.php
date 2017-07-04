@@ -1,7 +1,6 @@
 <?php
 namespace Acf\InfoBundle\Controller;
 
-use Acf\DataBundle\Entity\BiDoc;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -33,7 +32,7 @@ class BiDocController extends BaseController
      *
      * @param string $uid
      *
-     * @return StreamedResponse|RedirectResponse
+     * @return StreamedResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function downloadAction($uid)
     {

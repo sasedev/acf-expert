@@ -5,7 +5,6 @@ use Acf\DataBundle\Repository\RoleRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -29,8 +28,7 @@ class UpdateUserRolesTForm extends AbstractType
             'label' => 'User.userRoles.label',
             'class' => 'AcfDataBundle:Role',
             'query_builder' => function (RoleRepository $rr) {
-                return $rr->createQueryBuilder('r')
-                    ->orderBy('r.name', 'ASC');
+                return $rr->createQueryBuilder('r')->orderBy('r.name', 'ASC');
             },
             'choice_label' => 'name',
             'multiple' => true,
@@ -44,7 +42,6 @@ class UpdateUserRolesTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

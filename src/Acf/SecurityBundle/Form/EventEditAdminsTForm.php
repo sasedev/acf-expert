@@ -5,7 +5,6 @@ use Acf\DataBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -29,14 +28,10 @@ class EventEditAdminsTForm extends AbstractType
             'label' => 'Agenda.admins.label',
             'class' => 'AcfDataBundle:User',
             'query_builder' => function (UserRepository $ur) {
-                return $ur->createQueryBuilder('u')
-                    ->leftJoin('u.userRoles', 'r')
-                    ->where('r.name IN (:roles)')
-                    ->setParameter('roles', array(
+                return $ur->createQueryBuilder('u')->leftJoin('u.userRoles', 'r')->where('r.name IN (:roles)')->setParameter('roles', array(
                     'ROLE_ADMIN',
                     'ROLE_SUPERADMIN'
-                ))
-                    ->orderBy('u.username', 'ASC');
+                ))->orderBy('u.username', 'ASC');
             },
             'choice_label' => 'fullName',
             'multiple' => true,
@@ -47,7 +42,6 @@ class EventEditAdminsTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

@@ -6,7 +6,6 @@ use Acf\DataBundle\Repository\DocgroupauditRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -47,8 +46,7 @@ class UpdateParentTForm extends AbstractType
                 'label' => 'Docgroupaudit.parent.label',
                 'class' => 'AcfDataBundle:Docgroupaudit',
                 'query_builder' => function (DocgroupauditRepository $dgr) use ($selfUrl) {
-                    $qb = $dgr->createQueryBuilder('d')
-                        ->where('d.pageUrlFull NOT LIKE :url');
+                    $qb = $dgr->createQueryBuilder('d')->where('d.pageUrlFull NOT LIKE :url');
                     $qb->setParameter('url', $selfUrl . '%');
 
                     return $qb->addOrderBy('d.pageUrlFull', 'ASC');
@@ -66,10 +64,7 @@ class UpdateParentTForm extends AbstractType
                 'label' => 'Docgroupaudit.parent.label',
                 'class' => 'AcfDataBundle:Docgroupaudit',
                 'query_builder' => function (DocgroupauditRepository $dgr) use ($selfUrl, $companyId) {
-                    $qb = $dgr->createQueryBuilder('d')
-                        ->join('d.company', 'c')
-                        ->where('c.id = :cid')
-                        ->andWhere('d.pageUrlFull NOT LIKE :url');
+                    $qb = $dgr->createQueryBuilder('d')->join('d.company', 'c')->where('c.id = :cid')->andWhere('d.pageUrlFull NOT LIKE :url');
                     $qb->setParameter('url', $selfUrl . '%');
                     $qb->setParameter('cid', $companyId);
 
@@ -87,7 +82,6 @@ class UpdateParentTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

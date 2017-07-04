@@ -10,7 +10,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -43,10 +42,7 @@ class NewTForm extends AbstractType
             'label' => 'CompanyUser.company.label',
             'class' => 'AcfDataBundle:Company',
             'query_builder' => function (CompanyRepository $br) use ($companyId) {
-                return $br->createQueryBuilder('c')
-                    ->where('c.id = :id')
-                    ->setParameter('id', $companyId)
-                    ->orderBy('c.corporateName', 'ASC');
+                return $br->createQueryBuilder('c')->where('c.id = :id')->setParameter('id', $companyId)->orderBy('c.corporateName', 'ASC');
             },
             'choice_label' => 'id',
             'multiple' => false,
@@ -58,22 +54,12 @@ class NewTForm extends AbstractType
             'label' => 'CompanyUser.user.label',
             'class' => 'AcfDataBundle:User',
             'query_builder' => function (UserRepository $ur) use ($companyId) {
-                $alreadyUsers = $ur->createQueryBuilder('u')
-                    ->select('u.id')
-                    ->join('u.companies', 'c')
-                    ->where('c.id = :id')
-                    ->setParameter('id', $companyId)
-                    ->getQuery()
-                    ->execute();
+                $alreadyUsers = $ur->createQueryBuilder('u')->select('u.id')->join('u.companies', 'c')->where('c.id = :id')->setParameter('id', $companyId)->getQuery()->execute();
 
                 if (count($alreadyUsers) != 0) {
-                    return $ur->createQueryBuilder('u')
-                        ->where('u.id NOT IN (:ulist)')
-                        ->setParameter('ulist', $alreadyUsers)
-                        ->orderBy('u.username', 'ASC');
+                    return $ur->createQueryBuilder('u')->where('u.id NOT IN (:ulist)')->setParameter('ulist', $alreadyUsers)->orderBy('u.username', 'ASC');
                 } else {
-                    return $ur->createQueryBuilder('u')
-                        ->orderBy('u.username', 'ASC');
+                    return $ur->createQueryBuilder('u')->orderBy('u.username', 'ASC');
                 }
             },
             'choice_label' => 'fullName',
@@ -455,7 +441,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

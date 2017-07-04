@@ -16,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -48,8 +47,7 @@ class NewTForm extends AbstractType
             'label' => 'Company.type.label',
             'class' => 'AcfDataBundle:CompanyType',
             'query_builder' => function (CompanyTypeRepository $ctr) {
-                return $ctr->createQueryBuilder('ct')
-                    ->orderBy('ct.label', 'ASC');
+                return $ctr->createQueryBuilder('ct')->orderBy('ct.label', 'ASC');
             },
             'choice_label' => 'label',
             'multiple' => false,
@@ -61,8 +59,7 @@ class NewTForm extends AbstractType
             'label' => 'Company.sectors.label',
             'class' => 'AcfDataBundle:Sector',
             'query_builder' => function (SectorRepository $sr) {
-                return $sr->createQueryBuilder('s')
-                    ->orderBy('s.label', 'ASC');
+                return $sr->createQueryBuilder('s')->orderBy('s.label', 'ASC');
             },
             'choice_label' => 'label',
             'multiple' => true,
@@ -190,8 +187,7 @@ class NewTForm extends AbstractType
             'label' => 'Company.clone.label',
             'class' => 'AcfDataBundle:Company',
             'query_builder' => function (CompanyRepository $cr) {
-                return $cr->createQueryBuilder('c')
-                    ->orderBy('c.corporateName', 'ASC');
+                return $cr->createQueryBuilder('c')->orderBy('c.corporateName', 'ASC');
             },
             'choice_label' => 'corporateName',
             'multiple' => false,
@@ -203,7 +199,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

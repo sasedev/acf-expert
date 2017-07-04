@@ -1,7 +1,9 @@
 <?php
 namespace Acf\AdminBundle\Form\CompanyFrame;
 
+use Acf\DataBundle\Entity\Company;
 use Acf\DataBundle\Entity\CompanyFrame;
+use Acf\DataBundle\Entity\Job;
 use Acf\DataBundle\Repository\CompanyRepository;
 use Acf\DataBundle\Repository\JobRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
@@ -14,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -54,8 +55,7 @@ class NewTForm extends AbstractType
                 'label' => 'CompanyFrame.company.label',
                 'class' => 'AcfDataBundle:Company',
                 'query_builder' => function (CompanyRepository $br) {
-                    return $br->createQueryBuilder('c')
-                        ->orderBy('c.corporateName', 'ASC');
+                    return $br->createQueryBuilder('c')->orderBy('c.corporateName', 'ASC');
                 },
                 'choice_label' => 'corporateName',
                 'multiple' => false,
@@ -68,10 +68,7 @@ class NewTForm extends AbstractType
                 'label' => 'CompanyFrame.company.label',
                 'class' => 'AcfDataBundle:Company',
                 'query_builder' => function (CompanyRepository $br) use ($companyId) {
-                    return $br->createQueryBuilder('c')
-                        ->where('c.id = :id')
-                        ->setParameter('id', $companyId)
-                        ->orderBy('c.corporateName', 'ASC');
+                    return $br->createQueryBuilder('c')->where('c.id = :id')->setParameter('id', $companyId)->orderBy('c.corporateName', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -84,8 +81,7 @@ class NewTForm extends AbstractType
                 'label' => 'CompanyFrame.job.label',
                 'class' => 'AcfDataBundle:Job',
                 'query_builder' => function (JobRepository $br) {
-                    return $br->createQueryBuilder('j')
-                        ->orderBy('j.label', 'ASC');
+                    return $br->createQueryBuilder('j')->orderBy('j.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -98,10 +94,7 @@ class NewTForm extends AbstractType
                 'label' => 'CompanyFrame.job.label',
                 'class' => 'AcfDataBundle:Job',
                 'query_builder' => function (JobRepository $br) use ($jobId) {
-                    return $br->createQueryBuilder('j')
-                        ->where('j.id = :id')
-                        ->setParameter('id', $jobId)
-                        ->orderBy('j.label', 'ASC');
+                    return $br->createQueryBuilder('j')->where('j.id = :id')->setParameter('id', $jobId)->orderBy('j.label', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -193,7 +186,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

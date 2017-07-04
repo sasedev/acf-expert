@@ -6,7 +6,6 @@ use Acf\DataBundle\Repository\AccountRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -39,8 +38,7 @@ class UpdateAccountTForm extends AbstractType
                 'label' => 'Buy.account.label',
                 'class' => 'AcfDataBundle:Account',
                 'query_builder' => function (AccountRepository $ar) {
-                    return $ar->createQueryBuilder('a')
-                        ->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -53,11 +51,7 @@ class UpdateAccountTForm extends AbstractType
                 'label' => 'Buy.account.label',
                 'class' => 'AcfDataBundle:Account',
                 'query_builder' => function (AccountRepository $ar) use ($companyId) {
-                    return $ar->createQueryBuilder('a')
-                        ->join('a.company', 'c')
-                        ->where('c.id = :cid')
-                        ->setParameter('cid', $companyId)
-                        ->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')->join('a.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -69,7 +63,6 @@ class UpdateAccountTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

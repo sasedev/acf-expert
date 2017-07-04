@@ -4,7 +4,6 @@ namespace Acf\AdminBundle\Form\Order;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Acf\DataBundle\Repository\OnlineProductRepository;
 
@@ -36,12 +35,9 @@ class AddProductTForm extends AbstractType
                 } else {
                     $opids = array();
                     foreach ($order->getProducts() as $prdexist) {
-                        $opids[] = $prdexist->getProduct()
-                            ->getId();
+                        $opids[] = $prdexist->getProduct()->getId();
                     }
-                    return $opr->createQueryBuilder('op')
-                        ->where('op.id not in (:ids)')
-                        ->setParameter('ids', $opids);
+                    return $opr->createQueryBuilder('op')->where('op.id not in (:ids)')->setParameter('ids', $opids);
                 }
             },
             'choice_label' => 'originalName',
@@ -54,7 +50,6 @@ class AddProductTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

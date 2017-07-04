@@ -14,8 +14,7 @@ class OnlineOrderRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -41,10 +40,7 @@ class OnlineOrderRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -56,16 +52,11 @@ class OnlineOrderRepository extends EntityRepository
      *
      * @param User $user
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByUser(User $user)
     {
-        $qb = $this->createQueryBuilder('o')
-            ->select('count(o)')
-            ->join('o.user', 'u')
-            ->where('u.id = :id')
-            ->setParameter('id', $user->getId());
+        $qb = $this->createQueryBuilder('o')->select('count(o)')->join('o.user', 'u')->where('u.id = :id')->setParameter('id', $user->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -80,11 +71,7 @@ class OnlineOrderRepository extends EntityRepository
      */
     public function getAllByUserQuery(User $user)
     {
-        $qb = $this->createQueryBuilder('o')
-            ->join('o.user', 'u')
-            ->where('u.id = :id')
-            ->orderBy('o.dtCrea', 'DESC')
-            ->setParameter('id', $user->getId());
+        $qb = $this->createQueryBuilder('o')->join('o.user', 'u')->where('u.id = :id')->orderBy('o.dtCrea', 'DESC')->setParameter('id', $user->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -95,10 +82,7 @@ class OnlineOrderRepository extends EntityRepository
      *
      * @param User $user
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByUser(User $user)
     {

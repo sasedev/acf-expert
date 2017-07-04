@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -36,8 +35,7 @@ class UpdateTForm extends AbstractType
             'label' => 'CompanyFrame.job.label',
             'class' => 'AcfDataBundle:Job',
             'query_builder' => function (JobRepository $br) {
-                return $br->createQueryBuilder('j')
-                    ->orderBy('j.label', 'ASC');
+                return $br->createQueryBuilder('j')->orderBy('j.label', 'ASC');
             },
             'choice_label' => 'label',
             'multiple' => false,
@@ -128,7 +126,6 @@ class UpdateTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

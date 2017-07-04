@@ -14,8 +14,7 @@ class OnlineTaxeRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -41,10 +40,7 @@ class OnlineTaxeRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -54,15 +50,11 @@ class OnlineTaxeRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countVisible()
     {
-        $qb = $this->createQueryBuilder('t')
-            ->select('count(t)')
-            ->where('t.visible = :visible')
-            ->setParameter('visible', OnlineTaxe::VISIBLE_SHOW);
+        $qb = $this->createQueryBuilder('t')->select('count(t)')->where('t.visible = :visible')->setParameter('visible', OnlineTaxe::VISIBLE_SHOW);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -75,10 +67,7 @@ class OnlineTaxeRepository extends EntityRepository
      */
     public function getAllVisibleQuery()
     {
-        $qb = $this->createQueryBuilder('t')
-            ->where('t.visible = :visible')
-            ->orderBy('t.priority', 'ASC')
-            ->setParameter('visible', OnlineTaxe::VISIBLE_SHOW);
+        $qb = $this->createQueryBuilder('t')->where('t.visible = :visible')->orderBy('t.priority', 'ASC')->setParameter('visible', OnlineTaxe::VISIBLE_SHOW);
         $query = $qb->getQuery();
 
         return $query;
@@ -87,10 +76,7 @@ class OnlineTaxeRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllVisible()
     {

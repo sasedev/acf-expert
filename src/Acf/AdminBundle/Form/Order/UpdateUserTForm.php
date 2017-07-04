@@ -5,7 +5,6 @@ use Symfony\Component\Form\AbstractType;
 use Acf\DataBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -27,8 +26,7 @@ class UpdateUserTForm extends AbstractType
             'label' => 'Order.user.label',
             'class' => 'AcfDataBundle:User',
             'query_builder' => function (UserRepository $ur) {
-                return $ur->createQueryBuilder('u')
-                    ->orderBy('u.username', 'ASC');
+                return $ur->createQueryBuilder('u')->orderBy('u.username', 'ASC');
             },
             'choice_label' => 'fullName',
             'multiple' => false,
@@ -39,7 +37,6 @@ class UpdateUserTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

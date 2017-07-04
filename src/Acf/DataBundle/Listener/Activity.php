@@ -16,7 +16,7 @@ class Activity
 
     /**
      *
-     * @var Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
      */
     private $tokenStorage;
 

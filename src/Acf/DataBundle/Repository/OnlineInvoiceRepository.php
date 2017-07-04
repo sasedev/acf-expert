@@ -16,8 +16,7 @@ class OnlineInvoiceRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -43,10 +42,7 @@ class OnlineInvoiceRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -58,16 +54,11 @@ class OnlineInvoiceRepository extends EntityRepository
      *
      * @param User $user
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByUser(User $user)
     {
-        $qb = $this->createQueryBuilder('i')
-            ->select('count(i)')
-            ->join('i.user', 'u')
-            ->where('u.id = :id')
-            ->setParameter('id', $user->getId());
+        $qb = $this->createQueryBuilder('i')->select('count(i)')->join('i.user', 'u')->where('u.id = :id')->setParameter('id', $user->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -82,13 +73,7 @@ class OnlineInvoiceRepository extends EntityRepository
      */
     public function getAllByUserQuery(User $user)
     {
-        $qb = $this->createQueryBuilder('i')
-            ->join('i.user', 'u')
-            ->where('u.id = :id')
-            ->andWhere('i.status = :status')
-            ->orderBy('i.dtCrea', 'DESC')
-            ->setParameter('id', $user->getId())
-            ->setParameter('status', OnlineInvoice::ST_OK);
+        $qb = $this->createQueryBuilder('i')->join('i.user', 'u')->where('u.id = :id')->andWhere('i.status = :status')->orderBy('i.dtCrea', 'DESC')->setParameter('id', $user->getId())->setParameter('status', OnlineInvoice::ST_OK);
         $query = $qb->getQuery();
 
         return $query;
@@ -99,10 +84,7 @@ class OnlineInvoiceRepository extends EntityRepository
      *
      * @param User $user
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByUser(User $user)
     {
@@ -114,16 +96,11 @@ class OnlineInvoiceRepository extends EntityRepository
      *
      * @param Company $company
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByCompany(Company $company)
     {
-        $qb = $this->createQueryBuilder('i')
-            ->select('count(i)')
-            ->join('i.company', 'c')
-            ->where('c.id = :id')
-            ->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('i')->select('count(i)')->join('i.company', 'c')->where('c.id = :id')->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -138,11 +115,7 @@ class OnlineInvoiceRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $company)
     {
-        $qb = $this->createQueryBuilder('i')
-            ->join('i.company', 'c')
-            ->where('c.id = :id')
-            ->orderBy('i.dtCrea', 'DESC')
-            ->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('i')->join('i.company', 'c')->where('c.id = :id')->orderBy('i.dtCrea', 'DESC')->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -153,10 +126,7 @@ class OnlineInvoiceRepository extends EntityRepository
      *
      * @param User $user
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByCompany(Company $company)
     {

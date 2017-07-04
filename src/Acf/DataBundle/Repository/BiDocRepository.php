@@ -16,8 +16,11 @@ class BiDocRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    /**
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -43,10 +46,7 @@ class BiDocRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -58,16 +58,11 @@ class BiDocRepository extends EntityRepository
      *
      * @param BiFolder $f
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByFolder(BiFolder $f)
     {
-        $qb = $this->createQueryBuilder('b')
-            ->select('count(b)')
-            ->join('b.folder', 'f')
-            ->where('f.id = :id')
-            ->setParameter('id', $f->getId());
+        $qb = $this->createQueryBuilder('b')->select('count(b)')->join('b.folder', 'f')->where('f.id = :id')->setParameter('id', $f->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -82,11 +77,7 @@ class BiDocRepository extends EntityRepository
      */
     public function getAllByFolderQuery(BiFolder $f)
     {
-        $qb = $this->createQueryBuilder('b')
-            ->join('b.folder', 'f')
-            ->where('f.id = :id')
-            ->orderBy('b.title', 'ASC')
-            ->setParameter('id', $f->getId());
+        $qb = $this->createQueryBuilder('b')->join('b.folder', 'f')->where('f.id = :id')->orderBy('b.title', 'ASC')->setParameter('id', $f->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -97,10 +88,7 @@ class BiDocRepository extends EntityRepository
      *
      * @param BiFolder $f
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByFolder(BiFolder $f)
     {

@@ -6,7 +6,6 @@ use Acf\DataBundle\Repository\WithholdingRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -39,8 +38,7 @@ class UpdateWithholdingTForm extends AbstractType
                 'label' => 'Buy.withholding.label',
                 'class' => 'AcfDataBundle:Withholding',
                 'query_builder' => function (WithholdingRepository $wr) {
-                    return $wr->createQueryBuilder('w')
-                        ->orderBy('w.label', 'ASC');
+                    return $wr->createQueryBuilder('w')->orderBy('w.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -53,11 +51,7 @@ class UpdateWithholdingTForm extends AbstractType
                 'label' => 'Buy.withholding.label',
                 'class' => 'AcfDataBundle:Withholding',
                 'query_builder' => function (WithholdingRepository $wr) use ($companyId) {
-                    return $wr->createQueryBuilder('w')
-                        ->join('w.company', 'c')
-                        ->where('c.id = :cid')
-                        ->setParameter('cid', $companyId)
-                        ->orderBy('w.label', 'ASC');
+                    return $wr->createQueryBuilder('w')->join('w.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('w.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -69,7 +63,6 @@ class UpdateWithholdingTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

@@ -20,7 +20,7 @@ class PaymentNotifController extends BaseController
 
     /**
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function paymentnotifAction()
     {

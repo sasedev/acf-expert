@@ -12,16 +12,28 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 class RoleManager implements RoleManagerInterface
 {
 
+    /**
+     *
+     * @var string
+     */
     protected $class;
 
+    /**
+     *
+     * @var \Doctrine\Common\Persistence\ObjectManager
+     */
     protected $entityManager;
 
+    /**
+     *
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
     protected $entityRepository;
 
     /**
      *
      * @param ManagerRegistry $managerRegistry
-     * @param unknown $class
+     * @param string $class
      */
     public function __construct(ManagerRegistry $managerRegistry, $class)
     {

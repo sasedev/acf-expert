@@ -14,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -55,8 +54,7 @@ class NewTForm extends AbstractType
             'label' => 'User.preferedLang.label',
             'class' => 'AcfDataBundle:Lang',
             'query_builder' => function (LangRepository $lr) {
-                return $lr->createQueryBuilder('l')
-                    ->orderBy('l.locale', 'ASC');
+                return $lr->createQueryBuilder('l')->orderBy('l.locale', 'ASC');
             },
             'choice_label' => 'fullLocale',
             'multiple' => false,
@@ -139,8 +137,7 @@ class NewTForm extends AbstractType
             'label' => 'User.userRoles.label',
             'class' => 'AcfDataBundle:Role',
             'query_builder' => function (RoleRepository $rr) {
-                return $rr->createQueryBuilder('r')
-                    ->orderBy('r.name', 'ASC');
+                return $rr->createQueryBuilder('r')->orderBy('r.name', 'ASC');
             },
             'choice_label' => 'name',
             'multiple' => true,
@@ -154,7 +151,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

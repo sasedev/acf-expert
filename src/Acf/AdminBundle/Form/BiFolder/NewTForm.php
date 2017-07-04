@@ -6,7 +6,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -32,8 +31,7 @@ class NewTForm extends AbstractType
             'label' => 'BiFolder.parent.label',
             'class' => 'AcfDataBundle:BiFolder',
             'query_builder' => function (BiFolderRepository $dgr) {
-                return $dgr->createQueryBuilder('d')
-                    ->orderBy('d.pageUrlFull', 'ASC');
+                return $dgr->createQueryBuilder('d')->orderBy('d.pageUrlFull', 'ASC');
             },
             'choice_label' => 'pageUrlFull',
             'multiple' => false,
@@ -46,7 +44,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

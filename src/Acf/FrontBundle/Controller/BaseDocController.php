@@ -6,8 +6,6 @@ use FeedIo\FeedIo;
 use GuzzleHttp\Client as GuzzleClient;
 use Psr\Log\NullLogger;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
-use Acf\DataBundle\Entity\FeedRead;
-use Acf\DataBundle\Entity\GoodLink;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -36,7 +34,7 @@ class BaseDocController extends BaseController
 
     /**
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -86,7 +84,8 @@ class BaseDocController extends BaseController
     /**
      *
      * @param string $uid
-     * @return RedirectResponse
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirectAction($uid)
     {
@@ -122,7 +121,7 @@ class BaseDocController extends BaseController
     /**
      *
      * @param string $uid
-     * @return StreamedResponse|RedirectResponse
+     * @return StreamedResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function docDlAction($uid)
     {
@@ -157,8 +156,7 @@ class BaseDocController extends BaseController
                     $response->headers->set('Content-Type', $goodDoc->getMimeType());
                     $response->headers->set('Cache-Control', '');
                     $response->headers->set('Content-Length', $goodDoc->getSize());
-                    $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $goodDoc->getDtUpdate()
-                        ->getTimestamp()));
+                    $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $goodDoc->getDtUpdate()->getTimestamp()));
                     $fallback = $this->normalize($goodDoc->getTitle());
 
                     $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $goodDoc->getOriginalName(), $fallback);

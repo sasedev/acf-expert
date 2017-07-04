@@ -19,23 +19,15 @@ class DocgrouppersoRepository extends EntityRepository
      *
      * @param null|Company $c
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countRoots(Company $c = null)
     {
         if (null == $c) {
-            $qb = $this->createQueryBuilder('d')
-                ->select('count(d)')
-                ->where('d.parent is NULL');
+            $qb = $this->createQueryBuilder('d')->select('count(d)')->where('d.parent is NULL');
             $query = $qb->getQuery();
         } else {
-            $qb = $this->createQueryBuilder('d')
-                ->select('count(d)')
-                ->join('d.company', 'c')
-                ->where('d.parent is NULL')
-                ->andWhere('c.id = :id')
-                ->setParameter('id', $c->getId());
+            $qb = $this->createQueryBuilder('d')->select('count(d)')->join('d.company', 'c')->where('d.parent is NULL')->andWhere('c.id = :id')->setParameter('id', $c->getId());
             $query = $qb->getQuery();
         }
 
@@ -52,16 +44,9 @@ class DocgrouppersoRepository extends EntityRepository
     public function getRootsQuery(Company $c = null)
     {
         if (null == $c) {
-            $qb = $this->createQueryBuilder('d')
-                ->where('d.parent is NULL')
-                ->orderBy('d.label', 'ASC');
+            $qb = $this->createQueryBuilder('d')->where('d.parent is NULL')->orderBy('d.label', 'ASC');
         } else {
-            $qb = $this->createQueryBuilder('d')
-                ->join('d.company', 'c')
-                ->where('d.parent is NULL')
-                ->andWhere('c.id = :id')
-                ->orderBy('d.label', 'ASC')
-                ->setParameter('id', $c->getId());
+            $qb = $this->createQueryBuilder('d')->join('d.company', 'c')->where('d.parent is NULL')->andWhere('c.id = :id')->orderBy('d.label', 'ASC')->setParameter('id', $c->getId());
         }
         $query = $qb->getQuery();
 
@@ -73,10 +58,7 @@ class DocgrouppersoRepository extends EntityRepository
      *
      * @param null|Company $c
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getRoots(Company $c = null)
     {
@@ -88,8 +70,7 @@ class DocgrouppersoRepository extends EntityRepository
      *
      * @param null|Company $c
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countAll(Company $c = null)
     {
@@ -97,11 +78,7 @@ class DocgrouppersoRepository extends EntityRepository
             $qb = $this->createQueryBuilder('d')->select('count(d)');
             $query = $qb->getQuery();
         } else {
-            $qb = $this->createQueryBuilder('d')
-                ->select('count(d)')
-                ->join('d.company', 'c')
-                ->where('c.id = :id')
-                ->setParameter('id', $c->getId());
+            $qb = $this->createQueryBuilder('d')->select('count(d)')->join('d.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
             $query = $qb->getQuery();
         }
 
@@ -120,11 +97,7 @@ class DocgrouppersoRepository extends EntityRepository
         if (null == $c) {
             $qb = $this->createQueryBuilder('d')->orderBy('d.pageUrlFull', 'ASC');
         } else {
-            $qb = $this->createQueryBuilder('d')
-                ->join('d.company', 'c')
-                ->where('c.id = :id')
-                ->orderBy('d.pageUrlFull', 'ASC')
-                ->setParameter('id', $c->getId());
+            $qb = $this->createQueryBuilder('d')->join('d.company', 'c')->where('c.id = :id')->orderBy('d.pageUrlFull', 'ASC')->setParameter('id', $c->getId());
         }
         $query = $qb->getQuery();
 
@@ -136,10 +109,7 @@ class DocgrouppersoRepository extends EntityRepository
      *
      * @param null|Company $c
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll(Company $c = null)
     {
@@ -151,21 +121,12 @@ class DocgrouppersoRepository extends EntityRepository
      *
      * @param Docgroupperso $dg
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countAllChilds(Docgroupperso $dg)
     {
         $c = $dg->getCompany();
-        $qb = $this->createQueryBuilder('d')
-            ->select('count(d)')
-            ->join('d.company', 'c')
-            ->where('c.id = :cid')
-            ->andWhere('d.pageUrlFull LIKE :url')
-            ->andWhere('d.id != :did')
-            ->setParameter('cid', $c->getId())
-            ->setParameter('url', $dg->getPageUrlFull() . '%')
-            ->setParameter('did', $dg->getId());
+        $qb = $this->createQueryBuilder('d')->select('count(d)')->join('d.company', 'c')->where('c.id = :cid')->andWhere('d.pageUrlFull LIKE :url')->andWhere('d.id != :did')->setParameter('cid', $c->getId())->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -181,15 +142,7 @@ class DocgrouppersoRepository extends EntityRepository
     public function getAllChildsQuery(Docgroupperso $dg)
     {
         $c = $dg->getCompany();
-        $qb = $this->createQueryBuilder('d')
-            ->join('d.company', 'c')
-            ->where('c.id = :cid')
-            ->andWhere('d.pageUrlFull LIKE :url')
-            ->andWhere('d.id != :did')
-            ->orderBy('d.pageUrlFull', 'ASC')
-            ->setParameter('cid', $c->getId())
-            ->setParameter('url', $dg->getPageUrlFull() . '%')
-            ->setParameter('did', $dg->getId());
+        $qb = $this->createQueryBuilder('d')->join('d.company', 'c')->where('c.id = :cid')->andWhere('d.pageUrlFull LIKE :url')->andWhere('d.id != :did')->orderBy('d.pageUrlFull', 'ASC')->setParameter('cid', $c->getId())->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -200,10 +153,7 @@ class DocgrouppersoRepository extends EntityRepository
      *
      * @param Docgroupperso $dg
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllChilds(Docgroupperso $dg)
     {

@@ -18,16 +18,11 @@ class CompanyNatureRepository extends EntityRepository
      *
      * @param Company $company
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByCompany(Company $company)
     {
-        $qb = $this->createQueryBuilder('n')
-            ->select('count(n)')
-            ->join('n.company', 'c')
-            ->where('c.id = :id')
-            ->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('n')->select('count(n)')->join('n.company', 'c')->where('c.id = :id')->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -42,11 +37,7 @@ class CompanyNatureRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $company)
     {
-        $qb = $this->createQueryBuilder('n')
-            ->join('n.company', 'c')
-            ->where('c.id = :id')
-            ->orderBy('n.label', 'ASC')
-            ->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('n')->join('n.company', 'c')->where('c.id = :id')->orderBy('n.label', 'ASC')->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -57,10 +48,7 @@ class CompanyNatureRepository extends EntityRepository
      *
      * @param Company $company
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByCompany(Company $company)
     {

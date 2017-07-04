@@ -8,7 +8,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -41,8 +40,7 @@ class NewInvoiceDocumentTForm extends AbstractType
                 'label' => 'InvoiceDocument.invoice.label',
                 'class' => 'AcfDataBundle:OnlineInvoice',
                 'query_builder' => function (OnlineInvoiceRepository $ir) {
-                    return $ir->createQueryBuilder('i')
-                        ->orderBy('i.dtCrea', 'ASC');
+                    return $ir->createQueryBuilder('i')->orderBy('i.dtCrea', 'ASC');
                 },
                 'choice_label' => 'ref',
                 'multiple' => false,
@@ -55,10 +53,7 @@ class NewInvoiceDocumentTForm extends AbstractType
                 'label' => 'InvoiceDocument.invoice.label',
                 'class' => 'AcfDataBundle:OnlineInvoice',
                 'query_builder' => function (OnlineInvoiceRepository $br) use ($invoiceId) {
-                    return $br->createQueryBuilder('i')
-                        ->where('i.id = :id')
-                        ->setParameter('id', $invoiceId)
-                        ->orderBy('i.dtCrea', 'ASC');
+                    return $br->createQueryBuilder('i')->where('i.id = :id')->setParameter('id', $invoiceId)->orderBy('i.dtCrea', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -74,7 +69,6 @@ class NewInvoiceDocumentTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

@@ -14,8 +14,7 @@ class LangRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -41,10 +40,7 @@ class LangRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -54,15 +50,11 @@ class LangRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countEnabled()
     {
-        $qb = $this->createQueryBuilder('l')
-            ->select('count(l)')
-            ->where('l.status = :st')
-            ->setParameter('st', Lang::ST_ENABLED);
+        $qb = $this->createQueryBuilder('l')->select('count(l)')->where('l.status = :st')->setParameter('st', Lang::ST_ENABLED);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -75,10 +67,7 @@ class LangRepository extends EntityRepository
      */
     public function getAllEnabledQuery()
     {
-        $qb = $this->createQueryBuilder('l')
-            ->where('l.status = :st')
-            ->orderBy('l.locale', 'ASC')
-            ->setParameter('st', Lang::ST_ENABLED);
+        $qb = $this->createQueryBuilder('l')->where('l.status = :st')->orderBy('l.locale', 'ASC')->setParameter('st', Lang::ST_ENABLED);
         $query = $qb->getQuery();
 
         return $query;
@@ -87,10 +76,7 @@ class LangRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllEnabled()
     {

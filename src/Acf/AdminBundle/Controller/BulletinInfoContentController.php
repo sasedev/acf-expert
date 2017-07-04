@@ -3,7 +3,6 @@ namespace Acf\AdminBundle\Controller;
 
 use Acf\AdminBundle\Form\BulletinInfoContent\UpdateTitleTForm as BulletinInfoContentUpdateTitleTForm;
 use Acf\AdminBundle\Form\BulletinInfoContent\UpdateTForm as BulletinInfoContentUpdateTForm;
-use Acf\DataBundle\Entity\BulletinInfoContent;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 
 /**

@@ -5,7 +5,6 @@ use Acf\DataBundle\Repository\CompanyTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -29,8 +28,7 @@ class UpdateTypeTForm extends AbstractType
             'label' => 'Company.type.label',
             'class' => 'AcfDataBundle:CompanyType',
             'query_builder' => function (CompanyTypeRepository $ctr) {
-                return $ctr->createQueryBuilder('ct')
-                    ->orderBy('ct.label', 'ASC');
+                return $ctr->createQueryBuilder('ct')->orderBy('ct.label', 'ASC');
             },
             'choice_label' => 'label',
             'multiple' => false,
@@ -43,7 +41,6 @@ class UpdateTypeTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

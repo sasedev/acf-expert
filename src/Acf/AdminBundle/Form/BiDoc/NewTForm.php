@@ -6,7 +6,6 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Acf\DataBundle\Entity\BiFolder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -43,8 +42,7 @@ class NewTForm extends AbstractType
                 'label' => 'BiDoc.folder.label',
                 'class' => 'AcfDataBundle:BiFolder',
                 'query_builder' => function (BiFolderRepository $br) {
-                    return $br->createQueryBuilder('c')
-                        ->orderBy('c.title', 'ASC');
+                    return $br->createQueryBuilder('c')->orderBy('c.title', 'ASC');
                 },
                 'choice_label' => 'title',
                 'multiple' => false,
@@ -57,10 +55,7 @@ class NewTForm extends AbstractType
                 'label' => 'BiDoc.folder.label',
                 'class' => 'AcfDataBundle:BiFolder',
                 'query_builder' => function (BiFolderRepository $br) use ($folderId) {
-                    return $br->createQueryBuilder('c')
-                        ->where('c.id = :id')
-                        ->setParameter('id', $folderId)
-                        ->orderBy('c.title', 'ASC');
+                    return $br->createQueryBuilder('c')->where('c.id = :id')->setParameter('id', $folderId)->orderBy('c.title', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -85,7 +80,6 @@ class NewTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()

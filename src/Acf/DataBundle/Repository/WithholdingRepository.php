@@ -18,16 +18,11 @@ class WithholdingRepository extends EntityRepository
      *
      * @param Company $company
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByCompany(Company $company)
     {
-        $qb = $this->createQueryBuilder('w')
-            ->select('count(w)')
-            ->join('w.company', 'c')
-            ->where('c.id = :id')
-            ->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('w')->select('count(w)')->join('w.company', 'c')->where('c.id = :id')->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -42,11 +37,7 @@ class WithholdingRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $company)
     {
-        $qb = $this->createQueryBuilder('w')
-            ->join('w.company', 'c')
-            ->where('c.id = :id')
-            ->orderBy('w.label', 'ASC')
-            ->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('w')->join('w.company', 'c')->where('c.id = :id')->orderBy('w.label', 'ASC')->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -57,10 +48,7 @@ class WithholdingRepository extends EntityRepository
      *
      * @param Company $company
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByCompany(Company $company)
     {

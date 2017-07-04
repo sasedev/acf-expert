@@ -15,8 +15,7 @@ class OnlineInvoiceDocumentRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function count()
     {
@@ -42,10 +41,7 @@ class OnlineInvoiceDocumentRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAll()
     {
@@ -55,18 +51,11 @@ class OnlineInvoiceDocumentRepository extends EntityRepository
     /**
      * All count
      *
-     * @return Ambigous <\Doctrine\ORM\mixed, mixed, multitype:,
-     *         \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countByInvoice(OnlineInvoice $invoice)
     {
-        $qb = $this->createQueryBuilder('d')
-            ->select('count(d)')
-            ->join('d.invoice', 'i')
-            ->where('i.id = :id')
-            ->andWhere('d.visible = :visible')
-            ->setParameter('id', $invoice->getId())
-            ->setParameter('visible', OnlineInvoiceDocument::ST_OK);
+        $qb = $this->createQueryBuilder('d')->select('count(d)')->join('d.invoice', 'i')->where('i.id = :id')->andWhere('d.visible = :visible')->setParameter('id', $invoice->getId())->setParameter('visible', OnlineInvoiceDocument::ST_OK);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -79,13 +68,7 @@ class OnlineInvoiceDocumentRepository extends EntityRepository
      */
     public function getAllByInvoiceQuery(OnlineInvoice $invoice)
     {
-        $qb = $this->createQueryBuilder('d')
-            ->join('d.invoice', 'i')
-            ->where('i.id = :id')
-            ->andWhere('d.visible = :visible')
-            ->setParameter('id', $invoice->getId())
-            ->setParameter('visible', OnlineInvoiceDocument::ST_OK)
-            ->orderBy('d.dtCrea', 'ASC');
+        $qb = $this->createQueryBuilder('d')->join('d.invoice', 'i')->where('i.id = :id')->andWhere('d.visible = :visible')->setParameter('id', $invoice->getId())->setParameter('visible', OnlineInvoiceDocument::ST_OK)->orderBy('d.dtCrea', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -94,10 +77,7 @@ class OnlineInvoiceDocumentRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByInvoice(OnlineInvoice $invoice)
     {

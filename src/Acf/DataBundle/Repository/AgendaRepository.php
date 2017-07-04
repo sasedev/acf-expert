@@ -57,11 +57,7 @@ class AgendaRepository extends EntityRepository
                 )
             ORDER BY ag.dtStart ASC';
 
-        $query = $this->getEntityManager()
-            ->createQuery($dql)
-            ->setParameter('user', $user)
-            ->setParameter('dtStart', $dtStart)
-            ->setParameter('dtEnd', $dtEnd);
+        $query = $this->getEntityManager()->createQuery($dql)->setParameter('user', $user)->setParameter('dtStart', $dtStart)->setParameter('dtEnd', $dtEnd);
 
         return $query;
     }
@@ -73,10 +69,7 @@ class AgendaRepository extends EntityRepository
      * @param integer $week
      * @param User $user
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getAllByYearWeekUser($year, $week, User $user)
     {
@@ -112,11 +105,7 @@ class AgendaRepository extends EntityRepository
                 )
             ORDER BY ag.dtStart ASC';
 
-        $query = $this->getEntityManager()
-            ->createQuery($dql)
-            ->setParameter('user', $user)
-            ->setParameter('dtStart', $dtStart)
-            ->setParameter('dtEnd', $dtEnd);
+        $query = $this->getEntityManager()->createQuery($dql)->setParameter('user', $user)->setParameter('dtStart', $dtStart)->setParameter('dtEnd', $dtEnd);
 
         return $query;
     }
@@ -126,10 +115,7 @@ class AgendaRepository extends EntityRepository
      *
      * @param User $user
      *
-     * @return Ambigous <\Doctrine\ORM\mixed,
-     *         \Doctrine\ORM\Internal\Hydration\mixed,
-     *         \Doctrine\DBAL\Driver\Statement,
-     *         \Doctrine\Common\Cache\mixed>
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function getNextByUser(User $user)
     {

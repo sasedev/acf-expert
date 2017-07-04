@@ -41,7 +41,7 @@ class ProfileController extends BaseController
 
     /**
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function myProfileAction()
     {
@@ -71,7 +71,7 @@ class ProfileController extends BaseController
 
     /**
      *
-     * @return RedirectResponse|Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function myProfilePostAction()
     {
@@ -197,9 +197,7 @@ class ProfileController extends BaseController
                 $lastbox = new Box(130, 130);
                 $mode = ImageInterface::THUMBNAIL_OUTBOUND;
 
-                $image->crop($firstpoint, $selbox)
-                    ->thumbnail($lastbox, $mode)
-                    ->save($path);
+                $image->crop($firstpoint, $selbox)->thumbnail($lastbox, $mode)->save($path);
 
                 $file = new File($path);
                 $avatarDir = $this->getParameter('kernel.root_dir') . '/../web/res/avatars';
@@ -238,9 +236,7 @@ class ProfileController extends BaseController
 
     protected function traceEntity(User $cloneUser, User $user)
     {
-        $curUser = $this->getSecurityTokenStorage()
-            ->getToken()
-            ->getUser();
+        $curUser = $this->getSecurityTokenStorage()->getToken()->getUser();
         $trace = new Trace();
         $trace->setActionId($user->getId());
         $trace->setActionType(Trace::AT_UPDATE);

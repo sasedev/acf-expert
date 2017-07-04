@@ -1,12 +1,11 @@
 <?php
 namespace Acf\AdminBundle\Form\Sale;
 
-use Acf\DataBundle\Entity\Sale;
+use Acf\DataBundle\Entity\MBSale;
 use Acf\DataBundle\Repository\CustomerRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -39,8 +38,7 @@ class UpdateRelationTForm extends AbstractType
                 'label' => 'Sale.relation.label',
                 'class' => 'AcfDataBundle:Customer',
                 'query_builder' => function (CustomerRepository $sr) {
-                    return $sr->createQueryBuilder('s')
-                        ->orderBy('s.label', 'ASC');
+                    return $sr->createQueryBuilder('s')->orderBy('s.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -53,11 +51,7 @@ class UpdateRelationTForm extends AbstractType
                 'label' => 'Sale.relation.label',
                 'class' => 'AcfDataBundle:Customer',
                 'query_builder' => function (CustomerRepository $sr) use ($companyId) {
-                    return $sr->createQueryBuilder('s')
-                        ->join('s.company', 'c')
-                        ->where('c.id = :cid')
-                        ->setParameter('cid', $companyId)
-                        ->orderBy('s.label', 'ASC');
+                    return $sr->createQueryBuilder('s')->join('s.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('s.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -69,7 +63,6 @@ class UpdateRelationTForm extends AbstractType
 
     /**
      *
-     * {@inheritdoc} @see \Symfony\Component\Form\FormTypeInterface::getName()
      * @return string
      */
     public function getName()
