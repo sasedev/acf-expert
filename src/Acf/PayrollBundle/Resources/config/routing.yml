@@ -82,3 +82,11 @@ _payroll_mpaye_excel:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
 
+_payroll_mpaye_excelYear:
+    path:     /mpaye/excel/{year}/{uid}
+    defaults: { _controller: "AcfPayrollBundle:MPaye:excelYear" }
+    requirements:
+        year: \d+
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+

@@ -123,7 +123,7 @@ $(function() {
 	});
 	{% endif %}
 
-	$('#chmonth').chosen({disable_search_threshold: 10});
+	$('#chmonth').chosen({disable_search_threshold: 10, width: '200px'});
 
 	$('#changeMonth').click(function () {
 		window.location.replace($('#chmonth').val());

@@ -34,10 +34,8 @@
 						{% for mpayeYear in mpayeYears %}
 						<div class="panel box box-info">
 							<div class="box-header">
-								<h4 class="box-title">
-									<a href="#collapseMpayeList{{ mpayeYear.year }}"
-										data-parent="#accordionMpayeList" data-toggle="collapse">{{ mpayeYear.year }}</a>
-								</h4>
+								<h4 class="box-title"><a href="#collapseMpayeList{{ mpayeYear.year }}" data-parent="#accordionMpayeList" data-toggle="collapse">{{ mpayeYear.year }}</a></h4>
+								<div class="pull-right"><a class="btn btn-sm btn-success" href="{{path('_payroll_mpaye_excelYear',{'year': mpayeYear.year, 'uid':company.id})}}">{{ faIco('file-excel-o') }} &nbsp; {{ 'action.excel'|trans }} {{ mpayeYear.year }}</a></div>
 							</div>
 							<div id="collapseMpayeList{{ mpayeYear.year }}"
 								class="panel-collapse collapse">

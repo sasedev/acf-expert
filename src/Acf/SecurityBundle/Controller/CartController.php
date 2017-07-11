@@ -168,7 +168,7 @@ class CartController extends BaseController
     {
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
-            return $this->redirect($this->generateUrl('_admin_order_addGet'));
+            return $this->redirect($this->generateUrl('_security_onlineProduct'));
         }
 
         $em = $this->getEntityManager();
