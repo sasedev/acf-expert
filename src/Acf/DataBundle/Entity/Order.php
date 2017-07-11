@@ -1,17 +1,10 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Order
- * @ORM\Table(name="acf_orders")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OrderRepository")
- * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"ref"}, errorPath="ref", groups={"ref"})
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Order
 {
@@ -54,75 +47,67 @@ class Order
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="ref", type="text", nullable=false, unique=true)
+     * @var string
      */
     protected $ref;
 
     /**
      *
-     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="orders", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      })
+     * @var User
      */
     protected $user;
 
     /**
      *
-     * @var string @ORM\Column(name="description", type="text", nullable=true)
+     * @var string
      */
     protected $description;
 
     /**
      *
-     * @var float @ORM\Column(name="val", type="float", nullable=false)
-     *      @Assert\GreaterThan(value=0, groups={"val"})
+     * @var float
      */
     protected $val;
 
     /**
      *
-     * @var integer @ORM\Column(name="status", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceStatusCallback", groups={"status"})
+     * @var integer
      */
     protected $status;
 
     /**
      *
-     * @var string @ORM\Column(name="auth", type="text", nullable=true)
+     * @var string
      */
     protected $auth;
 
     /**
      *
-     * @var string @ORM\Column(name="session_id", type="text", nullable=true)
+     * @var string
      */
     protected $sessId;
 
     /**
      *
-     * @var string @ORM\Column(name="ip_addr", type="text", nullable=true)
+     * @var string
      */
     protected $ipAddr;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -134,7 +119,7 @@ class Order
         $this->dtCrea = new \DateTime('now');
         $bytes = \openssl_random_pseudo_bytes(10);
         $ref = \bin2hex($bytes);
-        $this->setRef('ACF'.$ref);
+        $this->setRef('ACF' . $ref);
 
         $this->val = 0;
         $this->status = self::ST_NEW;
@@ -143,7 +128,7 @@ class Order
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -403,6 +388,4 @@ class Order
             self::ST_ERROR
         );
     }
-
-
 }

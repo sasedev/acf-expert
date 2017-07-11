@@ -66,7 +66,6 @@ class NewTForm extends AbstractType
 
         $builder->add('month', ChoiceType::class, array(
             'label' => 'MBSale.month.label',
-            'choices_as_values' => true,
             'choices' => MBSale::choiceMonth(),
             'attr' => array(
                 'choice_label_trans' => true

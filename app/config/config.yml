@@ -30,7 +30,7 @@ framework:
         handler_id:  session.handler.mongo
         name: "Acf"
         cookie_lifetime:      600
-        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+        #save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
         gc_probability: 0
         gc_maxlifetime: 7200 #2592000 # optional, it is set to 30 days here
     fragments: { path: /_fragment }
@@ -87,6 +87,17 @@ doctrine:
         entity_managers:
             default:
                 auto_mapping: true
+                metadata_cache_driver: apcu
+                query_cache_driver: 
+                    type: memcache
+                    host: localhost
+                    port: 11211
+                    instance_class: Memcache
+                result_cache_driver:
+                    type: memcache
+                    host: localhost
+                    port: 11211
+                    instance_class: Memcache
                 naming_strategy: doctrine.orm.naming_strategy.underscore
                 second_level_cache:
                     enabled:              true

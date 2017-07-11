@@ -1497,7 +1497,6 @@ MPaye.month.choice.12: Décembre
 
 MPaye.company: Société
 MPaye.ref: Référence
-MPaye.month: Mois
 MPaye.year: Année
 MPaye.docs: Documents
 MPaye.dtCrea: Date d'ajout
@@ -1505,7 +1504,6 @@ MPaye.dtUpdate: Date de modification
 
 MPaye.company.label: "Société :"
 MPaye.ref.label: "Référence :"
-MPaye.month.label: "Mois :"
 MPaye.year.label: "Année :"
 MPaye.docs.label: "Documents :"
 

@@ -1,18 +1,10 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * CompanyUser
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_company_users")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\CompanyUserRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"user", "company"}, errorPath="user", groups={"user"})
  */
 class CompanyUser
 {
@@ -31,299 +23,253 @@ class CompanyUser
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="companyUsers", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="companyUsers", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      })
+     * @var User
      */
     protected $user;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_companyinfos", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editCompanyinfos"})
+     * @var integer
      */
     protected $editCompanyinfos;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_addresses", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addAddresses"})
+     * @var integer
      */
     protected $addAddresses;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_addresses", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editAddresses"})
+     * @var integer
      */
     protected $editAddresses;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_del_addresses", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"deleteAddresses"})
+     * @var integer
      */
     protected $deleteAddresses;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_phones", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addPhones"})
+     * @var integer
      */
     protected $addPhones;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_phones", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editPhones"})
+     * @var integer
      */
     protected $editPhones;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_del_phones", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"deletePhones"})
+     * @var integer
      */
     protected $deletePhones;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_frames", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addFrames"})
+     * @var integer
      */
     protected $addFrames;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_frames", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editFrames"})
+     * @var integer
      */
     protected $editFrames;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_del_frames", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"deleteFrames"})
+     * @var integer
      */
     protected $deleteFrames;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_docs", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addDocs"})
+     * @var integer
      */
     protected $addDocs;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_docs", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editDocs"})
+     * @var integer
      */
     protected $editDocs;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_del_docs", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"deleteDocs"})
+     * @var integer
      */
     protected $deleteDocs;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_suppliers", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addSuppliers"})
+     * @var integer
      */
     protected $addSuppliers;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_suppliers", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editSuppliers"})
+     * @var integer
      */
     protected $editSuppliers;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_del_suppliers", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"deleteSuppliers"})
+     * @var integer
      */
     protected $deleteSuppliers;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_customers", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addCustomers"})
+     * @var integer @
      */
     protected $addCustomers;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_customers", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editCustomers"})
+     * @var integer
      */
     protected $editCustomers;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_del_customers", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"deleteCustomers"})
+     * @var integer
      */
     protected $deleteCustomers;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_sales", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addSales"})
+     * @var integer
      */
     protected $addSales;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_sales", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editSales"})
+     * @var integer
      */
     protected $editSales;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_del_sales", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"deleteSales"})
+     * @var integer
      */
     protected $deleteSales;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_buys", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addBuys"})
+     * @var integer
      */
     protected $addBuys;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_buys", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editBuys"})
+     * @var integer
      */
     protected $editBuys;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_del_buys", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"deleteBuys"})
+     * @var integer
      */
     protected $deleteBuys;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_dgcomptables", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addDocgroupComptables"})
+     * @var integer
      */
     protected $addDocgroupComptables;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_dgcomptables", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editDocgroupComptables"})
+     * @var integer
      */
     protected $editDocgroupComptables;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_dgbanks", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addDocgroupBanks"})
+     * @var integer
      */
     protected $addDocgroupBanks;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_dgbanks", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editDocgroupBanks"})
+     * @var integer
      */
     protected $editDocgroupBanks;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_dgjuridics", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addDocgroupJuridics"})
+     * @var integer
      */
     protected $addDocgroupJuridics;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_dgjuridics", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editDocgroupJuridics"})
+     * @var integer
      */
     protected $editDocgroupJuridics;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_dgfiscals", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addDocgroupFiscals"})
+     * @var integer
      */
     protected $addDocgroupFiscals;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_dgfiscals", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editDocgroupFiscals"})
+     * @var integer
      */
     protected $editDocgroupFiscals;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_dgpersos", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addDocgroupPersos"})
+     * @var integer @
      */
     protected $addDocgroupPersos;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_dgpersos", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editDocgroupPersos"})
+     * @var integer
      */
     protected $editDocgroupPersos;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_add_dgsysts", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"addDocgroupSysts"})
+     * @var integer
      */
     protected $addDocgroupSysts;
 
     /**
      *
-     * @var integer @ORM\Column(name="can_edit_dgsysts", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTFCallback", groups={"editDocgroupSysts"})
+     * @var integer
      */
     protected $editDocgroupSysts;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -375,7 +321,7 @@ class CompanyUser
 
     /**
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -1242,7 +1188,7 @@ class CompanyUser
 
     /**
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDtCrea()
     {
@@ -1264,7 +1210,7 @@ class CompanyUser
 
     /**
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDtUpdate()
     {
@@ -1313,5 +1259,6 @@ class CompanyUser
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

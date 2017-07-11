@@ -1,260 +1,152 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Doc
- * @ORM\Table(name="acf_company_docs")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\DocRepository")
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Doc
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="filename", type="text", nullable=false)
-     *      @Assert\File(maxSize="20480k", groups={"fileName"})
+     * @var string
      */
     protected $fileName;
 
     /**
      *
-     * @var integer @ORM\Column(name="filesize", type="bigint", nullable=false)
+     * @var integer
      */
     protected $size;
 
     /**
      *
-     * @var string @ORM\Column(name="filemimetype", type="text", nullable=false)
+     * @var string
      */
     protected $mimeType;
 
     /**
      *
-     * @var string @ORM\Column(name="filemd5", type="text", nullable=false)
+     * @var string
      */
     protected $md5;
 
     /**
      *
-     * @var string @ORM\Column(name="fileoname", type="text", nullable=false)
+     * @var string
      */
     protected $originalName;
 
     /**
      *
-     * @var string @ORM\Column(name="filedesc", type="text", nullable=true)
+     * @var string
      */
     protected $description;
 
     /**
      *
-     * @var integer @ORM\Column(name="filedls", type="bigint", nullable=false)
+     * @var integer
      */
     protected $nbrDownloads;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="docs",cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Docgroup", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_group_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $groups;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Docgroupcomptable", inversedBy="docs",
-     *      cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_groupcomptable_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $groupcomptables;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Docgroupfiscal", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_groupfiscal_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $groupfiscals;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Docgroupperso", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_groupperso_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $grouppersos;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Docgroupsyst", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_groupsyst_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $groupsysts;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Docgroupbank", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_groupbank_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $groupbanks;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Docgroupaudit", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_groupaudit_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $groupaudits;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Account", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_account_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="account_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $accounts;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Relation", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_relation_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="relation_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $relations;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="MonthlyBalance", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_mbalance_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="mbalance_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $monthlyBalances;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Transaction", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_transaction_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="transaction_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $transactions;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="MPaye", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_mpaye_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="mpaye_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $mpayes;
 
@@ -283,7 +175,7 @@ class Doc
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -1290,5 +1182,6 @@ class Doc
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

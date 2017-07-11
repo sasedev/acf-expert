@@ -25,7 +25,6 @@ class UpdatePhysicaltypeTForm extends AbstractType
     {
         $builder->add('physicaltype', ChoiceType::class, array(
             'label' => 'Company.physicaltype.label',
-            'choices_as_values' => true,
             'choices' => Company::choicePhysicaltype(),
             'expanded' => true,
             'attr' => array(

@@ -1,20 +1,13 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Transaction
- * @ORM\Table(name="acf_transactions")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\TransactionRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="transactiontype", type="string")
- * @ORM\DiscriminatorMap({"1" = "Sale", "2" = "Buy"})
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 abstract class Transaction
 {
@@ -159,226 +152,181 @@ abstract class Transaction
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var MonthlyBalance @ORM\ManyToOne(targetEntity="MonthlyBalance", inversedBy="transactions", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="mbalance_id", referencedColumnName="id")
-     *      })
+     * @var MonthlyBalance
      */
     protected $monthlyBalance;
 
     /**
      *
-     * @var integer @ORM\Column(name="numb", type="bigint", nullable=true)
+     * @var integer
      */
     protected $number;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="dtactivation", type="date", nullable=true)
-     *      @Assert\GreaterThanOrEqual(value="2000-01-01", groups={"dtActivation"})
-     *      @assert\LessThan(value="2100-01-01", groups={"dtActivation"})
+     * @var \DateTime
      */
     protected $dtActivation;
 
     /**
      *
-     * @var string @ORM\Column(name="bill", type="text", nullable=true)
+     * @var string
      */
     protected $bill;
 
     /**
      *
-     * @var Relation @ORM\ManyToOne(targetEntity="Relation", inversedBy="transactions", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="relation_id", referencedColumnName="id")
-     *      })
+     * @var Relation
      */
     protected $relation;
 
     /**
      *
-     * @var string @ORM\Column(name="label", type="text", nullable=false)
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var string @ORM\Column(name="devise", type="text", nullable=false)
-     *      @Assert\Currency(groups={"devise"})
+     * @var string
      */
     protected $devise;
 
     /**
      *
-     * @var float @ORM\Column(name="conversionrate", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThan(value=0, groups={"vat"})
+     * @var float
      */
     protected $conversionRate;
 
     /**
      *
-     * @var float @ORM\Column(name="vat", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"vat"})
+     * @var float
      */
     protected $vat;
 
     /**
      *
-     * @var float @ORM\Column(name="vatd", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"vatDevise"})
+     * @var float
      */
     protected $vatDevise;
 
     /**
      *
-     * @var float @ORM\Column(name="stamp", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"stamp"})
+     * @var float
      */
     protected $stamp;
 
     /**
      *
-     * @var float @ORM\Column(name="stampd", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"stampDevise"})
+     * @var float
      */
     protected $stampDevise;
 
     /**
      *
-     * @var float @ORM\Column(name="balance_ttc", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"balanceTtc"})
+     * @var float
      */
     protected $balanceTtc;
 
     /**
      *
-     * @var float @ORM\Column(name="balance_ttcd", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"balanceTtcDevise"})
+     * @var float
      */
     protected $balanceTtcDevise;
 
     /**
      *
-     * @var float @ORM\Column(name="balance_net", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"balanceNet"})
+     * @var float
      */
     protected $balanceNet;
 
     /**
      *
-     * @var float @ORM\Column(name="balance_netd", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"balanceNetDevise"})
+     * @var float
      */
     protected $balanceNetDevise;
 
     /**
      *
-     * @var integer @ORM\Column(name="vatinfo", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceVatInfoCallback", groups={"vatInfo"})
+     * @var integer
      */
     protected $vatInfo;
 
     /**
      *
-     * @var integer @ORM\Column(name="regime", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceRegimeCallback", groups={"regime"})
+     * @var integer
      */
     protected $regime;
 
     /**
      *
-     * @var Withholding @ORM\ManyToOne(targetEntity="Withholding", inversedBy="transactions", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="withholding_id", referencedColumnName="id")
-     *      })
+     * @var Withholding
      */
     protected $withholding;
 
     /**
      *
-     * @var integer @ORM\Column(name="payment_type", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choicePaymentTypeCallback", groups={"paymentType"})
+     * @var integer
      */
     protected $paymentType;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="dtpayment", type="date", nullable=true)
-     *      @Assert\GreaterThanOrEqual(value="2000-01-01", groups={"dtPayment"})
-     *      @assert\LessThan(value="2100-01-01", groups={"dtPayment"})
+     * @var \DateTime
      */
     protected $dtPayment;
 
     /**
      *
-     * @var Account @ORM\ManyToOne(targetEntity="Account", inversedBy="transactions")
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="account_id", referencedColumnName="id")
-     *      })
+     * @var Account
      */
     protected $account;
 
     /**
      *
-     * @var CompanyNature @ORM\ManyToOne(targetEntity="CompanyNature", inversedBy="transactions", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="nature_id", referencedColumnName="id")
-     *      })
+     * @var CompanyNature
      */
     protected $nature;
 
     /**
      *
-     * @var integer @ORM\Column(name="transaction_status", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTransactionStatusCallback", groups={"transactionStatus"})
+     * @var integer
      */
     protected $transactionStatus;
 
     /**
      *
-     * @var integer @ORM\Column(name="validated", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceValidatedCallback", groups={"validated"})
+     * @var integer
      */
     protected $validated;
 
     /**
      *
-     * @var string @ORM\Column(name="others", type="text", nullable=true)
+     * @var string
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="transactions", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_transaction_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="transaction_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $docs;
 
@@ -409,7 +357,7 @@ abstract class Transaction
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -1311,5 +1259,6 @@ abstract class Transaction
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

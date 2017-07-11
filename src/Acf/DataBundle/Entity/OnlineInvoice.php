@@ -1,20 +1,13 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * OnlineInvoice
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_online_invoices")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineInvoiceRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"ref"}, errorPath="ref", groups={"ref"})
  */
 class OnlineInvoice
 {
@@ -69,109 +62,91 @@ class OnlineInvoice
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="ref", type="text", nullable=false, unique=true)
+     * @var string
      */
     protected $ref;
 
     /**
      *
-     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="orders", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      })
+     * @var User
      */
     protected $user;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="invoices", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company })
      */
     protected $company;
 
     /**
      *
-     * @var float @ORM\Column(name="val", type="float", nullable=false)
-     *      @Assert\GreaterThan(value=0, groups={"val"})
+     * @var float
      */
     protected $val;
 
     /**
      *
-     * @var string @ORM\Column(name="orderto", type="text", nullable=false)
-     *      @Assert\NotBlank(groups={"orderTo"})
+     * @var string
      */
     protected $orderTo;
 
     /**
      *
-     * @var integer @ORM\Column(name="payment_type", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choicePaymentTypeCallback", groups={"paymentType"})
+     * @var integer
      */
     protected $paymentType;
 
     /**
      *
-     * @var integer @ORM\Column(name="payment_status", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceStatusCallback", groups={"status"})
+     * @var integer
      */
     protected $status;
 
     /**
      *
-     * @var integer @ORM\Column(name="autorenew", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceRenewCallback", groups={"renew"})
+     * @var integer
      */
     protected $renew;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var OnlineOrder @ORM\OneToOne(targetEntity="OnlineOrder", inversedBy="invoice")
-     *      @ORM\JoinColumn(name="ord_id", referencedColumnName="id")
+     * @var OnlineOrder
      */
     protected $order;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="OnlineInvoiceProduct", mappedBy="invoice", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $products;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="OnlineInvoiceTaxe", mappedBy="invoice", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"priority" = "ASC"})
+     * @var Collection
      */
     protected $taxes;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="OnlineInvoiceDocument", mappedBy="invoice", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $docs;
 
@@ -388,7 +363,7 @@ class OnlineInvoice
 
     /**
      *
-     * @return Da\DateTimeteTime $dtCrea
+     * @return \DateTime $dtCrea
      */
     public function getDtCrea()
     {
@@ -686,5 +661,6 @@ class OnlineInvoice
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

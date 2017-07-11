@@ -1,54 +1,44 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * CompanyType
- * @ORM\Table(name="acf_cmp_types")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\CompanyTypeRepository")
- * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"label"}, errorPath="label", groups={"label"})
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class CompanyType
 {
 
     /**
      *
-     * @var integer @ORM\Column(name="id", type="integer", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="SEQUENCE")
-     *      @ORM\SequenceGenerator(sequenceName="acf_cmp_types_id_seq", allocationSize=1, initialValue=1)
+     * @var integer
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="label", type="text", nullable=false)
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Company", mappedBy="type", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"corporateName" = "ASC"})
+     * @var Collection
      */
     protected $companies;
 
@@ -197,5 +187,6 @@ class CompanyType
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

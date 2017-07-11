@@ -1,21 +1,13 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Relation
- * @ORM\Table(name="acf_company_relations")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\RelationRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="relationtype", type="string")
- * @ORM\DiscriminatorMap({"1" = "Customer", "2" = "Supplier"})
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 abstract class Relation
 {
@@ -46,185 +38,152 @@ abstract class Relation
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="relations", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var string @ORM\Column(name="label", type="text", nullable=false)
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var integer @ORM\Column(name="numb", type="bigint", nullable=true)
-     *      @Assert\GreaterThan(value="0", groups={"number"})
-     *      @Assert\LessThan(value="1000000000", groups={"number"})
+     * @var integer
      */
     protected $number;
 
     /**
      *
-     * @var string @ORM\Column(name="fisc", type="text", nullable=true)
+     * @var string
      */
     protected $fisc;
 
     /**
      *
-     * @var integer @ORM\Column(name="physicaltype", type="bigint", nullable=false)
-     *      @Assert\Choice(callback="choicePhysicaltypeCallback", groups={"physicaltype"})
+     * @var integer
      */
     protected $physicaltype;
 
     /**
      *
-     * @var string @ORM\Column(name="cin", type="text", nullable=true)
+     * @var string
      */
     protected $cin;
 
     /**
      *
-     * @var string @ORM\Column(name="passport", type="text", nullable=true)
+     * @var string
      */
     protected $passport;
 
     /**
      *
-     * @var string @ORM\Column(name="commercial_register", type="text", nullable=true)
+     * @var string
      */
     protected $commercialRegister;
 
     /**
      *
-     * @var string @ORM\Column(name="strnum", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"streetNum"})
+     * @var string
+     *
      */
     protected $streetNum;
 
     /**
      *
-     * @var string @ORM\Column(name="address", type="text", nullable=true)
+     * @var string
      */
     protected $address;
 
     /**
      *
-     * @var string @ORM\Column(name="address2", type="text", nullable=true)
+     * @var string
      */
     protected $address2;
 
     /**
      *
-     * @var string @ORM\Column(name="town", type="text", nullable=true)
-     *      @Assert\Length(max="120", groups={"town"})
+     * @var string
      */
     protected $town;
 
     /**
      *
-     * @var string @ORM\Column(name="zipcode", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"zipCode"})
+     * @var string
      */
     protected $zipCode;
 
     /**
      *
-     * @var string @ORM\Column(name="country", type="text", nullable=true)
-     *      @Assert\Country(groups={"country"})
+     * @var string
      */
     protected $country;
 
     /**
      *
-     * @var string @ORM\Column(name="phone", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"phone"})
+     * @var string
      */
     protected $phone;
 
     /**
      *
-     * @var string @ORM\Column(name="mobile", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"mobile"})
+     * @var string
      */
     protected $mobile;
 
     /**
      *
-     * @var string @ORM\Column(name="fax", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"fax"})
+     * @var string
      */
     protected $fax;
 
     /**
      *
-     * @var string @ORM\Column(name="email", type="text", nullable=true)
-     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
+     * @var string
      */
     protected $email;
 
     /**
      *
-     * @var string @ORM\Column(name="others", type="text", nullable=true)
+     * @var string
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Sector", inversedBy="relations", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_relation_sectors",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="relation_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="sector_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $sectors;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Transaction", mappedBy="relation", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"number" = "ASC"})
+     * @var Collection
      */
     protected $transactions;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="relations", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_relation_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="relation_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $docs;
 
@@ -243,7 +202,7 @@ abstract class Relation
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {

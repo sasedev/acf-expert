@@ -1,0 +1,95 @@
+Acf\DataBundle\Entity\BiFolder:
+    type: entity
+    table: acf_bifolders
+    repositoryClass: Acf\DataBundle\Repository\BiFolderRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        title:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        pageUrlFull:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: pageurl_full
+            gedmo:
+                slug:
+                  separator: "_"
+                  style: camel
+                  fields:
+                      - title
+                  handlers:
+                      'Gedmo\Sluggable\Handler\TreeSlugHandler':
+                          parentRelationField: parent
+                          separator: /
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        parent:
+            targetEntity: Acf\DataBundle\Entity\BiFolder
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: childs
+            joinColumns:
+                parent_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        childs:
+            targetEntity: Acf\DataBundle\Entity\BiFolder
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: parent
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                title: ASC
+        docs:
+            targetEntity: Acf\DataBundle\Entity\BiDoc
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: folder
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                title: ASC
+    lifecycleCallbacks: {  }

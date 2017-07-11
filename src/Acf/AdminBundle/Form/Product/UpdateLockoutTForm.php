@@ -24,7 +24,6 @@ class UpdateLockoutTForm extends AbstractType
     {
         $builder->add('lockout', ChoiceType::class, array(
             'label' => 'Product.lockout.label',
-            'choices_as_values' => true,
             'choices' => OnlineProduct::choiceLockout(),
             'attr' => array(
                 'choice_label_trans' => true

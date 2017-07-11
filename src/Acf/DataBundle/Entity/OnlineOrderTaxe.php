@@ -1,16 +1,10 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * OnlineOrderTaxe
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_online_order_taxes")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineOrderTaxeRepository")
- *         @ORM\HasLifecycleCallbacks
  */
 class OnlineOrderTaxe
 {
@@ -29,56 +23,49 @@ class OnlineOrderTaxe
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var OnlineOrder @ORM\ManyToOne(targetEntity="OnlineOrder", inversedBy="taxes", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="ord_id", referencedColumnName="id")
-     *      })
+     * @var OnlineOrder
      */
     protected $order;
 
     /**
      *
-     * @var string @ORM\Column(name="tx_label", type="text", nullable=false)
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var float @ORM\Column(name="tx_val", type="float", nullable=false)
-     *      @Assert\NotNull(groups={"value"})
+     * @var float
      */
     protected $value;
 
     /**
      *
-     * @var integer @ORM\Column(name="tx_type", type="integer", nullable=false)
+     * @var integer
      */
     protected $type;
 
     /**
      *
-     * @var integer @ORM\Column(name="tx_priority", type="integer", nullable=false)
+     * @var integer
      */
     protected $priority;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -105,7 +92,7 @@ class OnlineOrderTaxe
 
     /**
      *
-     * @return guid $id
+     * @return string $id
      */
     public function getId()
     {
@@ -219,7 +206,7 @@ class OnlineOrderTaxe
 
     /**
      *
-     * @return DateTime $dtCrea
+     * @return \DateTime $dtCrea
      */
     public function getDtCrea()
     {
@@ -240,7 +227,7 @@ class OnlineOrderTaxe
 
     /**
      *
-     * @return DateTime $dtUpdate
+     * @return \DateTime $dtUpdate
      */
     public function getDtUpdate()
     {

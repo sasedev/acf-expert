@@ -24,7 +24,6 @@ class UpdateTypeTForm extends AbstractType
     {
         $builder->add('type', ChoiceType::class, array(
             'label' => 'Taxe.type.label',
-            'choices_as_values' => true,
             'choices' => OnlineTaxe::choiceType(),
             'attr' => array(
                 'choice_label_trans' => true

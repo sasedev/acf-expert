@@ -24,7 +24,6 @@ class UpdateStatusTForm extends AbstractType
     {
         $builder->add('status', ChoiceType::class, array(
             'label' => 'Lang.status.label',
-            'choices_as_values' => true,
             'choices' => Lang::choiceStatus(),
             'expanded' => true,
             'attr' => array(

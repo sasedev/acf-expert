@@ -1,96 +1,65 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\Role\RoleInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\Role\Role as BaseRole;
+
+// use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
+ * Role
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_roles")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\RoleRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"name"}, errorPath="name", groups={"name"})
  */
-class Role implements RoleInterface, \Serializable
+class Role extends BaseRole implements \Serializable
 {
 
     /**
      *
-     * @var integer @ORM\Column(name="id", type="bigint", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="SEQUENCE")
-     *      @ORM\SequenceGenerator(sequenceName="acf_roles_id_seq", allocationSize=1, initialValue=1)
+     * @var integer
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="name", type="string", length=250, nullable=false)
-     *      @Assert\Length(max=100, groups={"name"})
-     *      @Assert\Regex(pattern="/^ROLE\_[A-Z](([A-Z0-9\_]+[A-Z0-9])|[A-Z0-9])$/", groups={"name"})
+     * @var string
      */
     protected $name;
 
     /**
      *
-     * @var string @ORM\Column(name="description", type="text", nullable=true)
+     * @var string
      */
     protected $description;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Role", inversedBy="childs", cascade={"persist"})
-     *      @ORM\JoinTable(
-     *      name="acf_role_parents",
-     *      joinColumns={@ORM\JoinColumn(name="child", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="parent", referencedColumnName="id")}
-     *      )
-     *      @ORM\OrderBy({"name" = "ASC"})
+     * @var Collection
      */
     protected $parents;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Role", mappedBy="parents")
-     *      @ORM\JoinTable(
-     *      name="acf_role_parents",
-     *      joinColumns={@ORM\JoinColumn(name="parent", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="child", referencedColumnName="id")}
-     *      )
-     *      @ORM\OrderBy({"name" = "ASC"})
+     * @var Collection
      */
     protected $childs;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="User", mappedBy="userRoles")
-     *      @ORM\JoinTable(name="acf_users_roles",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="role_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $users;
 
@@ -387,7 +356,7 @@ class Role implements RoleInterface, \Serializable
 
     /**
      *
-     * {@inheritdoc} @see RoleInterface::getRole()
+     * {@inheritdoc} @see \Symfony\Component\Security\Core\Role\Role::getRole()
      * @return string
      */
     public function getRole()
@@ -443,5 +412,6 @@ class Role implements RoleInterface, \Serializable
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

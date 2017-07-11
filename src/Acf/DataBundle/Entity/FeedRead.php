@@ -1,61 +1,47 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * FeedRead
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_feedreads")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\FeedReadRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"url"}, errorPath="url", groups={"url"})
  */
 class FeedRead
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="url", type="text", nullable=false)
-     *      @Assert\Url(checkDNS=true, groups={"url"})
+     * @var string
      */
     protected $url;
 
     /**
      *
-     * @var bigint @ORM\Column(name="nbrdays", type="bigint", nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"nbrDays"})
+     * @var integer
      */
     protected $nbrDays;
 
     /**
      *
-     * @var bigint @ORM\Column(name="nbritems", type="bigint", nullable=false)
-     *      @Assert\GreaterThanOrEqual(value=0, groups={"nbrItems"})
+     * @var integer
      */
     protected $nbrItems;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -72,7 +58,7 @@ class FeedRead
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -103,7 +89,7 @@ class FeedRead
 
     /**
      *
-     * @return bigint
+     * @return integer
      */
     public function getNbrDays()
     {
@@ -112,7 +98,7 @@ class FeedRead
 
     /**
      *
-     * @param bigint $nbrDays
+     * @param integer $nbrDays
      *
      * @return FeedRead
      */
@@ -125,7 +111,7 @@ class FeedRead
 
     /**
      *
-     * @return bigint
+     * @return integer
      */
     public function getNbrItems()
     {
@@ -134,7 +120,7 @@ class FeedRead
 
     /**
      *
-     * @param bigint $nbrItems
+     * @param integer $nbrItems
      *
      * @return FeedRead
      */

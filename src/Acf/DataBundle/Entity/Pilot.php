@@ -1,231 +1,221 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 /**
  * Pilot
- * @ORM\Table(name="acf_company_pilots")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\PilotRepository")
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Pilot
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="pilots", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var string @ORM\Column(name="ref", type="text", nullable=true)
+     * @var string
      */
     protected $ref;
 
     /**
      *
-     * @var string @ORM\Column(name="mission", type="text", nullable=true)
+     * @var string
      */
     protected $mission;
 
     /**
      *
-     * @var string @ORM\Column(name="nat_mission", type="text", nullable=true)
+     * @var string
      */
     protected $natureMission;
 
     /**
      *
-     * @var string @ORM\Column(name="prestataire", type="text", nullable=true)
+     * @var string
      */
     protected $prestataire;
 
     /**
      *
-     * @var string @ORM\Column(name="recfin", type="text", nullable=true)
+     * @var string
      */
     protected $recetteFinance;
 
     /**
      *
-     * @var string @ORM\Column(name="pinance", type="text", nullable=true)
+     * @var string
      */
     protected $pinAnce;
 
     /**
      *
-     * @var string @ORM\Column(name="expirationance", type="text", nullable=true)
+     * @var string
      */
     protected $expirationAnce;
 
     /**
      *
-     * @var string @ORM\Column(name="mpimpots", type="text", nullable=true)
+     * @var string
      */
     protected $mpImpots;
 
     /**
      *
-     * @var string @ORM\Column(name="idcnss", type="text", nullable=true)
+     * @var string
      */
     protected $idCnss;
 
     /**
      *
-     * @var string @ORM\Column(name="mdpcnss", type="text", nullable=true)
+     * @var string
      */
     protected $mpCnss;
 
     /**
      *
-     * @var string @ORM\Column(name="nom_cac", type="text", nullable=true)
+     * @var string
      */
     protected $nomCac;
 
     /**
      *
-     * @var string @ORM\Column(name="duree_mandat", type="text", nullable=true)
+     * @var string
      */
     protected $dureeMandat;
 
     /**
      *
-     * @var string @ORM\Column(name="num_mandat", type="text", nullable=true)
+     * @var string
      */
     protected $numMandat;
 
     /**
      *
-     * @var string @ORM\Column(name="rapport_cac", type="text", nullable=true)
+     * @var string
      */
     protected $rapportCac;
 
     /**
      *
-     * @var string @ORM\Column(name="decl_empl", type="text", nullable=true)
+     * @var string
      */
     protected $declEmpl;
 
     /**
      *
-     * @var string @ORM\Column(name="is_dur", type="text", nullable=true)
+     * @var string
      */
     protected $isDur;
 
     /**
      *
-     * @var string @ORM\Column(name="pv_ca", type="text", nullable=true)
+     * @var string
      */
     protected $pvCa;
 
     /**
      *
-     * @var string @ORM\Column(name="rapport_gerance", type="text", nullable=true)
+     * @var string
      */
     protected $rapportGerance;
 
     /**
      *
-     * @var string @ORM\Column(name="pv_ago", type="text", nullable=true)
+     * @var string
      */
     protected $pvAgo;
 
     /**
      *
-     * @var string @ORM\Column(name="pv_age", type="text", nullable=true)
+     * @var string
      */
     protected $pvAge;
 
     /**
      *
-     * @var string @ORM\Column(name="livres_cotes", type="text", nullable=true)
+     * @var string
      */
     protected $livresCotes;
 
     /**
      *
-     * @var float @ORM\Column(name="hon_theo_ann", type="float", nullable=true)
+     * @var float
      */
     protected $honTeorAnn;
 
     /**
      *
-     * @var string @ORM\Column(name="mode_fact", type="text", nullable=true)
+     * @var string
      */
     protected $modeFact;
 
     /**
      *
-     * @var float @ORM\Column(name="non_fact_m", type="float", nullable=true)
+     * @var float
      */
     protected $nonFactMont;
 
     /**
      *
-     * @var string @ORM\Column(name="nom_fact_d", type="text", nullable=true)
+     * @var string
      */
     protected $nonFactDesc;
 
     /**
      *
-     * @var float @ORM\Column(name="nom_enc_m", type="float", nullable=true)
+     * @var float
      */
     protected $nonEncMont;
 
     /**
      *
-     * @var string @ORM\Column(name="nom_enc_d", type="text", nullable=true)
+     * @var string
      */
     protected $nonEncDesc;
 
     /**
      *
-     * @var string @ORM\Column(name="comment_quit", type="text", nullable=true)
+     * @var string
      */
     protected $commentQuit;
 
     /**
      *
-     * @var string @ORM\Column(name="mq_quit_impots", type="text", nullable=true)
+     * @var string
      */
     protected $mqQuitImpots;
 
     /**
      *
-     * @var string @ORM\Column(name="mq_quit_cnss", type="text", nullable=true)
+     * @var string
      */
     protected $mqQuitCnss;
 
     /**
      *
-     * @var string @ORM\Column(name="commentaires", type="text", nullable=true)
+     * @var string
      */
     protected $comments;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -240,7 +230,7 @@ class Pilot
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -1002,10 +992,8 @@ class Pilot
     }
 
     /**
-     *
      */
     public function __clone()
     {
-
     }
 }

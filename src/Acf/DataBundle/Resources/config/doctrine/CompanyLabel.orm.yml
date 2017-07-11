@@ -1,0 +1,63 @@
+Acf\DataBundle\Entity\CompanyLabel:
+    type: entity
+    table: acf_company_labels
+    repositoryClass: Acf\DataBundle\Repository\CompanyLabelRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        name:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        abrev:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: abreviation
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        company:
+            targetEntity: Acf\DataBundle\Entity\Company
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: companyLabels
+            joinColumns:
+                company_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

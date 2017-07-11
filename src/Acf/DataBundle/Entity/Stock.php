@@ -1,62 +1,47 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Stock
- * @ORM\Table(name="acf_company_stocks")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\StockRepository")
- * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"year", "company"}, errorPath="year", groups={"year"})
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Stock
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="stocks", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var integer @ORM\Column(name="year", type="integer", nullable=false)
-     *      @Assert\GreaterThan(value="0", groups={"year"})
+     * @var integer
      */
     protected $year;
 
     /**
      *
-     * @var float @ORM\Column(name="val", type="float", nullable=true)
-     *      @Assert\GreaterThanOrEqual(value="0", groups={"value"})
+     * @var float
      */
     protected $value;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -73,7 +58,7 @@ class Stock
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -202,5 +187,6 @@ class Stock
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

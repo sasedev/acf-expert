@@ -5,7 +5,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\Security\Core\Role\Role;
 
+// use Symfony\Component\Security\Core\Role\RoleInterface;
+
 /**
+ * RoleManagerInterface
  *
  * @author sasedev <seif.salah@gmail.com>
  */

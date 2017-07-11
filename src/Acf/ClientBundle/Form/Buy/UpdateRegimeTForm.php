@@ -24,7 +24,6 @@ class UpdateRegimeTForm extends AbstractType
     {
         $builder->add('regime', ChoiceType::class, array(
             'label' => 'Buy.regime.label',
-            'choices_as_values' => true,
             'choices' => Buy::choiceRegime(),
             'attr' => array(
                 'choice_label_trans' => true

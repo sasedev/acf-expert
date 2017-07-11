@@ -1,18 +1,10 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-// use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * CompanyAdmin
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_company_admins")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\CompanyAdminRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"user", "company"}, errorPath="user", groups={"user"})
  */
 class CompanyAdmin
 {
@@ -31,40 +23,31 @@ class CompanyAdmin
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="companyAdmins", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="companyAdmins", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      })
+     * @var User
      */
     protected $user;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -78,7 +61,7 @@ class CompanyAdmin
 
     /**
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -131,7 +114,7 @@ class CompanyAdmin
 
     /**
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDtCrea()
     {
@@ -153,7 +136,7 @@ class CompanyAdmin
 
     /**
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDtUpdate()
     {
@@ -202,5 +185,6 @@ class CompanyAdmin
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

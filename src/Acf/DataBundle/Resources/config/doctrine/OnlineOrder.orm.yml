@@ -1,0 +1,149 @@
+Acf\DataBundle\Entity\OnlineOrder:
+    type: entity
+    table: acf_online_orders
+    repositoryClass: Acf\DataBundle\Repository\OnlineOrderRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        ref:
+            type: text
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+        val:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        orderTo:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: orderto
+        auth:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        sessId:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: session_id
+        ipAddr:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: ip_addr
+        paymentType:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: payment_type
+        status:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: payment_status
+        renew:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: autorenew
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        user:
+            targetEntity: Acf\DataBundle\Entity\User
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: orders
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToOne:
+        invoice:
+            targetEntity: Acf\DataBundle\Entity\OnlineInvoice
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: order
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+    oneToMany:
+        products:
+            targetEntity: Acf\DataBundle\Entity\OnlineOrderProduct
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: order
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                dtCrea: ASC
+        taxes:
+            targetEntity: Acf\DataBundle\Entity\OnlineOrderTaxe
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: order
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                priority: ASC
+    lifecycleCallbacks: {  }

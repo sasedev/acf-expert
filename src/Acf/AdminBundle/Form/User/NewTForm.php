@@ -43,7 +43,6 @@ class NewTForm extends AbstractType
 
         $builder->add('lockout', ChoiceType::class, array(
             'label' => 'User.lockout.label',
-            'choices_as_values' => true,
             'choices' => User::choiceLockout(),
             'attr' => array(
                 'choice_label_trans' => true
@@ -66,7 +65,7 @@ class NewTForm extends AbstractType
 
         $builder->add('sexe', ChoiceType::class, array(
             'label' => 'User.sexe.label',
-            'choices_as_values' => true,
+
             'choices' => User::choiceSexe(),
             'attr' => array(
                 'choice_label_trans' => true

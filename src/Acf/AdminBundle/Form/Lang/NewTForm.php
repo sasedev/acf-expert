@@ -29,7 +29,6 @@ class NewTForm extends AbstractType
 
         $builder->add('direction', ChoiceType::class, array(
             'label' => 'Lang.direction.label',
-            'choices_as_values' => true,
             'choices' => Lang::choiceDirection(),
             'attr' => array(
                 'choice_label_trans' => true
@@ -38,7 +37,6 @@ class NewTForm extends AbstractType
 
         $builder->add('status', ChoiceType::class, array(
             'label' => 'Lang.status.label',
-            'choices_as_values' => true,
             'choices' => Lang::choiceStatus(),
             'expanded' => true,
             'attr' => array(

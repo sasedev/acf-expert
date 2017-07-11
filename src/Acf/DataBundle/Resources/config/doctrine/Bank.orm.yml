@@ -1,0 +1,142 @@
+Acf\DataBundle\Entity\Bank:
+    type: entity
+    table: bank
+    repositoryClass: Acf\DataBundle\Repository\BankRepository
+    fields:
+        label:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        number:
+            type: bigint
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: numb
+        agency:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        rib:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        contact:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        tel:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fax:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        email:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        otherInfos:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: others
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        company:
+            targetEntity: Acf\DataBundle\Entity\Company
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: accounts
+            joinColumns:
+                company_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        transactions:
+            targetEntity: Acf\DataBundle\Entity\Transaction
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: account
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                number: ASC
+    manyToMany:
+        docs:
+            targetEntity: Acf\DataBundle\Entity\Doc
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: accounts
+            inversedBy: null
+            joinTable:
+                name: acf_account_docs
+                schema: null
+                joinColumns:
+                    -
+                        name: account_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: doc_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks: {  }

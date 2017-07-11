@@ -624,7 +624,6 @@ Company.tab.admins: Collaborateurs/Admins
 Company.tab.trace: Historique
 Company.tab.tab2: Dossier Comptable
 Company.tab.labels: Journaux
-Company.tab.frames: Cadres
 Company.tab.customers: Clients
 Company.tab.suppliers: Fournisseurs
 Company.tab.banks: Banques
@@ -657,7 +656,6 @@ Company.tlabel.edit.physicaltype: 'Modification du Type'
 Company.tlabel.edit.cnss: 'Modification du CNSS'
 Company.tlabel.edit.cnssBureau: 'Modification du Bureau CNSS'
 Company.tlabel.edit.sectors: 'Modification des Secteurs d''Activité'
-Company.tlabel.edit.physicaltype: 'Modification du Type'
 Company.tlabel.edit.phone: 'Modification du Téléphone'
 Company.tlabel.edit.mobile: 'Modification du Mobile'
 Company.tlabel.edit.fax: 'Modification du Fax'
@@ -1804,7 +1802,6 @@ Sale.tlabel.addSecondaryVat: 'Ajouter une TVA Secondaire'
 
 Sale.tlabel.list: Liste des Ventes
 Sale.tlabel.add: Ajouter nouvelle Vente
-Sale.tlabel.overview: 'Aperçu des détails de la Vente'
 Sale.tlabel.edit: 'Modifier les détails de la Vente'
 Sale.tlabel.docs.add: 'Ajouter un Nouveau Document à la Vente'
 Sale.tlabel.docs.edit: 'Modifier la Liste des Documents de la Vente'
@@ -1881,7 +1878,6 @@ SecondaryVat.tlabel.editBalanceNet: 'Modifier le Montant Net de la TVA Secondair
 
 SecondaryVat.tlabel.list: Liste des TVA Secondaires
 SecondaryVat.tlabel.add: Ajouter nouvelle TVA Secondaire
-SecondaryVat.tlabel.overview: 'Aperçu des détails de la TVA Secondaire'
 SecondaryVat.tlabel.edit: 'Modifier les détails de la TVA Secondaire'
 
 SecondaryVat.empty: Aucune TVA Secondaire trouvée dans la base de donnée
@@ -2030,7 +2026,6 @@ Buy.excel.label: 'Achats (Excel) :'
 
 Buy.tlabel.list: Liste des Achats
 Buy.tlabel.add: Ajouter nouvelle Achat
-Buy.tlabel.overview: 'Aperçu des détails de l''Achat'
 Buy.tlabel.edit: 'Modifier les détails de l''Achat'
 Buy.tlabel.docs.add: 'Ajouter un Nouveau Document à l''Achat'
 Buy.tlabel.docs.edit: 'Modifier la Liste des Documents de l''Achat'

@@ -58,7 +58,7 @@
 							class="dropdown user user-menu{% if menu_active=='profile'%} active{% endif %}">
 							<a href="#"
 							class="dropdown-toggle{% if menu_active=='profile'%} active{% endif %}"
-							data-toggle="dropdown"> {{ glyphIco('user') }} <span>{{render_hinclude(controller('AcfSecurityBundle:Security:whoami'))}}
+							data-toggle="dropdown"> {{ glyphIco('user') }} <span>{{render(controller('AcfSecurityBundle:Security:whoami'))}}
 									<i class="caret"></i></span>
 						</a>
 							<ul class="dropdown-menu">

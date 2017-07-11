@@ -70,7 +70,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editCompanyinfos', ChoiceType::class, array(
             'label' => 'CompanyUser.editCompanyinfos.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -80,7 +79,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addAddresses', ChoiceType::class, array(
             'label' => 'CompanyUser.addAddresses.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -90,7 +88,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editAddresses', ChoiceType::class, array(
             'label' => 'CompanyUser.editAddresses.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -100,7 +97,6 @@ class NewTForm extends AbstractType
 
         $builder->add('deleteAddresses', ChoiceType::class, array(
             'label' => 'CompanyUser.deleteAddresses.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -110,7 +106,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addPhones', ChoiceType::class, array(
             'label' => 'CompanyUser.addPhones.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -120,7 +115,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editPhones', ChoiceType::class, array(
             'label' => 'CompanyUser.editPhones.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -130,7 +124,6 @@ class NewTForm extends AbstractType
 
         $builder->add('deletePhones', ChoiceType::class, array(
             'label' => 'CompanyUser.deletePhones.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -140,7 +133,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addFrames', ChoiceType::class, array(
             'label' => 'CompanyUser.addFrames.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -150,7 +142,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editFrames', ChoiceType::class, array(
             'label' => 'CompanyUser.editFrames.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -160,7 +151,6 @@ class NewTForm extends AbstractType
 
         $builder->add('deleteFrames', ChoiceType::class, array(
             'label' => 'CompanyUser.deleteFrames.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -170,7 +160,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addDocs', ChoiceType::class, array(
             'label' => 'CompanyUser.addDocs.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -180,7 +169,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editDocs', ChoiceType::class, array(
             'label' => 'CompanyUser.editDocs.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -190,7 +178,6 @@ class NewTForm extends AbstractType
 
         $builder->add('deleteDocs', ChoiceType::class, array(
             'label' => 'CompanyUser.deleteDocs.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -200,7 +187,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addSuppliers', ChoiceType::class, array(
             'label' => 'CompanyUser.addSuppliers.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -210,7 +196,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editSuppliers', ChoiceType::class, array(
             'label' => 'CompanyUser.editSuppliers.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -220,7 +205,6 @@ class NewTForm extends AbstractType
 
         $builder->add('deleteSuppliers', ChoiceType::class, array(
             'label' => 'CompanyUser.deleteSuppliers.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -230,7 +214,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addCustomers', ChoiceType::class, array(
             'label' => 'CompanyUser.addCustomers.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -240,7 +223,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editCustomers', ChoiceType::class, array(
             'label' => 'CompanyUser.editCustomers.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -250,7 +232,6 @@ class NewTForm extends AbstractType
 
         $builder->add('deleteCustomers', ChoiceType::class, array(
             'label' => 'CompanyUser.deleteCustomers.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -260,7 +241,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addSales', ChoiceType::class, array(
             'label' => 'CompanyUser.addSales.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -270,7 +250,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editSales', ChoiceType::class, array(
             'label' => 'CompanyUser.editSales.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -280,7 +259,6 @@ class NewTForm extends AbstractType
 
         $builder->add('deleteSales', ChoiceType::class, array(
             'label' => 'CompanyUser.deleteSales.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -290,7 +268,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addBuys', ChoiceType::class, array(
             'label' => 'CompanyUser.addBuys.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -300,7 +277,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editBuys', ChoiceType::class, array(
             'label' => 'CompanyUser.editBuys.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -310,7 +286,6 @@ class NewTForm extends AbstractType
 
         $builder->add('deleteBuys', ChoiceType::class, array(
             'label' => 'CompanyUser.deleteBuys.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -320,7 +295,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addDocgroupComptables', ChoiceType::class, array(
             'label' => 'CompanyUser.addDocgroupComptables.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -330,7 +304,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editDocgroupComptables', ChoiceType::class, array(
             'label' => 'CompanyUser.editDocgroupComptables.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -340,7 +313,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addDocgroupBanks', ChoiceType::class, array(
             'label' => 'CompanyUser.addDocgroupBanks.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -350,7 +322,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editDocgroupBanks', ChoiceType::class, array(
             'label' => 'CompanyUser.editDocgroupBanks.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -360,7 +331,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addDocgroupJuridics', ChoiceType::class, array(
             'label' => 'CompanyUser.addDocgroupJuridics.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -370,7 +340,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editDocgroupJuridics', ChoiceType::class, array(
             'label' => 'CompanyUser.editDocgroupJuridics.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -380,7 +349,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addDocgroupFiscals', ChoiceType::class, array(
             'label' => 'CompanyUser.addDocgroupFiscals.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -390,7 +358,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editDocgroupFiscals', ChoiceType::class, array(
             'label' => 'CompanyUser.editDocgroupFiscals.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -400,7 +367,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addDocgroupPersos', ChoiceType::class, array(
             'label' => 'CompanyUser.addDocgroupPersos.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -410,7 +376,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editDocgroupPersos', ChoiceType::class, array(
             'label' => 'CompanyUser.editDocgroupPersos.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -420,7 +385,6 @@ class NewTForm extends AbstractType
 
         $builder->add('addDocgroupSysts', ChoiceType::class, array(
             'label' => 'CompanyUser.addDocgroupSysts.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(
@@ -430,7 +394,6 @@ class NewTForm extends AbstractType
 
         $builder->add('editDocgroupSysts', ChoiceType::class, array(
             'label' => 'CompanyUser.editDocgroupSysts.label',
-            'choices_as_values' => true,
             'choices' => CompanyUser::choiceTF(),
             'expanded' => true,
             'attr' => array(

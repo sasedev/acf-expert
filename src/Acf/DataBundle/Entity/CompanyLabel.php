@@ -1,59 +1,47 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 /**
  * CompanyLabel
- * @ORM\Table(name="acf_company_labels")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\CompanyLabelRepository")
- * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"abrev", "company"}, errorPath="abrev", groups={"abrev"})
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class CompanyLabel
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="companyLabels", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var string @ORM\Column(name="name", type="text", nullable=false)
+     * @var string
      */
     protected $name;
 
     /**
      *
-     * @var string @ORM\Column(name="abreviation", type="text", nullable=false)
+     * @var string
      */
     protected $abrev;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -68,7 +56,7 @@ class CompanyLabel
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -198,5 +186,6 @@ class CompanyLabel
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

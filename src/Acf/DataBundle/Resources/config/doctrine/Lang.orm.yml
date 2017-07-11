@@ -1,0 +1,69 @@
+Acf\DataBundle\Entity\Lang:
+    type: entity
+    table: acf_langs
+    repositoryClass: Acf\DataBundle\Repository\LangRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        locale:
+            type: text
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+        status:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        direction:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    oneToMany:
+        users:
+            targetEntity: Acf\DataBundle\Entity\User
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: preferedLang
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                username: ASC
+    lifecycleCallbacks: {  }

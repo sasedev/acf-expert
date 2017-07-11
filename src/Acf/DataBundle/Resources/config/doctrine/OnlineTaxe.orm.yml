@@ -1,0 +1,76 @@
+Acf\DataBundle\Entity\OnlineTaxe:
+    type: entity
+    table: acf_online_taxes
+    repositoryClass: Acf\DataBundle\Repository\OnlineTaxeRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        label:
+            type: text
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+            column: tx_label
+        value:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: tx_val
+        type:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: tx_type
+        visible:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: tx_actif
+        priority:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: tx_priority
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    lifecycleCallbacks: {  }

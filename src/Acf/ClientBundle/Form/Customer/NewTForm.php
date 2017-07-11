@@ -84,7 +84,6 @@ class NewTForm extends AbstractType
 
         $builder->add('physicaltype', ChoiceType::class, array(
             'label' => 'Customer.physicaltype.label',
-            'choices_as_values' => true,
             'choices' => Customer::choicePhysicaltype(),
             'expanded' => true,
             'attr' => array(

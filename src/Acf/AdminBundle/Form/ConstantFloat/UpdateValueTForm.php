@@ -54,7 +54,7 @@ class UpdateValueTForm extends AbstractType
     {
         return array(
             'validation_groups' => array(
-                'Default'
+                'value'
             )
         );
     }

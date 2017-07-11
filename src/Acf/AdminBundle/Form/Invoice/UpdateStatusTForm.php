@@ -24,7 +24,6 @@ class UpdateStatusTForm extends AbstractType
     {
         $builder->add('status', ChoiceType::class, array(
             'label' => 'Invoice.status.label',
-            'choices_as_values' => true,
             'choices' => OnlineInvoice::choiceStatus(),
             'attr' => array(
                 'choice_label_trans' => true

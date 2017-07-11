@@ -31,7 +31,6 @@ class NewOnlineOrderTForm extends AbstractType
 
         $builder->add('renew', ChoiceType::class, array(
             'label' => 'OnlineOrder.renew.label',
-            'choices_as_values' => true,
             'choices' => OnlineOrder::choiceRenew(),
             'expanded' => true,
             'attr' => array(

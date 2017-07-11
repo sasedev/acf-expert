@@ -1,0 +1,68 @@
+Acf\DataBundle\Entity\BulletinInfoTitle:
+    type: entity
+    table: acf_bi_titles
+    repositoryClass: Acf\DataBundle\Repository\BulletinInfoTitleRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        title:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: bt_content
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        bulletinInfo:
+            targetEntity: Acf\DataBundle\Entity\BulletinInfo
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: titles
+            joinColumns:
+                bi_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        contents:
+            targetEntity: Acf\DataBundle\Entity\BulletinInfoContent
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: bulletinInfoTitle
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                title: ASC
+    lifecycleCallbacks: {  }

@@ -1,0 +1,80 @@
+Acf\DataBundle\Entity\BulletinInfo:
+    type: entity
+    table: acf_bis
+    repositoryClass: Acf\DataBundle\Repository\BulletinInfoRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        num:
+            type: integer
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+            column: bi_num
+        dtStart:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: dtstart
+        description:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: bi_description
+        nbrClicks:
+            type: bigint
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: nbrclicks
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    oneToMany:
+        titles:
+            targetEntity: Acf\DataBundle\Entity\BulletinInfoTitle
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: bulletinInfo
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                title: ASC
+    lifecycleCallbacks: {  }

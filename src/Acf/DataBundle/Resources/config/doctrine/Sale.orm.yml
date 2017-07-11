@@ -1,0 +1,281 @@
+Acf\DataBundle\Entity\Sale:
+    type: entity
+    table: sale
+    repositoryClass: Acf\DataBundle\Repository\SaleRepository
+    fields:
+        number:
+            type: bigint
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: numb
+        dtActivation:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: dtactivation
+        bill:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        label:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        devise:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        conversionRate:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+            column: conversionrate
+        vat:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+        vatDevise:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+            column: vatd
+        stamp:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+        stampDevise:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+            column: stampd
+        balanceTtc:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+            column: balance_ttc
+        balanceTtcDevise:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+            column: balance_ttcd
+        balanceNet:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+            column: balance_net
+        balanceNetDevise:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 10
+            column: balance_netd
+        vatInfo:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: vatinfo
+        regime:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        paymentType:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: payment_type
+        dtPayment:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: dtpayment
+        transactionStatus:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: transaction_status
+        validated:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        otherInfos:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: others
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    oneToMany:
+        secondaryVats:
+            targetEntity: Acf\DataBundle\Entity\SecondaryVat
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: sale
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                vatInfo: ASC
+    manyToOne:
+        monthlyBalance:
+            targetEntity: Acf\DataBundle\Entity\MonthlyBalance
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: transactions
+            joinColumns:
+                mbalance_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        relation:
+            targetEntity: Acf\DataBundle\Entity\Relation
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: transactions
+            joinColumns:
+                relation_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        withholding:
+            targetEntity: Acf\DataBundle\Entity\Withholding
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: transactions
+            joinColumns:
+                withholding_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        account:
+            targetEntity: Acf\DataBundle\Entity\Account
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: transactions
+            joinColumns:
+                account_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        nature:
+            targetEntity: Acf\DataBundle\Entity\CompanyNature
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: transactions
+            joinColumns:
+                nature_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        docs:
+            targetEntity: Acf\DataBundle\Entity\Doc
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: transactions
+            inversedBy: null
+            joinTable:
+                name: acf_transaction_docs
+                schema: null
+                joinColumns:
+                    -
+                        name: transaction_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: doc_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks: {  }

@@ -78,7 +78,6 @@ class NewTForm extends AbstractType
 
         $builder->add('vatInfo', ChoiceType::class, array(
             'label' => 'SecondaryVat.vatInfo.label',
-            'choices_as_values' => true,
             'choices' => SecondaryVat::choiceVatInfo(),
             'attr' => array(
                 'choice_label_trans' => true

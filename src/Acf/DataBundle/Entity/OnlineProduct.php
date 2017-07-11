@@ -1,20 +1,13 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * OnlineProduct
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_online_products")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineProductRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"label"}, errorPath="label", groups={"label"})
  */
 class OnlineProduct
 {
@@ -33,70 +26,61 @@ class OnlineProduct
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="prd_label", type="text", nullable=false, unique=true)
-     *      @Assert\Length(min = "2", max = "100", groups={"label"})
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var string @ORM\Column(name="prd_title", type="text", nullable=true)
+     * @var string
      */
     protected $title;
 
     /**
      *
-     * @var string @ORM\Column(name="prd_description", type="text", nullable=true)
+     * @var string
      */
     protected $description;
 
     /**
      *
-     * @var float @ORM\Column(name="prd_price_ht", type="float", nullable=false)
-     *      @Assert\GreaterThan(value="0", groups={"price"})
+     * @var float
      */
     protected $price;
 
     /**
      *
-     * @var float @ORM\Column(name="prd_vat", type="float", nullable=false)
-     *      @Assert\GreaterThanOrEqual(value="0", groups={"vat"})
-     *      @Assert\LessThanOrEqual(value="100", groups={"vat"})
+     * @var float
      */
     protected $vat;
 
     /**
      *
-     * @var integer @ORM\Column(name="prd_lockout", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceLockoutCallback", groups={"lockout"})
+     * @var integer
      */
     protected $lockout;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="OnlineOrderProduct", mappedBy="product", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $orders;
 
@@ -378,5 +362,6 @@ class OnlineProduct
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

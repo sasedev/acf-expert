@@ -1,0 +1,66 @@
+Acf\DataBundle\Entity\Autoinc:
+    type: entity
+    table: acf_autoincs
+    repositoryClass: Acf\DataBundle\Repository\AutoincRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        name:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        description:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        value:
+            type: bigint
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: val
+        count:
+            type: bigint
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: cnt
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    lifecycleCallbacks: {  }

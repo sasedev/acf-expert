@@ -167,7 +167,6 @@ class NewTForm extends AbstractType
 
         $builder->add('regime', ChoiceType::class, array(
             'label' => 'Buy.regime.label',
-            'choices_as_values' => true,
             'choices' => Buy::choiceRegime(),
             'attr' => array(
                 'choice_label_trans' => true
@@ -230,7 +229,6 @@ class NewTForm extends AbstractType
 
         $builder->add('paymentType', ChoiceType::class, array(
             'label' => 'Buy.paymentType.label',
-            'choices_as_values' => true,
             'choices' => Buy::choicePaymentType(),
             'attr' => array(
                 'choice_label_trans' => true
@@ -239,8 +237,6 @@ class NewTForm extends AbstractType
 
         $builder->add('transactionStatus', ChoiceType::class, array(
             'label' => 'Buy.transactionStatus.label',
-            'choices_as_values' => true,
-            'choices_as_values' => true,
             'choices' => Buy::choiceTransactionStatus(),
             'expanded' => true,
             'attr' => array(

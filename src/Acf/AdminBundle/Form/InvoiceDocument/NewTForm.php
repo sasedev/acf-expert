@@ -70,7 +70,6 @@ class NewTForm extends AbstractType
 
         $builder->add('visible', ChoiceType::class, array(
             'label' => 'InvoiceDocument.visible.label',
-            'choices_as_values' => true,
             'choices' => OnlineInvoiceDocument::choiceVisible(),
             'attr' => array(
                 'choice_label_trans' => true

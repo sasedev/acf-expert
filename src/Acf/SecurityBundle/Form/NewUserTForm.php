@@ -56,7 +56,6 @@ class NewUserTForm extends AbstractType
 
         $builder->add('sexe', ChoiceType::class, array(
             'label' => 'NewUser.sexe.label',
-            'choices_as_values' => true,
             'choices' => User::choiceSexe(),
             'attr' => array(
                 'choice_label_trans' => true

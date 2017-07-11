@@ -1,16 +1,8 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * CompanyFrame
- * @ORM\Table(name="acf_company_frames")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\CompanyFrameRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class CompanyFrame
 {
@@ -35,137 +27,121 @@ class CompanyFrame
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="companyFrames", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var Job @ORM\ManyToOne(targetEntity="Job", inversedBy="companyFrames", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="job_id", referencedColumnName="id")
-     *      })
+     * @var Job
      */
     protected $job;
 
     /**
      *
-     * @var string @ORM\Column(name="lastname", type="text", nullable=true)
+     * @var string
      */
     protected $lastName;
 
     /**
      *
-     * @var string @ORM\Column(name="firstname", type="text", nullable=true)
+     * @var string
      */
     protected $firstName;
 
     /**
      *
-     * @var integer @ORM\Column(name="sexe", type="bigint", nullable=true)
+     * @var integer
      */
     protected $sexe;
 
     /**
      *
-     * @var string @ORM\Column(name="cin", type="text", nullable=true)
+     * @var string
      */
     protected $cin;
 
     /**
      *
-     * @var string @ORM\Column(name="passport", type="text", nullable=true)
+     * @var string
      */
     protected $passport;
 
     /**
      *
-     * @var string @ORM\Column(name="strnum", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"streetNum"})
+     * @var string
      */
     protected $streetNum;
 
     /**
      *
-     * @var string @ORM\Column(name="address", type="text", nullable=true)
+     * @var string
      */
     protected $address;
 
     /**
      *
-     * @var string @ORM\Column(name="address2", type="text", nullable=true)
+     * @var string
      */
     protected $address2;
 
     /**
      *
-     * @var string @ORM\Column(name="town", type="text", nullable=true)
-     *      @Assert\Length(max="120", groups={"town"})
+     * @var string
      */
     protected $town;
 
     /**
      *
-     * @var string @ORM\Column(name="zipcode", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"zipCode"})
+     * @var string
      */
     protected $zipCode;
 
     /**
      *
-     * @var string @ORM\Column(name="country", type="text", nullable=true)
-     *      @Assert\Country(groups={"country"})
+     * @var string
      */
     protected $country;
 
     /**
      *
-     * @var string @ORM\Column(name="phone", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"phone"})
+     * @var string
      */
     protected $phone;
 
     /**
      *
-     * @var string @ORM\Column(name="mobile", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"mobile"})
+     * @var string
      */
     protected $mobile;
 
     /**
      *
-     * @var string @ORM\Column(name="email", type="text", nullable=true)
-     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
+     * @var string
      */
     protected $email;
 
     /**
      *
-     * @var string @ORM\Column(name="others", type="text", nullable=true)
+     * @var string
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -180,7 +156,7 @@ class CompanyFrame
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -695,5 +671,6 @@ class CompanyFrame
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

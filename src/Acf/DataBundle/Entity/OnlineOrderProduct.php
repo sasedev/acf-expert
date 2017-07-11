@@ -1,85 +1,67 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * OnlineOrderProduct
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_online_order_elements")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineOrderProductRepository")
- *         @ORM\HasLifecycleCallbacks
  */
 class OnlineOrderProduct
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var OnlineOrder @ORM\ManyToOne(targetEntity="OnlineOrder", inversedBy="products", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="ord_id", referencedColumnName="id")
-     *      })
+     * @var OnlineOrder
      */
     protected $order;
 
     /**
      *
-     * @var OnlineProduct @ORM\ManyToOne(targetEntity="OnlineProduct", inversedBy="orders", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="prd_id", referencedColumnName="id")
-     *      })
+     * @var OnlineProduct
      */
     protected $product;
 
     /**
      *
-     * @var string @ORM\Column(name="prd_label", type="text", nullable=false)
-     *      @Assert\Length(min = "2", max = "100", groups={"label"})
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var float @ORM\Column(name="prd_price_ht", type="float", nullable=false)
-     *      @Assert\GreaterThan(value="0", groups={"price"})
+     * @var float
      */
     protected $price;
 
     /**
      *
-     * @var float @ORM\Column(name="prd_vat", type="float", nullable=false)
-     *      @Assert\GreaterThanOrEqual(value="0", groups={"vat"})
-     *      @Assert\LessThanOrEqual(value="100", groups={"vat"})
+     * @var float
      */
     protected $vat;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
+     * Constructor
      *
      * @param OnlineProduct $product
-     *            Constructor
+     *
      */
     public function __construct(OnlineProduct $product = null)
     {
@@ -213,7 +195,7 @@ class OnlineOrderProduct
 
     /**
      *
-     * @return DateTime $dtCrea
+     * @return \DateTime $dtCrea
      */
     public function getDtCrea()
     {
@@ -234,7 +216,7 @@ class OnlineOrderProduct
 
     /**
      *
-     * @return DateTime $dtUpdate
+     * @return \DateTime $dtUpdate
      */
     public function getDtUpdate()
     {

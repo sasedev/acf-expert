@@ -1,60 +1,47 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * ConstantStr
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_constant_strs")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\ConstantStrRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"name"}, errorPath="name", groups={"name"})
  */
 class ConstantStr
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="name", type="text", nullable=false)
-     *      @Assert\NotBlank(groups={"name"})
+     * @var string
      */
     protected $name;
 
     /**
      *
-     * @var string @ORM\Column(name="description", type="text", nullable=true)
+     * @var string
      */
     protected $description;
 
     /**
      *
-     * @var string @ORM\Column(name="val", type="text", nullable=false)
-     *      @Assert\NotBlank(groups={"admCreate", "admUpdate"})
+     * @var string
      */
     protected $value;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -69,7 +56,7 @@ class ConstantStr
     /**
      * Get
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {

@@ -3,72 +3,54 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
+ * Notification
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_notifs")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\NotificationRepository")
- *         @ORM\HasLifecycleCallbacks
  */
 class Notification
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="notifs", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      })
+     * @var User
      */
     protected $user;
 
     /**
      *
-     * @var string @ORM\Column(name="notif_title", type="text", nullable=true)
+     * @var string
      */
     protected $title;
 
     /**
      *
-     * @var string @ORM\Column(name="notif_comments", type="text", nullable=true)
+     * @var string
      */
     protected $comment;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="User", inversedBy="sharedNotifs", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_notif_shares",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="notif_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $users;
 
@@ -84,7 +66,7 @@ class Notification
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -259,5 +241,6 @@ class Notification
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

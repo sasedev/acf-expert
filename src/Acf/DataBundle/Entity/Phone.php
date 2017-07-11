@@ -1,65 +1,53 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
-
 /**
  * Phone
- * @ORM\Table(name="acf_company_phones")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\PhoneRepository")
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Phone
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="phones", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var string @ORM\Column(name="label", type="text", nullable=true)
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var string @ORM\Column(name="phone", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"phone"})
+     * @var string
      */
     protected $phone;
 
     /**
      *
-     * @var string @ORM\Column(name="contact", type="text", nullable=true)
+     * @var string
      */
     protected $contact;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -74,7 +62,7 @@ class Phone
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -228,5 +216,6 @@ class Phone
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

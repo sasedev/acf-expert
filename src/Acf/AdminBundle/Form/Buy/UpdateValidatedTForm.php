@@ -24,7 +24,6 @@ class UpdateValidatedTForm extends AbstractType
     {
         $builder->add('validated', ChoiceType::class, array(
             'label' => 'Buy.validated.label',
-            'choices_as_values' => true,
             'choices' => Buy::choiceValidated(),
             'expanded' => true,
             'attr' => array(

@@ -1,102 +1,74 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Docgroupaudit
- * @ORM\Table(name="acf_company_docgroupaudits")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\DocgroupauditRepository")
- * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"label", "parent", "company"}, errorPath="label", groups={"label"})
- * @UniqueEntity(fields={"pageUrlFull"}, errorPath="parent", groups={"parent"})
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Docgroupaudit
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="docgroupaudits", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var Docgroupaudit @ORM\ManyToOne(targetEntity="Docgroupaudit", inversedBy="childs", cascade={"persist"})
-     *      @ORM\JoinColumns({@ORM\JoinColumn(name="parent_id", referencedColumnName="id")})
+     * @var Docgroupaudit
      */
     protected $parent;
 
     /**
      *
-     * @var string @ORM\Column(name="label", type="text", nullable=false)
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var string @ORM\Column(name="pageurl_full", type="text", nullable=false)
-     *      @Gedmo\Slug(handlers={
-     *      @Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\TreeSlugHandler", options={
-     *      @Gedmo\SlugHandlerOption(name="parentRelationField", value="parent"),
-     *      @Gedmo\SlugHandlerOption(name="separator", value="/")
-     *      })
-     *      }, separator="_", updatable=true, style="camel", fields={"label"})
+     * @var string
      */
     protected $pageUrlFull;
 
     /**
      *
-     * @var string @ORM\Column(name="others", type="text", nullable=true)
+     * @var string
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Docgroupaudit", mappedBy="parent",cascade={"persist"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $childs;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="groupaudits", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_groupaudit_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $docs;
 
@@ -113,7 +85,7 @@ class Docgroupaudit
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {

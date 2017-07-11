@@ -1,21 +1,13 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Company
- * @ORM\Table(name="acf_companies")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\CompanyRepository")
- * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"ref"}, errorPath="ref", groups={"ref"})
- * @UniqueEntity(fields={"corporateName"}, errorPath="corporateName", groups={"corporateName"})
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Company
 {
@@ -34,396 +26,331 @@ class Company
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="ref", type="text", nullable=false)
+     * @var string
      */
     protected $ref;
 
     /**
      *
-     * @var string @ORM\Column(name="corporate_name", type="text", nullable=false)
+     * @var string
      */
     protected $corporateName;
 
     /**
      *
-     * @var CompanyType @ORM\ManyToOne(targetEntity="CompanyType", inversedBy="companies", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="type_id", referencedColumnName="id")
-     *      })
+     * @var CompanyType
      */
     protected $type;
 
     /**
      *
-     * @var string @ORM\Column(name="tribunal", type="text", nullable=true)
+     * @var string
      */
     protected $tribunal;
 
     /**
      *
-     * @var string @ORM\Column(name="fisc", type="text", nullable=true)
+     * @var string
      */
     protected $fisc;
 
     /**
      *
-     * @var string @ORM\Column(name="cnss", type="text", nullable=true)
+     * @var string
      */
     protected $cnss;
 
     /**
      *
-     * @var string @ORM\Column(name="bureaucnss", type="text", nullable=true)
+     * @var string
      */
     protected $cnssBureau;
 
     /**
      *
-     * @var integer @ORM\Column(name="physicaltype", type="bigint", nullable=false)
-     *      @Assert\Choice(callback="choicePhysicaltypeCallback", groups={"physicaltype"})
+     * @var integer
      */
     protected $physicaltype;
 
     /**
      *
-     * @var string @ORM\Column(name="cin", type="text", nullable=true)
+     * @var string
      */
     protected $cin;
 
     /**
      *
-     * @var string @ORM\Column(name="passport", type="text", nullable=true)
+     * @var string
      */
     protected $passport;
 
     /**
      *
-     * @var string @ORM\Column(name="commercial_register", type="text", nullable=true)
+     * @var string
      */
     protected $commercialRegister;
 
     /**
      *
-     * @var string @ORM\Column(name="bureaurc", type="text", nullable=true)
+     * @var string
      */
     protected $commercialRegisterBureau;
 
     /**
      *
-     * @var string @ORM\Column(name="customs_code", type="text", nullable=true)
+     * @var string
      */
     protected $customsCode;
 
     /**
      *
-     * @var float @ORM\Column(name="actionvn", type="float", precision=10, scale=0, nullable=false)
-     *      @Assert\GreaterThan(value="0", groups={"actionvn"})
+     * @var float
      */
     protected $actionvn;
 
     /**
      *
-     * @var string @ORM\Column(name="strnum", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"streetNum"})
+     * @var string
      */
     protected $streetNum;
 
     /**
      *
-     * @var string @ORM\Column(name="address", type="text", nullable=true)
+     * @var string
      */
     protected $address;
 
     /**
      *
-     * @var string @ORM\Column(name="address2", type="text", nullable=true)
+     * @var string
      */
     protected $address2;
 
     /**
      *
-     * @var string @ORM\Column(name="town", type="text", nullable=true)
-     *      @Assert\Length(max="120", groups={"town"})
+     * @var string
      */
     protected $town;
 
     /**
      *
-     * @var string @ORM\Column(name="zipcode", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"zipCode"})
+     * @var string
      */
     protected $zipCode;
 
     /**
      *
-     * @var string @ORM\Column(name="country", type="text", nullable=true)
-     *      @Assert\Country(groups={"country"})
+     * @var string
      */
     protected $country;
 
     /**
      *
-     * @var string @ORM\Column(name="phone", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"phone"})
+     * @var string
      */
     protected $phone;
 
     /**
      *
-     * @var string @ORM\Column(name="mobile", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"mobile"})
+     * @var string
      */
     protected $mobile;
 
     /**
      *
-     * @var string @ORM\Column(name="fax", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"phone"})
+     * @var string
      */
     protected $fax;
 
     /**
      *
-     * @var string @ORM\Column(name="email", type="text", nullable=true)
-     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
+     * @var string
      */
     protected $email;
 
     /**
      *
-     * @var string @ORM\Column(name="others", type="text", nullable=true)
+     * @var string
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Stock", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"year" = "ASC"})
+     * @var Collection
      */
     protected $stocks;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Phone", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $phones;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Address", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $addresses;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="CompanyFrame", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"lastName" = "ASC", "firstName" = "ASC"})
+     * @var Collection
      */
     protected $companyFrames;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="CompanyLabel", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"name" = "ASC"})
+     * @var Collection
      */
     protected $companyLabels;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Shareholder", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"name" = "ASC"})
+     * @var Collection
      */
     protected $shareholders;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Pilot", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"mission" = "ASC"})
+     * @var Collection
      */
     protected $pilots;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="CompanyNature", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $companyNatures;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Relation", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $relations;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Sector", inversedBy="companies", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_company_sectors",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="sector_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $sectors;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="User", inversedBy="companies", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_company_users",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $users;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="CompanyUser", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $companyUsers;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="User", inversedBy="admCompanies", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_company_admins",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $admins;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="CompanyAdmin", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $companyAdmins;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Account", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $accounts;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Withholding", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $withholdings;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="MonthlyBalance", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"year" = "ASC", "month" = "ASC"})
+     * @var Collection
      */
     protected $monthlyBalances;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="MPaye", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"year" = "ASC", "month" = "ASC"})
+     * @var Collection
      */
     protected $payes;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="OnlineInvoice", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "DESC"})
+     * @var Collection
      */
     protected $invoices;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Docgroup", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $docgroups;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Docgroupcomptable", mappedBy="company", cascade={"persist",
-     *      "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $docgroupcomptables;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Docgroupfiscal", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $docgroupfiscals;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Docgroupperso", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $docgrouppersos;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Docgroupsyst", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $docgroupsysts;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Docgroupbank", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $docgroupbanks;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Docgroupaudit", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     * @var Collection
      */
     protected $docgroupaudits;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Doc", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "DESC"})
+     * @var Collection
      */
     protected $docs;
 
@@ -466,7 +393,7 @@ class Company
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {

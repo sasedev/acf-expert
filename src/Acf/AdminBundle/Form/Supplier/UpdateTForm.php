@@ -41,7 +41,6 @@ class UpdateTForm extends AbstractType
 
         $builder->add('physicaltype', ChoiceType::class, array(
             'label' => 'Supplier.physicaltype.label',
-            'choices_as_values' => true,
             'choices' => Supplier::choicePhysicaltype(),
             'expanded' => true,
             'attr' => array(

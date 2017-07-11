@@ -1,22 +1,13 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Account
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_company_accounts")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\AccountRepository")
- *         @ORM\InheritanceType("SINGLE_TABLE")
- *         @ORM\DiscriminatorColumn(name="accounttype", type="string")
- *         @ORM\DiscriminatorMap({"1" = "Bank", "2" = "Fund"})
- *         @ORM\HasLifecycleCallbacks
  */
 abstract class Account
 {
@@ -35,111 +26,91 @@ abstract class Account
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="accounts", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var string @ORM\Column(name="label", type="text", nullable=false)
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var integer @ORM\Column(name="numb", type="bigint", nullable=true)
-     *      @Assert\GreaterThan(value="0", groups={"number"})
-     *      @Assert\LessThan(value="1000000000", groups={"number"})
+     * @var integer
      */
     protected $number;
 
     /**
      *
-     * @var string @ORM\Column(name="agency", type="text", nullable=true)
+     * @var string
      */
     protected $agency;
 
     /**
      *
-     * @var string @ORM\Column(name="rib", type="text", nullable=true)
+     * @var string
      */
     protected $rib;
 
     /**
      *
-     * @var string @ORM\Column(name="contact", type="text", nullable=true)
+     * @var string
      */
     protected $contact;
 
     /**
      *
-     * @var string @ORM\Column(name="tel", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"tel"})
+     * @var string
      */
     protected $tel;
 
     /**
      *
-     * @var string @ORM\Column(name="fax", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"fax"})
+     * @var string
      */
     protected $fax;
 
     /**
      *
-     * @var string @ORM\Column(name="email", type="text", nullable=true)
-     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
+     * @var string
      */
     protected $email;
 
     /**
      *
-     * @var string @ORM\Column(name="others", type="text", nullable=true)
+     * @var string
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Transaction", mappedBy="account", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"number" = "ASC"})
+     * @var Collection
      */
     protected $transactions;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="accounts", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_account_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="account_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $docs;
 
@@ -156,7 +127,7 @@ abstract class Account
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {

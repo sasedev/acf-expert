@@ -1,75 +1,65 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 /**
  * Shareholder
- * @ORM\Table(name="acf_company_shareholders")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\ShareholderRepository")
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Shareholder
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="shareholders", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var string @ORM\Column(name="name", type="text", nullable=false)
+     * @var string
      */
     protected $name;
 
     /**
      *
-     * @var string @ORM\Column(name="cin", type="text", nullable=false)
+     * @var string
      */
     protected $cin;
 
     /**
      *
-     * @var string @ORM\Column(name="quality", type="text", nullable=false)
+     * @var string
      */
     protected $quality;
 
     /**
      *
-     * @var string @ORM\Column(name="address", type="text", nullable=false)
+     * @var string
      */
     protected $address;
 
     /**
      *
-     * @var integer @ORM\Column(name="trades", type="bigint", nullable=false)
+     * @var integer
      */
     protected $trades;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -85,7 +75,7 @@ class Shareholder
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -299,5 +289,6 @@ class Shareholder
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

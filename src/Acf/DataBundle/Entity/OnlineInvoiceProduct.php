@@ -1,76 +1,61 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * OnlineInvoiceProduct
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_online_invoice_elements")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineInvoiceProductRepository")
- *         @ORM\HasLifecycleCallbacks
  */
 class OnlineInvoiceProduct
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var OnlineInvoice @ORM\ManyToOne(targetEntity="OnlineInvoice", inversedBy="products", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
-     *      })
+     * @var OnlineInvoice
      */
     protected $invoice;
 
     /**
      *
-     * @var string @ORM\Column(name="prd_label", type="text", nullable=false)
-     *      @Assert\Length(min = "2", max = "100", groups={"label"})
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var float @ORM\Column(name="prd_price_ht", type="float", nullable=false)
-     *      @Assert\GreaterThan(value="0", groups={"price"})
+     * @var float
      */
     protected $price;
 
     /**
      *
-     * @var float @ORM\Column(name="prd_vat", type="float", nullable=false)
-     *      @Assert\GreaterThanOrEqual(value="0", groups={"vat"})
-     *      @Assert\LessThanOrEqual(value="100", groups={"vat"})
+     * @var float
      */
     protected $vat;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
+     * Constructor
      *
      * @param OnlineProduct $product
-     *            Constructor
+     *
      */
     public function __construct(OnlineOrderProduct $product = null)
     {
@@ -182,7 +167,7 @@ class OnlineInvoiceProduct
 
     /**
      *
-     * @return DateTime $dtCrea
+     * @return \DateTime $dtCrea
      */
     public function getDtCrea()
     {
@@ -203,7 +188,7 @@ class OnlineInvoiceProduct
 
     /**
      *
-     * @return DateTime $dtUpdate
+     * @return \DateTime $dtUpdate
      */
     public function getDtUpdate()
     {

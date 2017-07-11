@@ -1,23 +1,15 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Encoder\Pbkdf2PasswordEncoder;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * User
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_users")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\UserRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"username"}, errorPath="username", groups={"username"})
  */
 class User implements UserInterface, \Serializable
 {
@@ -54,186 +46,167 @@ class User implements UserInterface, \Serializable
 
     /**
      *
-     * @var integer @ORM\Column(name="id", type="bigint", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="SEQUENCE")
-     *      @ORM\SequenceGenerator(sequenceName="acf_users_id_seq", allocationSize=1, initialValue=1)
+     * @var integer
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="username", type="text", nullable=false, unique=true)
-     *      @Assert\Length(min = "3", max = "100", groups={"username"})
-     *      @Assert\Regex(pattern="/^[a-z0-9][a-z0-9_]+$/", groups={"username"})
+     * @var string
      */
     protected $username;
 
     /**
      *
-     * @var string @ORM\Column(name="email", type="text", nullable=true)
-     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
+     * @var string
      */
     protected $email;
 
     /**
      *
-     * @var string @ORM\Column(name="salt", type="text", nullable=true)
+     * @var string
      */
     protected $salt;
 
     /**
      *
-     * @var string @ORM\Column(name="clearpassword", type="text", nullable=true)
-     *      @Assert\Length(min="8", max="200", groups={"clearPassword"})
+     * @var string
      */
     protected $clearPassword;
 
     /**
      *
-     * @var string @ORM\Column(name="passwd", type="text", nullable=true)
+     * @var string
      */
     protected $password;
 
     /**
      *
-     * @var string @ORM\Column(name="recoverycode", type="text", nullable=true)
+     * @var string
      */
     protected $recoveryCode;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="recoveryexpiration", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $recoveryExpiration;
 
     /**
      *
-     * @var integer @ORM\Column(name="lockout", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceLockoutCallback", groups={"lockout"})
+     * @var integer
      */
     protected $lockout;
 
     /**
      *
-     * @var integer @ORM\Column(name="logins", type="bigint", nullable=false)
+     * @var integer
      */
     protected $logins;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="lastlogin", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $lastLogin;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="lastactivity", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $lastActivity;
 
     /**
      *
-     * @var string @ORM\Column(name="lastname", type="text", nullable=true)
+     * @var string
      */
     protected $lastName;
 
     /**
      *
-     * @var string @ORM\Column(name="firstname", type="text", nullable=true)
+     * @var string
      */
     protected $firstName;
 
     /**
      *
-     * @var integer @ORM\Column(name="sexe", type="integer", nullable=true)
-     *      @Assert\Choice(callback="choiceSexeCallback", groups={"sexe"})
+     * @var integer
      */
     protected $sexe;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="birthday", type="date", nullable=true)
-     *      @Assert\Date(groups={"birthday"})
+     * @var \DateTime
      */
     protected $birthday;
 
     /**
      *
-     * @var string @ORM\Column(name="strnum", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"streetNum"})
+     * @var string
      */
     protected $streetNum;
 
     /**
      *
-     * @var string @ORM\Column(name="address", type="text", nullable=true)
+     * @var string
      */
     protected $address;
 
     /**
      *
-     * @var string @ORM\Column(name="address2", type="text", nullable=true)
+     * @var string
      */
     protected $address2;
 
     /**
      *
-     * @var string @ORM\Column(name="town", type="text", nullable=true)
-     *      @Assert\Length(max="120", groups={"town"})
+     * @var string
      */
     protected $town;
 
     /**
      *
-     * @var string @ORM\Column(name="zipcode", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"zipCode"})
+     * @var string
      */
     protected $zipCode;
 
     /**
      *
-     * @var string @ORM\Column(name="country", type="text", nullable=true)
-     *      @Assert\Country(groups={"country"})
+     * @var string
      */
     protected $country;
 
     /**
      *
-     * @var string @ORM\Column(name="phone", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"phone"})
+     * @var string
      */
     protected $phone;
 
     /**
      *
-     * @var string @ORM\Column(name="mobile", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"mobile"})
+     * @var string
      */
     protected $mobile;
 
     /**
      *
-     * @var string @ORM\Column(name="avatar", type="text", nullable=true)
+     * @var string
      */
     protected $avatar;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Lang", inversedBy="users", cascade={"persist"})
-     * @ORM\JoinColumns({@ORM\JoinColumn(name="lang_id", referencedColumnName="id")})
      *
      * @var Lang $preferedLang
      */
@@ -241,106 +214,61 @@ class User implements UserInterface, \Serializable
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Role", inversedBy="users", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_users_roles",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="role_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $userRoles;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Company", mappedBy="users")
-     *      @ORM\JoinTable(name="acf_company_users",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $companies;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="CompanyUser", mappedBy="user", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $companyUsers;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Company", mappedBy="admins", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_company_admins",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $admCompanies;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="CompanyAdmin", mappedBy="user", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $companyAdmins;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Agenda", mappedBy="user", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtStart" = "ASC"})
+     * @var Collection
      */
     protected $events;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Agenda", mappedBy="users", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_agenda_shares",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="evt_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $sharedEvents;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Notification", mappedBy="user", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $notifs;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Notification", mappedBy="users", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_notif_shares",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="notif_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $sharedNotifs;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="OnlineOrder", mappedBy="user", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     * @var Collection
      */
     protected $orders;
 

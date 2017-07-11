@@ -158,7 +158,6 @@ class NewTForm extends AbstractType
 
         $builder->add('vatInfo', ChoiceType::class, array(
             'label' => 'Sale.vatInfo.label',
-            'choices_as_values' => true,
             'choices' => Sale::choiceVatInfo(),
             'attr' => array(
                 'choice_label_trans' => true
@@ -167,7 +166,6 @@ class NewTForm extends AbstractType
 
         $builder->add('regime', ChoiceType::class, array(
             'label' => 'Sale.regime.label',
-            'choices_as_values' => true,
             'choices' => Sale::choiceRegime(),
             'attr' => array(
                 'choice_label_trans' => true
@@ -203,7 +201,6 @@ class NewTForm extends AbstractType
 
         $builder->add('paymentType', ChoiceType::class, array(
             'label' => 'Sale.paymentType.label',
-            'choices_as_values' => true,
             'choices' => Sale::choicePaymentType(),
             'attr' => array(
                 'choice_label_trans' => true
@@ -212,7 +209,6 @@ class NewTForm extends AbstractType
 
         $builder->add('transactionStatus', ChoiceType::class, array(
             'label' => 'Sale.transactionStatus.label',
-            'choices_as_values' => true,
             'choices' => Sale::choiceTransactionStatus(),
             'expanded' => true,
             'attr' => array(
@@ -279,7 +275,6 @@ class NewTForm extends AbstractType
 
         $builder->add('validated', ChoiceType::class, array(
             'label' => 'Sale.validated.label',
-            'choices_as_values' => true,
             'choices' => Sale::choiceValidated(),
             'expanded' => true,
             'attr' => array(

@@ -1,0 +1,1263 @@
+Acf\DataBundle\Entity\Account:
+    properties:
+        number:
+            - GreaterThan:
+                value: 0
+                groups: [number]
+            - LessThan:
+                value: 1000000000
+                groups: [number]
+        email:
+            - Email:
+                checkMX: true
+                checkHost: true
+                groups: [email]
+        tel:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [tel]
+        fax:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [fax]
+
+Acf\DataBundle\Entity\Address:
+    properties:
+        streetNum:
+            - Length:
+                max: 15
+                groups: [streetNum]
+        town:
+            - Length:
+                max: 120
+                groups: [town]
+        zipCode:
+            - Length:
+                max: 15
+                groups: [zipCode]
+        country:
+            - Country:
+                groups: [country]
+        email:
+            - Email:
+                checkMX: true
+                checkHost: true
+                groups: [email]
+        phone:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [phone]
+        mobile:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [mobile]
+        fax:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [fax]
+
+Acf\DataBundle\Entity\Autoinc:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [name]
+            errorPath: name
+            groups: [name]
+    properties:
+        name:
+            - NotBlank:
+                groups: [name]
+
+Acf\DataBundle\Entity\Bank:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [number, company]
+            errorPath: number
+            groups: [number]
+
+Acf\DataBundle\Entity\BiDoc:
+    properties:
+        fileName:
+            - File:
+                maxSize: "20480k"
+                groups: [fileName]
+
+Acf\DataBundle\Entity\BiFolder:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [title, parent]
+            errorPath: title
+            groups: [title]
+
+Acf\DataBundle\Entity\BulletinInfo:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [num]
+            errorPath: num
+            groups: [num]
+    properties:
+        dtStart:
+            - NotNull:
+                groups: [dtStart]
+
+Acf\DataBundle\Entity\BulletinInfoContent:
+    properties:
+        title:
+            - NotBlank:
+                groups: [title]
+
+Acf\DataBundle\Entity\BulletinInfoTitle:
+    properties:
+        title:
+            - NotNull:
+                groups: [title]
+
+Acf\DataBundle\Entity\Company:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [ref]
+            errorPath: ref
+            groups: [ref]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [corporateName]
+            errorPath: corporateName
+            groups: [corporateName]
+    properties:
+        physicaltype:
+            - Choice:
+                callback: "choicePhysicaltypeCallback"
+                groups: [physicaltype]
+        actionvn:
+            - GreaterThan:
+                value: 0
+                groups: [actionvn]
+        streetNum:
+            - Length:
+                max: 15
+                groups: [streetNum]
+        town:
+            - Length:
+                max: 120
+                groups: [town]
+        zipCode:
+            - Length:
+                max: 15
+                groups: [zipCode]
+        country:
+            - Country:
+                groups: [country]
+        email:
+            - Email:
+                checkMX: true
+                checkHost: true
+                groups: [email]
+        phone:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [phone]
+        mobile:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [mobile]
+        fax:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [fax]
+
+Acf\DataBundle\Entity\CompanyAdmin:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [user, company]
+            errorPath: user
+            groups: [user]
+
+Acf\DataBundle\Entity\CompanyFrame:
+    properties:
+        streetNum:
+            - Length:
+                max: 15
+                groups: [streetNum]
+        town:
+            - Length:
+                max: 120
+                groups: [town]
+        zipCode:
+            - Length:
+                max: 15
+                groups: [zipCode]
+        country:
+            - Country:
+                groups: [country]
+        email:
+            - Email:
+                checkMX: true
+                checkHost: true
+                groups: [email]
+        phone:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [phone]
+        mobile:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [mobile]
+
+Acf\DataBundle\Entity\CompanyLabel:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [abrev, company]
+            errorPath: abrev
+            groups: [abrev]
+
+Acf\DataBundle\Entity\CompanyNature:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, company]
+            errorPath: label
+            groups: [label]
+
+Acf\DataBundle\Entity\CompanyType:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label]
+            errorPath: label
+            groups: [label]
+
+Acf\DataBundle\Entity\CompanyUser:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [user,company]
+            errorPath: user
+            groups: [user]
+    properties:
+        editCompanyinfos:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editCompanyinfos]
+        addAddresses:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addAddresses]
+        editAddresses:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editAddresses]
+        deleteAddresses:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [deleteAddresses]
+        addPhones:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addPhones]
+        editPhones:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editPhones]
+        deletePhones:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [deletePhones]
+        addFrames:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addFrames]
+        editFrames:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editFrames]
+        deleteFrames:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [deleteFrames]
+        addDocs:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addDocs]
+        editDocs:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editDocs]
+        deleteDocs:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [deleteDocs]
+        addSuppliers:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addSuppliers]
+        editSuppliers:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editSuppliers]
+        deleteSuppliers:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [deleteSuppliers]
+        addCustomers:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addCustomers]
+        editCustomers:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editCustomers]
+        deleteCustomers:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [deleteCustomers]
+        addSales:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addSales]
+        editSales:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editSales]
+        deleteSales:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [deleteSales]
+        addBuys:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addBuys]
+        editBuys:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editBuys]
+        deleteBuys:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [deleteBuys]
+        addDocgroupComptables:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addDocgroupComptables]
+        editDocgroupComptables:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editDocgroupComptables]
+        addDocgroupBanks:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addDocgroupBanks]
+        editDocgroupBanks:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editDocgroupBanks]
+        addDocgroupJuridics:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addDocgroupJuridics]
+        editDocgroupJuridics:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editDocgroupJuridics]
+        addDocgroupFiscals:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addDocgroupFiscals]
+        editDocgroupFiscals:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editDocgroupFiscals]
+        addDocgroupPersos:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addDocgroupPersos]
+        editDocgroupPersos:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editDocgroupPersos]
+        addDocgroupSysts:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [addDocgroupSysts]
+        editDocgroupSysts:
+            - Choice:
+                callback: "choiceTFCallback"
+                groups: [editDocgroupSysts]
+
+Acf\DataBundle\Entity\CompanyLabel:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [abrev, company]
+            errorPath: abrev
+            groups: [abrev]
+
+Acf\DataBundle\Entity\ConstantFloat:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [name]
+            errorPath: name
+            groups: [name]
+    properties:
+        name:
+            - NotBlank:
+                groups: [name]
+        value:
+            - NotBlank:
+                groups: [value]
+
+Acf\DataBundle\Entity\ConstantInt:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [name]
+            errorPath: name
+            groups: [name]
+    properties:
+        name:
+            - NotBlank:
+                groups: [name]
+        value:
+            - NotBlank:
+                groups: [value]
+
+Acf\DataBundle\Entity\ConstantStr:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [name]
+            errorPath: name
+            groups: [name]
+    properties:
+        name:
+            - NotBlank:
+                groups: [name]
+        value:
+            - NotBlank:
+                groups: [value]
+
+Acf\DataBundle\Entity\Customer:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [number, company]
+            errorPath: number
+            groups: [number]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [fisc, company]
+            errorPath: fisc
+            groups: [fisc]
+    properties:
+        number:
+            - GreaterThan:
+                value: 0
+                groups: [number]
+            - LessThan:
+                value: 1000000000
+                groups: [number]
+        physicaltype:
+            - Choice:
+                callback: "choicePhysicaltypeCallback"
+                groups: [physicaltype]
+        streetNum:
+            - Length:
+                max: 15
+                groups: [streetNum]
+        town:
+            - Length:
+                max: 120
+                groups: [town]
+        zipCode:
+            - Length:
+                max: 15
+                groups: [zipCode]
+        country:
+            - Country:
+                groups: [country]
+        email:
+            - Email:
+                checkMX: true
+                checkHost: true
+                groups: [email]
+        phone:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [phone]
+        mobile:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [mobile]
+        fax:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [fax]
+
+Acf\DataBundle\Entity\Doc:
+    properties:
+        fileName:
+            - File:
+                maxSize: "20480k"
+                groups: [fileName]
+
+Acf\DataBundle\Entity\Docgroup:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, parent, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [pageUrlFull]
+            errorPath: parent
+            groups: [parent]
+
+Acf\DataBundle\Entity\Docgroupaudit:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, parent, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [pageUrlFull]
+            errorPath: parent
+            groups: [parent]
+
+Acf\DataBundle\Entity\Docgroupbank:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, parent, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [pageUrlFull]
+            errorPath: parent
+            groups: [parent]
+
+Acf\DataBundle\Entity\Docgroupcomptable:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, parent, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [pageUrlFull]
+            errorPath: parent
+            groups: [parent]
+
+Acf\DataBundle\Entity\Docgroupfiscal:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, parent, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [pageUrlFull]
+            errorPath: parent
+            groups: [parent]
+
+Acf\DataBundle\Entity\Docgroupperso:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, parent, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [pageUrlFull]
+            errorPath: parent
+            groups: [parent]
+
+Acf\DataBundle\Entity\Docgroupsyst:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, parent, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [pageUrlFull]
+            errorPath: parent
+            groups: [parent]
+
+Acf\DataBundle\Entity\FeedRead:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [url]
+            errorPath: url
+            groups: [url]
+    properties:
+        url:
+            - Url:
+                checkDNS: true
+                groups: [url]
+        nbrDays:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [nbrDays]
+        nbrItems:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [nbrItems]
+
+Acf\DataBundle\Entity\Fund:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label,company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [number,company]
+            errorPath: number
+            groups: [number]
+
+Acf\DataBundle\Entity\GoodDoc:
+    properties:
+        fileName:
+            - File:
+                maxSize: "20480k"
+                groups: [fileName]
+
+Acf\DataBundle\Entity\GoodLink:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [url]
+            errorPath: url
+            groups: [url]
+    properties:
+        url:
+            - Url:
+                checkDNS: true
+                groups: [url]
+        nbrDays:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [nbrDays]
+        nbrItems:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [nbrItems]
+
+Acf\DataBundle\Entity\Job:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label]
+            errorPath: label
+            groups: [label]
+
+Acf\DataBundle\Entity\Lang:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [locale]
+            errorPath: locale
+            groups: [locale]
+    properties:
+        locale:
+            - Locale:
+                groups: [locale]
+        status:
+            - Choice:
+                callback: "choiceStatusCallback"
+                groups: [status]
+        direction:
+            - Choice:
+                callback: "choiceDirectionCallback"
+                groups: [direction]
+
+Acf\DataBundle\Entity\MBPurchase:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [month,year,company]
+            errorPath: month
+            groups: [month]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [ref,company]
+            errorPath: ref
+            groups: [ref]
+    properties:
+        year:
+            - GreaterThan:
+                value: 0
+                groups: [year]
+            - LessThan:
+                value: 3000
+                groups: [year]
+        month:
+            - Choice:
+                callback: "choiceMonthCallback"
+                groups: [month]
+        count:
+            - GreaterThan:
+                value: 0
+                groups: [count]
+
+Acf\DataBundle\Entity\MBSale:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [month,year,company]
+            errorPath: month
+            groups: [month]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [ref,company]
+            errorPath: ref
+            groups: [ref]
+    properties:
+        year:
+            - GreaterThan:
+                value: 0
+                groups: [year]
+            - LessThan:
+                value: 3000
+                groups: [year]
+        month:
+            - Choice:
+                callback: "choiceMonthCallback"
+                groups: [month]
+        count:
+            - GreaterThan:
+                value: 0
+                groups: [count]
+
+Acf\DataBundle\Entity\MonthlyBalance:
+    properties:
+        year:
+            - GreaterThan:
+                value: 0
+                groups: [year]
+            - LessThan:
+                value: 3000
+                groups: [year]
+        month:
+            - Choice:
+                callback: "choiceMonthCallback"
+                groups: [month]
+        count:
+            - GreaterThan:
+                value: 0
+                groups: [count]
+
+Acf\DataBundle\Entity\MPaye:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [month,year,company]
+            errorPath: month
+            groups: [month]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [ref,company]
+            errorPath: ref
+            groups: [ref]
+    properties:
+        year:
+            - GreaterThan:
+                value: 0
+                groups: [year]
+            - LessThan:
+                value: 3000
+                groups: [year]
+        month:
+            - Choice:
+                callback: "choiceMonthCallback"
+                groups: [month]
+
+Acf\DataBundle\Entity\MSalary:
+    properties:
+        matricule:
+            - NotNull:
+                groups: [matricule]
+        nom:
+            - NotNull:
+                groups: [nom]
+        prenom:
+            - NotNull:
+                groups: [prenom]
+
+Acf\DataBundle\Entity\OnlineInvoice:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [ref]
+            errorPath: ref
+            groups: [ref]
+    properties:
+        val:
+            - GreaterThan:
+                value: 0
+                groups: [val]
+        orderTo:
+            - NotBlank:
+                groups: [orderTo]
+        paymentType:
+            - Choice:
+                callback: "choicePaymentTypeCallback"
+                groups: [paymentType]
+        status:
+            - Choice:
+                callback: "choiceStatusCallback"
+                groups: [status]
+        renew:
+            - Choice:
+                callback: "choiceRenewCallback"
+                groups: [renew]
+
+Acf\DataBundle\Entity\OnlineInvoiceDocument:
+    properties:
+        fileName:
+            - File:
+                maxSize: "20480k"
+                groups: [fileName]
+        visible:
+            - Choice:
+                callback: "choiceVisibleCallback"
+                groups: [visible]
+
+Acf\DataBundle\Entity\OnlineInvoiceProduct:
+    properties:
+        label:
+            - Length:
+                min: 2
+                max: 100
+                groups: [label]
+        price:
+            - GreaterThan:
+                value: 0
+                groups: [price]
+        vat:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [vat]
+            - LessThanOrEqual:
+                value: 100
+                groups: [vat]
+
+Acf\DataBundle\Entity\OnlineInvoiceTaxe:
+    properties:
+        value:
+            - NotNull:
+                groups: [value]
+
+Acf\DataBundle\Entity\OnlineOrder:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [ref]
+            errorPath: ref
+            groups: [ref]
+    properties:
+        val:
+            - GreaterThan:
+                value: 0
+                groups: [val]
+        orderTo:
+            - NotBlank:
+                groups: [orderTo]
+        paymentType:
+            - Choice:
+                callback: "choicePaymentTypeCallback"
+                groups: [paymentType]
+        status:
+            - Choice:
+                callback: "choiceStatusCallback"
+                groups: [status]
+        renew:
+            - Choice:
+                callback: "choiceRenewCallback"
+                groups: [renew]
+
+Acf\DataBundle\Entity\OnlineOrderProduct:
+    properties:
+        label:
+            - Length:
+                min: 2
+                max: 100
+                groups: [label]
+        price:
+            - GreaterThan:
+                value: 0
+                groups: [price]
+        vat:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [vat]
+            - LessThanOrEqual:
+                value: 100
+                groups: [vat]
+
+Acf\DataBundle\Entity\OnlineOrderProduct:
+    properties:
+        value:
+            - NotNull:
+                groups: [value]
+
+Acf\DataBundle\Entity\OnlineProduct:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label]
+            errorPath: label
+            groups: [label]
+    properties:
+        label:
+            - Length:
+                min: 2
+                max: 100
+                groups: [label]
+        price:
+            - GreaterThan:
+                value: 0
+                groups: [price]
+        vat:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [vat]
+            - LessThanOrEqual:
+                value: 100
+                groups: [vat]
+        lockout:
+            - Choice:
+                callback: "choiceLockoutCallback"
+                groups: [lockout]
+
+Acf\DataBundle\Entity\OnlineTaxe:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label]
+            errorPath: label
+            groups: [label]
+    properties:
+        label:
+            - Length:
+                min: 2
+                max: 100
+                groups: [label]
+        value:
+            - NotNull:
+                groups: [value]
+        type:
+            - Choice:
+                callback: "choiceTypeCallback"
+                groups: [type]
+        visible:
+            - Choice:
+                callback: "choiceVisibleCallback"
+                groups: [visible]
+
+Acf\DataBundle\Entity\Order:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [ref]
+            errorPath: ref
+            groups: [ref]
+    properties:
+        val:
+            - GreaterThan:
+                value: 0
+                groups: [val]
+        status:
+            - Choice:
+                callback: "choiceStatusCallback"
+                groups: [status]
+
+Acf\DataBundle\Entity\Phone:
+    properties:
+        phone:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [phone]
+
+Acf\DataBundle\Entity\Relation:
+    properties:
+        number:
+            - GreaterThan:
+                value: 0
+                groups: [number]
+            - LessThan:
+                value: 1000000000
+                groups: [number]
+        physicaltype:
+            - Choice:
+                callback: "choicePhysicaltypeCallback"
+                groups: [physicaltype]
+        streetNum:
+            - Length:
+                max: 15
+                groups: [streetNum]
+        town:
+            - Length:
+                max: 120
+                groups: [town]
+        zipCode:
+            - Length:
+                max: 15
+                groups: [zipCode]
+        country:
+            - Country:
+                groups: [country]
+        email:
+            - Email:
+                checkMX: true
+                checkHost: true
+                groups: [email]
+        phone:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [phone]
+        mobile:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [mobile]
+        fax:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [fax]
+
+Acf\DataBundle\Entity\Role:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [name]
+            errorPath: name
+            groups: [name]
+    properties:
+        name:
+            - Length:
+                max: 100
+                groups: [name]
+            - Regex:
+                pattern: "/^ROLE\_[A-Z](([A-Z0-9\_]+[A-Z0-9])|[A-Z0-9])$/"
+                groups: [name]
+
+Acf\DataBundle\Entity\Sale:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [bill, monthlyBalance]
+            errorPath: bill
+            groups: [bill]
+
+Acf\DataBundle\Entity\SecondaryVat:
+    properties:
+        vatInfo:
+            - Choice:
+                callback: "choiceVatInfoCallback"
+                groups: [vatInfo]
+        vat:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [vat]
+        balanceNet:
+            - GreaterThan:
+                value: 0
+                groups: [balanceNet]
+        balanceTtc:
+            - GreaterThan:
+                value: 0
+                groups: [balanceTtc]
+
+Acf\DataBundle\Entity\Sector:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label]
+            errorPath: label
+            groups: [label]
+
+Acf\DataBundle\Entity\Stock:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [year,company]
+            errorPath: year
+            groups: [year]
+    properties:
+        year:
+            - GreaterThan:
+                value: 0
+                groups: [year]
+        value:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [value]
+
+Acf\DataBundle\Entity\Supplier:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [number, company]
+            errorPath: number
+            groups: [number]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [fisc, company]
+            errorPath: fisc
+            groups: [fisc]
+    properties:
+        number:
+            - GreaterThan:
+                value: 0
+                groups: [number]
+            - LessThan:
+                value: 1000000000
+                groups: [number]
+        physicaltype:
+            - Choice:
+                callback: "choicePhysicaltypeCallback"
+                groups: [physicaltype]
+        streetNum:
+            - Length:
+                max: 15
+                groups: [streetNum]
+        town:
+            - Length:
+                max: 120
+                groups: [town]
+        zipCode:
+            - Length:
+                max: 15
+                groups: [zipCode]
+        country:
+            - Country:
+                groups: [country]
+        email:
+            - Email:
+                checkMX: true
+                checkHost: true
+                groups: [email]
+        phone:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [phone]
+        mobile:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [mobile]
+        fax:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [fax]
+
+Acf\DataBundle\Entity\Transaction:
+    properties:
+        dtActivation:
+            - GreaterThanOrEqual:
+                value: "2000-01-01"
+                groups: [dtActivation]
+            - LessThan:
+                value: "2100-01-01"
+                groups: [dtActivation]
+        devise:
+            - Currency:
+                groups: [devise]
+        conversionRate:
+            - GreaterThan:
+                value: 0
+                groups: [conversionRate]
+        vat:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [vat]
+        vatDevise:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [vatDevise]
+        stamp:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [stamp]
+        stampDevise:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [stampDevise]
+        balanceTtc:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [balanceTtc]
+        balanceTtcDevise:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [balanceTtcDevise]
+        balanceNet:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [balanceNet]
+        balanceNetDevise:
+            - GreaterThanOrEqual:
+                value: 0
+                groups: [balanceNetDevise]
+        vatInfo:
+            - Choice:
+                callback: "choiceVatInfoCallback"
+                groups: [vatInfo]
+        regime:
+            - Choice:
+                callback: "choiceRegimeCallback"
+                groups: [regime]
+        paymentType:
+            - Choice:
+                callback: "choicePaymentTypeCallback"
+                groups: [paymentType]
+        dtPayment:
+            - GreaterThanOrEqual:
+                value: "2000-01-01"
+                groups: [dtPayment]
+            - LessThan:
+                value: "2100-01-01"
+                groups: [dtPayment]
+        transactionStatus:
+            - Choice:
+                callback: "choiceTransactionStatusCallback"
+                groups: [transactionStatus]
+        validated:
+            - Choice:
+                callback: "choiceValidatedCallback"
+                groups: [validated]
+
+Acf\DataBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [username]
+            errorPath: username
+            groups: [username]
+    properties:
+        username:
+            - Length:
+                min: 3
+                max: 100
+                groups: [username]
+            - Regex:
+                pattern: "/^[a-z0-9][a-z0-9_]+$/"
+                groups: [username]
+        email:
+            - Email:
+                checkMX: true
+                checkHost: true
+                groups: [email]
+        clearPassword:
+            - Length:
+                min: 8
+                max: 200
+                groups: [clearPassword]
+        lockout:
+            - Choice:
+                callback: "choiceLockoutCallback"
+                groups: [lockout]
+        sexe:
+            - Choice:
+                callback: "choiceSexeCallback"
+                groups: [sexe]
+        birthday:
+            - Date:
+                groups: [birthday]
+        streetNum:
+            - Length:
+                max: 15
+                groups: [streetNum]
+        town:
+            - Length:
+                max: 120
+                groups: [town]
+        zipCode:
+            - Length:
+                max: 15
+                groups: [zipCode]
+        country:
+            - Country:
+                groups: [country]
+        phone:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [phone]
+        mobile:
+            - Sasedev\Commons\SharedBundle\Validator\Phone:
+                groups: [mobile]
+
+Acf\DataBundle\Entity\Withholding:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [label, company]
+            errorPath: label
+            groups: [label]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [number, company]
+            errorPath: number
+            groups: [number]
+    properties:
+        number:
+            - GreaterThan:
+                value: 0
+                groups: [number]
+            - LessThan:
+                value: 1000000000
+                groups: [number]
+        value:
+            - GreaterThan:
+                value: 0
+                groups: [value]
+

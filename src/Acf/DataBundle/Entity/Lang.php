@@ -1,21 +1,14 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Intl\Intl;
 
 /**
+ * Lang
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_langs")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\LangRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"locale"}, errorPath="locale", groups={"locale"})
  */
 class Lang
 {
@@ -46,49 +39,43 @@ class Lang
 
     /**
      *
-     * @var integer @ORM\Column(name="id", type="integer", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="SEQUENCE")
-     *      @ORM\SequenceGenerator(sequenceName="acf_langs_id_seq", allocationSize=1, initialValue=1)
+     * @var integer
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="locale", type="text", nullable=false, unique=true)
-     *      @Assert\Locale(groups={"locale"})
+     * @var string
      */
     protected $locale;
 
     /**
      *
-     * @var integer @ORM\Column(name="status", type="integer", nullable=false)
+     * @var integer
      */
     protected $status;
 
     /**
      *
-     * @var string @ORM\Column(name="direction", type="text", nullable=false)
+     * @var string
      */
     protected $direction;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="User", mappedBy="preferedLang", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"username" = "ASC"})
+     * @var Collection
      */
     protected $users;
 
@@ -360,5 +347,6 @@ class Lang
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

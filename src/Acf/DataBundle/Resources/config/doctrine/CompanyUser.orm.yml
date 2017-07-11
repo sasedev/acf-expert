@@ -1,0 +1,355 @@
+Acf\DataBundle\Entity\CompanyUser:
+    type: entity
+    table: acf_company_users
+    repositoryClass: Acf\DataBundle\Repository\CompanyUserRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        editCompanyinfos:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_companyinfos
+        addAddresses:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_addresses
+        editAddresses:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_addresses
+        deleteAddresses:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_del_addresses
+        addPhones:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_phones
+        editPhones:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_phones
+        deletePhones:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_del_phones
+        addFrames:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_frames
+        editFrames:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_frames
+        deleteFrames:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_del_frames
+        addDocs:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_docs
+        editDocs:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_docs
+        deleteDocs:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_del_docs
+        addSuppliers:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_suppliers
+        editSuppliers:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_suppliers
+        deleteSuppliers:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_del_suppliers
+        addCustomers:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_customers
+        editCustomers:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_customers
+        deleteCustomers:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_del_customers
+        addSales:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_sales
+        editSales:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_sales
+        deleteSales:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_del_sales
+        addBuys:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_buys
+        editBuys:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_buys
+        deleteBuys:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_del_buys
+        addDocgroupComptables:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_dgcomptables
+        editDocgroupComptables:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_dgcomptables
+        addDocgroupBanks:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_dgbanks
+        editDocgroupBanks:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_dgbanks
+        addDocgroupJuridics:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_dgjuridics
+        editDocgroupJuridics:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_dgjuridics
+        addDocgroupFiscals:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_dgfiscals
+        editDocgroupFiscals:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_dgfiscals
+        addDocgroupPersos:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_dgpersos
+        editDocgroupPersos:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_dgpersos
+        addDocgroupSysts:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_add_dgsysts
+        editDocgroupSysts:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: can_edit_dgsysts
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        company:
+            targetEntity: Acf\DataBundle\Entity\Company
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: companyUsers
+            joinColumns:
+                company_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: Acf\DataBundle\Entity\User
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: companyUsers
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

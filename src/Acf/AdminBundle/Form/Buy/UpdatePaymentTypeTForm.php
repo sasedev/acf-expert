@@ -24,7 +24,6 @@ class UpdatePaymentTypeTForm extends AbstractType
     {
         $builder->add('paymentType', ChoiceType::class, array(
             'label' => 'Buy.paymentType.label',
-            'choices_as_values' => true,
             'choices' => Buy::choicePaymentType(),
             'attr' => array(
                 'choice_label_trans' => true

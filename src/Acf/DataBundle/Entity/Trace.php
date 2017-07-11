@@ -1,15 +1,10 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 /**
+ * Trace
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_traces")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\TraceRepository")
- *         @ORM\HasLifecycleCallbacks
  */
 class Trace
 {
@@ -256,107 +251,103 @@ class Trace
 
     /**
      *
-     * @var integer @ORM\Column(name="id", type="bigint", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="SEQUENCE")
-     *      @ORM\SequenceGenerator(sequenceName="acf_traces_id_seq", allocationSize=1, initialValue=1)
+     * @var integer
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="msg", type="text", nullable=true)
+     * @var string
      */
     protected $msg;
 
     /**
      *
-     * @var integer @ORM\Column(name="action_type", type="bigint", nullable=false)
+     * @var integer
      */
     protected $actionType;
 
     /**
      *
-     * @var string @ORM\Column(name="action_entity", type="text", nullable=false)
+     * @var string
      */
     protected $actionEntity;
 
     /**
      *
-     * @var string @ORM\Column(name="action_id", type="text", nullable=true)
+     * @var string
      */
     protected $actionId;
 
     /**
      *
-     * @var string @ORM\Column(name="action_entity2", type="text", nullable=false)
+     * @var string
      */
     protected $actionEntity2;
 
     /**
      *
-     * @var string @ORM\Column(name="action_id2", type="text", nullable=true)
+     * @var string
      */
     protected $actionId2;
 
     /**
      *
-     * @var string @ORM\Column(name="action_entity3", type="text", nullable=false)
+     * @var string
      */
     protected $actionEntity3;
 
     /**
      *
-     * @var string @ORM\Column(name="action_id3", type="text", nullable=true)
+     * @var string
      */
     protected $actionId3;
 
     /**
      *
-     * @var string @ORM\Column(name="action_entity4", type="text", nullable=false)
+     * @var string
      */
     protected $actionEntity4;
 
     /**
      *
-     * @var string @ORM\Column(name="action_id4", type="text", nullable=true)
+     * @var string
      */
     protected $actionId4;
 
     /**
      *
-     * @var guid @ORM\Column(name="company_id", type="guid", nullable=true)
+     * @var string
      */
     protected $companyId;
 
     /**
      *
-     * @var string @ORM\Column(name="user_id", type="text", nullable=true)
+     * @var string
      */
     protected $userId;
 
     /**
      *
-     * @var string @ORM\Column(name="user_fullname", type="text", nullable=true)
+     * @var string
      */
     protected $userFullname;
 
     /**
      *
-     * @var integer @ORM\Column(name="user_type", type="bigint", nullable=false)
+     * @var integer
      */
     protected $userType;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -620,7 +611,7 @@ class Trace
 
     /**
      *
-     * @param guid $companyId
+     * @param string $companyId
      *
      * @return Trace
      */
@@ -633,7 +624,7 @@ class Trace
 
     /**
      *
-     * @return guid
+     * @return string
      */
     public function getCompanyId()
     {

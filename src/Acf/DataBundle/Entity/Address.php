@@ -1,127 +1,107 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Address
- * @ORM\Table(name="acf_company_addresses")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\AddressRepository")
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class Address
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="addresses", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var string @ORM\Column(name="label", type="text", nullable=true)
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var string @ORM\Column(name="strnum", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"streetNum"})
+     * @var string
      */
     protected $streetNum;
 
     /**
      *
-     * @var string @ORM\Column(name="address", type="text", nullable=true)
+     * @var string
      */
     protected $address;
 
     /**
      *
-     * @var string @ORM\Column(name="address2", type="text", nullable=true)
+     * @var string
      */
     protected $address2;
 
     /**
      *
-     * @var string @ORM\Column(name="town", type="text", nullable=true)
-     *      @Assert\Length(max="120", groups={"town"})
+     * @var string
      */
     protected $town;
 
     /**
      *
-     * @var string @ORM\Column(name="zipcode", type="text", nullable=true)
-     *      @Assert\Length(max="15", groups={"zipCode"})
+     * @var string
      */
     protected $zipCode;
 
     /**
      *
-     * @var string @ORM\Column(name="country", type="text", nullable=true)
-     *      @Assert\Country(groups={"country"})
+     * @var string
      */
     protected $country;
 
     /**
      *
-     * @var string @ORM\Column(name="phone", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"phone"})
+     * @var string
      */
     protected $phone;
 
     /**
      *
-     * @var string @ORM\Column(name="mobile", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"mobile"})
+     * @var string
      */
     protected $mobile;
 
     /**
      *
-     * @var string @ORM\Column(name="fax", type="text", nullable=true)
-     *      @ExtraAssert\Phone(groups={"fax"})
+     * @var string
      */
     protected $fax;
 
     /**
      *
-     * @var string @ORM\Column(name="email", type="text", nullable=true)
-     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
+     * @var string
      */
     protected $email;
 
     /**
      *
-     * @var string @ORM\Column(name="others", type="text", nullable=true)
+     * @var string
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -136,7 +116,7 @@ class Address
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -516,5 +496,6 @@ class Address
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

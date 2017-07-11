@@ -1,16 +1,10 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * OnlineInvoiceDocument
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_online_invoice_docs")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineInvoiceDocumentRepository")
- *         @ORM\HasLifecycleCallbacks
  */
 class OnlineInvoiceDocument
 {
@@ -29,69 +23,61 @@ class OnlineInvoiceDocument
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var OnlineInvoice @ORM\ManyToOne(targetEntity="OnlineInvoice", inversedBy="docs", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
-     *      })
+     * @var OnlineInvoice
      */
     protected $invoice;
 
     /**
      *
-     * @var string @ORM\Column(name="filename", type="text", nullable=false)
-     *      @Assert\File(maxSize="20480k", groups={"fileName"})
+     * @var string
      */
     protected $fileName;
 
     /**
      *
-     * @var integer @ORM\Column(name="filesize", type="bigint", nullable=false)
+     * @var integer
      */
     protected $size;
 
     /**
      *
-     * @var string @ORM\Column(name="filemimetype", type="text", nullable=false)
+     * @var string
      */
     protected $mimeType;
 
     /**
      *
-     * @var string @ORM\Column(name="filemd5", type="text", nullable=false)
+     * @var string
      */
     protected $md5;
 
     /**
      *
-     * @var string @ORM\Column(name="fileoname", type="text", nullable=false)
+     * @var string
      */
     protected $originalName;
 
     /**
      *
-     * @var integer @ORM\Column(name="visible", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceVisibleCallback", groups={"visible"})
+     * @var integer
      */
     protected $visible;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -108,7 +94,7 @@ class OnlineInvoiceDocument
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -363,5 +349,6 @@ class OnlineInvoiceDocument
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

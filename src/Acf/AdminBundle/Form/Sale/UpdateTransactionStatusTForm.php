@@ -25,7 +25,6 @@ class UpdateTransactionStatusTForm extends AbstractType
     {
         $builder->add('transactionStatus', ChoiceType::class, array(
             'label' => 'Sale.transactionStatus.label',
-            'choices_as_values' => true,
             'choices' => Sale::choiceTransactionStatus(),
             'expanded' => true,
             'attr' => array(

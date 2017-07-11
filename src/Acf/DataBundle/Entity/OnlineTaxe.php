@@ -1,18 +1,10 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * OnlineTaxe
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_online_taxes")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineTaxeRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"label"}, errorPath="label", groups={"label"})
  */
 class OnlineTaxe
 {
@@ -43,56 +35,49 @@ class OnlineTaxe
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="tx_label", type="text", nullable=false, unique=true)
-     *      @Assert\Length(min = "2", max = "100", groups={"label"})
+     * @var string
      */
     protected $label;
 
     /**
      *
-     * @var float @ORM\Column(name="tx_val", type="float", nullable=false)
-     *      @Assert\NotNull(groups={"value"})
+     * @var float
      */
     protected $value;
 
     /**
      *
-     * @var integer @ORM\Column(name="tx_type", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceTypeCallback", groups={"type"})
+     * @var integer
      */
     protected $type;
 
     /**
      *
-     * @var integer @ORM\Column(name="tx_actif", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceVisibleCallback", groups={"visible"})
+     * @var integer
      */
     protected $visible;
 
     /**
      *
-     * @var integer @ORM\Column(name="tx_priority", type="integer", nullable=false)
+     * @var integer
      */
     protected $priority;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -319,5 +304,6 @@ class OnlineTaxe
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

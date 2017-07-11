@@ -24,7 +24,6 @@ class UpdateVatInfoTForm extends AbstractType
     {
         $builder->add('vatInfo', ChoiceType::class, array(
             'label' => 'Sale.vatInfo.label',
-            'choices_as_values' => true,
             'choices' => Sale::choiceVatInfo(),
             'attr' => array(
                 'choice_label_trans' => true

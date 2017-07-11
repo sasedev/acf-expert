@@ -24,7 +24,6 @@ class UpdateDirectionTForm extends AbstractType
     {
         $builder->add('direction', ChoiceType::class, array(
             'label' => 'Lang.direction.label',
-            'choices_as_values' => true,
             'choices' => Lang::choiceDirection(),
             'attr' => array(
                 'choice_label_trans' => true

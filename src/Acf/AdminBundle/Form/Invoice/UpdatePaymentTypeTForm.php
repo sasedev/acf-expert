@@ -24,7 +24,6 @@ class UpdatePaymentTypeTForm extends AbstractType
     {
         $builder->add('paymentType', ChoiceType::class, array(
             'label' => 'Invoice.paymentType.label',
-            'choices_as_values' => true,
             'choices' => OnlineInvoice::choicePaymentType(),
             'attr' => array(
                 'choice_label_trans' => true

@@ -178,7 +178,6 @@ class NewTForm extends AbstractType
 
         $builder->add('hasexpert', ChoiceType::class, array(
             'label' => 'Devis.hasexpert.label',
-            'choices_as_values' => true,
             'choices' => array(
                 'Devis.hasexpert.1' => 1,
                 'Devis.hasexpert.2' => 2

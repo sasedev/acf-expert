@@ -29,7 +29,6 @@ class UpdateProfileTForm extends AbstractType
     {
         $builder->add('sexe', ChoiceType::class, array(
             'label' => 'User.sexe.label',
-            'choices_as_values' => true,
             'choices' => User::choiceSexe(),
             'attr' => array(
                 'choice_label_trans' => true

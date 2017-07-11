@@ -1,87 +1,77 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * GoodDoc
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_goodfiles")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\GoodDocRepository")
- *         @ORM\HasLifecycleCallbacks
  */
 class GoodDoc
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="title", type="text", nullable=false)
+     * @var string
      */
     protected $title;
 
     /**
      *
-     * @var string @ORM\Column(name="filename", type="text", nullable=false)
-     *      @Assert\File(maxSize="20480k", groups={"fileName"})
+     * @var string
      */
     protected $fileName;
 
     /**
      *
-     * @var integer @ORM\Column(name="filesize", type="bigint", nullable=false)
+     * @var integer
      */
     protected $size;
 
     /**
      *
-     * @var string @ORM\Column(name="filemimetype", type="text", nullable=false)
+     * @var string
      */
     protected $mimeType;
 
     /**
      *
-     * @var string @ORM\Column(name="filemd5", type="text", nullable=false)
+     * @var string
      */
     protected $md5;
 
     /**
      *
-     * @var string @ORM\Column(name="fileoname", type="text", nullable=false)
+     * @var string
      */
     protected $originalName;
 
     /**
      *
-     * @var string @ORM\Column(name="filedesc", type="text", nullable=true)
+     * @var string
      */
     protected $description;
 
     /**
      *
-     * @var integer @ORM\Column(name="filedls", type="bigint", nullable=false)
+     * @var integer
      */
     protected $nbrDownloads;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -98,7 +88,7 @@ class GoodDoc
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -355,5 +345,6 @@ class GoodDoc
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

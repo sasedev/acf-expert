@@ -1,20 +1,13 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MonthlyBalance
- * @ORM\Table(name="acf_company_mbalances")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\MonthlyBalanceRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="mbalancetype", type="string")
- * @ORM\DiscriminatorMap({"1" = "MBSale", "2" = "MBPurchase"})
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 abstract class MonthlyBalance
 {
@@ -33,80 +26,61 @@ abstract class MonthlyBalance
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="monthlyBalances", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     *      })
+     * @var Company
      */
     protected $company;
 
     /**
      *
-     * @var string @ORM\Column(name="ref", type="text", nullable=false)
+     * @var string
      */
     protected $ref;
 
     /**
      *
-     * @var integer @ORM\Column(name="year", type="integer", nullable=false)
-     *      @Assert\GreaterThan(value="0", groups={"year"})
-     *      @Assert\LessThan(value="3000", groups={"year"})
+     * @var integer
      */
     protected $year;
 
     /**
      *
-     * @var integer @ORM\Column(name="month", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceMonthCallback", groups={"physicaltype"})
+     * @var integer
      */
     protected $month;
 
     /**
      *
-     * @var integer @ORM\Column(name="cnt", type="bigint", nullable=false)
-     *      @Assert\GreaterThan(value="0", groups={"count"})
+     * @var integer
      */
     protected $count;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="Transaction", mappedBy="monthlyBalance", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"number" = "ASC"})
+     * @var Collection
      */
     protected $transactions;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="monthlyBalances", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_mbalance_docs",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="mbalance_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $docs;
 
@@ -124,7 +98,7 @@ abstract class MonthlyBalance
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {

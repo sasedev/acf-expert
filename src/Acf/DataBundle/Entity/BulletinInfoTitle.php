@@ -1,62 +1,50 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BulletinInfoTitle
- * @ORM\Table(name="acf_bi_titles")
- * @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\BulletinInfoTitleRepository")
- * @ORM\HasLifecycleCallbacks
+ *
+ * @author sasedev <seif.salah@gmail.com>
  */
 class BulletinInfoTitle
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var BulletinInfo @ORM\ManyToOne(targetEntity="BulletinInfo", inversedBy="titles", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="bi_id", referencedColumnName="id")
-     *      })
+     * @var BulletinInfo
      */
     protected $bulletinInfo;
 
     /**
      *
-     * @var string @ORM\Column(name="bt_content", type="text", nullable=false)
-     *      @Assert\NotNull(groups={"title"})
+     * @var string
      */
     protected $title;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="BulletinInfoContent", mappedBy="bulletinInfoTitle", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"title" = "ASC"})
+     * @var Collection
      */
     protected $contents;
 
@@ -72,7 +60,7 @@ class BulletinInfoTitle
     /**
      * Get $id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -232,5 +220,6 @@ class BulletinInfoTitle
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

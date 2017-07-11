@@ -75,8 +75,7 @@ class NewTForm extends AbstractType
     {
         return array(
             'validation_groups' => array(
-                'Default',
-                'admCreate'
+                'name'
             )
         );
     }

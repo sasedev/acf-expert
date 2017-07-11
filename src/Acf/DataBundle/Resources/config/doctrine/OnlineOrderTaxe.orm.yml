@@ -1,0 +1,80 @@
+Acf\DataBundle\Entity\OnlineOrderTaxe:
+    type: entity
+    table: acf_online_order_taxes
+    repositoryClass: Acf\DataBundle\Repository\OnlineOrderTaxeRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        label:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: tx_label
+        value:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: tx_val
+        type:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: tx_type
+        priority:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: tx_priority
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        order:
+            targetEntity: Acf\DataBundle\Entity\OnlineOrder
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: taxes
+            joinColumns:
+                ord_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

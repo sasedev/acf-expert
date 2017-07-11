@@ -24,7 +24,6 @@ class UpdateVisibleTForm extends AbstractType
     {
         $builder->add('visible', ChoiceType::class, array(
             'label' => 'Taxe.visible.label',
-            'choices_as_values' => true,
             'choices' => OnlineTaxe::choiceVisible(),
             'attr' => array(
                 'choice_label_trans' => true

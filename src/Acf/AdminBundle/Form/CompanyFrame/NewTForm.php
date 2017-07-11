@@ -105,7 +105,6 @@ class NewTForm extends AbstractType
 
         $builder->add('sexe', ChoiceType::class, array(
             'label' => 'CompanyFrame.sexe.label',
-            'choices_as_values' => true,
             'choices' => CompanyFrame::choiceSexe(),
             'attr' => array(
                 'choice_label_trans' => true
@@ -211,9 +210,12 @@ class NewTForm extends AbstractType
     {
         return array(
             'validation_groups' => array(
-                'sexe',
-                'phone',
+                'streetNum',
+                'town',
+                'zipCode',
+                'country',
                 'email',
+                'phone',
                 'mobile'
             ),
             'company' => null,

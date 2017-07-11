@@ -1,0 +1,96 @@
+Acf\DataBundle\Entity\OnlineProduct:
+    type: entity
+    table: acf_online_products
+    repositoryClass: Acf\DataBundle\Repository\OnlineProductRepository
+    id:
+        id:
+            type: guid
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: UUID
+    fields:
+        label:
+            type: text
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+            column: prd_label
+        title:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: prd_title
+        description:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: prd_description
+        price:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: prd_price_ht
+        vat:
+            type: float
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: prd_vat
+        lockout:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: prd_lockout
+        dtCrea:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: created_at
+        dtUpdate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    oneToMany:
+        orders:
+            targetEntity: Acf\DataBundle\Entity\OnlineOrderProduct
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: product
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                dtCrea: ASC
+    lifecycleCallbacks: {  }

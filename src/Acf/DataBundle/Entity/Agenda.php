@@ -1,8 +1,6 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Acf\DataBundle\Model\FCEventClass;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,78 +8,61 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_agenda_events")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\AgendaRepository")
- *         @ORM\HasLifecycleCallbacks
  */
 class Agenda extends FCEventClass
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="events", cascade={"persist"})
-     *      @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      })
+     * @var User
      */
     protected $user;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="evt_start", type="datetimetz", nullable=false)
+     * @var \DateTime
      */
     protected $dtStart;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="evt_end", type="datetimetz", nullable=false)
+     * @var \DateTime
      */
     protected $dtEnd;
 
     /**
      *
-     * @var string @ORM\Column(name="evt_title", type="text", nullable=true)
+     * @var string
      */
     protected $title;
 
     /**
      *
-     * @var string @ORM\Column(name="evt_comments", type="text", nullable=true)
+     * @var string
      */
     protected $comment;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection @ORM\ManyToMany(targetEntity="User", inversedBy="sharedEvents", cascade={"persist"})
-     *      @ORM\JoinTable(name="acf_agenda_shares",
-     *      joinColumns={
-     *      @ORM\JoinColumn(name="evt_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *      }
-     *      )
+     * @var Collection
      */
     protected $users;
 
@@ -97,7 +78,7 @@ class Agenda extends FCEventClass
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -246,7 +227,7 @@ class Agenda extends FCEventClass
 
     /**
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDtUpdate()
     {
@@ -338,5 +319,6 @@ class Agenda extends FCEventClass
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }

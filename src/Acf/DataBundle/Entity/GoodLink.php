@@ -1,59 +1,47 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
+ * GoodLink
  *
  * @author sasedev <seif.salah@gmail.com>
- *         @ORM\Table(name="acf_goodlinks")
- *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\GoodLinkRepository")
- *         @ORM\HasLifecycleCallbacks
- *         @UniqueEntity(fields={"url"}, errorPath="url", groups={"url"})
  */
 class GoodLink
 {
 
     /**
      *
-     * @var guid @ORM\Column(name="id", type="guid", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="UUID")
+     * @var string
      */
     protected $id;
 
     /**
      *
-     * @var string @ORM\Column(name="title", type="text", nullable=false)
+     * @var string
      */
     protected $title;
 
     /**
      *
-     * @var string @ORM\Column(name="url", type="text", nullable=false)
-     *      @Assert\Url(checkDNS=true, groups={"url"})
+     * @var string
      */
     protected $url;
 
     /**
      *
-     * @var integer @ORM\Column(name="nbrclicks", type="bigint", nullable=false)
+     * @var integer
      */
     protected $nbrClicks;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
+     * @var \DateTime
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
-     *      @Gedmo\Timestampable(on="update")
+     * @var \DateTime
      */
     protected $dtUpdate;
 
@@ -70,7 +58,7 @@ class GoodLink
     /**
      * Get id
      *
-     * @return guid
+     * @return string
      */
     public function getId()
     {
@@ -103,7 +91,7 @@ class GoodLink
 
     /**
      *
-     * @return the string
+     * @return string
      */
     public function getUrl()
     {
@@ -198,5 +186,6 @@ class GoodLink
     /**
      */
     public function __clone()
-    {}
+    {
+    }
 }
