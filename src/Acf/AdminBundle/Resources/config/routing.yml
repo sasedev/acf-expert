@@ -1691,6 +1691,10 @@ _admin_invoice_list:
     path:     /invoices
     defaults: { _controller: "AcfAdminBundle:Invoice:list" }
 
+_admin_invoice_excel:
+    path:     /invoices/excel
+    defaults: { _controller: "AcfAdminBundle:Invoice:excel" }
+
 _admin_invoice_delete:
     path:     /invoice/delete/{uid}
     defaults: { _controller: "AcfAdminBundle:Invoice:delete" }

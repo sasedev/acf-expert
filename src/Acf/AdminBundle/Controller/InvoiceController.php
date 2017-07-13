@@ -52,6 +52,136 @@ class InvoiceController extends BaseController
 
     /**
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function excelAction()
+    {
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            return $this->redirect($this->generateUrl('_admin_homepage'));
+        }
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('_admin_user_list');
+        }
+
+        try {
+            $em = $this->getEntityManager();
+            $invoices = $em->getRepository('AcfDataBundle:OnlineInvoice')->getAll();
+            $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.user.list'))->setSubject($this->translate('pagetitle.user.list'))->setDescription($this->translate('pagetitle.user.list'))->setKeywords($this->translate('pagetitle.user.list'))->setCategory('ACEF Users');
+
+            $phpExcelObject->setActiveSheetIndex(0);
+
+            $workSheet = $phpExcelObject->getActiveSheet();
+            $workSheet->setTitle($this->translate('pagetitle.invoice.list'));
+
+            $workSheet->setCellValue('A1', $this->translate('Invoice.dtCrea.label'));
+            $workSheet->getStyle('A1')->getFont()->setBold(true);
+            $workSheet->setCellValue('B1', $this->translate('Invoice.user.label'));
+            $workSheet->getStyle('B1')->getFont()->setBold(true);
+            $workSheet->setCellValue('C1', $this->translate('Invoice.ref.label'));
+            $workSheet->getStyle('C1')->getFont()->setBold(true);
+            $workSheet->setCellValue('D1', $this->translate('Invoice.status.label'));
+            $workSheet->getStyle('D1')->getFont()->setBold(true);
+            $workSheet->setCellValue('E1', $this->translate('Invoice.orderTo.label'));
+            $workSheet->getStyle('E1')->getFont()->setBold(true);
+            $workSheet->setCellValue('F1', $this->translate('Invoice.val.label'));
+            $workSheet->getStyle('F1')->getFont()->setBold(true);
+            $workSheet->setCellValue('G1', $this->translate('Invoice.paymentType.label'));
+            $workSheet->getStyle('G1')->getFont()->setBold(true);
+            $workSheet->setCellValue('H1', $this->translate('Invoice.renew.label'));
+            $workSheet->getStyle('H1')->getFont()->setBold(true);
+            $workSheet->setCellValue('I1', $this->translate('Invoice.order.label'));
+            $workSheet->getStyle('I1')->getFont()->setBold(true);
+
+            $workSheet->getStyle('A1:I1')->applyFromArray(array(
+                'fill' => array(
+                    'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array(
+                        'rgb' => '94ccdf'
+                    )
+                )
+            ));
+
+            $i = 1;
+
+            foreach ($invoices as $invoice) {
+                $i++;
+                $workSheet->setCellValue('A' . $i, \PHPExcel_Shared_Date::PHPToExcel($invoice->getDtCrea()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $workSheet->getStyle('A' . $i)->getNumberFormat()->setFormatCode('dd/mm/yyyy hh:MM:ss');
+                $workSheet->setCellValue('B' . $i, $invoice->getUser()->getFullname(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('C' . $i, $invoice->getRef(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('D' . $i, $this->translate('Invoice.status.' . $invoice->getStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('E' . $i, $invoice->getOrderTo(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('F' . $i, $invoice->getVal(), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $workSheet->setCellValue('G' . $i, $this->translate('Invoice.paymentType.' . $invoice->getPaymentType()), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('H' . $i, $this->translate('Invoice.renew.' . $invoice->getRenew()), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                if (null != $invoice->getOrder()) {
+                    $workSheet->setCellValue('I' . $i, $invoice->getOrder()->getRef(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                }
+
+                if ($i % 2 == 1) {
+                    $workSheet->getStyle('A' . $i . ':I' . $i)->applyFromArray(array(
+                        'fill' => array(
+                            'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                            'color' => array(
+                                'rgb' => 'd8f1f5'
+                            )
+                        )
+                    ));
+                } else {
+                    $workSheet->getStyle('A' . $i . ':I' . $i)->applyFromArray(array(
+                        'fill' => array(
+                            'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                            'color' => array(
+                                'rgb' => 'bfbfbf'
+                            )
+                        )
+                    ));
+                }
+            }
+            // *
+            $workSheet->getColumnDimension('A')->setAutoSize(true);
+            $workSheet->getColumnDimension('B')->setAutoSize(true);
+            $workSheet->getColumnDimension('C')->setAutoSize(true);
+            $workSheet->getColumnDimension('D')->setAutoSize(true);
+            $workSheet->getColumnDimension('E')->setAutoSize(true);
+            $workSheet->getColumnDimension('F')->setAutoSize(true);
+            $workSheet->getColumnDimension('G')->setAutoSize(true);
+            $workSheet->getColumnDimension('H')->setAutoSize(true);
+            $workSheet->getColumnDimension('I')->setAutoSize(true);
+
+            $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+            $response = $this->get('phpexcel')->createStreamedResponse($writer);
+
+            $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
+
+            $filename = $this->normalize($this->translate('pagetitle.invoice.list'));
+            $filename = str_ireplace('"', '|', $filename);
+            $filename = str_ireplace(' ', '_', $filename);
+
+            $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename . '.xlsx');
+            $response->headers->set('Pragma', 'public');
+            $response->headers->set('Cache-Control', 'maxage=1');
+
+            return $response;
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+        }
+
+        return $this->redirect($urlFrom);
+
+        $this->gvars['smenu_active'] = 'list';
+        $this->gvars['pagetitle'] = $this->translate('pagetitle.user.list');
+        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.user.list.txt');
+
+        return $this->renderResponse('AcfAdminBundle:User:list.html.twig', $this->gvars);
+    }
+
+    /**
+     *
      * @param string $uid
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
