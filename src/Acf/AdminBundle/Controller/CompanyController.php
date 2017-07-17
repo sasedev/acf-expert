@@ -1130,10 +1130,10 @@ class CompanyController extends BaseController
                 $this->gvars['mbpurchaseYears'] = $mbpurchaseYears;
                 $this->gvars['mpayeYears'] = $mpayeYears;
 
-                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 29);
                 $this->getSession()->remove('tabActive');
 
-                $this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
+                $this->gvars['stabActive'] = $this->getSession()->get('stabActive', 2);
                 $this->getSession()->remove('stabActive');
 
                 $customersConstStr = $em->getRepository('AcfDataBundle:ConstantStr')->findOneBy(array(
@@ -1450,10 +1450,10 @@ class CompanyController extends BaseController
                     'company' => $company
                 ));
 
-                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 29);
                 $this->getSession()->remove('tabActive');
 
-                $this->gvars['stabActive'] = $this->getSession()->get('stabActive', 1);
+                $this->gvars['stabActive'] = $this->getSession()->get('stabActive', 2);
                 $this->getSession()->remove('stabActive');
 
                 $request = $this->getRequest();
