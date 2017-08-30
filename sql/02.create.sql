@@ -1119,4 +1119,32 @@ CREATE TABLE "acf_online_invoice_docs" (
 
 
 
+CREATE TABLE "acf_liassefolders" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "title"                                                             TEXT NOT NULL,
+    "pageurl_full"                                                      TEXT NULL,
+    "parent_id"                                                         UUID NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_acf_liassefolders" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_acf_liassefolders_parent" FOREIGN KEY ("parent_id") REFERENCES "acf_liassefolders" ("id") ON UPDATE CASCADE ON DELETE SET NULL
+);
+
+CREATE TABLE "acf_liassefiles" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "title"                                                             TEXT NOT NULL,
+    "filename"                                                          TEXT NOT NULL,
+    "filesize"                                                          INT8 NOT NULL DEFAULT 0,
+    "filemimetype"                                                      TEXT NOT NULL,
+    "fileoname"                                                         TEXT NOT NULL,
+    "filemd5"                                                           TEXT NOT NULL,
+    "filedesc"                                                          TEXT NULL,
+    "filedls"                                                           INT8 NOT NULL DEFAULT 0,
+    "liassef_id"                                                            UUID NOT NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_acf_liassefiles" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_acf_liassefolders_liassef" FOREIGN KEY ("liassef_id") REFERENCES "acf_liassefolders" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 

@@ -2522,3 +2522,83 @@ Docgroupperso.tab.back: "Retour aux Documents Personnels"
 Docgroupsyst.tab.back: "Retour aux Documents Sytème"
 Docgroupaudit.tab.back: "Retour aux Documents Audit"
 MPaye.tab.back: "Retour aux Payes"
+
+
+# LiasseFolder
+menu.admin.liasseFolder: Dossier Liasse
+breadcrumb.liasseFolder.list: Liste des Dossiers Liasse
+breadcrumb.liasseFolder.add: Ajouter Dossier Liasse
+breadcrumb.liasseFolder.edit: Dossier Liasse <b>%liasseFolder%</b>
+
+pagetitle.liasseFolder.list: Liste des Dossiers Liasse
+pagetitle.liasseFolder.list.txt: Liste des Dossiers Liasse
+pagetitle.liasseFolder.add: Ajouter Dossier Liasse
+pagetitle.liasseFolder.add.txt: Ajouter Dossier Liasse
+pagetitle.liasseFolder.edit: Edition Dossier Liasse <b>%liasseFolder%</b>
+pagetitle.liasseFolder.edit.txt: Edition Dossier Liasse "%liasseFolder%"
+
+LiasseFolder.tab.overview: Détails
+LiasseFolder.tab.edit: Edition
+LiasseFolder.tab.docs: Documents
+
+LiasseFolder.tlabel.list: Liste des Dossiers Liasse
+LiasseFolder.tlabel.add: Ajouter nouveau Dossier Liasse
+LiasseFolder.tlabel.overview: Aperçu des détails du Dossier Liasse
+LiasseFolder.tlabel.editTitle: Modification du titre du Dossier Liasse
+LiasseFolder.tlabel.editParent: Modification du parent du Dossier Liasse
+LiasseFolder.tlabel.docs.add: Ajouter un Nouveau Document
+LiasseFolder.tlabel.docs.list: Liste des Documents
+
+LiasseFolder.empty: Aucun Dossier Liasse trouvé dans la base de donnée
+
+LiasseFolder.add.success: Succès de l'ajout du Dossier Liasse <b>%liasseFolder%</b>
+LiasseFolder.add.failure: Echec de l'ajout du Dossier Liasse
+LiasseFolder.download.notfound: Echec de téléchargement du Dossier Liasse
+LiasseFolder.delete.confirm.title: Demande de Confirmation
+LiasseFolder.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Dossier Liasse ?<br/> Cette action est irreversible!
+LiasseFolder.delete.notfound: Dossier Liasse inconnu
+LiasseFolder.delete.success: Succès de la suppression du Dossier Liasse <b>%liasseFolder%</b>
+LiasseFolder.delete.failure: Echec de la suppression du Dossier Liasse <b>%liasseFolder%</b>
+LiasseFolder.edit.notfound: Dossier Liasse inconnu
+LiasseFolder.edit.success: Succès de la modification du Dossier Liasse <b>%liasseFolder%</b>
+LiasseFolder.edit.failure: Echec de la modification du Dossier Liasse <b>%liasseFolder%</b>
+
+# LiasseDoc
+menu.admin.liasseDoc: Document Liasse
+breadcrumb.liasseDoc.list: Liste des Documents Liasse
+breadcrumb.liasseDoc.add: Ajouter Document Liasse
+breadcrumb.liasseDoc.edit: Document Liasse <b>%liasseDoc%</b>
+
+pagetitle.liasseDoc.list: Liste des Documents Liasse
+pagetitle.liasseDoc.list.txt: Liste des Documents Liasse
+pagetitle.liasseDoc.add: Ajouter Document Liasses
+pagetitle.liasseDoc.add.txt: Ajouter Document Liasse
+pagetitle.liasseDoc.edit: Edition Document Liasse <b>%liasseDoc%</b>
+pagetitle.liasseDoc.edit.txt: Edition Document Liasse "%liasseDoc%"
+
+LiasseDoc.tab.overview: Détails
+LiasseDoc.tab.edit: Edition
+
+LiasseDoc.tlabel.list: Liste des Documents Liasse
+LiasseDoc.tlabel.add: Ajouter nouveau Document Liasse
+LiasseDoc.tlabel.overview: Aperçu des détails du Document Liasse
+LiasseDoc.tlabel.editContent: Modification du Contenu du Document Liasse
+LiasseDoc.tlabel.editDescription: Modification de la Description du Document Liasse
+LiasseDoc.tlabel.editOriginalName: Modification du nom du Document Liasse
+LiasseDoc.tlabel.editTitle: Modification du titre du Document Liasse
+
+LiasseDoc.empty: Aucun Document Liasse trouvé dans la base de donnée
+
+LiasseDoc.add.success: Succès de l'ajout du Document Liasse <b>%liasseDoc%</b>
+LiasseDoc.add.failure: Echec de l'ajout du Document Liasse
+LiasseDoc.download.notfound: Echec de téléchargement du Document Liasse
+LiasseDoc.delete.confirm.title: Demande de Confirmation
+LiasseDoc.delete.confirm.txt: Etes-vous sûre de vouloir supprimer ce Document Liasse ?<br/> Cette action est irreversible!
+LiasseDoc.delete.notfound: Document Liasse inconnu
+LiasseDoc.delete.success: Succès de la suppression du Document Liasse <b>%liasseDoc%</b>
+LiasseDoc.delete.failure: Echec de la suppression du Document Liasse <b>%liasseDoc%</b>
+LiasseDoc.edit.notfound: Document Liasse inconnu
+LiasseDoc.edit.success: Succès de la modification du Document Liasse <b>%liasseDoc%</b>
+LiasseDoc.edit.failure: Echec de la modification du Document Liasse <b>%liasseDoc%</b>
+
+

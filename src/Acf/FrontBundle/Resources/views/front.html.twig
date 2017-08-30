@@ -252,6 +252,18 @@
 									{{ 'menu.add'|trans }}</a></li>
 						</ul>
 					</li>
+                    <li class="treeview{% if menu_active=='liasseDoc'%} active{% endif %}">
+                        <a href="#"> {{ faIco('exclamation-triangle') }} <span>{{ 'menu.admin.liasseFolder'|trans }}</span>
+                            <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li {% if smenu_active=='list'%} class="active" {% endif %}><a
+                                href="{{ path('_admin_liasseFolder_list') }}">{{ faIco('angle-double-right') }}
+                                    {{ 'menu.list'|trans }}</a></li>
+                            <li {% if smenu_active=='add'%} class="active" {% endif %}><a
+                                href="{{ path('_admin_liasseFolder_addGet') }}">{{ faIco('angle-double-right') }}
+                                    {{ 'menu.add'|trans }}</a></li>
+                        </ul>
+                    </li>
 					<li class="treeview{% if menu_active=='user'%} active{% endif %}">
 						<a href="#"> {{ faIco('users') }} <span>{{ 'menu.admin.user'|trans }}</span>
 							<i class="fa fa-angle-left pull-right"></i></a>
@@ -413,6 +425,15 @@
 				</ul>
 				<br>
 				{% endif %}
+                {% if is_granted('ROLE_CLIENT4')%}
+                <ul class="sidebar-menu" id="side-menu6">
+                    <li {% if menu_active=='liassehome'%} class="active" {% endif %}>
+                        <a href="{{ path('_liasse_homepage') }}"> {{ faIco('dashboard') }}
+                            <span>{{ 'menu.liasse'|trans }}</span></a>
+                    </li>
+                </ul>
+                <br>
+                {% endif %}
 				<br>
 			</section>
 			<!-- /.sidebar -->

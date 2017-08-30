@@ -1,0 +1,153 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$("#LiasseDocUpdateContentForm_doc").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Documents", browseIcon: '{{faIco('folder-open')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+
+
+
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_liasseFolder_list') }}">{{faIco('exclamation-triangle')}} &nbsp; {{'breadcrumb.liasseFolder.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('_admin_liasseFolder_editGet', {'uid': liasseDoc.folder.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.liasseFolder.edit'|trans({'%liasseFolder%': liasseDoc.folder.title})|raw}}</a></li>
+	<li class="active"><a href="{{ path('_admin_liasseDoc_editGet', {'uid': liasseDoc.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.liasseDoc.edit'|trans({'%liasseDoc%': liasseDoc.title})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('_admin_liasseFolder_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('_admin_liasseDoc_download',{'uid':liasseDoc.id})}}" class="btn btn-success">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'LiasseDoc.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'LiasseDoc.tab.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'LiasseDoc.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'LiasseDoc.folder'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('_admin_liasseFolder_editGet', {'uid': liasseDoc.folder.id}) }}">{{liasseDoc.folder.title}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'LiasseDoc.title'|trans|raw}} :</div>
+								<div class="col-lg-9">{{liasseDoc.title}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'LiasseDoc.originalName'|trans|raw}} :</div>
+								<div class="col-lg-9">{{liasseDoc.originalName}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'LiasseDoc.description'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if liasseDoc.description is not empty%}{{liasseDoc.description|raw}}{%else%}{{bsLabelWarning('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'LiasseDoc.size'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if liasseDoc.size<1024%}
+									{{liasseDoc.size}} o
+								{%elseif liasseDoc.size<(1024*1024)%}
+									{{'%.2f'|format(liasseDoc.size/1024)}} Ko
+								{%elseif liasseDoc.size<(1024*1024*1024)%}
+									{{'%.2f'|format(liasseDoc.size/1024/1024)}} Mo
+								{%else%}
+									{{'%.2f'|format(liasseDoc.size/1024/1024/1024)}} Go
+								{% endif %}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'LiasseDoc.mimeType'|trans|raw}} :</div>
+								<div class="col-lg-9">{{liasseDoc.mimeType}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'LiasseDoc.md5'|trans|raw}} :</div>
+								<div class="col-lg-9">{{liasseDoc.md5}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'LiasseDoc.nbrDownloads'|trans|raw}} :</div>
+								<div class="col-lg-9">{{liasseDoc.nbrDownloads}}&nbsp;<br><br><a href="{{ path('_admin_liasseDoc_sendmail', {'uid': liasseDoc.id}) }}" class="btn-primary btn">{{glyphIco('envelope')}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+
+								<div class="col-lg-3 text-right">{{'LiasseDoc.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{liasseDoc.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{liasseDoc.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'LiasseDoc.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{liasseDoc.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{liasseDoc.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'LiasseDoc.tlabel.editDescription'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(LiasseDocUpdateDescriptionForm, {'method':'POST', 'action': path('_admin_liasseDoc_editPost', {'uid': liasseDoc.id}), 'style': 'horizontal'})}}
+							{{form_row(LiasseDocUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(LiasseDocUpdateDescriptionForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'LiasseDoc.tlabel.editTitle'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(LiasseDocUpdateTitleForm, {'method':'POST', 'action': path('_admin_liasseDoc_editPost', {'uid': liasseDoc.id}), 'style': 'horizontal'})}}
+							{{form_row(LiasseDocUpdateTitleForm.title, {'label_col': 3, 'widget_col': 5})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(LiasseDocUpdateTitleForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'LiasseDoc.tlabel.editOriginalName'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(LiasseDocUpdateOriginalNameForm, {'method':'POST', 'action': path('_admin_liasseDoc_editPost', {'uid': liasseDoc.id}), 'style': 'horizontal'})}}
+							{{form_row(LiasseDocUpdateOriginalNameForm.originalName, {'label_col': 3, 'widget_col': 5})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(LiasseDocUpdateOriginalNameForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'LiasseDoc.tlabel.editContent'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(LiasseDocUpdateContentForm, {'method':'POST', 'action': path('_admin_liasseDoc_editPost', {'uid': liasseDoc.id}), 'style': 'horizontal'})}}
+							{{form_row(LiasseDocUpdateContentForm.doc, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(LiasseDocUpdateContentForm)}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

@@ -1,0 +1,42 @@
+<div class="box-body table-responsive">
+    <div id="accordionLiasseFolder{{ parent.id }}" class="box-group">
+        {% for liasseFolder in parent.childs %}
+        <div class="panel box box-warning">
+            <div class="box-header">
+                <h4 class="box-title"><a href="#collapse{{ liasseFolder.id }}" data-parent="#accordionLiasseFolder{{ parent.id }}" data-toggle="collapse">{{ liasseFolder.title }}</a></h4>
+            </div>
+            <div id="collapse{{ liasseFolder.id }}" class="panel-collapse collapse">
+                {% if liasseFolder.docs|length != 0 %}
+                <table class="table table-bordered table-hover liasseDocList">
+                    <thead>
+                        <tr>
+                            <th>{{ 'LiasseDoc.title.label'|trans|raw }}</th>
+                            <th>{{ 'LiasseDoc.dtCrea'|trans|raw }}:</th>
+                            <th>{{ 'action'|trans|raw }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for liasseDoc in liasseFolder.docs %}
+                        <tr>
+                            <td>{{ liasseDoc.title }}</td>
+                            <td>{{ liasseDoc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="{{path('_liasse_liasseDoc_download',{'uid':liasseDoc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+                {% if liasseFolder.childs|length != 0 %}
+                {{ render(controller('AcfLiasseBundle:Default:childs', {parent: liasseFolder.id})) }}
+                {% endif %}
+                {% if liasseFolder.childs|length == 0 and liasseFolder.docs|length == 0%}
+                {{ 'liasse.LiasseDoc.empty'|trans|raw }}
+                            <br><br><br>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

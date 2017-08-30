@@ -1979,3 +1979,42 @@ InvoiceDocument.visible.choice.2: "Oui"
 InvoiceDocument.dtCrea.label: "Date d'ajout :"
 InvoiceDocument.dtUpdate.label: "Date de modification :"
 
+
+
+# LiasseFolder
+LiasseFolder.title: Titre
+LiasseFolder.parent: Parent
+LiasseFolder.childs: Enfants
+LiasseFolder.docs: Fichiers
+LiasseFolder.dtCrea: Date d'ajout
+LiasseFolder.dtUpdate: Date de modification
+
+LiasseFolder.title.label: "Titre :"
+LiasseFolder.parent.label: "Parent :"
+LiasseFolder.childs.label: "Enfant :"
+LiasseFolder.docs.label: "Fichiers :"
+
+# LiasseDoc
+LiasseDoc.fileName: Fichier
+LiasseDoc.size: Taille
+LiasseDoc.mimeType: MimeType
+LiasseDoc.md5: md5
+LiasseDoc.nbrDownloads: Nombre de Téléchargements
+LiasseDoc.originalName: Nom Original
+LiasseDoc.description: Description
+LiasseDoc.title: Titre
+LiasseDoc.dtCrea: Date d'ajout
+LiasseDoc.dtUpdate: Date de modification
+LiasseDoc.folder: Dossier
+
+LiasseDoc.fileName.label: "Fichier :"
+LiasseDoc.description.label: "Description :"
+LiasseDoc.originalName.label: "Nom du Fichier :"
+LiasseDoc.mimeType.label: "Type :"
+LiasseDoc.size.label: "Taille :"
+LiasseDoc.md5.label: "md5 :"
+LiasseDoc.nbrDownloads.label: "Nbr Téléchargements :"
+LiasseDoc.title.label: "Titre :"
+LiasseDoc.folder.label: "Dossier :"
+
+

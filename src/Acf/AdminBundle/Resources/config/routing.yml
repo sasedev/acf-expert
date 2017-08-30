@@ -1759,6 +1759,73 @@ _admin_invoice_doc_editPost:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+_admin_liasseFolder_list:
+    path:     /liasseFolder/list
+    defaults: { _controller: "AcfAdminBundle:LiasseFolder:list" }
+
+_admin_liasseFolder_addGet:
+    path:     /liasseFolder/add
+    defaults: { _controller: "AcfAdminBundle:LiasseFolder:addGet" }
+    methods: [GET]
+
+_admin_liasseFolder_addPost:
+    path:     /liasseFolder/add
+    defaults: { _controller: "AcfAdminBundle:LiasseFolder:addPost" }
+    methods: [POST]
+
+_admin_liasseFolder_delete:
+    path:     /liasseFolder/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:LiasseFolder:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_liasseFolder_editGet:
+    path:     /liasseFolder/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:LiasseFolder:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_liasseFolder_addDoc:
+    path:     /liasseFolder/addDoc/{uid}
+    defaults: { _controller: "AcfAdminBundle:LiasseFolder:addDoc" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_liasseFolder_editPost:
+    path:     /liasseFolder/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:LiasseFolder:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+_admin_liasseDoc_delete:
+    path:     /liasseDoc/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:LiasseDoc:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_liasseDoc_download:
+    path:     /liasseDoc/download/{uid}
+    defaults: { _controller: "AcfAdminBundle:LiasseDoc:download" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_liasseDoc_editGet:
+    path:     /liasseDoc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:LiasseDoc:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_liasseDoc_editPost:
+    path:     /liasseDoc/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:LiasseDoc:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
 
 

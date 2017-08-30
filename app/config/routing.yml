@@ -26,3 +26,8 @@ acf_payroll:
     resource: "@AcfPayrollBundle/Resources/config/routing.yml"
     prefix:   /ACEF-Payroll
 
+acf_liasse:
+    resource: "@AcfLiasseBundle/Resources/config/routing.yml"
+    prefix:   /ACEF-Liasse
+
+

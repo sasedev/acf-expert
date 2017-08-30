@@ -22,6 +22,10 @@
 									<li><a href="{{ path('_payroll_homepage') }}">{{ 'menu.top.client3'|trans }}</a>
 									</li>
 									{% endif %}
+                                    {% if is_granted('ROLE_CLIENT4') %}
+                                    <li><a href="{{ path('_liasse_homepage') }}">{{ 'menu.top.client4'|trans }}</a>
+                                    </li>
+                                    {% endif %}
 									<li class="divider"></li>
 									<li><a href="{{ path('_security_logout') }}">{{ 'menu.top.logout'|trans }}</a>
 									</li>

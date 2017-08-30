@@ -1,0 +1,10 @@
+menu.liasse: ACEF-Liasse
+breadcrumb.liasse: ACEF-Liasse
+
+
+pagetitle.liasse.list: 'Liasse Fiscale'
+pagetitle.liasse.list.txt: 'Liasse Fiscale'
+
+
+liasse.LiasseFolder.tlabel.list: Liasse Fiscale
+liasse.LiasseDoc.empty: Aucun Document trouvé dans la base de donnée

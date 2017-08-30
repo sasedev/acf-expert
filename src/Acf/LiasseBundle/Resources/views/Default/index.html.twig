@@ -1,0 +1,89 @@
+{% extends 'AcfFrontBundle::front.html.twig' %}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('.liasseDocList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10
+	});
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('_liasse_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.liasse'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% if liasseFolders|length != 0 %}
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">{{ 'liasse.LiasseFolder.tlabel.list'|trans|raw}}</h3>
+            </div>
+            <div class="box-body table-responsive">
+                <div id="accordionLiasseFolder" class="box-group">
+                    {% for liasseFolder in liasseFolders %}
+                    <div class="panel box box-warning">
+                        <div class="box-header">
+                            <h4 class="box-title"><a href="#collapse{{ liasseFolder.id }}" data-parent="#accordionLiasseFolder" data-toggle="collapse">{{ liasseFolder.title }}</a></h4>
+                        </div>
+                        <div id="collapse{{ liasseFolder.id }}" class="panel-collapse collapse">
+                            {% if liasseFolder.docs|length != 0 %}
+                            <table class="table table-bordered table-hover liasseDocList">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'LiasseDoc.title.label'|trans|raw }}</th>
+                                        <th>{{ 'LiasseDoc.dtCrea'|trans|raw }}:</th>
+                                        <th>{{ 'action'|trans|raw }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for liasseDoc in liasseFolder.docs %}
+                                    <tr>
+                                        <td>{{ liasseDoc.title }}</td>
+                                        <td>{{ liasseDoc.dtCrea|date('Y-m-d @ H:i:s') }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="{{path('_liasse_liasseDoc_download',{'uid':liasseDoc.id})}}">{{ glyphIco('download') }} {{ 'action.btnDownload'|trans }}</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+                            {% if liasseFolder.childs|length != 0 %}
+                            {{ render(controller('AcfLiasseBundle:Default:childs', {parent: liasseFolder.id})) }}
+                            {% endif %}
+                            {% if liasseFolder.childs|length == 0 and liasseFolder.docs|length == 0%}
+                            {{ 'liasse.LiasseDoc.empty'|trans|raw }}
+                            <br><br><br>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+	</div>
+</div>
+{%endblock content%}
