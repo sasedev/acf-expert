@@ -1763,16 +1763,6 @@ _admin_liasseFolder_list:
     path:     /liasseFolder/list
     defaults: { _controller: "AcfAdminBundle:LiasseFolder:list" }
 
-_admin_liasseFolder_addGet:
-    path:     /liasseFolder/add
-    defaults: { _controller: "AcfAdminBundle:LiasseFolder:addGet" }
-    methods: [GET]
-
-_admin_liasseFolder_addPost:
-    path:     /liasseFolder/add
-    defaults: { _controller: "AcfAdminBundle:LiasseFolder:addPost" }
-    methods: [POST]
-
 _admin_liasseFolder_delete:
     path:     /liasseFolder/delete/{uid}
     defaults: { _controller: "AcfAdminBundle:LiasseFolder:delete" }

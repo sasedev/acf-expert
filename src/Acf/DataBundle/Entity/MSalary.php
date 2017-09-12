@@ -1,275 +1,291 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * MSalary
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_msalaries")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\MSalaryRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class MSalary
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var MonthlyBalance
+     * @var MonthlyBalance @ORM\ManyToOne(targetEntity="MPaye", inversedBy="salaries", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="mpaye_id", referencedColumnName="id")
+     *      })
      */
     protected $paye;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ref", type="text", nullable=false)
+     *      @Assert\NotNull(groups={"matricule"})
      */
     protected $matricule;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nom", type="text", nullable=false)
+     *      @Assert\NotNull(groups={"nom"})
      */
     protected $nom;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="prenom", type="text", nullable=false)
+     *      @Assert\NotNull(groups={"prenom"})
      */
     protected $prenom;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="active", type="text", nullable=true)
      */
     protected $actif;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="fonction", type="text", nullable=true)
      */
     protected $fonction;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="regime", type="text", nullable=true)
      */
     protected $regime;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="dtstartcontrat", type="text", nullable=true)
      */
     protected $dtStartContrat;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="dtendcontrat", type="text", nullable=true)
      */
     protected $dtEndContrat;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="departement", type="text", nullable=true)
      */
     protected $departement;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="categorie", type="text", nullable=true)
      */
     protected $categorie;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="echelon", type="text", nullable=true)
      */
     protected $echelon;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="cin", type="text", nullable=true)
      */
     protected $cin;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="cnss", type="text", nullable=true)
      */
     protected $cnss;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="birthday", type="text", nullable=true)
      */
     protected $birthday;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="adresse", type="text", nullable=true)
      */
     protected $adresse;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="tel", type="text", nullable=true)
      */
     protected $tel;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mail", type="text", nullable=true)
      */
     protected $email;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="banque", type="text", nullable=true)
      */
     protected $banque;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="rib", type="text", nullable=true)
      */
     protected $rib;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="chefdefamille", type="text", nullable=true)
      */
     protected $familyChef;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="situationfamiliale", type="text", nullable=true)
      */
     protected $familySituation;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="enfanthandicap", type="text", nullable=true)
      */
     protected $handicap;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="enfantsansbourse", type="text", nullable=true)
      */
     protected $childWoBourse;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nbrjwork", type="text", nullable=true)
      */
     protected $nbrDaysWork;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nbrjabsence", type="text", nullable=true)
      */
     protected $nbrDaysAbs;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nbrjconge", type="text", nullable=true)
      */
     protected $nbrDaysFerry;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nbrh075sup", type="text", nullable=true)
      */
     protected $nbrH075Sup;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nbrh100sup", type="text", nullable=true)
      */
     protected $nbrH100Sup;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nbrjsup", type="text", nullable=true)
      */
     protected $nbrDSup;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="remboursement", type="text", nullable=true)
      */
     protected $remboursement;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="achatste", type="text", nullable=true)
      */
     protected $buysFromCompany;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="avancesalaire", type="text", nullable=true)
      */
     protected $salaryAdvance;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="salairebrut", type="text", nullable=true)
      */
     protected $salaryBrut;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="salairenet", type="text", nullable=true)
      */
     protected $salaryNet;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="avantagenature", type="text", nullable=true)
      */
     protected $advantageNature;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ticketresto", type="text", nullable=true)
      */
     protected $ticketResto;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ticketcadeau", type="text", nullable=true)
      */
     protected $ticketCadeau;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="assurancevie", type="text", nullable=true)
      */
     protected $lifeAssurance;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="comptecea", type="text", nullable=true)
      */
     protected $ceaAccount;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="remarques", type="text", nullable=true)
      */
     protected $others;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

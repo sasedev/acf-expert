@@ -1,83 +1,97 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * BiDoc
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_bifiles")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\BiDocRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class BiDoc
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var BiFolder
+     * @var BiFolder @ORM\ManyToOne(targetEntity="BiFolder", inversedBy="docs", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="bif_id", referencedColumnName="id")
+     *      })
      */
     protected $folder;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="title", type="text", nullable=false)
      */
     protected $title;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="filename", type="text", nullable=false)
+     *      @Assert\File(maxSize="20480k", groups={"fileName"})
      */
     protected $fileName;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="filesize", type="bigint", nullable=false)
      */
     protected $size;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="filemimetype", type="text", nullable=false)
      */
     protected $mimeType;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="filemd5", type="text", nullable=false)
      */
     protected $md5;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="fileoname", type="text", nullable=false)
      */
     protected $originalName;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="filedesc", type="text", nullable=true)
      */
     protected $description;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="filedls", type="bigint", nullable=false)
      */
     protected $nbrDownloads;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

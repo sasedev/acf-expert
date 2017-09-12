@@ -1,4 +1,0 @@
-Acf\DataBundle\Entity\Bank:
-    type: entity
-    repositoryClass: Acf\DataBundle\Repository\BankRepository
-    lifecycleCallbacks: {  }

@@ -3,60 +3,74 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BulletinInfo
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_bis")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\BulletinInfoRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"num"}, errorPath="num", groups={"num"})
  */
 class BulletinInfo
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="bi_num", type="integer", nullable=false, unique=true)
+     *      @Assert\GreaterThan(value=0, groups={"num"})
      */
     protected $num;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="dtstart", type="date", nullable=false)
+     *      @Assert\NotNull(groups={"dtStart"})
      */
     protected $dtStart;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bi_description", type="text", nullable=true)
      */
     protected $description;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="nbrclicks", type="bigint", nullable=false)
      */
     protected $nbrClicks;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="BulletinInfoTitle", mappedBy="bulletinInfo", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"title" = "ASC"})
      */
     protected $titles;
 

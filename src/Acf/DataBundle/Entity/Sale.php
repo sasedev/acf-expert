@@ -3,18 +3,24 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Sale
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\SaleRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"bill", "monthlyBalance"}, errorPath="bill", groups={"bill"})
  */
 class Sale extends Transaction
 {
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="SecondaryVat", mappedBy="sale", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"vatInfo" = "ASC"})
      */
     protected $secondaryVats;
 

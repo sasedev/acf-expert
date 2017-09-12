@@ -1,8 +1,9 @@
 <?php
 namespace Acf\DataBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Acf\DataBundle\Entity\Company;
 use Acf\DataBundle\Entity\LiasseFolder;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * LiasseFolderRepository
@@ -16,12 +17,19 @@ class LiasseFolderRepository extends EntityRepository
     /**
      * All count
      *
+     * @param null|Company $c
+     *
      * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
-    public function countRoots()
+    public function countRoots(Company $c = null)
     {
-        $qb = $this->createQueryBuilder('d')->select('count(d)')->where('d.parent is NULL');
-        $query = $qb->getQuery();
+        if (null == $c) {
+            $qb = $this->createQueryBuilder('lf')->select('count(lf)')->where('lf.parent is NULL');
+            $query = $qb->getQuery();
+        } else {
+            $qb = $this->createQueryBuilder('lf')->select('count(lf)')->join('lf.company', 'c')->where('lf.parent is NULL')->andWhere('c.id = :id')->setParameter('id', $c->getId());
+            $query = $qb->getQuery();
+        }
 
         return $query->getSingleScalarResult();
     }
@@ -29,11 +37,17 @@ class LiasseFolderRepository extends EntityRepository
     /**
      * Get Query for All Entities
      *
+     * @param null|Company $c
+     *
      * @return \Doctrine\ORM\Query
      */
-    public function getRootsQuery()
+    public function getRootsQuery(Company $c = null)
     {
-        $qb = $this->createQueryBuilder('d')->where('d.parent is NULL')->orderBy('d.title', 'ASC');
+        if (null == $c) {
+            $qb = $this->createQueryBuilder('lf')->where('lf.parent is NULL')->orderBy('lf.title', 'ASC');
+        } else {
+            $qb = $this->createQueryBuilder('lf')->join('lf.company', 'c')->where('c.id = :id')->andWhere('lf.parent is NULL')->setParameter('id', $c->getId())->orderBy('lf.title', 'ASC');
+        }
         $query = $qb->getQuery();
 
         return $query;
@@ -42,22 +56,31 @@ class LiasseFolderRepository extends EntityRepository
     /**
      * Get All Entities
      *
+     * @param null|Company $c
+     *
      * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
-    public function getRoots()
+    public function getRoots(Company $c = null)
     {
-        return $this->getRootsQuery()->execute();
+        return $this->getRootsQuery($c)->execute();
     }
 
     /**
      * All count
      *
+     * @param null|Company $c
+     *
      * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
-    public function count()
+    public function countAll(Company $c = null)
     {
-        $qb = $this->createQueryBuilder('b')->select('count(b)');
-        $query = $qb->getQuery();
+        if (null == $c) {
+            $qb = $this->createQueryBuilder('lf')->select('count(lf)');
+            $query = $qb->getQuery();
+        } else {
+            $qb = $this->createQueryBuilder('lf')->select('count(lf)')->join('lf.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
+            $query = $qb->getQuery();
+        }
 
         return $query->getSingleScalarResult();
     }
@@ -65,11 +88,17 @@ class LiasseFolderRepository extends EntityRepository
     /**
      * Get Query for All Entities
      *
+     * @param null|Company $c
+     *
      * @return \Doctrine\ORM\Query
      */
-    public function getAllQuery()
+    public function getAllQuery(Company $c = null)
     {
-        $qb = $this->createQueryBuilder('b')->orderBy('b.dtCrea', 'DESC');
+        if (null == $c) {
+            $qb = $this->createQueryBuilder('lf')->orderBy('lf.pageUrlFull', 'ASC');
+        } else {
+            $qb = $this->createQueryBuilder('lf')->join('lf.company', 'c')->where('c.id = :id')->orderBy('lf.pageUrlFull', 'ASC')->setParameter('id', $c->getId());
+        }
         $query = $qb->getQuery();
 
         return $query;
@@ -78,11 +107,13 @@ class LiasseFolderRepository extends EntityRepository
     /**
      * Get All Entities
      *
+     * @param null|Company $c
+     *
      * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
-    public function getAll()
+    public function getAll(Company $c = null)
     {
-        return $this->getAllQuery()->execute();
+        return $this->getAllQuery($c)->execute();
     }
 
     /**
@@ -94,7 +125,7 @@ class LiasseFolderRepository extends EntityRepository
      */
     public function countAllChilds(LiasseFolder $dg)
     {
-        $qb = $this->createQueryBuilder('d')->select('count(d)')->join('d.company', 'c')->where('d.pageUrlFull LIKE :url')->andWhere('d.id != :did')->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
+        $qb = $this->createQueryBuilder('lf')->select('count(lf)')->join('lf.company', 'c')->where('lf.pageUrlFull LIKE :url')->andWhere('d.id != :did')->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -109,7 +140,7 @@ class LiasseFolderRepository extends EntityRepository
      */
     public function getAllChildsQuery(LiasseFolder $dg)
     {
-        $qb = $this->createQueryBuilder('d')->where('d.pageUrlFull LIKE :url')->andWhere('d.id != :did')->orderBy('d.pageUrlFull', 'ASC')->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
+        $qb = $this->createQueryBuilder('lf')->where('lf.pageUrlFull LIKE :url')->andWhere('lf.id != :did')->orderBy('lf.pageUrlFull', 'ASC')->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
         $query = $qb->getQuery();
 
         return $query;

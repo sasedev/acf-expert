@@ -3,66 +3,85 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Withholding
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_company_withholdings")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\WithholdingRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"label", "company"}, errorPath="label", groups={"label"})
+ *         @UniqueEntity(fields={"number", "company"}, errorPath="number", groups={"number"})
  */
 class Withholding
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var Company
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="withholdings", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
      */
     protected $company;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="label", type="text", nullable=false)
      */
     protected $label;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="numb", type="bigint", nullable=false)
+     *      @Assert\GreaterThan(value="0", groups={"number"})
+     *      @Assert\LessThan(value="1000000000", groups={"number"})
      */
     protected $number;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="value", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThan(value="0", groups={"value"})
      */
     protected $value;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="others", type="text", nullable=true)
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="Transaction", mappedBy="withholding", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"number" = "ASC"})
      */
     protected $transactions;
 

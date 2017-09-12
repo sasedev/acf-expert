@@ -2540,9 +2540,10 @@ pagetitle.liasseFolder.edit.txt: Edition Dossier Liasse "%liasseFolder%"
 LiasseFolder.tab.overview: Détails
 LiasseFolder.tab.edit: Edition
 LiasseFolder.tab.docs: Documents
+Company.tab.tab20: Liasse Fiscale
 
-LiasseFolder.tlabel.list: Liste des Dossiers Liasse
-LiasseFolder.tlabel.add: Ajouter nouveau Dossier Liasse
+Company.tlabel.liassfolder.list: Liste des Dossiers Liasse
+Company.tlabel.liassfolder.add: Ajouter nouveau Dossier Liasse
 LiasseFolder.tlabel.overview: Aperçu des détails du Dossier Liasse
 LiasseFolder.tlabel.editTitle: Modification du titre du Dossier Liasse
 LiasseFolder.tlabel.editParent: Modification du parent du Dossier Liasse

@@ -29,25 +29,23 @@ $(function() {
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
 <ol class="breadcrumb">
-	<li class="active"><a href="{{ path('_liasse_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.liasse'|trans|raw}}</a></li>
+	<li><a href="{{ path('_liasse_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.liasse'|trans|raw}}</a></li>
+    <li class="active"><a
+        href="{{ path('_liasse_company_editGet', {'uid': company.id}) }}">{{glyphIco('edit')}}
+            &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': company.corporateName})|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}
 {%block content%}
-{% if companies | length != 0 %}
-{% for cmp in companies %}
 <div class="row">
 	<div class="col-lg-12">
-        <h3><a href="{{ path('_liasse_company_editGet', {'uid': cmp.company.id}) }}">{{ cmp.company.corporateName }}</a></h3>
-    </div>
-    <div class="col-lg-12">
-		{% if cmp.liasseFolders|length != 0 %}
+		{% if liasseFolders|length != 0 %}
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">{{ 'liasse.LiasseFolder.tlabel.list'|trans|raw}}</h3>
             </div>
             <div class="box-body table-responsive">
                 <div id="accordionLiasseFolder" class="box-group">
-                    {% for liasseFolder in cmp.liasseFolders %}
+                    {% for liasseFolder in liasseFolders %}
                     <div class="panel box box-warning">
                         <div class="box-header">
                             <h4 class="box-title"><a href="#collapse{{ liasseFolder.id }}" data-parent="#accordionLiasseFolder" data-toggle="collapse">{{ liasseFolder.title }}</a></h4>
@@ -91,8 +89,4 @@ $(function() {
         {% endif %}
 	</div>
 </div>
-{% endfor %}
-{% else %}
-Interface Client
-{% endif %}
 {%endblock content%}

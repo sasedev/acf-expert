@@ -58,6 +58,7 @@ use Acf\AdminBundle\Form\Docgroupperso\NewTForm as DocgrouppersoNewTForm;
 use Acf\AdminBundle\Form\Docgroupsyst\NewTForm as DocgroupsystNewTForm;
 use Acf\AdminBundle\Form\Docgroupaudit\NewTForm as DocgroupauditNewTForm;
 use Acf\AdminBundle\Form\Docgroupbank\NewTForm as DocgroupbankNewTForm;
+use Acf\AdminBundle\Form\LiasseFolder\NewTForm as LiasseFolderNewTForm;
 use Acf\DataBundle\Entity\CompanyFrame;
 use Acf\DataBundle\Entity\CompanyLabel;
 use Acf\DataBundle\Entity\Customer;
@@ -87,6 +88,7 @@ use Acf\DataBundle\Entity\CompanyUser;
 use Acf\DataBundle\Entity\CompanyAdmin;
 use Acf\DataBundle\Entity\Role;
 use Acf\DataBundle\Entity\Trace;
+use Acf\DataBundle\Entity\LiasseFolder;
 
 /**
  *
@@ -1034,6 +1036,15 @@ class CompanyController extends BaseController
 
                 $sector = new Sector();
                 $sectorNewForm = $this->createForm(SectorNewTForm::class, $sector);
+
+                $liasseFolder = new LiasseFolder();
+                $liasseFolder->setCompany($company);
+                $liasseFolderNewForm = $this->createForm(LiasseFolderNewTForm::class, $liasseFolder, array(
+                    'company' => $company
+                ));
+
+                $this->gvars['liasseFolder'] = $liasseFolder;
+
                 $this->gvars['sector'] = $sector;
                 $this->gvars['SectorNewForm'] = $sectorNewForm->createView();
 
@@ -1068,6 +1079,7 @@ class CompanyController extends BaseController
                 $this->gvars['docgroupsysts'] = $em->getRepository('AcfDataBundle:Docgroupsyst')->getRoots($company);
                 $this->gvars['docgroupbanks'] = $em->getRepository('AcfDataBundle:Docgroupbank')->getRoots($company);
                 $this->gvars['docgroupaudits'] = $em->getRepository('AcfDataBundle:Docgroupaudit')->getRoots($company);
+                $this->gvars['liasseFolders'] = $em->getRepository('AcfDataBundle:LiasseFolder')->getRoots($company);
 
                 $this->gvars['CompanyUpdateTypeForm'] = $companyUpdateTypeForm->createView();
                 $this->gvars['CompanyUpdateRefForm'] = $companyUpdateRefForm->createView();
@@ -1121,6 +1133,7 @@ class CompanyController extends BaseController
                 $this->gvars['DocgroupsystNewForm'] = $docgroupsystNewForm->createView();
                 $this->gvars['DocgroupauditNewForm'] = $docgroupauditNewForm->createView();
                 $this->gvars['DocgroupbankNewForm'] = $docgroupbankNewForm->createView();
+                $this->gvars['LiasseFolderNewForm'] = $liasseFolderNewForm->createView();
 
                 $mbsaleYears = $em->getRepository('AcfDataBundle:MBSale')->getAllYearByCompany($company);
                 $mbpurchaseYears = $em->getRepository('AcfDataBundle:MBPurchase')->getAllYearByCompany($company);
@@ -1447,6 +1460,12 @@ class CompanyController extends BaseController
                 $docgroupbank = new Docgroupbank();
                 $docgroupbank->setCompany($company);
                 $docgroupbankNewForm = $this->createForm(DocgroupbankNewTForm::class, $docgroupbank, array(
+                    'company' => $company
+                ));
+
+                $liasseFolder = new LiasseFolder();
+                $liasseFolder->setCompany($company);
+                $liasseFolderNewForm = $this->createForm(LiasseFolderNewTForm::class, $liasseFolder, array(
                     'company' => $company
                 ));
 
@@ -3636,6 +3655,26 @@ class CompanyController extends BaseController
 
                         $this->flashMsgSession('error', $this->translate('MPaye.add.failure'));
                     }
+                } elseif (isset($reqData['LiasseFolderNewForm'])) {
+                    $this->gvars['tabActive'] = 201;
+                    $this->getSession()->set('tabActive', 201);
+                    $liasseFolderNewForm->handleRequest($request);
+                    if ($liasseFolderNewForm->isValid()) {
+                        $em = $this->getEntityManager();
+                        $em->persist($liasseFolder);
+                        $em->flush();
+
+                        $this->gvars['stabActive'] = 2;
+                        $this->getSession()->set('stabActive', 2);
+
+                        $this->flashMsgSession('success', $this->translate('LiasseFolder.add.success', array(
+                            '%liasseFolder%' => $liasseFolder->getTitle()
+                        )));
+
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $this->flashMsgSession('error', $this->translate('LiasseFolder.add.failure'));
+                    }
                 }
 
                 $sector = new Sector();
@@ -3674,6 +3713,7 @@ class CompanyController extends BaseController
                 $this->gvars['docgroupsysts'] = $em->getRepository('AcfDataBundle:Docgroupsyst')->getRoots($company);
                 $this->gvars['docgroupbanks'] = $em->getRepository('AcfDataBundle:Docgroupbank')->getRoots($company);
                 $this->gvars['docgroupaudits'] = $em->getRepository('AcfDataBundle:Docgroupaudit')->getRoots($company);
+                $this->gvars['liasseFolders'] = $em->getRepository('AcfDataBundle:LiasseFolder')->getRoots($company);
 
                 $this->gvars['CompanyUpdateTypeForm'] = $companyUpdateTypeForm->createView();
                 $this->gvars['CompanyUpdateCorporateNameForm'] = $companyUpdateCorporateNameForm->createView();
@@ -3727,6 +3767,8 @@ class CompanyController extends BaseController
                 $this->gvars['DocgroupsystNewForm'] = $docgroupsystNewForm->createView();
                 $this->gvars['DocgroupauditNewForm'] = $docgroupauditNewForm->createView();
                 $this->gvars['DocgroupbankNewForm'] = $docgroupbankNewForm->createView();
+                $this->gvars['liasseFolder'] = $liasseFolder;
+                $this->gvars['LiasseFolderNewForm'] = $liasseFolderNewForm->createView();
 
                 $mbsaleYears = $em->getRepository('AcfDataBundle:MBSale')->getAllYearByCompany($company);
                 $mbpurchaseYears = $em->getRepository('AcfDataBundle:MBPurchase')->getAllYearByCompany($company);

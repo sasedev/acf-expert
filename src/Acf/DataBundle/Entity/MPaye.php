@@ -3,66 +3,93 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MPaye
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_mpayes")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\MPayeRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"month", "year", "company"}, errorPath="month", groups={"month"})
+ *         @UniqueEntity(fields={"ref", "company"}, errorPath="ref", groups={"ref"})
  */
 class MPaye
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var Company
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="payes", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
      */
     protected $company;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ref", type="text", nullable=false)
      */
     protected $ref;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="year", type="integer", nullable=false)
+     *      @Assert\GreaterThan(value="0", groups={"year"})
+     *      @Assert\LessThan(value="3000", groups={"year"})
      */
     protected $year;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="month", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceMonthCallback", groups={"physicaltype"})
      */
     protected $month;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="MSalary", mappedBy="paye", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"matricule" = "ASC"})
      */
     protected $salaries;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="mpayes", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_mpaye_docs",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="mpaye_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
+     *      }
+     *      )
      */
     protected $docs;
 

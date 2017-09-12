@@ -3,11 +3,20 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Transaction
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_transactions")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\TransactionRepository")
+ *         @ORM\InheritanceType("SINGLE_TABLE")
+ *         @ORM\DiscriminatorColumn(name="transactiontype", type="string")
+ *         @ORM\DiscriminatorMap({"1" = "Sale", "2" = "Buy"})
+ *         @ORM\HasLifecycleCallbacks
  */
 abstract class Transaction
 {
@@ -152,181 +161,226 @@ abstract class Transaction
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var MonthlyBalance
+     * @var MonthlyBalance @ORM\ManyToOne(targetEntity="MonthlyBalance", inversedBy="transactions", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="mbalance_id", referencedColumnName="id")
+     *      })
      */
     protected $monthlyBalance;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="numb", type="bigint", nullable=true)
      */
     protected $number;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="dtactivation", type="date", nullable=true)
+     *      @Assert\GreaterThanOrEqual(value="2000-01-01", groups={"dtActivation"})
+     *      @assert\LessThan(value="2100-01-01", groups={"dtActivation"})
      */
     protected $dtActivation;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bill", type="text", nullable=true)
      */
     protected $bill;
 
     /**
      *
-     * @var Relation
+     * @var Relation @ORM\ManyToOne(targetEntity="Relation", inversedBy="transactions", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="relation_id", referencedColumnName="id")
+     *      })
      */
     protected $relation;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="label", type="text", nullable=false)
      */
     protected $label;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="devise", type="text", nullable=false)
+     *      @Assert\Currency(groups={"devise"})
      */
     protected $devise;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="conversionrate", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThan(value=0, groups={"vat"})
      */
     protected $conversionRate;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="vat", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"vat"})
      */
     protected $vat;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="vatd", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"vatDevise"})
      */
     protected $vatDevise;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="stamp", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"stamp"})
      */
     protected $stamp;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="stampd", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"stampDevise"})
      */
     protected $stampDevise;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="balance_ttc", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"balanceTtc"})
      */
     protected $balanceTtc;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="balance_ttcd", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"balanceTtcDevise"})
      */
     protected $balanceTtcDevise;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="balance_net", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"balanceNet"})
      */
     protected $balanceNet;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="balance_netd", type="float", precision=10, scale=0, nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"balanceNetDevise"})
      */
     protected $balanceNetDevise;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="vatinfo", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceVatInfoCallback", groups={"vatInfo"})
      */
     protected $vatInfo;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="regime", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceRegimeCallback", groups={"regime"})
      */
     protected $regime;
 
     /**
      *
-     * @var Withholding
+     * @var Withholding @ORM\ManyToOne(targetEntity="Withholding", inversedBy="transactions", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="withholding_id", referencedColumnName="id")
+     *      })
      */
     protected $withholding;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="payment_type", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choicePaymentTypeCallback", groups={"paymentType"})
      */
     protected $paymentType;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="dtpayment", type="date", nullable=true)
+     *      @Assert\GreaterThanOrEqual(value="2000-01-01", groups={"dtPayment"})
+     *      @assert\LessThan(value="2100-01-01", groups={"dtPayment"})
      */
     protected $dtPayment;
 
     /**
      *
-     * @var Account
+     * @var Account @ORM\ManyToOne(targetEntity="Account", inversedBy="transactions")
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="account_id", referencedColumnName="id")
+     *      })
      */
     protected $account;
 
     /**
      *
-     * @var CompanyNature
+     * @var CompanyNature @ORM\ManyToOne(targetEntity="CompanyNature", inversedBy="transactions", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="nature_id", referencedColumnName="id")
+     *      })
      */
     protected $nature;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="transaction_status", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceTransactionStatusCallback", groups={"transactionStatus"})
      */
     protected $transactionStatus;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="validated", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceValidatedCallback", groups={"validated"})
      */
     protected $validated;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="others", type="text", nullable=true)
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="transactions", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_transaction_docs",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="transaction_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
+     *      }
+     *      )
      */
     protected $docs;
 

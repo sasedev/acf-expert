@@ -1,47 +1,61 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * ConstantFloat
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_constant_floats")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\ConstantFloatRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"name"}, errorPath="name", groups={"name"})
  */
 class ConstantFloat
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="name", type="text", nullable=false)
+     *      @Assert\NotBlank(groups={"name"})
      */
     protected $name;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="description", type="text", nullable=true)
      */
     protected $description;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="val", type="bigfloat", nullable=false)
+     *      @Assert\NotBlank(groups={"admCreate", "admUpdate"})
      */
     protected $value;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

@@ -3,11 +3,21 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Account
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_company_accounts")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\AccountRepository")
+ *         @ORM\InheritanceType("SINGLE_TABLE")
+ *         @ORM\DiscriminatorColumn(name="accounttype", type="string")
+ *         @ORM\DiscriminatorMap({"1" = "Bank", "2" = "Fund"})
+ *         @ORM\HasLifecycleCallbacks
  */
 abstract class Account
 {
@@ -26,91 +36,111 @@ abstract class Account
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var Company
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="accounts", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
      */
     protected $company;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="label", type="text", nullable=false)
      */
     protected $label;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="numb", type="bigint", nullable=true)
+     *      @Assert\GreaterThan(value="0", groups={"number"})
+     *      @Assert\LessThan(value="1000000000", groups={"number"})
      */
     protected $number;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="agency", type="text", nullable=true)
      */
     protected $agency;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="rib", type="text", nullable=true)
      */
     protected $rib;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="contact", type="text", nullable=true)
      */
     protected $contact;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="tel", type="text", nullable=true)
+     *      @ExtraAssert\Phone(groups={"tel"})
      */
     protected $tel;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="fax", type="text", nullable=true)
+     *      @ExtraAssert\Phone(groups={"fax"})
      */
     protected $fax;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="email", type="text", nullable=true)
+     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
      */
     protected $email;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="others", type="text", nullable=true)
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="Transaction", mappedBy="account", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"number" = "ASC"})
      */
     protected $transactions;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="accounts", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_account_docs",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="account_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
+     *      }
+     *      )
      */
     protected $docs;
 

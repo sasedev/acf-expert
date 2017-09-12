@@ -1,107 +1,129 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Address
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_company_addresses")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\AddressRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class Address
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var Company
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="addresses", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
      */
     protected $company;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="label", type="text", nullable=true)
      */
     protected $label;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="strnum", type="text", nullable=true)
+     *      @Assert\Length(max="15", groups={"streetNum"})
      */
     protected $streetNum;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="address", type="text", nullable=true)
      */
     protected $address;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="address2", type="text", nullable=true)
      */
     protected $address2;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="town", type="text", nullable=true)
+     *      @Assert\Length(max="120", groups={"town"})
      */
     protected $town;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="zipcode", type="text", nullable=true)
+     *      @Assert\Length(max="15", groups={"zipCode"})
      */
     protected $zipCode;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="country", type="text", nullable=true)
+     *      @Assert\Country(groups={"country"})
      */
     protected $country;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="phone", type="text", nullable=true)
+     *      @ExtraAssert\Phone(groups={"phone"})
      */
     protected $phone;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mobile", type="text", nullable=true)
+     *      @ExtraAssert\Phone(groups={"mobile"})
      */
     protected $mobile;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="fax", type="text", nullable=true)
+     *      @ExtraAssert\Phone(groups={"fax"})
      */
     protected $fax;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="email", type="text", nullable=true)
+     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
      */
     protected $email;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="others", type="text", nullable=true)
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

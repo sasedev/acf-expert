@@ -3,48 +3,62 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BulletinInfoTitle
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_bi_titles")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\BulletinInfoTitleRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class BulletinInfoTitle
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var BulletinInfo
+     * @var BulletinInfo @ORM\ManyToOne(targetEntity="BulletinInfo", inversedBy="titles", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="bi_id", referencedColumnName="id")
+     *      })
      */
     protected $bulletinInfo;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bt_content", type="text", nullable=false)
+     *      @Assert\NotNull(groups={"title"})
      */
     protected $title;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="BulletinInfoContent", mappedBy="bulletinInfoTitle", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"title" = "ASC"})
      */
     protected $contents;
 

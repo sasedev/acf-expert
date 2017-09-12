@@ -9,7 +9,7 @@
 {%endblock end_static_js%}
 {%block breadcrumb%}
 <ol class="breadcrumb">
-	<li class="active"><a href="{{ path('_payroll_homepage') }}">{{ faIco('dashboard') }}
+	<li><a href="{{ path('_payroll_homepage') }}">{{ faIco('dashboard') }}
 			&nbsp; {{'breadcrumb.payroll'|trans|raw}}</a></li>
 	<li class="active"><a
 		href="{{ path('_payroll_company_editGet', {'uid': company.id}) }}">{{glyphIco('edit')}}

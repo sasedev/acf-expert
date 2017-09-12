@@ -1118,15 +1118,16 @@ CREATE TABLE "acf_online_invoice_docs" (
 
 
 
-
 CREATE TABLE "acf_liassefolders" (
     "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
     "title"                                                             TEXT NOT NULL,
-    "pageurl_full"                                                      TEXT NULL,
-    "parent_id"                                                         UUID NULL,
+    "company_id"                                                        UUID NOT NULL,
     "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
     "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "pageurl_full"                                                      TEXT NULL,
+    "parent_id"                                                         UUID NULL,
     CONSTRAINT "pk_acf_liassefolders" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_acf_liassefolders_company" FOREIGN KEY ("company_id") REFERENCES "acf_companies" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT "fk_acf_liassefolders_parent" FOREIGN KEY ("parent_id") REFERENCES "acf_liassefolders" ("id") ON UPDATE CASCADE ON DELETE SET NULL
 );
 

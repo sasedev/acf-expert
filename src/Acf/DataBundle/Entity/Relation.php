@@ -3,11 +3,21 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Sasedev\Commons\SharedBundle\Validator as ExtraAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Relation
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_company_relations")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\RelationRepository")
+ *         @ORM\InheritanceType("SINGLE_TABLE")
+ *         @ORM\DiscriminatorColumn(name="relationtype", type="string")
+ *         @ORM\DiscriminatorMap({"1" = "Customer", "2" = "Supplier"})
+ *         @ORM\HasLifecycleCallbacks
  */
 abstract class Relation
 {
@@ -38,152 +48,185 @@ abstract class Relation
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var Company
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="relations", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
      */
     protected $company;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="label", type="text", nullable=false)
      */
     protected $label;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="numb", type="bigint", nullable=true)
+     *      @Assert\GreaterThan(value="0", groups={"number"})
+     *      @Assert\LessThan(value="1000000000", groups={"number"})
      */
     protected $number;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="fisc", type="text", nullable=true)
      */
     protected $fisc;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="physicaltype", type="bigint", nullable=false)
+     *      @Assert\Choice(callback="choicePhysicaltypeCallback", groups={"physicaltype"})
      */
     protected $physicaltype;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="cin", type="text", nullable=true)
      */
     protected $cin;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="passport", type="text", nullable=true)
      */
     protected $passport;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="commercial_register", type="text", nullable=true)
      */
     protected $commercialRegister;
 
     /**
      *
-     * @var string
-     *
+     * @var string @ORM\Column(name="strnum", type="text", nullable=true)
+     *      @Assert\Length(max="15", groups={"streetNum"})
      */
     protected $streetNum;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="address", type="text", nullable=true)
      */
     protected $address;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="address2", type="text", nullable=true)
      */
     protected $address2;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="town", type="text", nullable=true)
+     *      @Assert\Length(max="120", groups={"town"})
      */
     protected $town;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="zipcode", type="text", nullable=true)
+     *      @Assert\Length(max="15", groups={"zipCode"})
      */
     protected $zipCode;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="country", type="text", nullable=true)
+     *      @Assert\Country(groups={"country"})
      */
     protected $country;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="phone", type="text", nullable=true)
+     *      @ExtraAssert\Phone(groups={"phone"})
      */
     protected $phone;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mobile", type="text", nullable=true)
+     *      @ExtraAssert\Phone(groups={"mobile"})
      */
     protected $mobile;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="fax", type="text", nullable=true)
+     *      @ExtraAssert\Phone(groups={"fax"})
      */
     protected $fax;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="email", type="text", nullable=true)
+     *      @Assert\Email(checkMX=true, checkHost=true, groups={"email"})
      */
     protected $email;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="others", type="text", nullable=true)
      */
     protected $otherInfos;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\ManyToMany(targetEntity="Sector", inversedBy="relations", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_relation_sectors",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="relation_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="sector_id", referencedColumnName="id")
+     *      }
+     *      )
      */
     protected $sectors;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="Transaction", mappedBy="relation", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"number" = "ASC"})
      */
     protected $transactions;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\ManyToMany(targetEntity="Doc", mappedBy="relations", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_relation_docs",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="relation_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="doc_id", referencedColumnName="id")
+     *      }
+     *      )
      */
     protected $docs;
 

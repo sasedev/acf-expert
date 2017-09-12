@@ -1,95 +1,109 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * BulletinInfoContent
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_bi_contents")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\BulletinInfoContentRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class BulletinInfoContent
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var BulletinInfoTitle
+     * @var BulletinInfoTitle @ORM\ManyToOne(targetEntity="BulletinInfoTitle", inversedBy="contents", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="bt_id", referencedColumnName="id")
+     *      })
      */
     protected $bulletinInfoTitle;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_title", type="text", nullable=false)
+     *      @Assert\NotBlank(groups={"title"})
      */
     protected $title;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_content", type="text", nullable=true)
      */
     protected $content;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_theme", type="text", nullable=true)
      */
     protected $theme;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_jort", type="text", nullable=true)
      */
     protected $jort;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_txtnum", type="text", nullable=true)
      */
     protected $txtNum;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_arttxt", type="text", nullable=true)
      */
     protected $artTxt;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_dttxt", type="text", nullable=true)
      */
     protected $dtTxt;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_artcode", type="text", nullable=true)
      */
     protected $artCode;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_stetype", type="text", nullable=true)
      */
     protected $companyType;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="bc_dtapp", type="text", nullable=true)
      */
     protected $dtApplication;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

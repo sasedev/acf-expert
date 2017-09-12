@@ -1,47 +1,60 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * GoodLink
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_goodlinks")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\GoodLinkRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"url"}, errorPath="url", groups={"url"})
  */
 class GoodLink
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="title", type="text", nullable=false)
      */
     protected $title;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="url", type="text", nullable=false)
+     *      @Assert\Url(checkDNS=true, groups={"url"})
      */
     protected $url;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="nbrclicks", type="bigint", nullable=false)
      */
     protected $nbrClicks;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

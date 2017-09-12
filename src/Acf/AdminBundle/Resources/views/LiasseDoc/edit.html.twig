@@ -48,8 +48,11 @@ $(function() {
 {%block breadcrumb%}
 <ol class="breadcrumb">
 	<li><a href="{{ path('_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin'|trans|raw}}</a></li>
-	<li><a href="{{ path('_admin_liasseFolder_list') }}">{{faIco('exclamation-triangle')}} &nbsp; {{'breadcrumb.liasseFolder.list'|trans|raw}}</a></li>
-	<li><a href="{{ path('_admin_liasseFolder_editGet', {'uid': liasseDoc.folder.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.liasseFolder.edit'|trans({'%liasseFolder%': liasseDoc.folder.title})|raw}}</a></li>
+    {% if is_granted('ROLE_SUPERADMIN') %}
+    <li><a href="{{ path('_admin_company_list') }}">{{faIco('building')}} &nbsp; {{'breadcrumb.company.list'|trans|raw}}</a></li>
+    {% endif %}
+    <li><a href="{{ path('_admin_company_editGet', {'uid': liasseDoc.folder.company.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.company.edit'|trans({'%company%': liasseDoc.folder.company.corporateName})|raw}}</a></li>
+    <li><a href="{{ path('_admin_liasseFolder_editGet', {'uid': liasseDoc.folder.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.liasseFolder.edit'|trans({'%liasseFolder%': liasseDoc.folder.title})|raw}}</a></li>
 	<li class="active"><a href="{{ path('_admin_liasseDoc_editGet', {'uid': liasseDoc.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.liasseDoc.edit'|trans({'%liasseDoc%': liasseDoc.title})|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}

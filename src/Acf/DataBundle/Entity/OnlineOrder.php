@@ -3,11 +3,19 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OnlineOrder
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_online_orders")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineOrderRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"ref"}, errorPath="ref", groups={"ref"})
  */
 class OnlineOrder
 {
@@ -86,97 +94,110 @@ class OnlineOrder
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ref", type="text", nullable=false, unique=true)
      */
     protected $ref;
 
     /**
      *
-     * @var User
+     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="orders", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *      })
      */
     protected $user;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="val", type="float", nullable=false)
+     *      @Assert\GreaterThan(value=0, groups={"val"})
      */
     protected $val;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="orderto", type="text", nullable=false)
+     *      @Assert\NotBlank(groups={"orderTo"})
      */
     protected $orderTo;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="auth", type="text", nullable=true)
      */
     protected $auth;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="session_id", type="text", nullable=true)
      */
     protected $sessId;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ip_addr", type="text", nullable=true)
      */
     protected $ipAddr;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="payment_type", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choicePaymentTypeCallback", groups={"paymentType"})
      */
     protected $paymentType;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="payment_status", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceStatusCallback", groups={"status"})
      */
     protected $status;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="autorenew", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceRenewCallback", groups={"renew"})
      */
     protected $renew;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var OnlineInvoice
+     * @var OnlineInvoice @ORM\OneToOne(targetEntity="OnlineInvoice", mappedBy="order")
      */
     protected $invoice;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="OnlineOrderProduct", mappedBy="order", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"dtCrea" = "ASC"})
      */
     protected $products;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="OnlineOrderTaxe", mappedBy="order", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"priority" = "ASC"})
      */
     protected $taxes;
 

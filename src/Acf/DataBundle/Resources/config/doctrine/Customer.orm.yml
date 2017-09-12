@@ -1,4 +1,0 @@
-Acf\DataBundle\Entity\Customer:
-    type: entity
-    repositoryClass: Acf\DataBundle\Repository\CustomerRepository
-    lifecycleCallbacks: {  }

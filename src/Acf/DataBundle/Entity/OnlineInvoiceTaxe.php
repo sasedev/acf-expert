@@ -1,10 +1,17 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * OnlineInvoiceTaxe
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_online_invoice_taxes")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineInvoiceTaxeRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class OnlineInvoiceTaxe
 {
@@ -23,49 +30,56 @@ class OnlineInvoiceTaxe
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var OnlineInvoice
+     * @var OnlineInvoice @ORM\ManyToOne(targetEntity="OnlineInvoice", inversedBy="taxes", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
+     *      })
      */
     protected $invoice;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="tx_label", type="text", nullable=false)
      */
     protected $label;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="tx_val", type="float", nullable=false)
+     *      @Assert\NotNull(groups={"value"})
      */
     protected $value;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="tx_type", type="integer", nullable=false)
      */
     protected $type;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="tx_priority", type="integer", nullable=false)
      */
     protected $priority;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

@@ -1,10 +1,17 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * OnlineInvoiceDocument
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_online_invoice_docs")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineInvoiceDocumentRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class OnlineInvoiceDocument
 {
@@ -23,61 +30,69 @@ class OnlineInvoiceDocument
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var OnlineInvoice
+     * @var OnlineInvoice @ORM\ManyToOne(targetEntity="OnlineInvoice", inversedBy="docs", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="inv_id", referencedColumnName="id")
+     *      })
      */
     protected $invoice;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="filename", type="text", nullable=false)
+     *      @Assert\File(maxSize="20480k", groups={"fileName"})
      */
     protected $fileName;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="filesize", type="bigint", nullable=false)
      */
     protected $size;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="filemimetype", type="text", nullable=false)
      */
     protected $mimeType;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="filemd5", type="text", nullable=false)
      */
     protected $md5;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="fileoname", type="text", nullable=false)
      */
     protected $originalName;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="visible", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceVisibleCallback", groups={"visible"})
      */
     protected $visible;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

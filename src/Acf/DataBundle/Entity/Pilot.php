@@ -1,221 +1,233 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * Pilot
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_company_pilots")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\PilotRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class Pilot
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var Company
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="pilots", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
      */
     protected $company;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ref", type="text", nullable=true)
      */
     protected $ref;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mission", type="text", nullable=true)
      */
     protected $mission;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nat_mission", type="text", nullable=true)
      */
     protected $natureMission;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="prestataire", type="text", nullable=true)
      */
     protected $prestataire;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="recfin", type="text", nullable=true)
      */
     protected $recetteFinance;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="pinance", type="text", nullable=true)
      */
     protected $pinAnce;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="expirationance", type="text", nullable=true)
      */
     protected $expirationAnce;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mpimpots", type="text", nullable=true)
      */
     protected $mpImpots;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="idcnss", type="text", nullable=true)
      */
     protected $idCnss;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mdpcnss", type="text", nullable=true)
      */
     protected $mpCnss;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nom_cac", type="text", nullable=true)
      */
     protected $nomCac;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="duree_mandat", type="text", nullable=true)
      */
     protected $dureeMandat;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="num_mandat", type="text", nullable=true)
      */
     protected $numMandat;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="rapport_cac", type="text", nullable=true)
      */
     protected $rapportCac;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="decl_empl", type="text", nullable=true)
      */
     protected $declEmpl;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="is_dur", type="text", nullable=true)
      */
     protected $isDur;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="pv_ca", type="text", nullable=true)
      */
     protected $pvCa;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="rapport_gerance", type="text", nullable=true)
      */
     protected $rapportGerance;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="pv_ago", type="text", nullable=true)
      */
     protected $pvAgo;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="pv_age", type="text", nullable=true)
      */
     protected $pvAge;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="livres_cotes", type="text", nullable=true)
      */
     protected $livresCotes;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="hon_theo_ann", type="float", nullable=true)
      */
     protected $honTeorAnn;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mode_fact", type="text", nullable=true)
      */
     protected $modeFact;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="non_fact_m", type="float", nullable=true)
      */
     protected $nonFactMont;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nom_fact_d", type="text", nullable=true)
      */
     protected $nonFactDesc;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="nom_enc_m", type="float", nullable=true)
      */
     protected $nonEncMont;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="nom_enc_d", type="text", nullable=true)
      */
     protected $nonEncDesc;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="comment_quit", type="text", nullable=true)
      */
     protected $commentQuit;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mq_quit_impots", type="text", nullable=true)
      */
     protected $mqQuitImpots;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="mq_quit_cnss", type="text", nullable=true)
      */
     protected $mqQuitCnss;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="commentaires", type="text", nullable=true)
      */
     protected $comments;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

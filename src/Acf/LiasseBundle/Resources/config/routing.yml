@@ -2,6 +2,12 @@ _liasse_homepage:
     path:     /
     defaults: { _controller: "AcfLiasseBundle:Default:index" }
 
+_liasse_company_editGet:
+    path:     /company/{uid}
+    defaults: { _controller: "AcfLiasseBundle:Company:editGet" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 _liasse_liasseDoc_download:
     path:     /liasseDoc/download/{uid}
     defaults: { _controller: "AcfLiasseBundle:LiasseDoc:download" }

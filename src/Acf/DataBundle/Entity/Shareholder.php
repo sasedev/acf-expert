@@ -1,65 +1,77 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * Shareholder
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_company_shareholders")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\ShareholderRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class Shareholder
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var Company
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="shareholders", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
      */
     protected $company;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="name", type="text", nullable=false)
      */
     protected $name;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="cin", type="text", nullable=false)
      */
     protected $cin;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="quality", type="text", nullable=false)
      */
     protected $quality;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="address", type="text", nullable=false)
      */
     protected $address;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="trades", type="bigint", nullable=false)
      */
     protected $trades;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

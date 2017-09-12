@@ -1,10 +1,17 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * MBPurchase
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\MBPurchaseRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"month", "year", "company"}, errorPath="month", groups={"month"})
+ *         @UniqueEntity(fields={"ref", "company"}, errorPath="ref", groups={"ref"})
  */
 class MBPurchase extends MonthlyBalance
 {

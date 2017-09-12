@@ -1,47 +1,62 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * FeedRead
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_feedreads")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\FeedReadRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"url"}, errorPath="url", groups={"url"})
  */
 class FeedRead
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="url", type="text", nullable=false)
+     *      @Assert\Url(checkDNS=true, groups={"url"})
      */
     protected $url;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="nbrdays", type="bigint", nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"nbrDays"})
      */
     protected $nbrDays;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="nbritems", type="bigint", nullable=false)
+     *      @Assert\GreaterThanOrEqual(value=0, groups={"nbrItems"})
      */
     protected $nbrItems;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

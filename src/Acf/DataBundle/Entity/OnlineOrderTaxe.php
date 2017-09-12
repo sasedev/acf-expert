@@ -1,10 +1,17 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * OnlineOrderTaxe
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_online_order_taxes")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OnlineOrderTaxeRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class OnlineOrderTaxe
 {
@@ -23,56 +30,64 @@ class OnlineOrderTaxe
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var OnlineOrder
+     * @var OnlineOrder @ORM\ManyToOne(targetEntity="OnlineOrder", inversedBy="taxes", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="ord_id", referencedColumnName="id")
+     *      })
      */
     protected $order;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="tx_label", type="text", nullable=false)
      */
     protected $label;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="tx_val", type="float", nullable=false)
+     *      @Assert\NotNull(groups={"value"})
      */
     protected $value;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="tx_type", type="integer", nullable=false)
      */
     protected $type;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="tx_priority", type="integer", nullable=false)
      */
     protected $priority;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
+     * Constructor
      *
      * @param OnlineTaxe $taxe
-     *            Constructor
+     *
      */
     public function __construct(OnlineTaxe $taxe = null)
     {

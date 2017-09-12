@@ -1,10 +1,19 @@
 <?php
 namespace Acf\DataBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Order
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_orders")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\OrderRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"ref"}, errorPath="ref", groups={"ref"})
  */
 class Order
 {
@@ -47,67 +56,75 @@ class Order
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ref", type="text", nullable=false, unique=true)
      */
     protected $ref;
 
     /**
      *
-     * @var User
+     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="orders", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *      })
      */
     protected $user;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="description", type="text", nullable=true)
      */
     protected $description;
 
     /**
      *
-     * @var float
+     * @var float @ORM\Column(name="val", type="float", nullable=false)
+     *      @Assert\GreaterThan(value=0, groups={"val"})
      */
     protected $val;
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="status", type="integer", nullable=false)
+     *      @Assert\Choice(callback="choiceStatusCallback", groups={"status"})
      */
     protected $status;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="auth", type="text", nullable=true)
      */
     protected $auth;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="session_id", type="text", nullable=true)
      */
     protected $sessId;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="ip_addr", type="text", nullable=true)
      */
     protected $ipAddr;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 

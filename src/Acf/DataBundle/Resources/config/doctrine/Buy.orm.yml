@@ -1,4 +1,0 @@
-Acf\DataBundle\Entity\Buy:
-    type: entity
-    repositoryClass: Acf\DataBundle\Repository\BuyRepository
-    lifecycleCallbacks: {  }

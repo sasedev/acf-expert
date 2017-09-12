@@ -3,48 +3,75 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Sector
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_cmp_sectors")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\SectorRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"label"}, errorPath="label", groups={"label"})
  */
 class Sector
 {
 
     /**
      *
-     * @var integer
+     * @var integer @ORM\Column(name="id", type="bigint", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="SEQUENCE")
+     *      @ORM\SequenceGenerator(sequenceName="acf_cmp_sectors_id_seq", allocationSize=1, initialValue=1)
      */
     protected $id;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="label", type="text", nullable=false)
      */
     protected $label;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\ManyToMany(targetEntity="Company", mappedBy="sectors", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_company_sectors",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="sector_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      }
+     *      )
      */
     protected $companies;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\ManyToMany(targetEntity="Relation", mappedBy="sectors", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_relation_sectors",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="sector_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="relation_id", referencedColumnName="id")
+     *      }
+     *      )
      */
     protected $relations;
 

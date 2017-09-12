@@ -3,54 +3,73 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Notification
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_notifs")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\NotificationRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class Notification
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var User
+     * @var User @ORM\ManyToOne(targetEntity="User", inversedBy="notifs", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *      })
      */
     protected $user;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="notif_title", type="text", nullable=true)
      */
     protected $title;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="notif_comments", type="text", nullable=true)
      */
     protected $comment;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\ManyToMany(targetEntity="User", inversedBy="sharedNotifs", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_notif_shares",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="notif_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *      }
+     *      )
      */
     protected $users;
 

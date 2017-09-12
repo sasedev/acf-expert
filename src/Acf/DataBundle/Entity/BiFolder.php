@@ -3,60 +3,79 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * BiFolder
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_bifolders")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\BiFolderRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"title", "parent"}, errorPath="title", groups={"title"})
  */
 class BiFolder
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="title", type="text", nullable=false)
      */
     protected $title;
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="pageurl_full", type="text", nullable=false)
+     *      @Gedmo\Slug(handlers={
+     *      @Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\TreeSlugHandler", options={
+     *      @Gedmo\SlugHandlerOption(name="parentRelationField", value="parent"),
+     *      @Gedmo\SlugHandlerOption(name="separator", value="/")
+     *      })
+     *      }, separator="_", updatable=true, style="camel", fields={"title"})
      */
     protected $pageUrlFull;
 
     /**
      *
-     * @var BiFolder
+     * @var BiFolder @ORM\ManyToOne(targetEntity="BiFolder", inversedBy="childs", cascade={"persist"})
+     *      @ORM\JoinColumns({@ORM\JoinColumn(name="parent_id", referencedColumnName="id")})
      */
     protected $parent;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="BiFolder", mappedBy="parent",cascade={"persist"})
+     *      @ORM\OrderBy({"title" = "ASC"})
      */
     protected $childs;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="BiDoc", mappedBy="folder", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"title" = "ASC"})
      */
     protected $docs;
 

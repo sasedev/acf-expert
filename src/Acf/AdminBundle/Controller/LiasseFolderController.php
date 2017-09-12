@@ -4,7 +4,6 @@ namespace Acf\AdminBundle\Controller;
 use Acf\DataBundle\Entity\LiasseFolder;
 use Acf\DataBundle\Entity\LiasseDoc;
 use Acf\AdminBundle\Form\LiasseDoc\NewTForm as LiasseDocNewTForm;
-use Acf\AdminBundle\Form\LiasseFolder\NewTForm as LiasseFolderNewTForm;
 use Acf\AdminBundle\Form\LiasseFolder\UpdateTitleTForm as LiasseFolderUpdateTitleTForm;
 use Acf\AdminBundle\Form\LiasseFolder\UpdateParentTForm as LiasseFolderUpdateParentTForm;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
@@ -38,95 +37,6 @@ class LiasseFolderController extends BaseController
         return $this->redirect($this->generateUrl('_admin_liasseFolder_editGet', array(
             'uid' => $uid
         )));
-    }
-
-    /**
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function listAction()
-    {
-        if (!$this->hasRole('ROLE_SUPERADMIN')) {
-            return $this->redirect($this->generateUrl('_admin_homepage'));
-        }
-        $em = $this->getEntityManager();
-        $liasseFolders = $em->getRepository('AcfDataBundle:LiasseFolder')->getRoots();
-        $this->gvars['liasseFolders'] = $liasseFolders;
-
-        $this->gvars['smenu_active'] = 'list';
-        $this->gvars['pagetitle'] = $this->translate('pagetitle.liasseFolder.list');
-        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.liasseFolder.list.txt');
-
-        return $this->renderResponse('AcfAdminBundle:LiasseFolder:list.html.twig', $this->gvars);
-    }
-
-    /**
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function addGetAction()
-    {
-        if (!$this->hasRole('ROLE_SUPERADMIN')) {
-            return $this->redirect($this->generateUrl('_admin_homepage'));
-        }
-        $liasseFolder = new LiasseFolder();
-        $liasseFolderNewForm = $this->createForm(LiasseFolderNewTForm::class, $liasseFolder);
-        $this->gvars['liasseFolder'] = $liasseFolder;
-        $this->gvars['LiasseFolderNewForm'] = $liasseFolderNewForm->createView();
-
-        $this->gvars['pagetitle'] = $this->translate('pagetitle.liasseFolder.add');
-        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.liasseFolder.add.txt');
-        $this->gvars['smenu_active'] = 'add';
-
-        return $this->renderResponse('AcfAdminBundle:LiasseFolder:add.html.twig', $this->gvars);
-    }
-
-    /**
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function addPostAction()
-    {
-        if (!$this->hasRole('ROLE_SUPERADMIN')) {
-            return $this->redirect($this->generateUrl('_admin_homepage'));
-        }
-        $urlFrom = $this->getReferer();
-        if (null == $urlFrom || trim($urlFrom) == '') {
-            return $this->redirect($this->generateUrl('_admin_liasseFolder_addGet'));
-        }
-
-        $liasseFolder = new LiasseFolder();
-        $liasseFolderNewForm = $this->createForm(LiasseFolderNewTForm::class, $liasseFolder);
-        $this->gvars['liasseFolder'] = $liasseFolder;
-
-        $request = $this->getRequest();
-        $reqData = $request->request->all();
-
-        if (isset($reqData['LiasseFolderNewForm'])) {
-            $liasseFolderNewForm->handleRequest($request);
-            if ($liasseFolderNewForm->isValid()) {
-                $em = $this->getEntityManager();
-                $em->persist($liasseFolder);
-                $em->flush();
-
-                $this->flashMsgSession('success', $this->translate('LiasseFolder.add.success', array(
-                    '%liasseFolder%' => $liasseFolder->getTitle()
-                )));
-
-                return $this->redirect($this->generateUrl('_admin_liasseFolder_editGet', array(
-                    'uid' => $liasseFolder->getId()
-                )));
-            } else {
-                $this->flashMsgSession('error', $this->translate('LiasseFolder.add.failure'));
-            }
-        }
-        $this->gvars['LiasseFolderNewForm'] = $liasseFolderNewForm->createView();
-
-        $this->gvars['pagetitle'] = $this->translate('pagetitle.liasseFolder.add');
-        $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.liasseFolder.add.txt');
-        $this->gvars['smenu_active'] = 'add';
-
-        return $this->renderResponse('AcfAdminBundle:LiasseFolder:add.html.twig', $this->gvars);
     }
 
     /**
@@ -180,7 +90,7 @@ class LiasseFolderController extends BaseController
         }
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('_admin_liasseFolder_list');
+            $urlFrom = $this->generateUrl('_admin_company_list');
         }
 
         $em = $this->getEntityManager();
@@ -242,7 +152,7 @@ class LiasseFolderController extends BaseController
         }
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
-            return $this->redirect($this->generateUrl('_admin_liasseFolder_list'));
+            return $this->redirect($this->generateUrl('_admin_company_list'));
         }
 
         $em = $this->getEntityManager();

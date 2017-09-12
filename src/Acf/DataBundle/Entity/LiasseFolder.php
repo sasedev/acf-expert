@@ -3,60 +3,89 @@ namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * LiasseFolder
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Table(name="acf_liassefolders")
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\LiasseFolderRepository")
+ *         @ORM\HasLifecycleCallbacks
+ *         @UniqueEntity(fields={"title", "parent", "company"}, errorPath="title", groups={"title"})
+ *         @UniqueEntity(fields={"pageUrlFull"}, errorPath="parent", groups={"parent"})
  */
 class LiasseFolder
 {
 
     /**
      *
-     * @var string
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
      *
-     * @var string
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="liasses", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
      */
-    protected $title;
+    protected $company;
 
     /**
      *
-     * @var string
-     */
-    protected $pageUrlFull;
-
-    /**
-     *
-     * @var LiasseFolder
+     * @var LiasseFolder @ORM\ManyToOne(targetEntity="LiasseFolder", inversedBy="childs", cascade={"persist"})
+     *      @ORM\JoinColumns({@ORM\JoinColumn(name="parent_id", referencedColumnName="id")})
      */
     protected $parent;
 
     /**
      *
-     * @var \DateTime
+     * @var string @ORM\Column(name="title", type="text", nullable=false)
+     */
+    protected $title;
+
+    /**
+     *
+     * @var string @ORM\Column(name="pageurl_full", type="text", nullable=false)
+     *      @Gedmo\Slug(handlers={
+     *      @Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\TreeSlugHandler", options={
+     *      @Gedmo\SlugHandlerOption(name="parentRelationField", value="parent"),
+     *      @Gedmo\SlugHandlerOption(name="separator", value="/")
+     *      })
+     *      }, separator="_", updatable=true, style="camel", fields={"title"})
+     */
+    protected $pageUrlFull;
+
+    /**
+     *
+     * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
 
     /**
      *
-     * @var \DateTime
+     * @var \DateTime @ORM\Column(name="updated_at", type="datetimetz", nullable=true)
+     *      @Gedmo\Timestampable(on="update")
      */
     protected $dtUpdate;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="LiasseFolder", mappedBy="parent",cascade={"persist"})
+     *      @ORM\OrderBy({"title" = "ASC"})
      */
     protected $childs;
 
     /**
      *
-     * @var Collection
+     * @var Collection @ORM\OneToMany(targetEntity="LiasseDoc", mappedBy="folder",cascade={"persist"})
+     *      @ORM\OrderBy({"title" = "ASC"})
      */
     protected $docs;
 
@@ -78,6 +107,26 @@ class LiasseFolder
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     *
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     *
+     * @param Company $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
     }
 
     /**

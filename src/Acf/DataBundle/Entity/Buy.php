@@ -2,11 +2,14 @@
 namespace Acf\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Buy
  *
  * @author sasedev <seif.salah@gmail.com>
+ *         @ORM\Entity(repositoryClass="Acf\DataBundle\Repository\BuyRepository")
+ *         @ORM\HasLifecycleCallbacks
  */
 class Buy extends Transaction
 {
