@@ -26,7 +26,7 @@ class LiasseDoc
 
     /**
      *
-     * @var LiasseFolder @ORM\ManyToOne(targetEntity="LiasseFolder", inversedBy="liasses", cascade={"persist"})
+     * @var LiasseFolder @ORM\ManyToOne(targetEntity="LiasseFolder", inversedBy="docs", cascade={"persist"})
      *      @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="liassef_id", referencedColumnName="id")
      *      })

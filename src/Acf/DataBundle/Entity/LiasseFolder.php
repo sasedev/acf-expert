@@ -84,7 +84,7 @@ class LiasseFolder
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="LiasseDoc", mappedBy="folder",cascade={"persist"})
+     * @var Collection @ORM\OneToMany(targetEntity="LiasseDoc", mappedBy="folder", cascade={"persist"})
      *      @ORM\OrderBy({"title" = "ASC"})
      */
     protected $docs;

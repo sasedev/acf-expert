@@ -432,7 +432,7 @@ class Company
     /**
      *
      * @var Collection @ORM\OneToMany(targetEntity="LiasseFolder", mappedBy="company", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"label" = "ASC"})
+     *      @ORM\OrderBy({"title" = "ASC"})
      */
     protected $liasses;
 

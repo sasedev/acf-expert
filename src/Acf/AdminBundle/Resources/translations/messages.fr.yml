@@ -284,6 +284,7 @@ User.tlabel.editEmail: Modification de l'Email de l'Utilisateur
 User.tlabel.editPassword: Modification du Mot de passe de l'Utilisateur
 User.tlabel.editLockout: Modification du Verrouillage de compte de l'Utilisateur
 User.tlabel.editUserRoles: Modification des privilèges de l'Utilisateur
+User.tlabel.editLastValidity: Modification Date de fin de validité du compte de l'Utilisateur
 
 User.empty: Aucun Utilisateur trouvé dans la base de donnée
 
