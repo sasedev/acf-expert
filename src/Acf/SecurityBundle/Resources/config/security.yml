@@ -41,12 +41,13 @@ security:
                 username_parameter:     "LoginForm[username]"
                 password_parameter:     "LoginForm[password]"
                 target_path_parameter:  "LoginForm[target_path]"
-                default_target_path: /
+                default_target_path: /myProfile
+                always_use_default_target_path: true
                 use_referer:    true
                 use_forward:    false
 #                intention: authentication
                 require_previous_session: true
-#                remember_me:    true
+                remember_me:    true
 #                success_handler: login.listener
             logout:
                 path:   /logout

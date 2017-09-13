@@ -82,6 +82,7 @@ User.username: Identifiant
 User.email: Email
 User.logins: Nbr de Connexions
 User.lastLogin: Dernière Connexion
+User.lastValidity: Date de fin de Validité
 User.avatar: Avatar
 User.lockout: Verrouillage
 User.lockout.1: Compte Actif
@@ -116,6 +117,7 @@ User.clearPassword.label: "Mot de passe :"
 User.lockout.label: "Verrouillage :"
 User.lockout.choice.1: "Activer"
 User.lockout.choice.2: "Verrouiller"
+User.lastValidity.label: "Date de fin de Validité :"
 User.preferedLang.label: "Paramètre de Langue :"
 User.sexe.label: "Civilité :"
 User.sexe.choice.1: "Mlle"

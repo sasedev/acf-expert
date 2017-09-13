@@ -122,6 +122,8 @@ $(function() {
 							</div>
 							<div class="col-lg-3 text-right">{{'User.dtCrea'|trans}} :</div>
 							<div class="col-lg-9">{{user.dtCrea|localeDate('full')}} {{'_at'|trans}} {{user.dtCrea|localeDate('none','medium')}}</div>
+                            <div class="col-lg-3 text-right">{{'User.lastValidity'|trans}} :</div>
+                            <div class="col-lg-9">{% if user.lastValidity is not empty %}<span class="label label-danger">{{user.lastValidity|localeDate('full')}} {{'_at'|trans}} {{user.lastValidity|localeDate('none','medium')}}</span>{% else %}{{bsLabelWarning('_NA'|trans|raw)}}{% endif %}</div>
 							<div class="col-lg-3 text-right">{{'User.logins'|trans}} :</div>
 							<div class="col-lg-9">{{user.logins}}</div>
 							<div class="col-lg-3 text-right">{{'User.lastLogin'|trans}} :</div>

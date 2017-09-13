@@ -117,6 +117,12 @@ class User implements UserInterface, \Serializable
 
     /**
      *
+     * @var \DateTime @ORM\Column(name="lastvalidity", type="datetimetz", nullable=true)
+     */
+    protected $lastValidity;
+
+    /**
+     *
      * @var integer @ORM\Column(name="logins", type="bigint", nullable=false)
      */
     protected $logins;
@@ -567,6 +573,28 @@ class User implements UserInterface, \Serializable
     public function setLockout($lockout)
     {
         $this->lockout = $lockout;
+
+        return $this;
+    }
+
+    /**
+     * Get $lastValidity
+     *
+     * @return \DateTime
+     */
+    public function getLastValidity()
+    {
+        return $this->lastValidity;
+    }
+
+    /**
+     * Set $lastValidity
+     *
+     * @param \DateTime $lastValidity
+     */
+    public function setLastValidity($lastValidity)
+    {
+        $this->lastValidity = $lastValidity;
 
         return $this;
     }

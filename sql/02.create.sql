@@ -88,6 +88,7 @@ CREATE TABLE "acf_users" (
 	"recoverycode"                                                      TEXT NULL,
 	"recoveryexpiration"                                                TIMESTAMP WITH TIME ZONE NULL,
 	"lockout"                                                           INT8 NOT NULL DEFAULT 1,
+    "lastvalidity"                                                      TIMESTAMP WITH TIME ZONE NULL,
 	"logins"                                                            INT8 NOT NULL DEFAULT 0,
 	"lastlogin"                                                         TIMESTAMP WITH TIME ZONE NULL,
 	"lastactivity"                                                      TIMESTAMP WITH TIME ZONE NULL,

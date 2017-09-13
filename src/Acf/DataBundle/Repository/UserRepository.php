@@ -29,7 +29,16 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      */
     public function loadUserByUsername($username)
     {
-        $qb = $this->createQueryBuilder('u')->where('u.username = :username')->andWhere('u.lockout = :lockout')->setParameter('username', $username)->setParameter('lockout', User::LOCKOUT_UNLOCKED);
+        $now = new \DateTime();
+        $now->setTimestamp(strtotime('now'));
+
+        $qb = $this->createQueryBuilder('u');
+        $qb->where('u.username = :username');
+        $qb->andWhere('u.lockout = :lockout');
+        $qb->andWhere($qb->expr()->orX($qb->expr()->isNull('u.lastValidity'), $qb->expr()->gt('u.lastValidity', ':now')));
+        $qb->setParameter('username', $username);
+        $qb->setParameter('lockout', User::LOCKOUT_UNLOCKED);
+        $qb->setParameter('now', $now);
         $query = $qb->getQuery();
 
         try {

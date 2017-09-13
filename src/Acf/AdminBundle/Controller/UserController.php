@@ -6,6 +6,7 @@ use Acf\DataBundle\Entity\Trace;
 use Acf\AdminBundle\Form\User\CropAvatarTForm as UserCropAvatarTForm;
 use Acf\AdminBundle\Form\User\NewTForm as UserNewTForm;
 use Acf\AdminBundle\Form\User\UpdateEmailTForm as UserUpdateEmailTForm;
+use Acf\AdminBundle\Form\User\UpdateLastValidityTForm as UserUpdateLastValidityTForm;
 use Acf\AdminBundle\Form\User\UpdateLockoutTForm as UserUpdateLockoutTForm;
 use Acf\AdminBundle\Form\User\UpdatePasswordTForm as UserUpdatePasswordTForm;
 use Acf\AdminBundle\Form\User\UpdatePreferedLangTForm as UserUpdatePreferedLangTForm;
@@ -405,6 +406,7 @@ class UserController extends BaseController
                 $this->gvars['traces'] = array_reverse($traces);
                 $userUpdateEmailForm = $this->createForm(UserUpdateEmailTForm::class, $user);
                 $userUpdateLockoutForm = $this->createForm(UserUpdateLockoutTForm::class, $user);
+                $userUpdateLastValidityForm = $this->createForm(UserUpdateLastValidityTForm::class, $user);
                 $userUpdatePasswordForm = $this->createForm(UserUpdatePasswordTForm::class, $user);
                 $userUpdatePreferedLangForm = $this->createForm(UserUpdatePreferedLangTForm::class, $user);
                 $userUpdateProfileForm = $this->createForm(UserUpdateProfileTForm::class, $user);
@@ -415,6 +417,7 @@ class UserController extends BaseController
                 $this->gvars['user'] = $user;
                 $this->gvars['UserUpdateEmailForm'] = $userUpdateEmailForm->createView();
                 $this->gvars['UserUpdateLockoutForm'] = $userUpdateLockoutForm->createView();
+                $this->gvars['UserUpdateLastValidityForm'] = $userUpdateLastValidityForm->createView();
                 $this->gvars['UserUpdatePasswordForm'] = $userUpdatePasswordForm->createView();
                 $this->gvars['UserUpdatePreferedLangForm'] = $userUpdatePreferedLangForm->createView();
                 $this->gvars['UserUpdateProfileForm'] = $userUpdateProfileForm->createView();
@@ -467,6 +470,7 @@ class UserController extends BaseController
                 $traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($user->getId(), Trace::AE_USER);
                 $this->gvars['traces'] = array_reverse($traces);
                 $userUpdateEmailForm = $this->createForm(UserUpdateEmailTForm::class, $user);
+                $userUpdateLastValidityForm = $this->createForm(UserUpdateLastValidityTForm::class, $user);
                 $userUpdateLockoutForm = $this->createForm(UserUpdateLockoutTForm::class, $user);
                 $userUpdatePasswordForm = $this->createForm(UserUpdatePasswordTForm::class, $user);
                 $userUpdatePreferedLangForm = $this->createForm(UserUpdatePreferedLangTForm::class, $user);
@@ -488,6 +492,27 @@ class UserController extends BaseController
                     $this->getSession()->set('tabActive', 2);
                     $userUpdateEmailForm->handleRequest($request);
                     if ($userUpdateEmailForm->isValid()) {
+                        $em->persist($user);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('User.edit.success', array(
+                            '%user%' => $user->getUsername()
+                        )));
+
+                        $this->traceEntity($cloneUser, $user);
+
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($user);
+
+                        $this->flashMsgSession('error', $this->translate('User.edit.failure', array(
+                            '%user%' => $user->getUsername()
+                        )));
+                    }
+                } elseif (isset($reqData['UserUpdateLastValidityForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $userUpdateLastValidityForm->handleRequest($request);
+                    if ($userUpdateLastValidityForm->isValid()) {
                         $em->persist($user);
                         $em->flush();
                         $this->flashMsgSession('success', $this->translate('User.edit.success', array(
@@ -716,6 +741,7 @@ class UserController extends BaseController
 
                 $this->gvars['user'] = $user;
                 $this->gvars['UserUpdateEmailForm'] = $userUpdateEmailForm->createView();
+                $this->gvars['UserUpdateLastValidityForm'] = $userUpdateLastValidityForm->createView();
                 $this->gvars['UserUpdateLockoutForm'] = $userUpdateLockoutForm->createView();
                 $this->gvars['UserUpdatePasswordForm'] = $userUpdatePasswordForm->createView();
                 $this->gvars['UserUpdatePreferedLangForm'] = $userUpdatePreferedLangForm->createView();
@@ -994,8 +1020,24 @@ class UserController extends BaseController
             $msg .= '</td></tr>';
         }
 
+        if ($cloneUser->getLockout() != $user->getLastValidity()) {
+            $msg .= '<tr><td>' . $this->translate('User.lastValidity.label') . '</td><td>';
+            if ($cloneUser->getLastValidity() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $this->translate('User.lastValidity.' . $cloneUser->getLastValidity());
+            }
+            $msg .= '</td><td>';
+            if ($user->getLastValidity() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $this->translate('User.lastValidity.' . $user->getLastValidity());
+            }
+            $msg .= '</td></tr>';
+        }
+
         if ($cloneUser->getLockout() != $user->getLockout()) {
-            $msg .= '<tr><td>' . $this->translate('User.sexe.label') . '</td><td>';
+            $msg .= '<tr><td>' . $this->translate('User.lockout.label') . '</td><td>';
             if ($cloneUser->getLockout() == null) {
                 $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
             } else {
