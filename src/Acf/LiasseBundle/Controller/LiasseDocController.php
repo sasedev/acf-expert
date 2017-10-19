@@ -69,7 +69,7 @@ class LiasseDocController extends BaseController
                     $response->headers->set('Cache-Control', '');
                     $response->headers->set('Content-Length', $liasseDoc->getSize());
                     $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $timestamp));
-                    $fallback = $this->normalize($liasseDoc->getTitle());
+                    $fallback = $this->normalizeString($this->normalize($liasseDoc->getTitle()));
 
                     $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $liasseDoc->getOriginalName(), $fallback);
                     $response->headers->set('Content-Disposition', $contentDisposition);
@@ -95,5 +95,20 @@ class LiasseDocController extends BaseController
         }
 
         return $this->redirect($urlFrom);
+    }
+
+    private static function normalizeString($str = '')
+    {
+        $str = strip_tags($str);
+        $str = preg_replace('/[\r\n\t ]+/', ' ', $str);
+        $str = preg_replace('/[\"\*\/\:\<\>\?\'\|]+/', ' ', $str);
+        $str = strtolower($str);
+        $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
+        $str = htmlentities($str, ENT_QUOTES, "utf-8");
+        $str = preg_replace("/(&)([a-z])([a-z]+;)/i", '$2', $str);
+        $str = str_replace(' ', '-', $str);
+        $str = rawurlencode($str);
+        $str = str_replace('%', '-', $str);
+        return $str;
     }
 }

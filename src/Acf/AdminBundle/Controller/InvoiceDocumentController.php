@@ -110,8 +110,9 @@ class InvoiceDocumentController extends BaseController
                     $response->headers->set('Content-Type', $invoiceDoc->getMimeType());
                     $response->headers->set('Cache-Control', '');
                     $response->headers->set('Content-Length', $invoiceDoc->getSize());
-                    $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $invoiceDoc->getDtUpdate()->getTimestamp()));
-                    $fallback = $this->normalize($invoiceDoc->getOriginalName());
+                    $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $invoiceDoc->getDtUpdate()
+                        ->getTimestamp()));
+                    $fallback = $this->normalizeString($this->normalize($invoiceDoc->getOriginalName()));
 
                     $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $invoiceDoc->getOriginalName(), $fallback);
                     $response->headers->set('Content-Disposition', $contentDisposition);
@@ -342,14 +343,19 @@ class InvoiceDocumentController extends BaseController
                 $from = $this->getParameter('mail_from');
                 $fromName = $this->getParameter('mail_from_name');
                 $subject = $this->translate('_mail.invoiceDocument.subject', array(
-                    '%invoice%' => $invoiceDocument->getInvoice()->getRef(),
+                    '%invoice%' => $invoiceDocument->getInvoice()
+                        ->getRef(),
                     '%invoiceDocument%' => $invoiceDocument->getOriginalName()
                 ), 'messages');
                 $mvars = array();
                 $mvars['invoiceDocument'] = $invoiceDocument;
                 $message = \Swift_Message::newInstance();
                 $message->setFrom($from, $fromName);
-                $message->setTo($invoiceDocument->getInvoice()->getUser()->getEmail(), $invoiceDocument->getInvoice()->getUser()->getFullname());
+                $message->setTo($invoiceDocument->getInvoice()
+                    ->getUser()
+                    ->getEmail(), $invoiceDocument->getInvoice()
+                    ->getUser()
+                    ->getFullname());
                 $message->setSubject($subject);
                 $mvars['logo'] = $message->embed(\Swift_Image::fromPath($this->getParameter('kernel.root_dir') . '/../web/bundles/acfres/images/logo_acf.jpg'));
                 $message->setBody($this->renderView('AcfAdminBundle:InvoiceDocument:mail.html.twig', $mvars), 'text/html');
@@ -364,5 +370,20 @@ class InvoiceDocumentController extends BaseController
         }
 
         return $this->redirect($urlFrom);
+    }
+
+    private static function normalizeString($str = '')
+    {
+        $str = strip_tags($str);
+        $str = preg_replace('/[\r\n\t ]+/', ' ', $str);
+        $str = preg_replace('/[\"\*\/\:\<\>\?\'\|]+/', ' ', $str);
+        $str = strtolower($str);
+        $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
+        $str = htmlentities($str, ENT_QUOTES, "utf-8");
+        $str = preg_replace("/(&)([a-z])([a-z]+;)/i", '$2', $str);
+        $str = str_replace(' ', '-', $str);
+        $str = rawurlencode($str);
+        $str = str_replace('%', '-', $str);
+        return $str;
     }
 }

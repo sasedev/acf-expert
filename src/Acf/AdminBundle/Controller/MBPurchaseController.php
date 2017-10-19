@@ -737,7 +737,17 @@ class MBPurchaseController extends BaseController
 
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.buy.list'))->setSubject($this->translate('pagetitle.buy.list'))->setDescription($this->translate('pagetitle.buy.list'))->setKeywords($this->translate('pagetitle.buy.list'))->setCategory('ACEF buy');
+            $phpExcelObject->getProperties()
+                ->setCreator('Salah Abdelkader Seif Eddine')
+                ->setLastModifiedBy($this->getSecurityTokenStorage()
+                ->getToken()
+                ->getUser()
+                ->getFullname())
+                ->setTitle($this->translate('pagetitle.buy.list'))
+                ->setSubject($this->translate('pagetitle.buy.list'))
+                ->setDescription($this->translate('pagetitle.buy.list'))
+                ->setKeywords($this->translate('pagetitle.buy.list'))
+                ->setCategory('ACEF buy');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -747,45 +757,85 @@ class MBPurchaseController extends BaseController
             )));
 
             $workSheet->setCellValue('A1', $this->translate('Buy.number.label'));
-            $workSheet->getStyle('A1')->getFont()->setBold(true);
+            $workSheet->getStyle('A1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('Buy.dtActivation.label'));
-            $workSheet->getStyle('B1')->getFont()->setBold(true);
+            $workSheet->getStyle('B1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('C1', $this->translate('Buy.bill.label'));
-            $workSheet->getStyle('C1')->getFont()->setBold(true);
+            $workSheet->getStyle('C1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('D1', $this->translate('Buy.relation.label'));
-            $workSheet->getStyle('D1')->getFont()->setBold(true);
+            $workSheet->getStyle('D1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('E1', $this->translate('Buy.relation.number'));
-            $workSheet->getStyle('E1')->getFont()->setBold(true);
+            $workSheet->getStyle('E1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('F1', $this->translate('Buy.label.label'));
-            $workSheet->getStyle('F1')->getFont()->setBold(true);
+            $workSheet->getStyle('F1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('G1', $this->translate('Buy.balanceHt.label'));
-            $workSheet->getStyle('G1')->getFont()->setBold(true);
+            $workSheet->getStyle('G1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('H1', $this->translate('Buy.vat.label'));
-            $workSheet->getStyle('H1')->getFont()->setBold(true);
+            $workSheet->getStyle('H1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('I1', $this->translate('Buy.stamp.label'));
-            $workSheet->getStyle('I1')->getFont()->setBold(true);
+            $workSheet->getStyle('I1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('J1', $this->translate('Buy.balanceTtc.label'));
-            $workSheet->getStyle('J1')->getFont()->setBold(true);
+            $workSheet->getStyle('J1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('K1', $this->translate('Buy.regime.label'));
-            $workSheet->getStyle('K1')->getFont()->setBold(true);
+            $workSheet->getStyle('K1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('L1', $this->translate('Buy.withholding.label'));
-            $workSheet->getStyle('L1')->getFont()->setBold(true);
+            $workSheet->getStyle('L1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('M1', $this->translate('Buy.withholding.value.label'));
-            $workSheet->getStyle('M1')->getFont()->setBold(true);
+            $workSheet->getStyle('M1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('N1', $this->translate('Buy.balanceNet.label'));
-            $workSheet->getStyle('N1')->getFont()->setBold(true);
+            $workSheet->getStyle('N1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('O1', $this->translate('Buy.paymentType.label'));
-            $workSheet->getStyle('O1')->getFont()->setBold(true);
+            $workSheet->getStyle('O1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('P1', $this->translate('Buy.dtPayment.label'));
-            $workSheet->getStyle('P1')->getFont()->setBold(true);
+            $workSheet->getStyle('P1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('Q1', $this->translate('Buy.account.label'));
-            $workSheet->getStyle('Q1')->getFont()->setBold(true);
+            $workSheet->getStyle('Q1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('R1', $this->translate('Buy.nature.label'));
-            $workSheet->getStyle('R1')->getFont()->setBold(true);
+            $workSheet->getStyle('R1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('S1', $this->translate('Buy.transactionStatus.label'));
-            $workSheet->getStyle('S1')->getFont()->setBold(true);
+            $workSheet->getStyle('S1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('T1', $this->translate('Buy.otherInfos.label'));
-            $workSheet->getStyle('T1')->getFont()->setBold(true);
+            $workSheet->getStyle('T1')
+                ->getFont()
+                ->setBold(true);
 
             $workSheet->getStyle('A1:T1')->applyFromArray(array(
                 'fill' => array(
@@ -819,9 +869,12 @@ class MBPurchaseController extends BaseController
 
                 $workSheet->setCellValue('A' . $i, $buy->getNumber(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtActivation()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
-                $workSheet->getStyle('B' . $i)->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+                $workSheet->getStyle('B' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('dd/mm/yyyy');
                 $workSheet->setCellValue('C' . $i, $buy->getBill(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-                $workSheet->setCellValue('D' . $i, $buy->getRelation()->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('D' . $i, $buy->getRelation()
+                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $numb = $suppliersPrefix . $buy->getRelation()->getNumberFormated();
                 $workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('F' . $i, $buy->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -829,29 +882,48 @@ class MBPurchaseController extends BaseController
                 $balanceHt = $buy->getBalanceTtc() - $buy->getStamp() - $buy->getVat();
                 // $balanceHt = $currencyFormatter->formatCurrency($balanceHt, 'TND');
                 $workSheet->setCellValue('G' . $i, $balanceHt);
-                $workSheet->getStyle('G' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                $workSheet->getStyle('G' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('#,##0.000');
                 $workSheet->setCellValue('H' . $i, $buy->getVat());
-                $workSheet->getStyle('H' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                $workSheet->getStyle('H' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('#,##0.000');
                 $workSheet->setCellValue('I' . $i, $buy->getStamp());
-                $workSheet->getStyle('I' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                $workSheet->getStyle('I' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('#,##0.000');
                 $workSheet->setCellValue('J' . $i, $buy->getBalanceTtc());
-                $workSheet->getStyle('J' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                $workSheet->getStyle('J' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('#,##0.000');
                 $workSheet->setCellValue('K' . $i, $this->translate('Buy.regime.' . $buy->getRegime()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $withholding = $buy->getBalanceTtc() - $buy->getBalanceNet();
                 $workSheet->setCellValue('L' . $i, $withholding);
-                $workSheet->getStyle('L' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
-                $workSheet->setCellValue('M' . $i, $buy->getWithholding()->getValue() / 100);
-                $workSheet->getStyle('M' . $i)->getNumberFormat()->setFormatCode('#,##0.00%');
+                $workSheet->getStyle('L' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('#,##0.000');
+                $workSheet->setCellValue('M' . $i, $buy->getWithholding()
+                    ->getValue() / 100);
+                $workSheet->getStyle('M' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('#,##0.00%');
                 $workSheet->setCellValue('N' . $i, $buy->getBalanceNet());
-                $workSheet->getStyle('N' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                $workSheet->getStyle('N' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('#,##0.000');
                 $workSheet->setCellValue('O' . $i, $this->translate('Transaction.paymentType.' . $buy->getPaymentType()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('P' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtPayment()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
-                $workSheet->getStyle('P' . $i)->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-                $workSheet->setCellValue('Q' . $i, $buy->getAccount()->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->getStyle('P' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('dd/mm/yyyy');
+                $workSheet->setCellValue('Q' . $i, $buy->getAccount()
+                    ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 if (null == $buy->getNature()) {
                     $workSheet->setCellValue('R' . $i, 'ACHATS DE MARCHANDISES', \PHPExcel_Cell_DataType::TYPE_STRING2);
                 } else {
-                    $workSheet->setCellValue('R' . $i, $buy->getNature()->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('R' . $i, $buy->getNature()
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 }
                 $workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $buy->getTransactionStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('T' . $i, $buy->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -903,10 +975,11 @@ class MBPurchaseController extends BaseController
 
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
 
-            $filename = $this->normalize($this->translate('pagetitle.buy.listByMBPurchase', array(
+            $filename = $this->normalizeString($this->normalize($this->translate('pagetitle.buy.listByMBPurchase', array(
                 '%mbpurchase%' => $mbpurchase->getRef(),
-                '%company%' => $mbpurchase->getCompany()->getCorporateName()
-            )));
+                '%company%' => $mbpurchase->getCompany()
+                    ->getCorporateName()
+            ))));
             $filename = str_ireplace('"', '|', $filename);
             $filename = str_ireplace(' ', '_', $filename);
 
@@ -953,7 +1026,17 @@ class MBPurchaseController extends BaseController
 
                 $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-                $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.buy.list'))->setSubject($this->translate('pagetitle.buy.list'))->setDescription($this->translate('pagetitle.buy.list'))->setKeywords($this->translate('pagetitle.buy.list'))->setCategory('ACEF buy');
+                $phpExcelObject->getProperties()
+                    ->setCreator('Salah Abdelkader Seif Eddine')
+                    ->setLastModifiedBy($this->getSecurityTokenStorage()
+                    ->getToken()
+                    ->getUser()
+                    ->getFullname())
+                    ->setTitle($this->translate('pagetitle.buy.list'))
+                    ->setSubject($this->translate('pagetitle.buy.list'))
+                    ->setDescription($this->translate('pagetitle.buy.list'))
+                    ->setKeywords($this->translate('pagetitle.buy.list'))
+                    ->setCategory('ACEF buy');
 
                 $phpExcelObject->setActiveSheetIndex(0);
 
@@ -963,45 +1046,85 @@ class MBPurchaseController extends BaseController
                 )));
 
                 $workSheet->setCellValue('A1', $this->translate('Buy.number.label'));
-                $workSheet->getStyle('A1')->getFont()->setBold(true);
+                $workSheet->getStyle('A1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('B1', $this->translate('Buy.dtActivation.label'));
-                $workSheet->getStyle('B1')->getFont()->setBold(true);
+                $workSheet->getStyle('B1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('C1', $this->translate('Buy.bill.label'));
-                $workSheet->getStyle('C1')->getFont()->setBold(true);
+                $workSheet->getStyle('C1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('D1', $this->translate('Buy.relation.label'));
-                $workSheet->getStyle('D1')->getFont()->setBold(true);
+                $workSheet->getStyle('D1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('E1', $this->translate('Buy.relation.number'));
-                $workSheet->getStyle('E1')->getFont()->setBold(true);
+                $workSheet->getStyle('E1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('F1', $this->translate('Buy.label.label'));
-                $workSheet->getStyle('F1')->getFont()->setBold(true);
+                $workSheet->getStyle('F1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('G1', $this->translate('Buy.balanceHt.label'));
-                $workSheet->getStyle('G1')->getFont()->setBold(true);
+                $workSheet->getStyle('G1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('H1', $this->translate('Buy.vat.label'));
-                $workSheet->getStyle('H1')->getFont()->setBold(true);
+                $workSheet->getStyle('H1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('I1', $this->translate('Buy.stamp.label'));
-                $workSheet->getStyle('I1')->getFont()->setBold(true);
+                $workSheet->getStyle('I1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('J1', $this->translate('Buy.balanceTtc.label'));
-                $workSheet->getStyle('J1')->getFont()->setBold(true);
+                $workSheet->getStyle('J1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('K1', $this->translate('Buy.regime.label'));
-                $workSheet->getStyle('K1')->getFont()->setBold(true);
+                $workSheet->getStyle('K1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('L1', $this->translate('Buy.withholding.label'));
-                $workSheet->getStyle('L1')->getFont()->setBold(true);
+                $workSheet->getStyle('L1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('M1', $this->translate('Buy.withholding.value.label'));
-                $workSheet->getStyle('M1')->getFont()->setBold(true);
+                $workSheet->getStyle('M1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('N1', $this->translate('Buy.balanceNet.label'));
-                $workSheet->getStyle('N1')->getFont()->setBold(true);
+                $workSheet->getStyle('N1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('O1', $this->translate('Buy.paymentType.label'));
-                $workSheet->getStyle('O1')->getFont()->setBold(true);
+                $workSheet->getStyle('O1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('P1', $this->translate('Buy.dtPayment.label'));
-                $workSheet->getStyle('P1')->getFont()->setBold(true);
+                $workSheet->getStyle('P1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('Q1', $this->translate('Buy.account.label'));
-                $workSheet->getStyle('Q1')->getFont()->setBold(true);
+                $workSheet->getStyle('Q1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('R1', $this->translate('Buy.nature.label'));
-                $workSheet->getStyle('R1')->getFont()->setBold(true);
+                $workSheet->getStyle('R1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('S1', $this->translate('Buy.transactionStatus.label'));
-                $workSheet->getStyle('S1')->getFont()->setBold(true);
+                $workSheet->getStyle('S1')
+                    ->getFont()
+                    ->setBold(true);
                 $workSheet->setCellValue('T1', $this->translate('Buy.otherInfos.label'));
-                $workSheet->getStyle('T1')->getFont()->setBold(true);
+                $workSheet->getStyle('T1')
+                    ->getFont()
+                    ->setBold(true);
 
                 $workSheet->getStyle('A1:T1')->applyFromArray(array(
                     'fill' => array(
@@ -1035,9 +1158,12 @@ class MBPurchaseController extends BaseController
 
                     $workSheet->setCellValue('A' . $i, $buy->getNumber(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('B' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtActivation()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
-                    $workSheet->getStyle('B' . $i)->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+                    $workSheet->getStyle('B' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('dd/mm/yyyy');
                     $workSheet->setCellValue('C' . $i, $buy->getBill(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-                    $workSheet->setCellValue('D' . $i, $buy->getRelation()->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('D' . $i, $buy->getRelation()
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $numb = $suppliersPrefix . $buy->getRelation()->getNumberFormated();
                     $workSheet->setCellValueExplicit('E' . $i, $numb, \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('F' . $i, $buy->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -1045,29 +1171,48 @@ class MBPurchaseController extends BaseController
                     $balanceHt = $buy->getBalanceTtc() - $buy->getStamp() - $buy->getVat();
                     // $balanceHt = $currencyFormatter->formatCurrency($balanceHt, 'TND');
                     $workSheet->setCellValue('G' . $i, $balanceHt);
-                    $workSheet->getStyle('G' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                    $workSheet->getStyle('G' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('#,##0.000');
                     $workSheet->setCellValue('H' . $i, $buy->getVat());
-                    $workSheet->getStyle('H' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                    $workSheet->getStyle('H' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('#,##0.000');
                     $workSheet->setCellValue('I' . $i, $buy->getStamp());
-                    $workSheet->getStyle('I' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                    $workSheet->getStyle('I' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('#,##0.000');
                     $workSheet->setCellValue('J' . $i, $buy->getBalanceTtc());
-                    $workSheet->getStyle('J' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                    $workSheet->getStyle('J' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('#,##0.000');
                     $workSheet->setCellValue('K' . $i, $this->translate('Buy.regime.' . $buy->getRegime()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $withholding = $buy->getBalanceTtc() - $buy->getBalanceNet();
                     $workSheet->setCellValue('L' . $i, $withholding);
-                    $workSheet->getStyle('L' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
-                    $workSheet->setCellValue('M' . $i, $buy->getWithholding()->getValue() / 100);
-                    $workSheet->getStyle('M' . $i)->getNumberFormat()->setFormatCode('#,##0.00%');
+                    $workSheet->getStyle('L' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('#,##0.000');
+                    $workSheet->setCellValue('M' . $i, $buy->getWithholding()
+                        ->getValue() / 100);
+                    $workSheet->getStyle('M' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('#,##0.00%');
                     $workSheet->setCellValue('N' . $i, $buy->getBalanceNet());
-                    $workSheet->getStyle('N' . $i)->getNumberFormat()->setFormatCode('#,##0.000');
+                    $workSheet->getStyle('N' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('#,##0.000');
                     $workSheet->setCellValue('O' . $i, $this->translate('Transaction.paymentType.' . $buy->getPaymentType()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('P' . $i, \PHPExcel_Shared_Date::PHPToExcel($buy->getDtPayment()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
-                    $workSheet->getStyle('P' . $i)->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-                    $workSheet->setCellValue('Q' . $i, $buy->getAccount()->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->getStyle('P' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode('dd/mm/yyyy');
+                    $workSheet->setCellValue('Q' . $i, $buy->getAccount()
+                        ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     if (null == $buy->getNature()) {
                         $workSheet->setCellValue('R' . $i, 'ACHATS DE MARCHANDISES', \PHPExcel_Cell_DataType::TYPE_STRING2);
                     } else {
-                        $workSheet->setCellValue('R' . $i, $buy->getNature()->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        $workSheet->setCellValue('R' . $i, $buy->getNature()
+                            ->getLabel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     }
                     $workSheet->setCellValue('S' . $i, $this->translate('Transaction.transactionStatus.' . $buy->getTransactionStatus()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('T' . $i, $buy->getOtherInfos(), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -1119,10 +1264,11 @@ class MBPurchaseController extends BaseController
 
                 $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
 
-                $filename = $this->normalize($this->translate('pagetitle.buy.listByYear', array(
+                $filename = $this->normalizeString($this->normalize($this->translate('pagetitle.buy.listByYear', array(
                     '%year%' => $year,
-                    '%company%' => $mbpurchase->getCompany()->getCorporateName()
-                )));
+                    '%company%' => $mbpurchase->getCompany()
+                        ->getCorporateName()
+                ))));
                 $filename = str_ireplace('"', '|', $filename);
                 $filename = str_ireplace(' ', '_', $filename);
 
@@ -1142,12 +1288,15 @@ class MBPurchaseController extends BaseController
 
     protected function traceEntity(MBPurchase $cloneMBPurchase, MBPurchase $mbpurchase)
     {
-        $curUser = $this->getSecurityTokenStorage()->getToken()->getUser();
+        $curUser = $this->getSecurityTokenStorage()
+            ->getToken()
+            ->getUser();
         $trace = new Trace();
         $trace->setActionId($mbpurchase->getId());
         $trace->setActionType(Trace::AT_UPDATE);
         $trace->setUserId($curUser->getId());
-        $trace->setCompanyId($mbpurchase->getCompany()->getId());
+        $trace->setCompanyId($mbpurchase->getCompany()
+            ->getId());
         $trace->setUserFullname($curUser->getFullName());
         if (!$this->hasRole('ROLE_SUPERADMIN')) {
             if (!$this->hasRole('ROLE_ADMIN')) {
@@ -1167,7 +1316,8 @@ class MBPurchaseController extends BaseController
         $tableEnd = '</tbody></table>';
 
         $trace->setActionEntity(Trace::AE_MBPURCHASE);
-        $trace->setActionId2($mbpurchase->getCompany()->getId());
+        $trace->setActionId2($mbpurchase->getCompany()
+            ->getId());
         $trace->setActionEntity2(Trace::AE_COMPANY);
 
         $msg = '';
@@ -1222,12 +1372,28 @@ class MBPurchaseController extends BaseController
 
             $trace->setMsg($this->translate('MBPurchase.traceEdit', array(
                 '%mbpurchase%' => $mbpurchase->getRef(),
-                '%company%' => $mbpurchase->getCompany()->getCorporateName()
+                '%company%' => $mbpurchase->getCompany()
+                    ->getCorporateName()
             )) . $msg);
             $trace->setDtCrea(new \DateTime('now'));
             $em = $this->getEntityManager();
             $em->persist($trace);
             $em->flush();
         }
+    }
+
+    private static function normalizeString($str = '')
+    {
+        $str = strip_tags($str);
+        $str = preg_replace('/[\r\n\t ]+/', ' ', $str);
+        $str = preg_replace('/[\"\*\/\:\<\>\?\'\|]+/', ' ', $str);
+        $str = strtolower($str);
+        $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
+        $str = htmlentities($str, ENT_QUOTES, "utf-8");
+        $str = preg_replace("/(&)([a-z])([a-z]+;)/i", '$2', $str);
+        $str = str_replace(' ', '-', $str);
+        $str = rawurlencode($str);
+        $str = str_replace('%', '-', $str);
+        return $str;
     }
 }

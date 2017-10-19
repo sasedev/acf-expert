@@ -198,7 +198,7 @@ class InvoiceController extends BaseController
 
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8');
 
-            $filename = $this->normalize($this->translate('pagetitle.invoice.list'));
+            $filename = $this->normalizeString($this->normalize($this->translate('pagetitle.invoice.list')));
             $filename = str_ireplace('"', '|', $filename);
             $filename = str_ireplace(' ', '_', $filename);
 
@@ -590,5 +590,20 @@ class InvoiceController extends BaseController
         }
 
         return $this->redirect($urlFrom);
+    }
+
+    private static function normalizeString($str = '')
+    {
+        $str = strip_tags($str);
+        $str = preg_replace('/[\r\n\t ]+/', ' ', $str);
+        $str = preg_replace('/[\"\*\/\:\<\>\?\'\|]+/', ' ', $str);
+        $str = strtolower($str);
+        $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
+        $str = htmlentities($str, ENT_QUOTES, "utf-8");
+        $str = preg_replace("/(&)([a-z])([a-z]+;)/i", '$2', $str);
+        $str = str_replace(' ', '-', $str);
+        $str = rawurlencode($str);
+        $str = str_replace('%', '-', $str);
+        return $str;
     }
 }

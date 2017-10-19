@@ -73,7 +73,7 @@ class DocController extends BaseController
                     $response->headers->set('Content-Length', $doc->getSize());
                     $response->headers->set('Last-Modified', gmdate('D, d M Y H:i:s', $doc->getDtUpdate()
                         ->getTimestamp()));
-                    $fallback = $this->normalize($doc->getOriginalName());
+                    $fallback = $this->normalizeString($this->normalize($doc->getOriginalName()));
 
                     $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $doc->getOriginalName(), $fallback);
                     $response->headers->set('Content-Disposition', $contentDisposition);
@@ -469,5 +469,20 @@ class DocController extends BaseController
             $em->persist($trace);
             $em->flush();
         }
+    }
+
+    private static function normalizeString($str = '')
+    {
+        $str = strip_tags($str);
+        $str = preg_replace('/[\r\n\t ]+/', ' ', $str);
+        $str = preg_replace('/[\"\*\/\:\<\>\?\'\|]+/', ' ', $str);
+        $str = strtolower($str);
+        $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
+        $str = htmlentities($str, ENT_QUOTES, "utf-8");
+        $str = preg_replace("/(&)([a-z])([a-z]+;)/i", '$2', $str);
+        $str = str_replace(' ', '-', $str);
+        $str = rawurlencode($str);
+        $str = str_replace('%', '-', $str);
+        return $str;
     }
 }
