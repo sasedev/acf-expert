@@ -81,7 +81,17 @@ class UserController extends BaseController
             $users = $em->getRepository('AcfDataBundle:User')->getAll();
             $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
-            $phpExcelObject->getProperties()->setCreator('Salah Abdelkader Seif Eddine')->setLastModifiedBy($this->getSecurityTokenStorage()->getToken()->getUser()->getFullname())->setTitle($this->translate('pagetitle.user.list'))->setSubject($this->translate('pagetitle.user.list'))->setDescription($this->translate('pagetitle.user.list'))->setKeywords($this->translate('pagetitle.user.list'))->setCategory('ACEF Users');
+            $phpExcelObject->getProperties()
+                ->setCreator('Salah Abdelkader Seif Eddine')
+                ->setLastModifiedBy($this->getSecurityTokenStorage()
+                ->getToken()
+                ->getUser()
+                ->getFullname())
+                ->setTitle($this->translate('pagetitle.user.list'))
+                ->setSubject($this->translate('pagetitle.user.list'))
+                ->setDescription($this->translate('pagetitle.user.list'))
+                ->setKeywords($this->translate('pagetitle.user.list'))
+                ->setCategory('ACEF Users');
 
             $phpExcelObject->setActiveSheetIndex(0);
 
@@ -89,45 +99,87 @@ class UserController extends BaseController
             $workSheet->setTitle($this->translate('pagetitle.user.list'));
 
             $workSheet->setCellValue('A1', $this->translate('User.lastName.label'));
-            $workSheet->getStyle('A1')->getFont()->setBold(true);
+            $workSheet->getStyle('A1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('B1', $this->translate('User.firstName.label'));
-            $workSheet->getStyle('B1')->getFont()->setBold(true);
+            $workSheet->getStyle('B1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('C1', $this->translate('User.sexe.label'));
-            $workSheet->getStyle('C1')->getFont()->setBold(true);
+            $workSheet->getStyle('C1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('D1', $this->translate('User.username.label'));
-            $workSheet->getStyle('D1')->getFont()->setBold(true);
+            $workSheet->getStyle('D1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('E1', $this->translate('User.email.label'));
-            $workSheet->getStyle('E1')->getFont()->setBold(true);
+            $workSheet->getStyle('E1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('F1', $this->translate('User.lockout.label'));
-            $workSheet->getStyle('F1')->getFont()->setBold(true);
+            $workSheet->getStyle('F1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('G1', $this->translate('User.birthday.label'));
-            $workSheet->getStyle('G1')->getFont()->setBold(true);
+            $workSheet->getStyle('G1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('H1', $this->translate('User.streetNum.label'));
-            $workSheet->getStyle('H1')->getFont()->setBold(true);
+            $workSheet->getStyle('H1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('I1', $this->translate('User.address.label'));
-            $workSheet->getStyle('I1')->getFont()->setBold(true);
+            $workSheet->getStyle('I1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('J1', $this->translate('User.address2.label'));
-            $workSheet->getStyle('J1')->getFont()->setBold(true);
+            $workSheet->getStyle('J1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('K1', $this->translate('User.town.label'));
-            $workSheet->getStyle('K1')->getFont()->setBold(true);
+            $workSheet->getStyle('K1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('L1', $this->translate('User.zipCode.label'));
-            $workSheet->getStyle('L1')->getFont()->setBold(true);
+            $workSheet->getStyle('L1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('M1', $this->translate('User.country.label'));
-            $workSheet->getStyle('M1')->getFont()->setBold(true);
+            $workSheet->getStyle('M1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('N1', $this->translate('User.phone.label'));
-            $workSheet->getStyle('N1')->getFont()->setBold(true);
+            $workSheet->getStyle('N1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('O1', $this->translate('User.mobile.label'));
-            $workSheet->getStyle('O1')->getFont()->setBold(true);
+            $workSheet->getStyle('O1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('P1', $this->translate('User.dtCrea.label'));
-            $workSheet->getStyle('P1')->getFont()->setBold(true);
+            $workSheet->getStyle('P1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('Q1', $this->translate('User.userRoles.label'));
-            $workSheet->getStyle('Q1')->getFont()->setBold(true);
+            $workSheet->getStyle('Q1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('R1', $this->translate('User.companies.label'));
-            $workSheet->getStyle('R1')->getFont()->setBold(true);
+            $workSheet->getStyle('R1')
+                ->getFont()
+                ->setBold(true);
             $workSheet->setCellValue('S1', $this->translate('User.admCompanies.label'));
-            $workSheet->getStyle('S1')->getFont()->setBold(true);
+            $workSheet->getStyle('S1')
+                ->getFont()
+                ->setBold(true);
+            $workSheet->setCellValue('T1', $this->translate('User.lastValidity.label'));
+            $workSheet->getStyle('T1')
+                ->getFont()
+                ->setBold(true);
 
-            $workSheet->getStyle('A1:S1')->applyFromArray(array(
+            $workSheet->getStyle('A1:T1')->applyFromArray(array(
                 'fill' => array(
                     'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array(
@@ -151,7 +203,9 @@ class UserController extends BaseController
                 } else {
                     $workSheet->setCellValue('G' . $i, null, \PHPExcel_Cell_DataType::TYPE_NUMERIC);
                 }
-                $workSheet->getStyle('G' . $i)->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+                $workSheet->getStyle('G' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('dd/mm/yyyy');
                 $workSheet->setCellValue('H' . $i, $user->getStreetNum(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('I' . $i, \html_entity_decode(\strip_tags($user->getAddress())), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('J' . $i, \html_entity_decode(\strip_tags($user->getAddress2())), \PHPExcel_Cell_DataType::TYPE_STRING2);
@@ -167,7 +221,9 @@ class UserController extends BaseController
                 } else {
                     $workSheet->setCellValue('P' . $i, null, \PHPExcel_Cell_DataType::TYPE_NUMERIC);
                 }
-                $workSheet->getStyle('P' . $i)->getNumberFormat()->setFormatCode('dd/mm/yyyy hh:MM:ss');
+                $workSheet->getStyle('P' . $i)
+                    ->getNumberFormat()
+                    ->setFormatCode('dd/mm/yyyy hh:MM:ss');
 
                 $roles = '';
                 $ln = 0;
@@ -179,7 +235,9 @@ class UserController extends BaseController
                     $ln++;
                 }
                 $workSheet->setCellValue('Q' . $i, $roles, \PHPExcel_Cell_DataType::TYPE_STRING2);
-                $workSheet->getStyle('Q' . $i)->getAlignment()->setWrapText(true);
+                $workSheet->getStyle('Q' . $i)
+                    ->getAlignment()
+                    ->setWrapText(true);
 
                 $companies = '';
                 $ln = 0;
@@ -191,7 +249,9 @@ class UserController extends BaseController
                     $ln++;
                 }
                 $workSheet->setCellValue('R' . $i, $companies, \PHPExcel_Cell_DataType::TYPE_STRING2);
-                $workSheet->getStyle('R' . $i)->getAlignment()->setWrapText(true);
+                $workSheet->getStyle('R' . $i)
+                    ->getAlignment()
+                    ->setWrapText(true);
 
                 $admCompanies = '';
                 $ln = 0;
@@ -203,10 +263,22 @@ class UserController extends BaseController
                     $ln++;
                 }
                 $workSheet->setCellValue('S' . $i, $admCompanies, \PHPExcel_Cell_DataType::TYPE_STRING2);
-                $workSheet->getStyle('S' . $i)->getAlignment()->setWrapText(true);
+                $workSheet->getStyle('S' . $i)
+                    ->getAlignment()
+                    ->setWrapText(true);
+                if (null != $user->getLastValidity()) {
+                    $workSheet->setCellValue('T' . $i, \PHPExcel_Shared_Date::PHPToExcel($user->getLastValidity()));
+                    $format = 'dd/mm/yyyy';
+
+                    $workSheet->getStyle('T' . $i)
+                        ->getNumberFormat()
+                        ->setFormatCode($format);
+                } else {
+                    $workSheet->setCellValue('T' . $i, null, \PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                }
 
                 if ($i % 2 == 1) {
-                    $workSheet->getStyle('A' . $i . ':S' . $i)->applyFromArray(array(
+                    $workSheet->getStyle('A' . $i . ':T' . $i)->applyFromArray(array(
                         'fill' => array(
                             'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                             'color' => array(
@@ -215,7 +287,7 @@ class UserController extends BaseController
                         )
                     ));
                 } else {
-                    $workSheet->getStyle('A' . $i . ':S' . $i)->applyFromArray(array(
+                    $workSheet->getStyle('A' . $i . ':T' . $i)->applyFromArray(array(
                         'fill' => array(
                             'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                             'color' => array(
@@ -245,6 +317,7 @@ class UserController extends BaseController
             $workSheet->getColumnDimension('Q')->setAutoSize(true);
             $workSheet->getColumnDimension('R')->setAutoSize(true);
             $workSheet->getColumnDimension('S')->setAutoSize(true);
+            $workSheet->getColumnDimension('T')->setAutoSize(true);
 
             $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
             $response = $this->get('phpexcel')->createStreamedResponse($writer);
@@ -711,7 +784,9 @@ class UserController extends BaseController
                         $lastbox = new Box(130, 130);
                         $mode = ImageInterface::THUMBNAIL_OUTBOUND;
 
-                        $image->crop($firstpoint, $selbox)->thumbnail($lastbox, $mode)->save($path);
+                        $image->crop($firstpoint, $selbox)
+                            ->thumbnail($lastbox, $mode)
+                            ->save($path);
 
                         $file = new File($path);
                         $avatarDir = $this->getParameter('kernel.root_dir') . '/../web/res/avatars';
@@ -769,7 +844,9 @@ class UserController extends BaseController
 
     protected function traceEntity(User $cloneUser, User $user)
     {
-        $curUser = $this->getSecurityTokenStorage()->getToken()->getUser();
+        $curUser = $this->getSecurityTokenStorage()
+            ->getToken()
+            ->getUser();
         $trace = new Trace();
         $trace->setActionId($user->getId());
         $trace->setActionType(Trace::AT_UPDATE);

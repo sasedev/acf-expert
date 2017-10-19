@@ -22,6 +22,7 @@ $(function() {
 		"columns": [
 			null,
 			null,
+            null,
 			null,
 			null,
 			null,
@@ -67,6 +68,7 @@ $(function() {
 						<tr>
 							<th>{{ 'Invoice.dtCrea.label'|trans|raw }}</th>
 							<th>{{ 'Invoice.user.label'|trans|raw }}</th>
+                            <th>{{ 'Invoice.company.label'|trans|raw }}</th>
 							<th>{{ 'Invoice.ref.label'|trans|raw }}</th>
 							<th>{{ 'Invoice.status.label'|trans|raw }}</th>
 							<th>{{ 'Invoice.orderTo.label'|trans|raw }}</th>
@@ -83,7 +85,8 @@ $(function() {
 						<tr>
 							<td align="right">{{invoice.dtCrea|date('Y-m-d')}} {{'_at'|trans}} {{invoice.dtCrea|localeDate('none', 'short')}}</td>
 							<td><a href="{{ path('_admin_user_editGet', {'id': invoice.user.id}) }}">{{ invoice.user.username }}</a></td>
-							<td align="right">{{ invoice.ref }}</td>
+							<td>{% if invoice.company is not null %}<a href="{{ path('_admin_company_editGet', {'uid': invoice.company.id}) }}">{{ invoice.company.corporateName }}</a>{% else %}{{ bsLabelWarning('_NA'|trans) }}{% endif %}</td>
+                            <td align="right">{{ invoice.ref }}</td>
 							<td align="right">{{ ('Invoice.status.'~invoice.status)|trans|raw }}</td>
 							<td>{{ invoice.orderTo|raw }}</td>
 							<td align="right">{{ invoice.val|number_format(3, '.', ' ') }} TND</td>

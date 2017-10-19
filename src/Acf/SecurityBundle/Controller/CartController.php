@@ -150,7 +150,9 @@ class CartController extends BaseController
         $order->setUser($user);
         $order->setOrderTo($user->getFullName());
 
-        $orderNewForm = $this->createForm(NewOnlineOrderTForm::class, $order);
+        $orderNewForm = $this->createForm(NewOnlineOrderTForm::class, $order, array(
+            'user' => $user
+        ));
         $this->gvars['OrderNewForm'] = $orderNewForm->createView();
 
         $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.myCart.txt');

@@ -188,6 +188,7 @@ class OnlineInvoice
             $this->orderTo = $order->getOrderTo();
             $this->paymentType = $order->getPaymentType();
             $this->user = $order->getUser();
+            $this->company = $order->getCompany();
             $this->renew = $order->getRenew();
             foreach ($order->getProducts() as $product) {
                 $iproduct = new OnlineInvoiceProduct($product);
@@ -687,6 +688,5 @@ class OnlineInvoice
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

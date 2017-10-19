@@ -389,6 +389,5 @@ class BiDoc
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

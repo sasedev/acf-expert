@@ -41,6 +41,8 @@ $(function() {
 	});
 	
 	$('#OrderNewForm_user').chosen({width: "100%", disable_search_threshold: 10});
+    
+    $('#OrderNewForm_company').chosen({width: "100%", disable_search_threshold: 10});
 });
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
@@ -63,6 +65,7 @@ $(function() {
 			<div class="box-body">
 				{{form_start(OrderNewForm, {'method':'POST', 'action': path('_admin_order_addPost'), 'style': 'horizontal'})}}
 				{{form_row(OrderNewForm.user, {'label_col': 3, 'widget_col': 8})}}
+				{{form_row(OrderNewForm.company, {'label_col': 3, 'widget_col': 8})}}
 				{{form_row(OrderNewForm.orderTo, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
 				{{form_row(OrderNewForm.oproducts, {'label_col': 3, 'widget_col': 8})}}
 				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>

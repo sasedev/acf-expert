@@ -199,6 +199,5 @@ class Job
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

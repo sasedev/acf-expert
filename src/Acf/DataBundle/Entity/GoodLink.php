@@ -199,6 +199,5 @@ class GoodLink
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

@@ -22,6 +22,7 @@ $(function() {
 		"columns": [
 			null,
 			null,
+            null,
 			null,
 			null,
 			null,
@@ -67,6 +68,7 @@ $(function() {
 						<tr>
 							<th>{{ 'Order.dtCrea.label'|trans|raw }}</th>
 							<th>{{ 'Order.user.label'|trans|raw }}</th>
+                            <th>{{ 'Order.company.label'|trans|raw }}</th>
 							<th>{{ 'Order.ref.label'|trans|raw }}</th>
 							<th>{{ 'Order.status.label'|trans|raw }}</th>
 							<th>{{ 'Order.orderTo.label'|trans|raw }}</th>
@@ -83,6 +85,7 @@ $(function() {
 						<tr>
 							<td align="right">{{order.dtCrea|date('Y-m-d')}} {{'_at'|trans}} {{order.dtCrea|localeDate('none', 'short')}}</td>
 							<td><a href="{{ path('_admin_user_editGet', {'id': order.user.id}) }}">{{ order.user.username }}</a></td>
+							<td>{% if order.company is not null %}<a href="{{ path('_admin_company_editGet', {'uid': order.company.id}) }}">{{ order.company.corporateName }}</a>{% else %}{{ bsLabelWarning('_NA'|trans) }}{% endif %}</td>
 							<td align="right">{{ order.ref }}</td>
 							<td align="right">{{ ('Order.status.'~order.status)|trans|raw }}</td>
 							<td>{{ order.orderTo|raw }}</td>

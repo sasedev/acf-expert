@@ -1,21 +1,18 @@
 <?php
-namespace Acf\SecurityBundle\Form;
+namespace Acf\AdminBundle\Form\Order;
 
-use Acf\DataBundle\Entity\OnlineOrder;
+use Acf\DataBundle\Entity\User;
 use Acf\DataBundle\Repository\CompanyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Acf\DataBundle\Entity\User;
 
 /**
  *
  * @author sasedev <seif.salah@gmail.com>
  */
-class NewOnlineOrderTForm extends AbstractType
+class UpdateCompanyTForm extends AbstractType
 {
 
     /**
@@ -29,8 +26,6 @@ class NewOnlineOrderTForm extends AbstractType
      *
      * @param FormBuilderInterface $builder
      * @param array $options
-     *
-     * @return null
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -52,19 +47,6 @@ class NewOnlineOrderTForm extends AbstractType
             'by_reference' => true,
             'required' => false
         ));
-
-        $builder->add('orderTo', TextareaType::class, array(
-            'label' => 'OnlineOrder.orderTo.label'
-        ));
-
-        $builder->add('renew', ChoiceType::class, array(
-            'label' => 'OnlineOrder.renew.label',
-            'choices' => OnlineOrder::choiceRenew(),
-            'expanded' => true,
-            'attr' => array(
-                'choice_label_trans' => true
-            )
-        ));
     }
 
     /**
@@ -73,7 +55,7 @@ class NewOnlineOrderTForm extends AbstractType
      */
     public function getName()
     {
-        return 'NewOnlineOrderForm';
+        return 'OrderUpdateCompanyForm';
     }
 
     /**
@@ -94,7 +76,7 @@ class NewOnlineOrderTForm extends AbstractType
     {
         return array(
             'validation_groups' => array(
-                'orderTo'
+                'company'
             ),
             'user' => null
         );

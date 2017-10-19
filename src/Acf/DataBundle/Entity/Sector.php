@@ -285,6 +285,5 @@ class Sector
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

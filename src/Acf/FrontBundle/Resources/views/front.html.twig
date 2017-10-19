@@ -372,6 +372,13 @@
 				</ul>
 				<br>
 				{% endif %}
+				<ul class="sidebar-menu" id="side-menu0">
+					<li {% if menu_active=='toolshome'%} class="active" {% endif %}>
+						<a href="{{ path('_tools_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.tools'|trans }}</span></a>
+					</li>
+				</ul>
+				<br>
 				{% if is_granted('ROLE_CLIENT1')%}
 				<ul class="sidebar-menu" id="side-menu3">
 					<li {% if menu_active=='clienthome'%} class="active" {% endif %}>

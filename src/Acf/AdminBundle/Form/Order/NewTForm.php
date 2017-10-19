@@ -2,6 +2,7 @@
 namespace Acf\AdminBundle\Form\Order;
 
 use Acf\DataBundle\Entity\User;
+use Acf\DataBundle\Repository\CompanyRepository;
 use Acf\DataBundle\Repository\UserRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -48,6 +49,18 @@ class NewTForm extends AbstractType
                 'by_reference' => true,
                 'required' => true
             ));
+
+            $builder->add('company', EntityType::class, array(
+                'label' => 'CompanyFrame.company.label',
+                'class' => 'AcfDataBundle:Company',
+                'query_builder' => function (CompanyRepository $br) {
+                    return $br->createQueryBuilder('c')->orderBy('c.corporateName', 'ASC');
+                },
+                'choice_label' => 'corporateName',
+                'multiple' => false,
+                'by_reference' => true,
+                'required' => false
+            ));
         } else {
             $userId = $this->user->getId();
             $builder->add('user', EntityidType::class, array(
@@ -60,6 +73,18 @@ class NewTForm extends AbstractType
                 'multiple' => false,
                 'by_reference' => true,
                 'required' => true
+            ));
+
+            $builder->add('company', EntityType::class, array(
+                'label' => 'CompanyFrame.company.label',
+                'class' => 'AcfDataBundle:Company',
+                'query_builder' => function (CompanyRepository $br) use ($userId) {
+                    return $br->createQueryBuilder('c')->leftJoin('c.users', 'u')->where('u.id = :userid')->setParameter('userid', $userId)->orderBy('c.corporateName', 'ASC');
+                },
+                'choice_label' => 'corporateName',
+                'multiple' => false,
+                'by_reference' => true,
+                'required' => false
             ));
         }
         $builder->add('oproducts', EntityType::class, array(

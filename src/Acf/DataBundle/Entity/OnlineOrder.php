@@ -117,6 +117,15 @@ class OnlineOrder
 
     /**
      *
+     * @var Company @ORM\ManyToOne(targetEntity="Company", inversedBy="onlineOrders", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     *      })
+     */
+    protected $company;
+
+    /**
+     *
      * @var float @ORM\Column(name="val", type="float", nullable=false)
      *      @Assert\GreaterThan(value=0, groups={"val"})
      */
@@ -272,6 +281,28 @@ class OnlineOrder
 
     /**
      *
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     *
+     * @param Company $company
+     *
+     * @return OnlineOrder
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     *
      * @return float $val
      */
     public function getVal()
@@ -288,6 +319,7 @@ class OnlineOrder
     public function setVal($val)
     {
         $this->val = $val;
+
         return $this;
     }
 

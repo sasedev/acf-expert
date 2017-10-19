@@ -1027,9 +1027,11 @@ CREATE TABLE "acf_online_orders" (
 	"payment_type"                                                      INT8 NOT NULL DEFAULT 1,
 	"payment_status"                                                    INT8 NOT NULL DEFAULT 1,
 	"autorenew"                                                         INT8 NOT NULL DEFAULT 1,
+    "acf_online_orders"                                                 UUID NULL,
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-	CONSTRAINT "pk_acf_online_orders" PRIMARY KEY ("id")
+	CONSTRAINT "pk_acf_online_orders" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_acf_online_orders_company" FOREIGN KEY ("company_id") REFERENCES "acf_companies" ("id") ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE "acf_online_invoices" (

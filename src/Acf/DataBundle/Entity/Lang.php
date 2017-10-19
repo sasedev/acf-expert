@@ -361,6 +361,5 @@ class Lang
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

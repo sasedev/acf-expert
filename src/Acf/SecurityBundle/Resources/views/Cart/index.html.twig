@@ -1,9 +1,11 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
 <script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
@@ -27,6 +29,8 @@ $(function() {
 		}
 		$this.tinymce(options);
 	});
+	
+	$('#NewOnlineOrderForm_company').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect:true});
 });
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
@@ -80,6 +84,7 @@ $(function() {
 				<br>
 				{{form_start(OrderNewForm, {'method':'POST', 'action': path('_security_myCart_validate'), 'style': 'horizontal'})}}
 				{{form_row(OrderNewForm.orderTo, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'} })}}
+                {{form_row(OrderNewForm.company, {'label_col': 3, 'widget_col': 8 })}}
 				{{form_row(OrderNewForm.renew, {'label_col': 3, 'widget_col': 8 })}}
 				<div class="form-group">
 						<div class="col-lg-offset-3 col-lg-3">

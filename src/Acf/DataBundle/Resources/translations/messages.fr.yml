@@ -1711,6 +1711,7 @@ OnlineTaxe.dtUpdate.label: "Date de modification :"
 Order.id: ID
 Order.ref: Référence
 Order.user: Utilisateur
+Order.company: Société
 Order.val: Montant
 Order.status: Etat
 Order.status.1: "Nouveau"
@@ -1740,6 +1741,7 @@ Order.dtUpdate: Date de modification
 Order.id.label: "ID :"
 Order.ref.label: "Référence :"
 Order.user.label: "Utilisateur :"
+Order.company.label: "Société :"
 Order.val.label: "Montant :"
 Order.status.label: "Etat :"
 Order.status.choice.1: "Nouveau"
@@ -1790,6 +1792,7 @@ OnlineOrder.renew.1: "Oui"
 OnlineOrder.renew.2: "Non"
 OnlineOrder.products: Produits
 OnlineOrder.taxes: Taxes
+OnlineOrder.company: Société
 OnlineOrder.auth: "Numéro d'autorisation"
 OnlineOrder.sessId: Session
 OnlineOrder.ipAddr: "Adresse IP"
@@ -1799,6 +1802,7 @@ OnlineOrder.dtUpdate: Date de modification
 OnlineOrder.id.label: "ID :"
 OnlineOrder.ref.label: "Référence :"
 OnlineOrder.user.label: "Utilisateur :"
+OnlineOrder.company: "Société :"
 OnlineOrder.val.label: "Montant :"
 OnlineOrder.status.label: "Etat :"
 OnlineOrder.status.choice.1: "Nouveau"
@@ -1831,6 +1835,7 @@ OnlineOrder.dtUpdate.label: "Date de modification :"
 Invoice.id: ID
 Invoice.ref: Référence
 Invoice.user: Utilisateur
+Invoice.company: Société
 Invoice.val: Montant
 Invoice.status: Etat
 Invoice.status.1: "Nouveau"
@@ -1856,6 +1861,7 @@ Invoice.dtUpdate: Date de modification
 Invoice.id.label: "ID :"
 Invoice.ref.label: "Référence :"
 Invoice.user.label: "Utilisateur :"
+Invoice.company.label: "Société :"
 Invoice.val.label: "Montant :"
 Invoice.status.label: "Etat :"
 Invoice.status.choice.1: "Nouveau"
@@ -1882,6 +1888,7 @@ Invoice.dtUpdate.label: "Date de modification :"
 OnlineInvoice.id: ID
 OnlineInvoice.ref: Référence
 OnlineInvoice.user: Utilisateur
+OnlineInvoice.company: Société
 OnlineInvoice.val: Montant
 OnlineInvoice.status: Etat
 OnlineInvoice.status.1: "Nouveau"
@@ -1907,6 +1914,7 @@ OnlineInvoice.dtUpdate: Date de modification
 OnlineInvoice.id.label: "ID :"
 OnlineInvoice.ref.label: "Référence :"
 OnlineInvoice.user.label: "Utilisateur :"
+OnlineInvoice.company: "Société :"
 OnlineInvoice.val.label: "Montant :"
 OnlineInvoice.status.label: "Etat :"
 OnlineInvoice.status.choice.1: "Nouveau"

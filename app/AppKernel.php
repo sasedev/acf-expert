@@ -42,7 +42,8 @@ class AppKernel extends Kernel
             new Acf\ClientBundle\AcfClientBundle(),
             new Acf\InfoBundle\AcfInfoBundle(),
             new Acf\PayrollBundle\AcfPayrollBundle(),
-            new Acf\LiasseBundle\AcfLiasseBundle()
+            new Acf\LiasseBundle\AcfLiasseBundle(),
+            new Acf\ToolsBundle\AcfToolsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), [

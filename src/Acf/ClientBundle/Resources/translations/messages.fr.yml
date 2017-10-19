@@ -17,6 +17,9 @@ _mail.newdocs.bodySale: 'Le Client <b>%user%</b> a ajouté à la société <a hr
 menu.client: ACEF-Cloud
 breadcrumb.client: ACEF-Cloud
 
+
+
+
 CompanyUser.accessForbidden: Accès non autorisé
 pagetitle.dasboard: ACEF Dashboard
 

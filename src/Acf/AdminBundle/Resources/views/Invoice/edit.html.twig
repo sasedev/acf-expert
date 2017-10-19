@@ -113,7 +113,9 @@ $(function() {
 								{% endif %}
 								<div class="col-lg-3 text-right">{{'Invoice.user'|trans|raw}} :</div>
 								<div class="col-lg-9"><a href="{{ path('_admin_user_editGet', {'id': invoice.user.id}) }}">{{invoice.user.fullName}}</a>&nbsp;</div>
-								<div class="col-lg-3 text-right">{{'Invoice.paymentType'|trans|raw}} :</div>
+								<div class="col-lg-3 text-right">{{'Invoice.company'|trans|raw}} :</div>
+                                <div class="col-lg-9">{% if invoice.company is not null %}<a href="{{ path('_admin_company_editGet', {'uid': invoice.company.id}) }}">{{ invoice.company.corporateName }}</a>{% else %}{{ bsLabelWarning('_NA'|trans) }}{% endif %}&nbsp;</div>
+                                <div class="col-lg-3 text-right">{{'Invoice.paymentType'|trans|raw}} :</div>
 								<div class="col-lg-9">{{('Invoice.paymentType.'~invoice.paymentType)|trans|raw}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Invoice.status'|trans|raw}} :</div>
 								<div class="col-lg-9">{{('Invoice.status.'~invoice.status)|trans|raw}}&nbsp;</div>

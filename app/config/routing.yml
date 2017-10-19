@@ -30,4 +30,8 @@ acf_liasse:
     resource: "@AcfLiasseBundle/Resources/config/routing.yml"
     prefix:   /ACEF-Liasse
 
+acf_tools:
+    resource: "@AcfToolsBundle/Resources/config/routing.yml"
+    prefix:   /ACEF-Tools
+
 

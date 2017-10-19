@@ -356,6 +356,5 @@ class GoodDoc
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

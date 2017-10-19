@@ -389,6 +389,5 @@ class LiasseDoc
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

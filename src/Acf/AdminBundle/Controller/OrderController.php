@@ -6,6 +6,7 @@ use Acf\AdminBundle\Form\Order\UpdateStatusTForm as OrderUpdateStatusTForm;
 use Acf\AdminBundle\Form\Order\AddProductTForm as OrderAddProductTForm;
 use Acf\AdminBundle\Form\Order\UpdatePaymentTypeTForm as OrderUpdatePaymentTypeTForm;
 use Acf\AdminBundle\Form\Order\UpdateUserTForm as OrderUpdateUserTForm;
+use Acf\AdminBundle\Form\Order\UpdateCompanyTForm as OrderUpdateCompanyTForm;
 use Acf\AdminBundle\Form\Order\UpdateOrderToTForm as OrderUpdateOrderToTForm;
 use Acf\AdminBundle\Form\Order\GenerateInvoiceTForm as OrderGenerateInvoiceTForm;
 use Acf\DataBundle\Entity\OnlineInvoice;
@@ -241,6 +242,9 @@ class OrderController extends BaseController
                 $orderUpdateStatusForm = $this->createForm(OrderUpdateStatusTForm::class, $order);
                 $orderUpdatePaymentTypeForm = $this->createForm(OrderUpdatePaymentTypeTForm::class, $order);
                 $orderUpdateUserForm = $this->createForm(OrderUpdateUserTForm::class, $order);
+                $orderUpdateCompanyForm = $this->createForm(OrderUpdateCompanyTForm::class, $order, array(
+                    'user' => $order->getUser()
+                ));
                 $orderUpdateOrderToForm = $this->createForm(OrderUpdateOrderToTForm::class, $order);
                 if (null == $order->getInvoice()) {
                     $invoice = new OnlineInvoice($order);
@@ -252,6 +256,7 @@ class OrderController extends BaseController
                 $this->gvars['OrderAddProductForm'] = $orderAddProductForm->createView();
                 $this->gvars['OrderUpdatePaymentTypeForm'] = $orderUpdatePaymentTypeForm->createView();
                 $this->gvars['OrderUpdateUserForm'] = $orderUpdateUserForm->createView();
+                $this->gvars['OrderUpdateCompanyForm'] = $orderUpdateCompanyForm->createView();
                 $this->gvars['OrderUpdateOrderToForm'] = $orderUpdateOrderToForm->createView();
                 if (null == $order->getInvoice()) {
                     $this->gvars['OrderGenerateInvoiceForm'] = $orderGenerateInvoiceForm->createView();
@@ -305,6 +310,9 @@ class OrderController extends BaseController
                 $orderUpdateStatusForm = $this->createForm(OrderUpdateStatusTForm::class, $order);
                 $orderUpdatePaymentTypeForm = $this->createForm(OrderUpdatePaymentTypeTForm::class, $order);
                 $orderUpdateUserForm = $this->createForm(OrderUpdateUserTForm::class, $order);
+                $orderUpdateCompanyForm = $this->createForm(OrderUpdateCompanyTForm::class, $order, array(
+                    'user' => $order->getUser()
+                ));
                 $orderUpdateOrderToForm = $this->createForm(OrderUpdateOrderToTForm::class, $order);
                 if (null == $order->getInvoice()) {
                     $invoice = new OnlineInvoice($order);
@@ -397,6 +405,25 @@ class OrderController extends BaseController
                             '%order%' => $order->getRef()
                         )));
                     }
+                } elseif (isset($reqData['OrderUpdateCompanyForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $orderUpdateCompanyForm->handleRequest($request);
+                    if ($orderUpdateCompanyForm->isValid()) {
+                        $em->persist($order);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('Order.edit.success', array(
+                            '%order%' => $order->getRef()
+                        )));
+
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($order);
+
+                        $this->flashMsgSession('error', $this->translate('Order.edit.failure', array(
+                            '%order%' => $order->getRef()
+                        )));
+                    }
                 } elseif (isset($reqData['OrderUpdateOrderToForm'])) {
                     $this->gvars['tabActive'] = 2;
                     $this->getSession()->set('tabActive', 2);
@@ -442,6 +469,7 @@ class OrderController extends BaseController
                 $this->gvars['OrderUpdateStatusForm'] = $orderUpdateStatusForm->createView();
                 $this->gvars['OrderUpdatePaymentTypeForm'] = $orderUpdatePaymentTypeForm->createView();
                 $this->gvars['OrderUpdateUserForm'] = $orderUpdateUserForm->createView();
+                $this->gvars['OrderUpdateCompanyForm'] = $orderUpdateCompanyForm->createView();
                 $this->gvars['OrderUpdateOrderToForm'] = $orderUpdateOrderToForm->createView();
                 if (null == $order->getInvoice()) {
                     $this->gvars['OrderGenerateInvoiceForm'] = $orderGenerateInvoiceForm->createView();

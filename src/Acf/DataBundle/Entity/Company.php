@@ -431,6 +431,13 @@ class Company
 
     /**
      *
+     * @var Collection @ORM\OneToMany(targetEntity="OnlineOrder", mappedBy="company", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     */
+    protected $onlineOrders;
+
+    /**
+     *
      * @var Collection @ORM\OneToMany(targetEntity="LiasseFolder", mappedBy="company", cascade={"persist", "remove"})
      *      @ORM\OrderBy({"title" = "ASC"})
      */
@@ -471,6 +478,7 @@ class Company
         $this->docgroupaudits = new ArrayCollection();
         $this->docs = new ArrayCollection();
         $this->liasses = new ArrayCollection();
+        $this->onlineOrders = new ArrayCollection();
     }
 
     /**

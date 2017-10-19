@@ -1,0 +1,3 @@
+_tools_homepage:
+    path:     /
+    defaults: { _controller: "AcfToolsBundle:Default:index" }
