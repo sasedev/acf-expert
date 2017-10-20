@@ -1,9 +1,10 @@
 <?php
 namespace Acf\ClientBundle\Form\Sale;
 
-use Acf\DataBundle\Entity\Sale;
+use Acf\DataBundle\Entity\Vat;
+use Acf\DataBundle\Repository\VatRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,12 +23,23 @@ class UpdateVatInfoTForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('vatInfo', ChoiceType::class, array(
+        $builder->add('vatInfo', EntityType::class, array(
+            'class' => 'AcfDataBundle:Vat',
             'label' => 'Sale.vatInfo.label',
-            'choices' => Sale::choiceVatInfo(),
-            'attr' => array(
-                'choice_label_trans' => true
-            )
+            'query_builder' => function (VatRepository $vr) {
+                return $vr->createQueryBuilder('v')
+                    ->orderBy('v.title', 'ASC');
+            },
+            'choice_label' => 'title',
+            'choice_value' => function ($entity = null) {
+                if ($entity instanceof Vat) {
+                    return $entity ? $entity->getTitle() : '';
+                } else {
+                    return $entity;
+                }
+            },
+            'multiple' => false,
+            'required' => true
         ));
     }
 

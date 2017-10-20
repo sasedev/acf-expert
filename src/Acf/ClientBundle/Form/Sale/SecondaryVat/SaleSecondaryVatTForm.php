@@ -1,9 +1,10 @@
 <?php
 namespace Acf\ClientBundle\Form\Sale\SecondaryVat;
 
-use Acf\DataBundle\Entity\SecondaryVat;
+use Acf\DataBundle\Entity\Vat;
+use Acf\DataBundle\Repository\VatRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,12 +24,23 @@ class SaleSecondaryVatTForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('vatInfo', ChoiceType::class, array(
+        $builder->add('vatInfo', EntityType::class, array(
+            'class' => 'AcfDataBundle:Vat',
             'label' => 'SecondaryVat.vatInfo.label',
-            'choices' => SecondaryVat::choiceVatInfo(),
-            'attr' => array(
-                'choice_label_trans' => true
-            )
+            'query_builder' => function (VatRepository $vr) {
+                return $vr->createQueryBuilder('v')
+                    ->orderBy('v.title', 'ASC');
+            },
+            'choice_label' => 'title',
+            'choice_value' => function ($entity = null) {
+                if ($entity instanceof Vat) {
+                    return $entity ? $entity->getTitle() : '';
+                } else {
+                    return $entity;
+                }
+            },
+            'multiple' => false,
+            'required' => true
         ));
 
         $builder->add('vat', NumberType::class, array(

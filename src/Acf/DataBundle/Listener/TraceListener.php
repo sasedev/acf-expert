@@ -334,7 +334,7 @@ class TraceListener implements EventSubscriber
         } elseif ($entity instanceof SecondaryVat) {
             $trace->setActionEntity(Trace::AE_SECONDARYVAT);
             $trace->setMsg($trans->trans('SecondaryVat.traceNew', array(
-                '%secondaryVat%' => $trans->trans('SecondaryVat.vatInfo.' . $entity->getVatInfo()),
+                '%secondaryVat%' => $entity->getVatInfo(),
                 '%sale%' => $entity->getSale()
                     ->getLabel(),
                 '%mbsale%' => $entity->getSale()
@@ -770,7 +770,7 @@ class TraceListener implements EventSubscriber
         } elseif ($entity instanceof SecondaryVat) {
             $trace->setActionEntity(Trace::AE_SECONDARYVAT);
             $trace->setMsg($trans->trans('SecondaryVat.traceDel', array(
-                '%secondaryVat%' => $trans->trans('SecondaryVat.vatInfo.' . $entity->getVatInfo()),
+                '%secondaryVat%' => $entity->getVatInfo(),
                 '%sale%' => $entity->getSale()
                     ->getLabel(),
                 '%mbsale%' => $entity->getSale()

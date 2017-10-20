@@ -272,12 +272,11 @@ $(function() {
 			txttoapp += '<div class="box-body">';
 				txttoapp += '<div class="form-group row">';
 					txttoapp += '<label class="control-label col-lg-3 required" for="SaleNewForm_secondaryVats_'+cntSecondaryVats+'_vatInfo">{{'SecondaryVat.vatInfo.label'|trans}}</label>';
-					txttoapp += '<div class="col-lg-8">';
+				 	txttoapp += '<div class="col-lg-8">';
 						txttoapp += '<select id="SaleNewForm_secondaryVats_'+cntSecondaryVats+'_vatInfo" class="form-control" required="required" name="SaleNewForm[secondaryVats]['+cntSecondaryVats+'][vatInfo]">';
-							txttoapp += '<option selected="selected" value="0">{{ 'SecondaryVat.vatInfo.0'|trans }}</option>';
-							txttoapp += '<option value="6">{{ 'SecondaryVat.vatInfo.6'|trans }}</option>';
-							txttoapp += '<option value="12">{{ 'SecondaryVat.vatInfo.12'|trans }}</option>';
-							txttoapp += '<option value="18">{{ 'SecondaryVat.vatInfo.18'|trans }}</option>';
+						{% for vat in vats %}
+		 					txttoapp += '<option value="{{ vat.title }}">{{ vat.title }}</option>';
+		 				{% endfor %}
 						txttoapp += '</select>';
 					txttoapp += '</div>';
 				txttoapp += '</div>';
@@ -429,7 +428,7 @@ $(function() {
 										<td>{{ sale.vat|number_format(3, '.', '') }}</td>
 										<td>{{ sale.stamp|number_format(3, '.', '') }}</td>
 										<td>{{ sale.balanceTtc|number_format(3, '.', '') }}</td>
-										<td>{{ ('Transaction.vatInfo.'~sale.vatInfo)|trans }}</td>
+										<td>{{     sale.vatInfo }}</td>
 										<td>{{ ('Sale.regime.'~sale.regime)|trans }}</td>
 										<td>{{ sale.withholding.value |number_format(2, '.', '')}}%</td>
 										<td>{%set withholding = sale.balanceTtc - sale.balanceNet%}{{ withholding|number_format(3, '.', '') }}</td>
@@ -457,7 +456,7 @@ $(function() {
 										<td>{{ secondaryVat.vat|number_format(3, '.', '') }}</td>
 										<td>{{ 0|number_format(3, '.', '') }}</td>
 										<td>{{ secondaryVat.balanceTtc|number_format(3, '.', '') }}</td>
-										<td>{{ ('SecondaryVat.vatInfo.'~secondaryVat.vatInfo)|trans }}</td>
+										<td>{{ secondaryVat.vatInfo }}</td>
 										<td>{{ ('Sale.regime.'~sale.regime)|trans }}</td>
 										<td>{{ sale.withholding.value |number_format(2, '.', '')}}%</td>
 										<td>{%set withholding = secondaryVat.balanceTtc - secondaryVat.balanceNet%}{{ withholding|number_format(3, '.', '') }}</td>

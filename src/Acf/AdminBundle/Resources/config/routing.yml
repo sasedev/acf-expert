@@ -1820,3 +1820,38 @@ _admin_liasseDoc_editPost:
 
 
 
+_admin_vat_list:
+    path:     /vats
+    defaults: { _controller: "AcfAdminBundle:Vat:list" }
+
+_admin_vat_addGet:
+    path:     /vat/add
+    defaults: { _controller: "AcfAdminBundle:Vat:addGet" }
+    methods: [GET]
+
+_admin_vat_addPost:
+    path:     /vat/add
+    defaults: { _controller: "AcfAdminBundle:Vat:addPost" }
+    methods: [POST]
+
+_admin_vat_delete:
+    path:     /vat/delete/{uid}
+    defaults: { _controller: "AcfAdminBundle:Vat:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_vat_editGet:
+    path:     /vat/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Vat:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+_admin_vat_editPost:
+    path:     /vat/edit/{uid}
+    defaults: { _controller: "AcfAdminBundle:Vat:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+

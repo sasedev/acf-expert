@@ -1097,18 +1097,18 @@ class UserController extends BaseController
             $msg .= '</td></tr>';
         }
 
-        if ($cloneUser->getLockout() != $user->getLastValidity()) {
+        if ($cloneUser->getLastValidity() != $user->getLastValidity()) {
             $msg .= '<tr><td>' . $this->translate('User.lastValidity.label') . '</td><td>';
             if ($cloneUser->getLastValidity() == null) {
                 $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
             } else {
-                $msg .= $this->translate('User.lastValidity.' . $cloneUser->getLastValidity());
+                $msg .= $cloneUser->getLastValidity()->format('Y-m-d');
             }
             $msg .= '</td><td>';
             if ($user->getLastValidity() == null) {
                 $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
             } else {
-                $msg .= $this->translate('User.lastValidity.' . $user->getLastValidity());
+                $msg .= $user->getLastValidity()->format('Y-m-d');
             }
             $msg .= '</td></tr>';
         }

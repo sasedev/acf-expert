@@ -1314,6 +1314,5 @@ class CompanyUser
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

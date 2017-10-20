@@ -1802,7 +1802,7 @@ OnlineOrder.dtUpdate: Date de modification
 OnlineOrder.id.label: "ID :"
 OnlineOrder.ref.label: "Référence :"
 OnlineOrder.user.label: "Utilisateur :"
-OnlineOrder.company: "Société :"
+OnlineOrder.company.label: "Société :"
 OnlineOrder.val.label: "Montant :"
 OnlineOrder.status.label: "Etat :"
 OnlineOrder.status.choice.1: "Nouveau"
@@ -2027,4 +2027,9 @@ LiasseDoc.nbrDownloads.label: "Nbr Téléchargements :"
 LiasseDoc.title.label: "Titre :"
 LiasseDoc.folder.label: "Dossier :"
 
+# Vat
+Vat.title: TVA
+Vat.dtCrea: Date d'ajout
+Vat.dtUpdate: Date de modification
 
+Vat.title.label: "TVA :"

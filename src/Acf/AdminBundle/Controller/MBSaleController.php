@@ -56,6 +56,8 @@ class MBSaleController extends BaseController
             if (null == $mbsale) {
                 $this->flashMsgSession('warning', $this->translate('MBSale.edit.notfound'));
             } else {
+                $vats = $em->getRepository('AcfDataBundle:Vat')->getAll();
+                $this->gvars['vats'] = $vats;
                 $traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($mbsale->getId(), Trace::AE_MBSALE);
                 $this->gvars['traces'] = array_reverse($traces);
                 $mbsaleUpdateCountForm = $this->createForm(MBSaleUpdateCountTForm::class, $mbsale);
@@ -141,6 +143,8 @@ class MBSaleController extends BaseController
             if (null == $mbsale) {
                 $this->flashMsgSession('warning', $this->translate('MBSale.edit.notfound'));
             } else {
+                $vats = $em->getRepository('AcfDataBundle:Vat')->getAll();
+                $this->gvars['vats'] = $vats;
                 $traces = $em->getRepository('AcfDataBundle:Trace')->getAllByEntityId($mbsale->getId(), Trace::AE_MBSALE);
                 $this->gvars['traces'] = array_reverse($traces);
                 $mbsaleUpdateCountForm = $this->createForm(MBSaleUpdateCountTForm::class, $mbsale);
@@ -322,19 +326,6 @@ class MBSaleController extends BaseController
                             if ($balanceTtc < 0) {
                                 $haserror = true;
                                 $log .= 'ligne ' . $lineRead . ', erreur : TTC<br>';
-                            }
-
-                            if ($vatInfo == $this->translate('Transaction.vatInfo.0')) {
-                                $vatInfo = 0;
-                            } elseif ($vatInfo == $this->translate('Transaction.vatInfo.6')) {
-                                $vatInfo = 6;
-                            } elseif ($vatInfo == $this->translate('Transaction.vatInfo.12')) {
-                                $vatInfo = 12;
-                            } elseif ($vatInfo == $this->translate('Transaction.vatInfo.18')) {
-                                $vatInfo = 18;
-                            } else {
-                                $vatInfo = 0;
-                                $log .= 'ligne ' . $lineRead . ', erreur (ignorée) : TVA PR INFO inconnu => ' . $this->translate('Transaction.vatInfo.0') . '<br>';
                             }
 
                             if ($regime == $this->translate('Sale.regime.0')) {
@@ -923,7 +914,7 @@ class MBSaleController extends BaseController
                 $workSheet->getStyle('J' . $i)
                     ->getNumberFormat()
                     ->setFormatCode('#,##0.000');
-                $workSheet->setCellValue('K' . $i, $this->translate('Transaction.vatInfo.' . $sale->getVatInfo()), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('K' . $i, $sale->getVatInfo(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                 $withholding = $sale->getBalanceTtc() - $sale->getBalanceNet();
                 $workSheet->setCellValue('M' . $i, $withholding);
@@ -998,7 +989,7 @@ class MBSaleController extends BaseController
                     $workSheet->getStyle('J' . $i)
                         ->getNumberFormat()
                         ->setFormatCode('#,##0.000');
-                    $workSheet->setCellValue('K' . $i, $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo()), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('K' . $i, $secondaryVat->getVatInfo(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $withholding = $secondaryVat->getBalanceTtc() - $secondaryVat->getBalanceNet();
                     $workSheet->setCellValue('M' . $i, $withholding);
@@ -1283,7 +1274,7 @@ class MBSaleController extends BaseController
                     $workSheet->getStyle('J' . $i)
                         ->getNumberFormat()
                         ->setFormatCode('#,##0.000');
-                    $workSheet->setCellValue('K' . $i, $this->translate('Transaction.vatInfo.' . $sale->getVatInfo()), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('K' . $i, $sale->getVatInfo(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $withholding = $sale->getBalanceTtc() - $sale->getBalanceNet();
                     $workSheet->setCellValue('M' . $i, $withholding);
@@ -1358,7 +1349,7 @@ class MBSaleController extends BaseController
                         $workSheet->getStyle('J' . $i)
                             ->getNumberFormat()
                             ->setFormatCode('#,##0.000');
-                        $workSheet->setCellValue('K' . $i, $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo()), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                        $workSheet->setCellValue('K' . $i, $secondaryVat->getVatInfo(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                         $workSheet->setCellValue('L' . $i, $this->translate('Sale.regime.' . $sale->getRegime()), \PHPExcel_Cell_DataType::TYPE_STRING2);
                         $withholding = $secondaryVat->getBalanceTtc() - $secondaryVat->getBalanceNet();
                         $workSheet->setCellValue('M' . $i, $withholding);

@@ -327,7 +327,11 @@ class SecurityController extends BaseController
         $this->gvars['user'] = $user;
 
         $em = $this->getEntityManager();
-        $events = $em->getRepository('AcfDataBundle:Agenda')->getNextByUser($user);
+        if (null != $user) {
+            $events = $em->getRepository('AcfDataBundle:Agenda')->getNextByUser($user);
+        } else {
+            $events = array();
+        }
         $this->gvars['nextEvents'] = $events;
 
         return $this->renderResponse('AcfSecurityBundle:Agenda:next.html.twig', $this->gvars);

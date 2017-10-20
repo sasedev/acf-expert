@@ -2,12 +2,14 @@
 namespace Acf\AdminBundle\Form\SecondaryVat;
 
 use Acf\DataBundle\Entity\Sale;
-use Acf\DataBundle\Entity\SecondaryVat;
+// use Acf\DataBundle\Entity\SecondaryVat;
+use Acf\DataBundle\Entity\Vat;
 use Acf\DataBundle\Repository\SaleRepository;
+use Acf\DataBundle\Repository\VatRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+// use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,7 +44,8 @@ class NewTForm extends AbstractType
                 'label' => 'SecondatVat.sale.label',
                 'class' => 'AcfDataBundle:Sale',
                 'query_builder' => function (SaleRepository $sr) {
-                    return $sr->createQueryBuilder('s')->orderBy('s.number', 'ASC');
+                    return $sr->createQueryBuilder('s')
+                        ->orderBy('s.number', 'ASC');
                 },
                 'choice_label' => 'number',
                 'multiple' => false,
@@ -55,7 +58,10 @@ class NewTForm extends AbstractType
                 'label' => 'SecondatVat.sale.label',
                 'class' => 'AcfDataBundle:Sale',
                 'query_builder' => function (SaleRepository $sr) use ($saleId) {
-                    return $sr->createQueryBuilder('s')->where('s.id = :id')->setParameter('id', $saleId)->orderBy('s.number', 'ASC');
+                    return $sr->createQueryBuilder('s')
+                        ->where('s.id = :id')
+                        ->setParameter('id', $saleId)
+                        ->orderBy('s.number', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -76,12 +82,23 @@ class NewTForm extends AbstractType
             'label' => 'SecondaryVat.balanceNet.label'
         ));
 
-        $builder->add('vatInfo', ChoiceType::class, array(
+        $builder->add('vatInfo', EntityType::class, array(
+            'class' => 'AcfDataBundle:Vat',
             'label' => 'SecondaryVat.vatInfo.label',
-            'choices' => SecondaryVat::choiceVatInfo(),
-            'attr' => array(
-                'choice_label_trans' => true
-            )
+            'query_builder' => function (VatRepository $vr) {
+                return $vr->createQueryBuilder('v')
+                    ->orderBy('v.title', 'ASC');
+            },
+            'choice_label' => 'title',
+            'choice_value' => function ($entity = null) {
+                if ($entity instanceof Vat) {
+                    return $entity ? $entity->getTitle() : '';
+                } else {
+                    return $entity;
+                }
+            },
+            'multiple' => false,
+            'required' => true
         ));
     }
 

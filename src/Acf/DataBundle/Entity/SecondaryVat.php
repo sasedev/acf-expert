@@ -18,30 +18,6 @@ class SecondaryVat
 
     /**
      *
-     * @var integer
-     */
-    const VI_0 = 0;
-
-    /**
-     *
-     * @var integer
-     */
-    const VI_6 = 6;
-
-    /**
-     *
-     * @var integer
-     */
-    const VI_12 = 12;
-
-    /**
-     *
-     * @var integer
-     */
-    const VI_18 = 18;
-
-    /**
-     *
      * @var string @ORM\Column(name="id", type="guid", nullable=false)
      *      @ORM\Id
      *      @ORM\GeneratedValue(strategy="UUID")
@@ -59,8 +35,7 @@ class SecondaryVat
 
     /**
      *
-     * @var integer @ORM\Column(name="vatinfo", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceVatInfoCallback", groups={"vatInfo"})
+     * @var string @ORM\Column(name="vatinfo", type="text", nullable=false)
      */
     protected $vatInfo;
 
@@ -107,7 +82,6 @@ class SecondaryVat
         $this->vat = 0;
         $this->balanceTtc = 0;
         $this->balanceNet = 0;
-        $this->vatInfo = self::VI_0;
     }
 
     /**
@@ -162,7 +136,7 @@ class SecondaryVat
 
     /**
      *
-     * @return integer
+     * @return string
      */
     public function getVatInfo()
     {
@@ -171,13 +145,17 @@ class SecondaryVat
 
     /**
      *
-     * @param integer $vatInfo
+     * @param string $vatInfo
      *
      * @return SecondaryVat
      */
     public function setVatInfo($vatInfo)
     {
-        $this->vatInfo = $vatInfo;
+        if ($vatInfo instanceof Vat) {
+            $this->vatInfo = $vatInfo->getTitle();
+        } else {
+            $this->vatInfo = $vatInfo;
+        }
 
         return $this;
     }
@@ -293,36 +271,6 @@ class SecondaryVat
     }
 
     /**
-     * Choice Form vatInfo
-     *
-     * @return multitype:string
-     */
-    public static function choiceVatInfo()
-    {
-        return array(
-            'SecondaryVat.vatInfo.choice.' . self::VI_0 => self::VI_0,
-            'SecondaryVat.vatInfo.choice.' . self::VI_6 => self::VI_6,
-            'SecondaryVat.vatInfo.choice.' . self::VI_12 => self::VI_12,
-            'SecondaryVat.vatInfo.choice.' . self::VI_18 => self::VI_18
-        );
-    }
-
-    /**
-     * Choice Validator vatInfo
-     *
-     * @return multitype:integer
-     */
-    public static function choiceVatInfoCallback()
-    {
-        return array(
-            self::VI_0,
-            self::VI_6,
-            self::VI_12,
-            self::VI_18
-        );
-    }
-
-    /**
      *
      * @return string
      */
@@ -334,6 +282,5 @@ class SecondaryVat
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

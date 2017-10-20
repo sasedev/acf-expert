@@ -103,30 +103,6 @@ abstract class Transaction
      *
      * @var integer
      */
-    const VI_0 = 0;
-
-    /**
-     *
-     * @var integer
-     */
-    const VI_6 = 6;
-
-    /**
-     *
-     * @var integer
-     */
-    const VI_12 = 12;
-
-    /**
-     *
-     * @var integer
-     */
-    const VI_18 = 18;
-
-    /**
-     *
-     * @var integer
-     */
     const R_0 = 0;
 
     /**
@@ -283,8 +259,7 @@ abstract class Transaction
 
     /**
      *
-     * @var integer @ORM\Column(name="vatinfo", type="integer", nullable=false)
-     *      @Assert\Choice(callback="choiceVatInfoCallback", groups={"vatInfo"})
+     * @var string @ORM\Column(name="vatinfo", type="text", nullable=false)
      */
     protected $vatInfo;
 
@@ -400,7 +375,6 @@ abstract class Transaction
         $this->balanceTtcDevise = 0;
         $this->balanceNet = 0;
         $this->balanceNetDevise = 0;
-        $this->vatInfo = self::VI_0;
         $this->regime = self::R_0;
         $this->paymentType = self::PTYPE_NA;
         $this->transactionStatus = self::STATUS_PENDING;
@@ -824,7 +798,7 @@ abstract class Transaction
     /**
      * Get integer
      *
-     * @return integer
+     * @return string
      */
     public function getVatInfo()
     {
@@ -834,13 +808,17 @@ abstract class Transaction
     /**
      * Set $vatInfo
      *
-     * @param integer $vatInfo
+     * @param string $vatInfo
      *
      * @return Transaction
      */
     public function setVatInfo($vatInfo)
     {
-        $this->vatInfo = $vatInfo;
+        if ($vatInfo instanceof Vat) {
+            $this->vatInfo = $vatInfo->getTitle();
+        } else {
+            $this->vatInfo = $vatInfo;
+        }
 
         return $this;
     }
@@ -1159,36 +1137,6 @@ abstract class Transaction
     }
 
     /**
-     * Choice Form vatInfo
-     *
-     * @return multitype:string
-     */
-    public static function choiceVatInfo()
-    {
-        return array(
-            'Transaction.vatInfo.choice.' . self::VI_0 => self::VI_0,
-            'Transaction.vatInfo.choice.' . self::VI_6 => self::VI_6,
-            'Transaction.vatInfo.choice.' . self::VI_12 => self::VI_12,
-            'Transaction.vatInfo.choice.' . self::VI_18 => self::VI_18
-        );
-    }
-
-    /**
-     * Choice Validator vatInfo
-     *
-     * @return multitype:integer
-     */
-    public static function choiceVatInfoCallback()
-    {
-        return array(
-            self::VI_0,
-            self::VI_6,
-            self::VI_12,
-            self::VI_18
-        );
-    }
-
-    /**
      * Choice Form regime
      *
      * @return multitype:string
@@ -1313,6 +1261,5 @@ abstract class Transaction
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

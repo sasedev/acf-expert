@@ -5,9 +5,11 @@ use Acf\ClientBundle\Form\Sale\Doc\SaleDocTForm;
 use Acf\ClientBundle\Form\Sale\SecondaryVat\SaleSecondaryVatTForm;
 use Acf\DataBundle\Entity\MBSale;
 use Acf\DataBundle\Entity\Sale;
+use Acf\DataBundle\Entity\Vat;
 use Acf\DataBundle\Repository\AccountRepository;
 use Acf\DataBundle\Repository\CustomerRepository;
 use Acf\DataBundle\Repository\MBSaleRepository;
+use Acf\DataBundle\Repository\VatRepository;
 use Acf\DataBundle\Repository\WithholdingRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -53,7 +55,8 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.monthlyBalance.label',
                 'class' => 'AcfDataBundle:MBSale',
                 'query_builder' => function (MBSaleRepository $mbsr) {
-                    return $mbsr->createQueryBuilder('mbs')->orderBy('mbs.ref', 'ASC');
+                    return $mbsr->createQueryBuilder('mbs')
+                        ->orderBy('mbs.ref', 'ASC');
                 },
                 'choice_label' => 'ref',
                 'multiple' => false,
@@ -66,7 +69,10 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.monthlyBalance.label',
                 'class' => 'AcfDataBundle:MBSale',
                 'query_builder' => function (MBSaleRepository $mbsr) use ($mbsaleId) {
-                    return $mbsr->createQueryBuilder('mbs')->where('mbs.id = :id')->setParameter('id', $mbsaleId)->orderBy('mbs.ref', 'ASC');
+                    return $mbsr->createQueryBuilder('mbs')
+                        ->where('mbs.id = :id')
+                        ->setParameter('id', $mbsaleId)
+                        ->orderBy('mbs.ref', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -91,7 +97,8 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.relation.label',
                 'class' => 'AcfDataBundle:Customer',
                 'query_builder' => function (CustomerRepository $sr) {
-                    return $sr->createQueryBuilder('s')->orderBy('s.label', 'ASC');
+                    return $sr->createQueryBuilder('s')
+                        ->orderBy('s.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -104,7 +111,11 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.relation.label',
                 'class' => 'AcfDataBundle:Customer',
                 'query_builder' => function (CustomerRepository $sr) use ($companyId) {
-                    return $sr->createQueryBuilder('s')->join('s.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('s.label', 'ASC');
+                    return $sr->createQueryBuilder('s')
+                        ->join('s.company', 'c')
+                        ->where('c.id = :cid')
+                        ->setParameter('cid', $companyId)
+                        ->orderBy('s.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -165,15 +176,23 @@ class NewTForm extends AbstractType
             'required' => false
         ));
 
-        $builder->add('vatInfo', ChoiceType::class, array(
+        $builder->add('vatInfo', EntityType::class, array(
+            'class' => 'AcfDataBundle:Vat',
             'label' => 'Sale.vatInfo.label',
-            'choices' => Sale::choiceVatInfo(),
-            'attr' => array(
-                'choice_label_trans' => true
-            ),
-            'attr' => array(
-                'choice_label_trans' => true
-            )
+            'query_builder' => function (VatRepository $vr) {
+                return $vr->createQueryBuilder('v')
+                    ->orderBy('v.title', 'ASC');
+            },
+            'choice_label' => 'title',
+            'choice_value' => function ($entity = null) {
+                if ($entity instanceof Vat) {
+                    return $entity ? $entity->getTitle() : '';
+                } else {
+                    return $entity;
+                }
+            },
+            'multiple' => false,
+            'required' => true
         ));
 
         $builder->add('regime', ChoiceType::class, array(
@@ -192,7 +211,8 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.withholding.label',
                 'class' => 'AcfDataBundle:Withholding',
                 'query_builder' => function (WithholdingRepository $wr) {
-                    return $wr->createQueryBuilder('w')->orderBy('w.label', 'ASC');
+                    return $wr->createQueryBuilder('w')
+                        ->orderBy('w.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -205,7 +225,11 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.withholding.label',
                 'class' => 'AcfDataBundle:Withholding',
                 'query_builder' => function (WithholdingRepository $wr) use ($companyId) {
-                    return $wr->createQueryBuilder('w')->join('w.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('w.label', 'ASC');
+                    return $wr->createQueryBuilder('w')
+                        ->join('w.company', 'c')
+                        ->where('c.id = :cid')
+                        ->setParameter('cid', $companyId)
+                        ->orderBy('w.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -243,7 +267,8 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.account.label',
                 'class' => 'AcfDataBundle:Account',
                 'query_builder' => function (AccountRepository $ar) {
-                    return $ar->createQueryBuilder('a')->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')
+                        ->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -256,7 +281,11 @@ class NewTForm extends AbstractType
                 'label' => 'Sale.account.label',
                 'class' => 'AcfDataBundle:Account',
                 'query_builder' => function (AccountRepository $ar) use ($companyId) {
-                    return $ar->createQueryBuilder('a')->join('a.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')
+                        ->join('a.company', 'c')
+                        ->where('c.id = :cid')
+                        ->setParameter('cid', $companyId)
+                        ->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,

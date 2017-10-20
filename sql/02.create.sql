@@ -522,7 +522,7 @@ CREATE TABLE "acf_transactions" (
 	"account_id"                                                        UUID NOT NULL,
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-	"vatinfo"                                                           INT8 NOT NULL DEFAULT 0,
+	"vatinfo"                                                           TEXT NOT NULL DEFAULT '0',
 	"regime"                                                            INT8 NOT NULL DEFAULT 0,
 	"devise"                                                            TEXT NOT NULL DEFAULT 'TND',
 	"conversionrate"                                                    FLOAT8 NOT NULL DEFAULT 1,
@@ -543,7 +543,7 @@ CREATE TABLE "acf_transactions" (
 
 CREATE TABLE "acf_transaction_vats" (
 	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
-	"vatinfo"                                                           INT8 NOT NULL DEFAULT 0,
+	"vatinfo"                                                           TEXT NOT NULL DEFAULT '0',
 	"vat"                                                               FLOAT8 NOT NULL DEFAULT 0,
 	"balance_ttc"                                                       FLOAT8 NOT NULL DEFAULT 0,
 	"balance_net"                                                       FLOAT8 NOT NULL DEFAULT 0,
@@ -1149,6 +1149,15 @@ CREATE TABLE "acf_liassefiles" (
     "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
     CONSTRAINT "pk_acf_liassefiles" PRIMARY KEY ("id"),
     CONSTRAINT "fk_acf_liassefolders_liassef" FOREIGN KEY ("liassef_id") REFERENCES "acf_liassefolders" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE "acf_vats" (
+	
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "title"                                                             TEXT NOT NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_acf_vats" PRIMARY KEY ("id")
 );
 
 

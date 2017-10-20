@@ -72,6 +72,7 @@ security:
         - { path: ^/ACEF-Info.*, role: ROLE_CLIENT2 }
         - { path: ^/ACEF-Payroll.*, role: ROLE_CLIENT3 }
         - { path: ^/ACEF-Liasse.*, role: ROLE_CLIENT4 }
+        - { path: ^/ACEF-Tools.*, role: ROLE_USER }
         - { path: ^/myProfile.*, role: ROLE_USER }
         - { path: ^/Agenda.*, role: ROLE_USER }
         - { path: ^/onlineProduct.*, role: ROLE_USER }

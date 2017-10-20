@@ -55,7 +55,7 @@ class SecondaryVatController extends BaseController
                 $this->flashMsgSession('success', $this->translate('SecondaryVat.delete.success', array(
                     '%sale%' => $secondaryVat->getSale()
                         ->getLabel(),
-                    '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                    '%secondaryVat%' => $secondaryVat->getVatInfo()
                 )));
             }
         } catch (\Exception $e) {
@@ -122,12 +122,12 @@ class SecondaryVatController extends BaseController
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.secondaryVat.edit', array(
                     '%sale%' => $secondaryVat->getSale()
                         ->getLabel(),
-                    '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                    '%secondaryVat%' => $secondaryVat->getVatInfo()
                 ));
                 $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.secondaryVat.edit.txt', array(
                     '%sale%' => $secondaryVat->getSale()
                         ->getLabel(),
-                    '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                    '%secondaryVat%' => $secondaryVat->getVatInfo()
                 ));
 
                 return $this->renderResponse('AcfAdminBundle:SecondaryVat:edit.html.twig', $this->gvars);
@@ -187,7 +187,7 @@ class SecondaryVatController extends BaseController
                         $this->flashMsgSession('success', $this->translate('SecondaryVat.edit.success', array(
                             '%sale%' => $secondaryVat->getSale()
                                 ->getLabel(),
-                            '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                            '%secondaryVat%' => $secondaryVat->getVatInfo()
                         )));
 
                         $this->traceEntity($cloneSecondaryVat, $secondaryVat);
@@ -199,7 +199,7 @@ class SecondaryVatController extends BaseController
                         $this->flashMsgSession('error', $this->translate('SecondaryVat.edit.failure', array(
                             '%sale%' => $secondaryVat->getSale()
                                 ->getLabel(),
-                            '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                            '%secondaryVat%' => $secondaryVat->getVatInfo()
                         )));
                     }
                 } elseif (isset($reqData['SecondaryVatUpdateVatForm'])) {
@@ -212,7 +212,7 @@ class SecondaryVatController extends BaseController
                         $this->flashMsgSession('success', $this->translate('SecondaryVat.edit.success', array(
                             '%sale%' => $secondaryVat->getSale()
                                 ->getLabel(),
-                            '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                            '%secondaryVat%' => $secondaryVat->getVatInfo()
                         )));
 
                         $this->traceEntity($cloneSecondaryVat, $secondaryVat);
@@ -224,7 +224,7 @@ class SecondaryVatController extends BaseController
                         $this->flashMsgSession('error', $this->translate('SecondaryVat.edit.failure', array(
                             '%sale%' => $secondaryVat->getSale()
                                 ->getLabel(),
-                            '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                            '%secondaryVat%' => $secondaryVat->getVatInfo()
                         )));
                     }
                 } elseif (isset($reqData['SecondaryVatUpdateBalanceTtcForm'])) {
@@ -237,7 +237,7 @@ class SecondaryVatController extends BaseController
                         $this->flashMsgSession('success', $this->translate('SecondaryVat.edit.success', array(
                             '%sale%' => $secondaryVat->getSale()
                                 ->getLabel(),
-                            '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                            '%secondaryVat%' => $secondaryVat->getVatInfo()
                         )));
 
                         $this->traceEntity($cloneSecondaryVat, $secondaryVat);
@@ -249,7 +249,7 @@ class SecondaryVatController extends BaseController
                         $this->flashMsgSession('error', $this->translate('SecondaryVat.edit.failure', array(
                             '%sale%' => $secondaryVat->getSale()
                                 ->getLabel(),
-                            '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                            '%secondaryVat%' => $secondaryVat->getVatInfo()
                         )));
                     }
                 } elseif (isset($reqData['SecondaryVatUpdateBalanceNetForm'])) {
@@ -262,7 +262,7 @@ class SecondaryVatController extends BaseController
                         $this->flashMsgSession('success', $this->translate('SecondaryVat.edit.success', array(
                             '%sale%' => $secondaryVat->getSale()
                                 ->getLabel(),
-                            '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                            '%secondaryVat%' => $secondaryVat->getVatInfo()
                         )));
 
                         $this->traceEntity($cloneSecondaryVat, $secondaryVat);
@@ -274,7 +274,7 @@ class SecondaryVatController extends BaseController
                         $this->flashMsgSession('error', $this->translate('SecondaryVat.edit.failure', array(
                             '%sale%' => $secondaryVat->getSale()
                                 ->getLabel(),
-                            '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                            '%secondaryVat%' => $secondaryVat->getVatInfo()
                         )));
                     }
                 }
@@ -301,12 +301,12 @@ class SecondaryVatController extends BaseController
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.secondaryVat.edit', array(
                     '%sale%' => $secondaryVat->getSale()
                         ->getLabel(),
-                    '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                    '%secondaryVat%' => $secondaryVat->getVatInfo()
                 ));
                 $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.secondaryVat.edit.txt', array(
                     '%sale%' => $secondaryVat->getSale()
                         ->getLabel(),
-                    '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo())
+                    '%secondaryVat%' => $secondaryVat->getVatInfo()
                 ));
 
                 return $this->renderResponse('AcfAdminBundle:SecondaryVat:edit.html.twig', $this->gvars);
@@ -369,13 +369,13 @@ class SecondaryVatController extends BaseController
             if ($cloneSecondaryVat->getVatInfo() == null) {
                 $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
             } else {
-                $msg .= $this->translate('SecondaryVat.vatInfo.' . $cloneSecondaryVat->getVatInfo());
+                $msg .= $cloneSecondaryVat->getVatInfo();
             }
             $msg .= '</td><td>';
             if ($secondaryVat->getVatInfo() == null) {
                 $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
             } else {
-                $msg .= $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo());
+                $msg .= $secondaryVat->getVatInfo();
             }
             $msg .= '</td></tr>';
         }
@@ -417,7 +417,7 @@ class SecondaryVatController extends BaseController
             $msg = $tableBegin . $msg . $tableEnd;
 
             $trace->setMsg($this->translate('SecondaryVat.traceEdit', array(
-                '%secondaryVat%' => $this->translate('SecondaryVat.vatInfo.' . $secondaryVat->getVatInfo()),
+                '%secondaryVat%' => $secondaryVat->getVatInfo(),
                 '%sale%' => $secondaryVat->getSale()
                     ->getLabel(),
                 '%mbsale%' => $secondaryVat->getSale()

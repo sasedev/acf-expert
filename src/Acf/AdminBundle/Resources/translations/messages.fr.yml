@@ -2605,3 +2605,37 @@ LiasseDoc.edit.success: Succès de la modification du Document Liasse <b>%liasse
 LiasseDoc.edit.failure: Echec de la modification du Document Liasse <b>%liasseDoc%</b>
 
 
+# Vat
+menu.admin.vat: TVA
+breadcrumb.vat.list: Liste des TVA
+breadcrumb.vat.add: Ajouter TVA
+breadcrumb.vat.edit: TVA <b>%vat%</b>
+
+pagetitle.vat.list: Liste des TVAs
+pagetitle.vat.list.txt: Liste des TVAs
+pagetitle.vat.add: Ajouter TVA
+pagetitle.vat.add.txt: Ajouter TVA
+pagetitle.vat.edit: Edition TVA <b>%vat%</b>
+pagetitle.vat.edit.txt: Edition TVA "%vat%"
+
+Vat.tab.overview: Détails
+Vat.tab.edit: Edition
+
+Vat.tlabel.list: Liste des TVAs
+Vat.tlabel.add: Ajouter nouveau TVA
+Vat.tlabel.overview: Aperçu des détails du TVA
+Vat.tlabel.editTitle: Modification de la TVA
+
+Vat.empty: Aucune TVA trouvée dans la base de donnée
+
+Vat.add.success: Succès de l'ajout de la TVA <b>%vat%</b>
+Vat.add.failure: Echec de l'ajout de la TVA
+Vat.delete.confirm.title: Demande de Confirmation
+Vat.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette TVA ?<br/> Cette action est irreversible!
+Vat.delete.notfound: TVA inconnue
+Vat.delete.success: Succès de la suppression de la TVA <b>%vat%</b>
+Vat.delete.failure: Echec de la suppression de la TVA
+Vat.edit.notfound: TVA inconnue
+Vat.edit.success: Succès de la modification de la TVA <b>%vat%</b>
+Vat.edit.failure: Echec de la modification de la TVA <b>%vat%</b>
+
