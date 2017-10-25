@@ -35,7 +35,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         $qb = $this->createQueryBuilder('u');
         $qb->where('u.username = :username');
         $qb->andWhere('u.lockout = :lockout');
-        $qb->andWhere($qb->expr()->orX($qb->expr()->isNull('u.lastValidity'), $qb->expr()->gt('u.lastValidity', ':now')));
+        $qb->andWhere($qb->expr()
+            ->orX($qb->expr()
+            ->isNull('u.lastValidity'), $qb->expr()
+            ->gt('u.lastValidity', ':now')));
         $qb->setParameter('username', $username);
         $qb->setParameter('lockout', User::LOCKOUT_UNLOCKED);
         $qb->setParameter('now', $now);
@@ -128,7 +131,21 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      */
     public function countSearch($q)
     {
-        $qb = $this->createQueryBuilder('u')->select('count(u)')->distinct()->where('LOWER(u.username) LIKE :key')->orWhere('LOWER(u.email) LIKE :key')->orWhere('LOWER(u.firstName) LIKE :key')->orWhere('LOWER(u.lastName) LIKE :key')->orWhere('LOWER(u.streetNum) LIKE :key')->orWhere('LOWER(u.address) LIKE :key')->orWhere('LOWER(u.address2) LIKE :key')->orWhere('LOWER(u.town) LIKE :key')->orWhere('LOWER(u.zipCode) LIKE :key')->orWhere('LOWER(u.mobile) LIKE :key')->orWhere('LOWER(u.phone) LIKE :key')->setParameter('key', '%' . strtolower($q) . '%');
+        $qb = $this->createQueryBuilder('u')
+            ->select('count(u)')
+            ->distinct()
+            ->where('LOWER(u.username) LIKE :key')
+            ->orWhere('LOWER(u.email) LIKE :key')
+            ->orWhere('LOWER(u.firstName) LIKE :key')
+            ->orWhere('LOWER(u.lastName) LIKE :key')
+            ->orWhere('LOWER(u.streetNum) LIKE :key')
+            ->orWhere('LOWER(u.address) LIKE :key')
+            ->orWhere('LOWER(u.address2) LIKE :key')
+            ->orWhere('LOWER(u.town) LIKE :key')
+            ->orWhere('LOWER(u.zipCode) LIKE :key')
+            ->orWhere('LOWER(u.mobile) LIKE :key')
+            ->orWhere('LOWER(u.phone) LIKE :key')
+            ->setParameter('key', '%' . strtolower($q) . '%');
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -143,7 +160,21 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      */
     public function getAllSearchQuery($q)
     {
-        $qb = $this->createQueryBuilder('u')->distinct()->where('LOWER(u.username) LIKE :key')->orWhere('LOWER(u.email) LIKE :key')->orWhere('LOWER(u.firstName) LIKE :key')->orWhere('LOWER(u.lastName) LIKE :key')->orWhere('LOWER(u.streetNum) LIKE :key')->orWhere('LOWER(u.address) LIKE :key')->orWhere('LOWER(u.address2) LIKE :key')->orWhere('LOWER(u.town) LIKE :key')->orWhere('LOWER(u.zipCode) LIKE :key')->orWhere('LOWER(u.mobile) LIKE :key')->orWhere('LOWER(u.phone) LIKE :key')->orderBy('u.username', 'ASC')->setParameter('key', '%' . strtolower($q) . '%');
+        $qb = $this->createQueryBuilder('u')
+            ->distinct()
+            ->where('LOWER(u.username) LIKE :key')
+            ->orWhere('LOWER(u.email) LIKE :key')
+            ->orWhere('LOWER(u.firstName) LIKE :key')
+            ->orWhere('LOWER(u.lastName) LIKE :key')
+            ->orWhere('LOWER(u.streetNum) LIKE :key')
+            ->orWhere('LOWER(u.address) LIKE :key')
+            ->orWhere('LOWER(u.address2) LIKE :key')
+            ->orWhere('LOWER(u.town) LIKE :key')
+            ->orWhere('LOWER(u.zipCode) LIKE :key')
+            ->orWhere('LOWER(u.mobile) LIKE :key')
+            ->orWhere('LOWER(u.phone) LIKE :key')
+            ->orderBy('u.username', 'ASC')
+            ->setParameter('key', '%' . strtolower($q) . '%');
         $query = $qb->getQuery();
 
         return $query;
@@ -177,7 +208,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         $delay = new \DateTime();
         $delay->setTimestamp(strtotime($strtotime));
 
-        $qb = $this->createQueryBuilder('u')->select('count(u)')->where('u.lastActivity > :delay')->orderBy('u.lastActivity', 'ASC')->setParameter('delay', $delay);
+        $qb = $this->createQueryBuilder('u')
+            ->select('count(u)')
+            ->where('u.lastActivity > :delay')
+            ->setParameter('delay', $delay);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -199,7 +233,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         $delay = new \DateTime();
         $delay->setTimestamp(strtotime($strtotime));
 
-        $qb = $this->createQueryBuilder('u')->where('u.lastActivity > :delay')->setParameter('delay', $delay)->orderBy('u.lastActivity', 'DESC');
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.lastActivity > :delay')
+            ->setParameter('delay', $delay)
+            ->orderBy('u.lastActivity', 'DESC');
         $query = $qb->getQuery();
 
         return $query;
@@ -218,13 +255,74 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     }
 
     /**
+     * Count All for last validity date
+     *
+     * @param \DateTime $lastValidity
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function countAllByLastValidity(\DateTime $lastValidity)
+    {
+        $lastValidityP1 = new \DateTime();
+        $lastValidityP1->setTimestamp($lastValidity->getTimestamp() + 3600 * 24);
+
+        $qb = $this->createQueryBuilder('u')
+            ->select('count(u)')
+            ->where('u.lastValidity >= :lastValidity')
+            ->andWhere('u.lastValidity <= :lastValidityp1')
+            ->setParameter('lastValidity', $lastValidity)
+            ->setParameter('lastValidityp1', $lastValidityP1);
+        $query = $qb->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
+
+    /**
+     * Get Query for All Entities for last validity date
+     *
+     * @param \DateTime $lastValidity
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getAllByLastValidityQuery(\DateTime $lastValidity)
+    {
+        $lastValidityP1 = new \DateTime();
+        $lastValidityP1->setTimestamp($lastValidity->getTimestamp() + 3600 * 24);
+
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.lastValidity >= :lastValidity')
+            ->andWhere('u.lastValidity <= :lastValidityp1')
+            ->setParameter('lastValidity', $lastValidity)
+            ->setParameter('lastValidityp1', $lastValidityP1)
+            ->orderBy('u.username', 'ASC');
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get All Entities for last validity date
+     *
+     * @param \DateTime $lastValidity
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function getAllByLastValidity(\DateTime $lastValidity)
+    {
+        return $this->getAllByLastValidityQuery($lastValidity)->execute();
+    }
+
+    /**
      * Count All Unlocked
      *
      * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
     public function countAllUnlocked()
     {
-        $qb = $this->createQueryBuilder('u')->select('count(u)')->where('u.lockout = :lockout')->setParameter('lockout', User::LOCKOUT_UNLOCKED);
+        $qb = $this->createQueryBuilder('u')
+            ->select('count(u)')
+            ->where('u.lockout = :lockout')
+            ->setParameter('lockout', User::LOCKOUT_UNLOCKED);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
@@ -237,7 +335,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      */
     public function getAllUnlockedQuery()
     {
-        $qb = $this->createQueryBuilder('u')->where('u.lockout = :lockout')->orderBy('u.username', 'ASC')->setParameter('lockout', User::LOCKOUT_UNLOCKED);
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.lockout = :lockout')
+            ->orderBy('u.username', 'ASC')
+            ->setParameter('lockout', User::LOCKOUT_UNLOCKED);
         $query = $qb->getQuery();
 
         return $query;

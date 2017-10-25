@@ -99,3 +99,6 @@ _front.devis.success: 'Votre demande de Devis a été sauvegardée avec succès'
 
 _mail.join.subject: '[Acf-expert.tn] Joindre nos équipes : '
 _mail.contact.subject: '[Acf-expert.tn] Contactez Nous : ' 
+
+_mail.uservalidity.subject: '[Acf-expert.tn] Notification de validité de Compte'
+

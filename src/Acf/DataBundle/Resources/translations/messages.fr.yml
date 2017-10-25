@@ -1914,7 +1914,7 @@ OnlineInvoice.dtUpdate: Date de modification
 OnlineInvoice.id.label: "ID :"
 OnlineInvoice.ref.label: "Référence :"
 OnlineInvoice.user.label: "Utilisateur :"
-OnlineInvoice.company: "Société :"
+OnlineInvoice.company.label: "Société :"
 OnlineInvoice.val.label: "Montant :"
 OnlineInvoice.status.label: "Etat :"
 OnlineInvoice.status.choice.1: "Nouveau"
