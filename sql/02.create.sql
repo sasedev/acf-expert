@@ -197,6 +197,9 @@ CREATE TABLE "acf_companies" (
 	"bureaurc"                                                          TEXT NULL,
 	"bureaucnss"                                                        TEXT NULL,
 	"ref"                                                               TEXT NULL,
+	"monthdocslimit"                                                    INT8 NOT NULL DEFAULT 100,
+	"curmonth"                                                          INT4 NOT NULL DEFAULT 1,
+	"curmonthdocs"                                                      INT8 NOT NULL DEFAULT 0,
 	CONSTRAINT "pk_acf_companies" PRIMARY KEY ("id"),
 	CONSTRAINT "fk_acf_companies_type" FOREIGN KEY ("type_id") REFERENCES "acf_cmp_types" ("id") ON UPDATE CASCADE ON DELETE SET NULL
 );

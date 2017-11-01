@@ -200,6 +200,9 @@ Company.buys: Achats
 Company.sales: Ventes
 Company.stocks: Stocks
 Company.docs: Documents
+Company.monthDocsLimit: Limite mensuelle de Documents
+Company.currentMonth: Mois en cours
+Company.currentMonthDocs: Nbr Documents ajoutés
 Company.dtCrea: Date d'ajout
 Company.dtUpdate: Date de modification
 Company.msalaries: "Salariés :"
@@ -242,6 +245,9 @@ Company.buys.label: "Achats :"
 Company.sales.label: "Ventes :"
 Company.docs.label: "Documents :"
 Company.clone.label: "Clone de :"
+Company.monthDocsLimit.label: "Limite mensuelle de Documents :"
+Company.currentMonth.label: "Mois en cours :"
+Company.currentMonthDocs.label: "Nbr Documents ajoutés"
 
 #Stock
 Stock.company: Société

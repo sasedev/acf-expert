@@ -165,6 +165,13 @@ class MBSaleController extends BaseController
 
                     return $this->redirect($this->generateUrl('_client_homepage'));
                 }
+                $currentMonth = date('m');
+                if ($company->getCurrentMonth() != $currentMonth) {
+                    $company->setCurrentMonth($currentMonth);
+                    $company->setCurrentMonthDocs(0);
+                    $em->persist($company);
+                    $em->flush();
+                }
                 $vats = $em->getRepository('AcfDataBundle:Vat')->getAll();
                 $this->gvars['vats'] = $vats;
                 $this->gvars['companyUser'] = $companyUser;
@@ -237,6 +244,8 @@ class MBSaleController extends BaseController
                             $em->persist($doc);
 
                             $sale->addDoc($doc);
+                            $company->setCurrentMonthDocs($company->getCurrentMonthDocs() + 1);
+                            $em->persist($company);
                         }
                         $em->persist($sale);
                         foreach ($saleNewForm->get('secondaryVats') as $secondaryVatNewForm) {
@@ -300,6 +309,8 @@ class MBSaleController extends BaseController
                             $em->persist($doc);
 
                             $mbsale->addDoc($doc);
+                            $company->setCurrentMonthDocs($company->getCurrentMonthDocs() + 1);
+                            $em->persist($company);
 
                             $docs[] = $doc;
 

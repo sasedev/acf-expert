@@ -47,7 +47,8 @@ class NewTForm extends AbstractType
             'label' => 'Company.type.label',
             'class' => 'AcfDataBundle:CompanyType',
             'query_builder' => function (CompanyTypeRepository $ctr) {
-                return $ctr->createQueryBuilder('ct')->orderBy('ct.label', 'ASC');
+                return $ctr->createQueryBuilder('ct')
+                    ->orderBy('ct.label', 'ASC');
             },
             'choice_label' => 'label',
             'multiple' => false,
@@ -59,7 +60,8 @@ class NewTForm extends AbstractType
             'label' => 'Company.sectors.label',
             'class' => 'AcfDataBundle:Sector',
             'query_builder' => function (SectorRepository $sr) {
-                return $sr->createQueryBuilder('s')->orderBy('s.label', 'ASC');
+                return $sr->createQueryBuilder('s')
+                    ->orderBy('s.label', 'ASC');
             },
             'choice_label' => 'label',
             'multiple' => true,
@@ -186,13 +188,18 @@ class NewTForm extends AbstractType
             'label' => 'Company.clone.label',
             'class' => 'AcfDataBundle:Company',
             'query_builder' => function (CompanyRepository $cr) {
-                return $cr->createQueryBuilder('c')->orderBy('c.corporateName', 'ASC');
+                return $cr->createQueryBuilder('c')
+                    ->orderBy('c.corporateName', 'ASC');
             },
             'choice_label' => 'corporateName',
             'multiple' => false,
             'by_reference' => true,
             'required' => false,
             'mapped' => false
+        ));
+
+        $builder->add('monthDocsLimit', IntegerType::class, array(
+            'label' => 'Company.monthDocsLimit.label'
         ));
     }
 
@@ -231,7 +238,8 @@ class NewTForm extends AbstractType
                 'mobile',
                 'fax',
                 'email',
-                'physicaltype'
+                'physicaltype',
+                'monthDocsLimit'
             )
         );
     }

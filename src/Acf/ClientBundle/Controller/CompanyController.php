@@ -21,7 +21,6 @@ use Acf\ClientBundle\Form\Company\UpdateActionvnTForm as CompanyUpdateActionvnTF
 use Acf\ClientBundle\Form\Address\NewTForm as AddressNewTForm;
 use Acf\ClientBundle\Form\Phone\NewTForm as PhoneNewTForm;
 use Acf\ClientBundle\Form\CompanyFrame\NewTForm as CompanyFrameNewTForm;
-use Acf\ClientBundle\Form\Doc\NewTForm as DocNewTForm;
 use Acf\ClientBundle\Form\Customer\NewTForm as CustomerNewTForm;
 use Acf\ClientBundle\Form\Supplier\NewTForm as SupplierNewTForm;
 use Acf\ClientBundle\Form\MBPurchase\NewTForm as MBPurchaseNewTForm;
@@ -32,7 +31,6 @@ use Acf\DataBundle\Entity\Supplier;
 use Acf\DataBundle\Entity\Address;
 use Acf\DataBundle\Entity\Phone;
 use Acf\DataBundle\Entity\ConstantStr;
-use Acf\DataBundle\Entity\Doc;
 use Acf\DataBundle\Entity\MBSale;
 use Acf\DataBundle\Entity\MBPurchase;
 use Acf\DataBundle\Entity\Trace;
@@ -208,6 +206,14 @@ class CompanyController extends BaseController
                 $this->flashMsgSession('warning', $this->translate('Company.edit.notfound'));
             } else {
 
+                $currentMonth = date('m');
+                if ($company->getCurrentMonth() != $currentMonth) {
+                    $company->setCurrentMonth($currentMonth);
+                    $company->setCurrentMonthDocs(0);
+                    $em->persist($company);
+                    $em->flush();
+                }
+
                 $sc = $this->getSecurityTokenStorage();
                 $user = $sc->getToken()->getUser();
 
@@ -255,12 +261,6 @@ class CompanyController extends BaseController
                     'company' => $company
                 ));
 
-                $doc = new Doc();
-                $doc->setCompany($company);
-                $docNewForm = $this->createForm(DocNewTForm::class, $doc, array(
-                    'company' => $company
-                ));
-
                 $customer = new Customer();
                 $customer->setCompany($company);
                 $customerNewForm = $this->createForm(CustomerNewTForm::class, $customer, array(
@@ -289,7 +289,6 @@ class CompanyController extends BaseController
                 $this->gvars['address'] = $address;
                 $this->gvars['phone'] = $phone;
                 $this->gvars['companyFrame'] = $companyFrame;
-                $this->gvars['doc'] = $doc;
                 $this->gvars['customer'] = $customer;
                 $this->gvars['supplier'] = $supplier;
                 $this->gvars['docgroupcomptables'] = $em->getRepository('AcfDataBundle:Docgroupcomptable')->getRoots($company);
@@ -318,7 +317,6 @@ class CompanyController extends BaseController
                 $this->gvars['AddressNewForm'] = $addressNewForm->createView();
                 $this->gvars['PhoneNewForm'] = $phoneNewForm->createView();
                 $this->gvars['CompanyFrameNewForm'] = $companyFrameNewForm->createView();
-                $this->gvars['DocNewForm'] = $docNewForm->createView();
                 $this->gvars['CustomerNewForm'] = $customerNewForm->createView();
                 $this->gvars['SupplierNewForm'] = $supplierNewForm->createView();
                 $this->gvars['MBSaleNewForm'] = $mbsaleNewForm->createView();
@@ -482,12 +480,6 @@ class CompanyController extends BaseController
                 $companyFrame = new CompanyFrame();
                 $companyFrame->setCompany($company);
                 $companyFrameNewForm = $this->createForm(CompanyFrameNewTForm::class, $companyFrame, array(
-                    'company' => $company
-                ));
-
-                $doc = new Doc();
-                $doc->setCompany($company);
-                $docNewForm = $this->createForm(DocNewTForm::class, $doc, array(
                     'company' => $company
                 ));
 
@@ -901,57 +893,6 @@ class CompanyController extends BaseController
 
                         $this->flashMsgSession('error', $this->translate('CompanyFrame.add.failure'));
                     }
-                } elseif (isset($reqData['DocNewForm'])) {
-                    $this->gvars['tabActive'] = 7;
-                    $this->getSession()->set('tabActive', 7);
-                    $docNewForm->handleRequest($request);
-                    if ($docNewForm->isValid()) {
-                        $docFiles = $docNewForm['fileName']->getData();
-                        $docs = array();
-
-                        $docDir = $this->getParameter('kernel.root_dir') . '/../web/res/docs';
-
-                        $docNames = '';
-
-                        foreach ($docFiles as $docFile) {
-                            $originalName = $docFile->getClientOriginalName();
-                            $fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($docFile->getClientOriginalExtension());
-                            $mimeType = $docFile->getMimeType();
-                            $docFile->move($docDir, $fileName);
-
-                            $size = filesize($docDir . '/' . $fileName);
-                            $md5 = md5_file($docDir . '/' . $fileName);
-
-                            $doc = new Doc();
-                            $doc->setCompany($company);
-                            $doc->setFileName($fileName);
-                            $doc->setOriginalName($originalName);
-                            $doc->setSize($size);
-                            $doc->setMimeType($mimeType);
-                            $doc->setMd5($md5);
-                            $doc->setDescription($docNewForm['description']->getData());
-                            $em->persist($doc);
-
-                            $docs[] = $doc;
-
-                            $docNames .= $doc->getOriginalName() . ' ';
-                        }
-                        $em->flush();
-
-                        $this->flashMsgSession('success', $this->translate('Doc.add.success', array(
-                            '%doc%' => $docNames
-                        )));
-                        $this->newDocNotifyAdmin($company, $docs);
-
-                        $this->gvars['stabActive'] = 2;
-                        $this->getSession()->set('stabActive', 2);
-
-                        return $this->redirect($urlFrom);
-                    } else {
-                        $em->refresh($company);
-
-                        $this->flashMsgSession('error', $this->translate('Doc.add.failure'));
-                    }
                 } elseif (isset($reqData['CustomerNewForm'])) {
                     $this->gvars['tabActive'] = 22;
                     $this->getSession()->set('tabActive', 22);
@@ -1044,7 +985,6 @@ class CompanyController extends BaseController
                 $this->gvars['address'] = $address;
                 $this->gvars['phone'] = $phone;
                 $this->gvars['companyFrame'] = $companyFrame;
-                $this->gvars['doc'] = $doc;
                 $this->gvars['customer'] = $customer;
                 $this->gvars['supplier'] = $supplier;
                 $this->gvars['docgroupcomptables'] = $em->getRepository('AcfDataBundle:Docgroupcomptable')->getRoots($company);
@@ -1073,7 +1013,6 @@ class CompanyController extends BaseController
                 $this->gvars['AddressNewForm'] = $addressNewForm->createView();
                 $this->gvars['PhoneNewForm'] = $phoneNewForm->createView();
                 $this->gvars['CompanyFrameNewForm'] = $companyFrameNewForm->createView();
-                $this->gvars['DocNewForm'] = $docNewForm->createView();
                 $this->gvars['CustomerNewForm'] = $customerNewForm->createView();
                 $this->gvars['SupplierNewForm'] = $supplierNewForm->createView();
                 $this->gvars['MBSaleNewForm'] = $mbsaleNewForm->createView();
@@ -1173,7 +1112,9 @@ class CompanyController extends BaseController
         $fromName = $this->getParameter('mail_from_name');
         $subject = $this->translate('_mail.newdocs.subject', array(), 'messages');
 
-        $user = $this->getSecurityTokenStorage()->getToken()->getUser();
+        $user = $this->getSecurityTokenStorage()
+            ->getToken()
+            ->getUser();
 
         $admins = $company->getAdmins();
         if (\count($admins) != 0) {
@@ -1195,7 +1136,9 @@ class CompanyController extends BaseController
 
     protected function traceEntity(Company $cloneCompany, Company $company)
     {
-        $curUser = $this->getSecurityTokenStorage()->getToken()->getUser();
+        $curUser = $this->getSecurityTokenStorage()
+            ->getToken()
+            ->getUser();
         $trace = new Trace();
         $trace->setActionId($company->getId());
         $trace->setActionType(Trace::AT_UPDATE);

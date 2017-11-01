@@ -207,6 +207,25 @@ class Company
 
     /**
      *
+     * @var integer @ORM\Column(name="monthdocslimit", type="integer", nullable=false)
+     *      @Assert\GreaterThanOrEqual(value="0", groups={"actionvn"})
+     */
+    protected $monthDocsLimit;
+
+    /**
+     *
+     * @var integer @ORM\Column(name="curmonth", type="integer", nullable=false)
+     */
+    protected $currentMonth;
+
+    /**
+     *
+     * @var integer @ORM\Column(name="curmonthdocs", type="integer", nullable=false)
+     */
+    protected $currentMonthDocs;
+
+    /**
+     *
      * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
@@ -450,6 +469,7 @@ class Company
     {
         $this->dtCrea = new \DateTime('now');
         $this->actionvn = 0;
+        $this->monthDocsLimit = 100;
         $this->physicaltype = self::PHTYPE_MORAL;
         $this->phones = new ArrayCollection();
         $this->addresses = new ArrayCollection();
@@ -1121,6 +1141,78 @@ class Company
     public function setOtherInfos($otherInfos)
     {
         $this->otherInfos = $otherInfos;
+
+        return $this;
+    }
+
+    /**
+     * Get $monthDocsLimit
+     *
+     * @return integer
+     */
+    public function getMonthDocsLimit()
+    {
+        return $this->monthDocsLimit;
+    }
+
+    /**
+     * Set $monthDocsLimit
+     *
+     * @param integer $monthDocsLimit
+     *
+     * @return Company
+     */
+    public function setMonthDocsLimit($monthDocsLimit)
+    {
+        $this->monthDocsLimit = $monthDocsLimit;
+
+        return $this;
+    }
+
+    /**
+     * Get $currentMonth
+     *
+     * @return integer
+     */
+    public function getCurrentMonth()
+    {
+        return $this->currentMonth;
+    }
+
+    /**
+     * Set $currentMonth
+     *
+     * @param integer $currentMonth
+     *
+     * @return Company
+     */
+    public function setCurrentMonth($currentMonth)
+    {
+        $this->currentMonth = $currentMonth;
+
+        return $this;
+    }
+
+    /**
+     * Get $currentMonthDocs
+     *
+     * @return integer
+     */
+    public function getCurrentMonthDocs()
+    {
+        return $this->currentMonthDocs;
+    }
+
+    /**
+     * Set $currentMonthDocs
+     *
+     * @param integer $currentMonthDocs
+     *
+     * @return Company
+     */
+    public function setCurrentMonthDocs($currentMonthDocs)
+    {
+        $this->currentMonthDocs = $currentMonthDocs;
 
         return $this;
     }
@@ -2668,6 +2760,58 @@ class Company
     public function setDocs(Collection $docs)
     {
         $this->docs = $docs;
+
+        return $this;
+    }
+
+    /**
+     * Add OnlineOrder
+     *
+     * @param OnlineOrder $onlineOrder
+     *
+     * @return Company
+     */
+    public function addOnlineOrder(LiasseFolder $onlineOrder)
+    {
+        $this->onlineOrders[] = $onlineOrder;
+
+        return $this;
+    }
+
+    /**
+     * Remove OnlineOrder
+     *
+     * @param OnlineOrder $onlineOrder
+     *
+     * @return Company
+     */
+    public function removeOnlineOrder(OnlineOrder $onlineOrder)
+    {
+        $this->onlineOrders->removeElement($onlineOrder);
+
+        return $this;
+    }
+
+    /**
+     * Get $onlineOrders
+     *
+     * @return ArrayCollection
+     */
+    public function getOnlineOrders()
+    {
+        return $this->onlineOrders;
+    }
+
+    /**
+     * Set $onlineOrders
+     *
+     * @param Collection $onlineOrders
+     *
+     * @return Company
+     */
+    public function setOnlineOrders(Collection $onlineOrders)
+    {
+        $this->onlineOrders = $onlineOrders;
 
         return $this;
     }

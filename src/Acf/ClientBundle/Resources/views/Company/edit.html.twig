@@ -357,6 +357,9 @@ $(function() {
 												<div class="col-lg-3 text-right">{{'Company.otherInfos'|trans|raw}} :</div>
 												<div class="col-lg-9">{%if company.otherInfos is not empty%}{{company.otherInfos|raw}}{%else%}{{bsLabel('_NA'|trans|raw)}}{%endif%}&nbsp;</div>
 												<div class="col-lg-12">&nbsp;</div>
+												<div class="col-lg-3 text-right">{{'Company.monthDocsLimit'|trans|raw}} :</div>
+												<div class="col-lg-9">{{company.currentMonthDocs}}/{{company.monthDocsLimit}}&nbsp;</div>
+												<div class="col-lg-12">&nbsp;</div>
 												<div class="col-lg-3 text-right">{{'Company.dtCrea'|trans|raw}} :</div>
 												<div class="col-lg-9">{{company.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{company.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
 												<div class="col-lg-3 text-right">{{'Company.dtUpdate'|trans|raw}} :</div>

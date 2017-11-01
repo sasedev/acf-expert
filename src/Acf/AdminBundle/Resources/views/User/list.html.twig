@@ -26,6 +26,7 @@ $(function() {
 			null,
 			null,
 			null,
+			null,
 			{ "searchable": false, "sortable": false }
 		],
 		"pageLength": 10,
@@ -69,6 +70,7 @@ $(function() {
 							<th>{{ 'User.phone.label'|trans|raw }}</th>
 							<th>{{ 'User.mobile.label'|trans|raw }}</th>
 							<th>{{ 'User.userRoles.label'|trans|raw }}</th>
+							<th>{{ 'User.lastValidity.label'|trans|raw }}</th>
 							<th>{{ 'action'|trans|raw }}</th>
 						</tr>
 					</thead>
@@ -91,6 +93,9 @@ $(function() {
 								{% endfor %}
 								</ul>
 								{%endif%}
+							</td>
+							<td>
+								{% if user.lastValidity is not empty %}{{user.lastValidity|localeDate('full')}} {{'_at'|trans}} {{user.lastValidity|localeDate('none','medium')}}{% else %}{{bsLabelWarning('_NA'|trans|raw)}}{% endif %}
 							</td>
 							<td>
 								<a class="btn btn-sm btn-info" href="{{path('_admin_user_editGet',{'id':user.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>

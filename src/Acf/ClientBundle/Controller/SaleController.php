@@ -288,6 +288,13 @@ class SaleController extends BaseController
 
                     return $this->redirect($this->generateUrl('_client_homepage'));
                 }
+                $currentMonth = date('m');
+                if ($company->getCurrentMonth() != $currentMonth) {
+                    $company->setCurrentMonth($currentMonth);
+                    $company->setCurrentMonthDocs(0);
+                    $em->persist($company);
+                    $em->flush();
+                }
                 $this->gvars['companyUser'] = $companyUser;
                 $this->gvars['menu_active'] = 'client' . $company->getId();
 
@@ -878,6 +885,8 @@ class SaleController extends BaseController
                             $em->persist($doc);
 
                             $sale->addDoc($doc);
+                            $company->setCurrentMonthDocs($company->getCurrentMonthDocs() + 1);
+                            $em->persist($company);
 
                             $docs[] = $doc;
 

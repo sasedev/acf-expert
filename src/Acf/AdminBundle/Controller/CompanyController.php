@@ -22,6 +22,7 @@ use Acf\AdminBundle\Form\Company\UpdateEmailTForm as CompanyUpdateEmailTForm;
 use Acf\AdminBundle\Form\Company\UpdateAdrTForm as CompanyUpdateAdrTForm;
 use Acf\AdminBundle\Form\Company\UpdateOtherInfosTForm as CompanyUpdateOtherInfosTForm;
 use Acf\AdminBundle\Form\Company\UpdateActionvnTForm as CompanyUpdateActionvnTForm;
+use Acf\AdminBundle\Form\Company\UpdateMonthDocsLimitTForm as CompanyUpdateMonthDocsLimitTForm;
 use Acf\AdminBundle\Form\Stock\NewTForm as StockNewTForm;
 use Acf\AdminBundle\Form\Address\NewTForm as AddressNewTForm;
 use Acf\AdminBundle\Form\Phone\NewTForm as PhoneNewTForm;
@@ -201,8 +202,12 @@ class CompanyController extends BaseController
             $workSheet->getStyle('H1')
                 ->getFont()
                 ->setBold(true);
+            $workSheet->setCellValue('I1', $this->translate('Company.monthDocsLimit.label'));
+            $workSheet->getStyle('I1')
+                ->getFont()
+                ->setBold(true);
 
-            $workSheet->getStyle('A1:H1')->applyFromArray(array(
+            $workSheet->getStyle('A1:I1')->applyFromArray(array(
                 'fill' => array(
                     'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array(
@@ -236,9 +241,10 @@ class CompanyController extends BaseController
                 $workSheet->setCellValue('F' . $i, \count($company->getDocs()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
                 $workSheet->setCellValue('G' . $i, \count($company->getPurchases()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
                 $workSheet->setCellValue('H' . $i, \count($company->getSales()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $workSheet->setCellValue('I' . $i, \count($company->getMonthDocsLimit()), \PHPExcel_Cell_DataType::TYPE_NUMERIC);
 
                 if ($i % 2 == 1) {
-                    $workSheet->getStyle('A' . $i . ':H' . $i)->applyFromArray(array(
+                    $workSheet->getStyle('A' . $i . ':I' . $i)->applyFromArray(array(
                         'fill' => array(
                             'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                             'color' => array(
@@ -247,7 +253,7 @@ class CompanyController extends BaseController
                         )
                     ));
                 } else {
-                    $workSheet->getStyle('A' . $i . ':H' . $i)->applyFromArray(array(
+                    $workSheet->getStyle('A' . $i . ':I' . $i)->applyFromArray(array(
                         'fill' => array(
                             'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                             'color' => array(
@@ -266,6 +272,7 @@ class CompanyController extends BaseController
             $workSheet->getColumnDimension('F')->setAutoSize(true);
             $workSheet->getColumnDimension('G')->setAutoSize(true);
             $workSheet->getColumnDimension('H')->setAutoSize(true);
+            $workSheet->getColumnDimension('I')->setAutoSize(true);
 
             $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
             $response = $this->get('phpexcel')->createStreamedResponse($writer);
@@ -851,6 +858,13 @@ class CompanyController extends BaseController
             if (null == $company) {
                 $this->flashMsgSession('warning', $this->translate('Company.edit.notfound'));
             } else {
+                $currentMonth = date('m');
+                if ($company->getCurrentMonth() != $currentMonth) {
+                    $company->setCurrentMonth($currentMonth);
+                    $company->setCurrentMonthDocs(0);
+                    $em->persist($company);
+                    $em->flush();
+                }
                 $sc = $this->getSecurityTokenStorage();
                 $ac = $this->getSecurityAuthorizationChecker();
                 $user = $sc->getToken()->getUser();
@@ -890,6 +904,7 @@ class CompanyController extends BaseController
                 $companyUpdateAdrForm = $this->createForm(CompanyUpdateAdrTForm::class, $company);
                 $companyUpdateOtherInfosForm = $this->createForm(CompanyUpdateOtherInfosTForm::class, $company);
                 $companyUpdateActionvnForm = $this->createForm(CompanyUpdateActionvnTForm::class, $company);
+                $companyUpdateMonthDocsLimitForm = $this->createForm(CompanyUpdateMonthDocsLimitTForm::class, $company);
 
                 $stock = new Stock();
                 $stock->setCompany($company);
@@ -1126,6 +1141,7 @@ class CompanyController extends BaseController
                 $this->gvars['CompanyUpdateAdrForm'] = $companyUpdateAdrForm->createView();
                 $this->gvars['CompanyUpdateOtherInfosForm'] = $companyUpdateOtherInfosForm->createView();
                 $this->gvars['CompanyUpdateActionvnForm'] = $companyUpdateActionvnForm->createView();
+                $this->gvars['CompanyUpdateMonthDocsLimitForm'] = $companyUpdateMonthDocsLimitForm->createView();
                 $this->gvars['StockNewForm'] = $stockNewForm->createView();
                 $this->gvars['AddressNewForm'] = $addressNewForm->createView();
                 $this->gvars['PhoneNewForm'] = $phoneNewForm->createView();
@@ -1319,6 +1335,7 @@ class CompanyController extends BaseController
                 $companyUpdateAdrForm = $this->createForm(CompanyUpdateAdrTForm::class, $company);
                 $companyUpdateOtherInfosForm = $this->createForm(CompanyUpdateOtherInfosTForm::class, $company);
                 $companyUpdateActionvnForm = $this->createForm(CompanyUpdateActionvnTForm::class, $company);
+                $companyUpdateMonthDocsLimitForm = $this->createForm(CompanyUpdateMonthDocsLimitTForm::class, $company);
 
                 $stock = new Stock();
                 $stock->setCompany($company);
@@ -1598,6 +1615,27 @@ class CompanyController extends BaseController
                     $this->getSession()->set('tabActive', 2);
                     $companyUpdateTribunalForm->handleRequest($request);
                     if ($companyUpdateTribunalForm->isValid()) {
+                        $em->persist($company);
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('Company.edit.success', array(
+                            '%company%' => $company->getCorporateName()
+                        )));
+
+                        $this->traceEntity($cloneCompany, $company);
+
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($company);
+
+                        $this->flashMsgSession('error', $this->translate('Company.edit.failure', array(
+                            '%company%' => $company->getCorporateName()
+                        )));
+                    }
+                } elseif (isset($reqData['CompanyUpdateMonthDocsLimitForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $companyUpdateMonthDocsLimitForm->handleRequest($request);
+                    if ($companyUpdateMonthDocsLimitForm->isValid()) {
                         $em->persist($company);
                         $em->flush();
                         $this->flashMsgSession('success', $this->translate('Company.edit.success', array(
@@ -3763,6 +3801,7 @@ class CompanyController extends BaseController
                 $this->gvars['CompanyUpdateAdrForm'] = $companyUpdateAdrForm->createView();
                 $this->gvars['CompanyUpdateOtherInfosForm'] = $companyUpdateOtherInfosForm->createView();
                 $this->gvars['CompanyUpdateActionvnForm'] = $companyUpdateActionvnForm->createView();
+                $this->gvars['CompanyUpdateMonthDocsLimitForm'] = $companyUpdateMonthDocsLimitForm->createView();
                 $this->gvars['CompanyUpdateRefForm'] = $companyUpdateRefForm->createView();
                 $this->gvars['StockNewForm'] = $stockNewForm->createView();
                 $this->gvars['AddressNewForm'] = $addressNewForm->createView();
@@ -5363,6 +5402,22 @@ class CompanyController extends BaseController
                 $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
             } else {
                 $msg .= $company->getCorporateName();
+            }
+            $msg .= '</td></tr>';
+        }
+
+        if ($cloneCompany->getMonthDocsLimit() != $company->getMonthDocsLimit()) {
+            $msg .= '<tr><td>' . $this->translate('Company.monthDocsLimit.label') . '</td><td>';
+            if ($cloneCompany->getMonthDocsLimit() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $cloneCompany->getMonthDocsLimit();
+            }
+            $msg .= '</td><td>';
+            if ($company->getMonthDocsLimit() == null) {
+                $msg .= '<span class="label label-warning">' . $this->translate('_NA') . '</span>';
+            } else {
+                $msg .= $company->getMonthDocsLimit();
             }
             $msg .= '</td></tr>';
         }
