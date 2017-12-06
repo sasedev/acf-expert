@@ -470,6 +470,8 @@ class Company
         $this->dtCrea = new \DateTime('now');
         $this->actionvn = 0;
         $this->monthDocsLimit = 100;
+        $this->currentMonthDocs = 0;
+        $this->currentMonth = date('m');
         $this->physicaltype = self::PHTYPE_MORAL;
         $this->phones = new ArrayCollection();
         $this->addresses = new ArrayCollection();

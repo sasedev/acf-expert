@@ -368,6 +368,7 @@ abstract class Transaction
         $this->devise = 'TND';
         $this->conversionRate = 1;
         $this->vat = 0;
+        $this->vatInfo = 0;
         $this->vatDevise = 0;
         $this->stamp = 0;
         $this->stampDevise = 0;
