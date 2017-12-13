@@ -2039,3 +2039,25 @@ Vat.dtCrea: Date d'ajout
 Vat.dtUpdate: Date de modification
 
 Vat.title.label: "TVA :"
+
+# AoCateg
+AoCateg.title: Titre
+AoCateg.subCategs: Sous-Activités
+AoCateg.dtCrea: Date d'ajout
+AoCateg.dtUpdate: Date de modification
+
+AoCateg.title.label: "Titre :"
+AoCateg.subCategs.label: "Sous-Activités :"
+
+# AoSubCateg
+AoSubCateg.categ: Activité
+AoSubCateg.ref: Ref
+AoSubCateg.title: Titre
+AoSubCateg.advertisements: Annonces (AO/VE)
+AoSubCateg.dtCrea: Date d'ajout
+AoSubCateg.dtUpdate: Date de modification
+
+AoSubCateg.categ.label: "Activité"
+AoSubCateg.ref.label: "Ref :"
+AoSubCateg.title.label: "Titre :"
+AoSubCateg.advertisements.label: "Annonces (AO/VE) :"

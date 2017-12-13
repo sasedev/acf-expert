@@ -34,6 +34,8 @@ menu.top.client3: 'ACEF Paie'
 menu.top.client4: 'ACEF Liasse'
 menu.top.client5: 'ACEF Facturation'
 menu.top.client6: 'ACEF Tools'
+menu.top.appeldoffres: "Appels d'offres"
+menu.top.ventesauxencheres: "Ventes aux encheres"
 menu.top.logout: 'Déconnexion'
 menu.top.devis: 'Devis'
 menu.shopping: 'Achats en Ligne'
@@ -61,8 +63,12 @@ site.global.addr.title: 'Adresse'
 site.global.addr: '63, Rue Madinet El Maoussel, 2037 – Ennasr 2 – Ariana – Tunisie'
 site.global.mail: 'contact@acf-expert.tn'
 site.global.mailto: 'mailto:contact@acf-expert.tn'
+site.global.mail2: 'contact@appelsdoffres.tn'
+site.global.mailto2: 'mailto:contact@appelsdoffres.tn'
 site.global.phone1: ' + 216 71 811 477'
 site.global.phone1.call: 'call:+21671811477'
+site.global.phone2: ' + 216 20 825 000'
+site.global.phone2.call: 'call:+21620825000'
 site.global.fax: ' +216 71 811 241'
 site.global.fax.call: 'call:+21671811241'
 
@@ -71,6 +77,8 @@ linkedin.url: 'https://www.linkedin.com/company/10368486?trk=tyah&trkInfo=clicke
 twitter.url: 'https://twitter.com/ACF_Expert'
 googleplus.url: 'https://plus.google.com/u/0/112375027217374397945'
 skype.url: 'skype:faiez.fakhfakh?call'
+facebook.url2: 'https://www.facebook.com/appelsdoffresventesauxencheres/'
+linkedin.url2: 'https://www.linkedin.com/company/11393636/'
 
 
 Devis.lastname.label: 'Nom :'
@@ -102,3 +110,5 @@ _mail.contact.subject: '[Acf-expert.tn] Contactez Nous : '
 
 _mail.uservalidity.subject: '[Acf-expert.tn] Notification de validité de Compte'
 
+pagetitle.ao.index.txt: Appelsdoffres.tn
+pagetitle.ao.index: Appelsdoffres.tn

@@ -1,0 +1,6 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li class="active"><a href="{{ path('ao_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin2'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}

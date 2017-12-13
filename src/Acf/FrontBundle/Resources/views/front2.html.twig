@@ -1,0 +1,227 @@
+{% extends 'AcfResBundle::base.html.twig' %}
+{%if menu_active is not defined%}
+{%set menu_active=''%}
+{%endif%}
+{%if smenu_active is not defined%}
+{%set smenu_active=''%}
+{%endif%}
+{%if tabActive is not defined%}
+{%set tabActive=1%}
+{%endif%}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css"
+	href="{{asset('bundles/acfres/css/theme/AdminLTE/AdminLTE.css')}}">
+<link rel="stylesheet" type="text/css"
+	href="{{asset('bundles/acfres/css/theme/AdminLTE/skins/_all-skins.css')}}">
+{%endblock static_css%}
+{%block html_body%}
+<body class="skin-blue">
+	{%block html_body_content%}
+	<div class="wrapper">
+		{%block header%}
+		<header class="main-header">
+			<a href="{{ path('_front_appelsdoffres') }}" class="logo"> <!-- Add the class icon to your logo image or logo icon to add the margining -->
+				<img src="{{asset('bundles/acfres/images/logo_ao.jpg')}}"
+				alt="{{ sitename }}" class="icon img" style="width: 190px;">
+			</a>
+			<!-- Header Navbar: style can be found in header.less -->
+			<nav class="navbar navbar-static-top" role="navigation">
+				<!-- Sidebar toggle button-->
+				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+					role="button"> <span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a>
+				{%block navbar_right%}
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<li class="dropdown{% if menu_active=='shopping'%} active{% endif %}">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+							    {{ faIco('shopping-bag') }} <span>{{'menu.shopping'|trans}} <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="{{ path('_security_onlineProduct') }}">{{ faIco('shopping-basket') }} {{'menu.shopping.products'|trans}}</a></li>
+								<li class="divider"></li>
+								<li><a href="{{ path('_security_myCart') }}">{{ faIco('cart-arrow-down') }} {{'menu.shopping.cart'|trans}} {{render(controller('AcfSecurityBundle:Cart:elements'))}}</a></li>
+								<li class="divider"></li>
+								<li><a href="{{ path('_security_myOrders') }}">{{ faIco('shopping-cart') }} {{'menu.shopping.orders'|trans}}</a></li>
+								<li class="divider"></li>
+								<li><a href="{{ path('_security_myInvoices') }}">{{ faIco('file-text-o') }} {{'menu.shopping.invoices'|trans}}</a></li>
+							</ul>
+						</li>
+						<li
+							class="dropdown tasks-menu{% if menu_active=='agenda'%} active{% endif %}">
+							{{render(controller('AcfSecurityBundle:Security:myNextEvents'))}}
+						</li>
+						<li
+							class="dropdown user user-menu{% if menu_active=='profile'%} active{% endif %}">
+							<a href="#"
+							class="dropdown-toggle{% if menu_active=='profile'%} active{% endif %}"
+							data-toggle="dropdown"> {{ glyphIco('user') }} <span>{{render(controller('AcfSecurityBundle:Security:whoami'))}}
+									<i class="caret"></i></span>
+						</a>
+							<ul class="dropdown-menu">
+								{%if app.user.avatar is not empty%}
+								<li class="user-header bg-light-blue"><img
+									src="{{asset('res/avatars/'~app.user.avatar)}}"
+									class="img-responsive img-thumbnail img-circle"
+									alt="{{app.user.fullName}}" />
+									<p>
+										<small>{{'User.lastLogin'|trans|raw}} :</small>
+										{{app.user.lastLogin|localeDate('full')}}
+										{{'_at'|trans}}
+										{{app.user.lastLogin|localeDate('none', 'medium')}}
+									</p></li>
+								{% endif %}
+								<li class="user-footer">
+									<div class="pull-left">
+										<a href="{{path('_security_profile')}}"
+											class="btn btn-default btn-flat">{{ 'menu.profile'|trans|raw }}</a>
+									</div>
+									<div class="pull-right">
+										<a href="{{path('_security_logout')}}"
+											class="btn btn-default btn-flat">{{ 'menu.logout'|trans|raw }}</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				{%endblock navbar_right%}
+			</nav>
+		</header>
+		{%endblock header%}
+		{%block leftside%}
+		<aside class="main-sidebar">
+			<section class="sidebar">
+				{% if is_granted('ROLE_USER')%}
+				<ul class="sidebar-menu" id="side-menu1">
+					<li {% if menu_active=='home'%} class="active" {% endif %}><a
+						href="{{ path('_front_homepage') }}"> {{ faIco('home') }} <span>{{ 'menu.home'|trans }}</span></a>
+					</li>
+				</ul>
+				<br>
+				{% endif %}
+				{% if is_granted('ROLE_ADMIN')%}
+				<ul class="sidebar-menu" id="side-menu2">
+					<li {% if menu_active=='acefadminhome'%} class="active" {% endif %}>
+						<a href="{{ path('_admin_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.admin'|trans }}</span></a>
+					</li>
+					<li {% if menu_active=='aoadminhome'%} class="active" {% endif %}>
+						<a href="{{ path('ao_admin_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.admin2'|trans }}</span></a>
+					</li>
+					<li class="treeview{% if menu_active=='aocateg'%} active{% endif %}">
+						<a href="#"> {{ faIco('object-group') }} <span>{{ 'menu.admin.aocateg'|trans }}</span>
+							<i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+							<li {% if smenu_active=='list'%} class="active" {% endif %}><a
+								href="{{ path('ao_admin_categ_list') }}">{{ faIco('angle-double-right') }}
+									{{ 'menu.list'|trans }}</a></li>
+							<li {% if smenu_active=='add'%} class="active" {% endif %}><a
+								href="{{ path('ao_admin_categ_addGet') }}">{{ faIco('angle-double-right') }}
+									{{ 'menu.add'|trans }}</a></li>
+						</ul>
+					</li>
+				</ul>
+				<br>
+				{% endif %}
+				{% if is_granted('ROLE_CLIENT10')%}
+				<ul class="sidebar-menu" id="side-menu10">
+					<li {% if menu_active=='clienthome'%} class="active" {% endif %}>
+						<a href="{{ path('_client_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.client'|trans }}</span></a>
+					</li>
+				</ul>
+				<br>
+				{% endif %}
+				<br>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+		{%endblock leftside%}
+		{%block rightside%}
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					{%if pagetitle is defined%}
+					{{pagetitle|raw}}
+					{%else%}
+					{{sitename}}
+					{%endif%}
+				</h1>
+				{%block breadcrumb%}
+				<ol class="breadcrumb">
+					<li class="active"><a href="{{ path('_front_homepage') }}">{{ faIco('dashboard') }}
+							&nbsp; {{'breadcrumb.home'|trans|raw}}</a></li>
+				</ol>
+				{%endblock breadcrumb%}
+			</section>
+			<!-- Main content -->
+			{%block sectioncontent%}
+			<section id="content" class="content">
+				{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': true }%}
+				{%block content%}
+				{%endblock content%}
+			</section>
+			{%endblock sectioncontent%}
+		</div>
+		{%endblock rightside%}
+		{%block footer%}
+		<footer class="main-footer">
+			<div class="pull-right hidden-xs">
+				<b>Version</b> 5.0
+			</div>
+			<strong>Copyright &copy; {{ 'now'|date('Y') }} <a
+				href="{{ url('_front_homepage') }}">ACEF-expert</a>.
+			</strong> All rights reserved.
+		</footer>
+		{%endblock footer%}
+	</div>
+	{%endblock html_body_content%}
+	<script type="text/javascript">
+	<!--
+	{%block end1_dynamic_jstxt%}
+	{%endblock end1_dynamic_jstxt%}
+	-->
+	</script>
+	{%block end_static_js%}
+	{{ parent() }}
+	<script type="text/javascript"
+		src="{{asset('bundles/acfres/js/theme/AdminLTE/app.js')}}"></script>
+	{%endblock end_static_js%}
+	{%block end_dynamic_js%}
+	{%if end_javascripts is defined%}
+	{%for js in end_javascripts%}
+	<script type="text/javascript" src="/{{js|raw}}"></script>
+	{%endfor%}
+	{%endif%}
+	{%endblock end_dynamic_js%}
+	<script type="text/javascript">
+	<!--
+	{%block end2_dynamic_jstxt%}
+	{%endblock end2_dynamic_jstxt%}
+	-->
+	</script>
+	{%block endappend%}
+	{%endblock endappend%}
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108802298-1"></script>
+
+<script>
+
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('js', new Date());
+
+
+  gtag('config', 'UA-108802298-1');
+
+</script>
+</body>
+{%endblock html_body%}

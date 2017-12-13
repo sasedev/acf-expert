@@ -2,6 +2,10 @@ _front_homepage:
     path:     /
     defaults: { _controller: "AcfFrontBundle:Default:index" }
 
+_front_appelsdoffres:
+    path:     /appelsdoffres
+    defaults: { _controller: "AcfFrontBundle:Default:appelsdoffres" }
+
 _front_smtnotif:
     path:     /smtspsnotifs
     defaults: { _controller: "AcfFrontBundle:PaymentNotif:paymentnotif" }

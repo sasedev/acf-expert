@@ -21,7 +21,7 @@ class DefaultController extends BaseController
      */
     public function __construct()
     {
-        $this->gvars['menu_active'] = 'adminhome';
+        $this->gvars['menu_active'] = 'acefadminhome';
     }
 
     /**

@@ -1163,4 +1163,49 @@ CREATE TABLE "acf_vats" (
     CONSTRAINT "pk_acf_vats" PRIMARY KEY ("id")
 );
 
+CREATE TABLE "ao_categs" (
+	
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "title"                                                             TEXT NOT NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ao_categs" PRIMARY KEY ("id")
+);
+
+CREATE TABLE "ao_subcategs" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "ref"                                                               TEXT NOT NULL,
+    "title"                                                             TEXT NOT NULL,
+    "categ_id"                                                          UUID NOT NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ao_subcategs" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_ao_categs_categ" FOREIGN KEY ("categ_id") REFERENCES "ao_categs" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE "ao_advertisements" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "ref"                                                               TEXT NOT NULL,
+    "img"                                                               TEXT NULL,
+    "dtpub"                                                             DATE NOT NULL,
+    "country"                                                           TEXT NULL,
+    "desc"                                                              TEXT NULL,
+    "company"                                                           TEXT NULL,
+    "nature"                                                            TEXT NULL,
+    "dtend"                                                             DATE NOT NULL,
+    "grp"                                                               TEXT NULL,
+    "dtopen"                                                            DATE NULL,
+    "adress"                                                            TEXT NULL,
+    "price"                                                             TEXT NULL,
+    "typeavis"                                                          TEXT NULL,
+    "adref"                                                             TEXT NULL,
+    "source"                                                            TEXT NULL,
+    "status"                                                            INT4 NULL,
+    "categ_id"                                                          UUID NOT NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ao_advertisements" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_ao_subcategs_categ" FOREIGN KEY ("categ_id") REFERENCES "ao_subcategs" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
 

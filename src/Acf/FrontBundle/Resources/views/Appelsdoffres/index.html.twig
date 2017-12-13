@@ -1,0 +1,291 @@
+{% extends 'AcfResBundle::base.html.twig' %}
+{%if menu_active is not defined%}
+{%set menu_active=''%}
+{%endif%}
+{%if smenu_active is not defined%}
+{%set smenu_active=''%}
+{%endif%}
+{%if tabActive is not defined%}
+{%set tabActive=1%}
+{%endif%}
+{%block static_css%}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/theme/margo/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/jquery/layerslider/layerslider.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/jquery.nicescroll.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/easing/1.3.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/layerslider/kreaturamedia.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/script.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/form/20130711.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/validate/jquery.validate.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/validate/localization/messages_fr.min.js')}}"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+{%endblock end_static_js%}
+{%block html_body_content%}
+<div id="container">
+	{% block header %}
+	<div class="hidden-header"></div>
+	<header class="clearfix">
+		{% block topbar %}
+		<div class="top-bar">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="contact-details">
+							<li><a href="{{ 'site.global.mailto2'|trans }}"><i class="fa fa-envelope-o"></i> {{ 'site.global.mail2'|trans }}</a></li>
+							<li><a href="{{ 'site.global.phone2.call'|trans }}"><i class="fa fa-phone"></i> {{ 'site.global.phone2'|trans }}</a></li>
+							<li><a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url2'|trans }}" target="_blank"><i
+									class="fa fa-facebook"
+								></i></a></li>
+							<li><a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url2'|trans }}" target="_blank"><i
+									class="fa fa-linkedin"
+								></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endblock topbar %}
+		<div class="navbar navbar-default navbar-top" id="navbar-menu">
+			<div class="container">
+				<div class="navbar-header">
+					<!-- Stat Toggle Nav Link For Mobiles -->
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<i class="fa fa-bars"></i>
+					</button>
+					<!-- End Toggle Nav Link For Mobiles -->
+					<a class="navbar-brand" href="{{ path('_front_appelsdoffres') }}"> <img alt=" appelsdoffres.tnable"
+						src="{{asset('bundles/acfres/images/logo_ao.jpg')}}" width="220">
+					</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="{{ path('_front_homepage')}}">{{ 'menu.top.home'|trans }}</a></li>
+						<li><a href="{{ path('_front_appelsdoffres')}}">{{ 'menu.top.appeldoffres'|trans }}</a></li>
+						<li><a href="{{ path('_front_appelsdoffres')}}">{{ 'menu.top.ventesauxencheres'|trans }}</a></li>
+						<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact'|trans }}</a>
+							<ul class="dropdown">
+								<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact1'|trans }}</a></li>
+								<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.top.contact2'|trans }}</a></li>
+								<li><a href="{{ path('_front_homepage')}}#join">{{ 'menu.top.contact4'|trans }}</a></li>
+								<li><a href="{{ path('_front_homepage')}}#map0">{{ 'menu.top.contact3'|trans }}</a></li>
+								<li><a href="{{ path('_front_devis') }}">{{ 'menu.top.devis'|trans }}</a></li>
+							</ul></li>
+						<li><a href="{{ path('_front_basedoc')}}">{{ 'menu.top.basedoc'|trans }}</a>
+							<ul class="dropdown">
+								<li><a href="{{ path('_front_basedoc')}}#actus">{{ 'menu.top.basedoc1'|trans }}</a></li>
+								<li><a href="{{ path('_front_basedoc')}}#links">{{ 'menu.top.basedoc2'|trans }}</a></li>
+								<li><a href="{{ path('_front_basedoc')}}#bulltin">{{ 'menu.top.basedoc3'|trans }}</a></li>
+							</ul></li>
+						{{ include('AcfFrontBundle:Default:menu.html.twig') }}
+					</ul>
+					<!-- End Navigation List -->
+				</div>
+			</div>
+		</div>
+		<!-- End Header Logo & Naviagtion -->
+	</header>
+	{% endblock header %}
+	{% block banner %}
+	{% endblock banner %}
+	{% block breadcrumb %}
+	<div class="page-banner">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="breadcrumbs">
+						{%block breadcrumbcnt%}
+						<li class="active"><a href="{{ path('_front_appelsdoffres') }}">{{ faIco('home') }} &nbsp; <i>Appelsdoffres.tn : la plateforme logicielle de
+									gestion des appels d'offres et des ventes aux enchères</i></a></li>
+						{%endblock breadcrumbcnt%}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock breadcrumb %}
+	{% block maincontainer %}
+	<div id="content">
+		<div class="container">
+			<div class="row sidebar-page">
+				<div class="col-md-12 page-content" id="cabinet">
+					<br> <br> <br>
+					<h4 class="classic-title">
+						<span>Présentation</span>
+					</h4>
+					<div class="col-md-8">
+						<p class="text-justify">Les sociétés ACEF Expert, Société d'Expertise Comptable et de Commissariat aux Comptes, et L'EXPERT DES MARCHES, Société
+							spécialisée dans la saisie et le traitement des données ont mis en commun leur savoir-faire afin de vous proposer une plateforme de base de données des
+							appels d'offres et des ventes aux enchères.</p>
+						<br>
+						<br>
+						<h5 class="classic-title">
+							<span>ABONNEMENT</span>
+						</h5>
+						<p class="text-justify">
+							<b>Pour vous abonner à la plateforme appelsdoffres.tn , cliquez <a href="{{ path('_security_register') }}">ICI</a>.
+							</b><br> <b>ACEF INFO : SIMPLIFIEZ-VOUS LA VEILLE RÉGLEMENTAIRE</b><br>
+							Pour tout abonnement à notre plateforme appelsdoffres.tn, nous vous offrons gratuitement un abonnement à notre base de veille réglementaire ACEF INFO : bulletin d’information
+							comptable, juridique, fiscal et social : plateforme web accessible 7j/7j, 24h/24h assurant une veille réglementaire de votre entreprise.
+						</p>
+						<p class="text-justify">La plateforme appelsdoffres.tn est hébergée au site web www.acf-expert.tn. Découvrez d'autres services proposés par
+							acf-expert.tn :
+						<ul>
+							<li>ACEF Cloud : plateforme collaborative de gestion électronique de données (GED) de vos documents comptables, juridiques, fiscaux et sociaux. Fini
+								les soucis d'acheminement de vos documents au cabinet de votre expert-comptable.</li>
+							<li>ACEF Paie : Gestion électronique de la paie.</li>
+							<li>ACEF Agenda : gestion de vos échéances réglementaires en ligne.</li>
+							<li>ACEF Info : plateforme de veille réglementaire offerte gratuitement avec tout abonnement à la plateforme appelsdoffres.tn.</li>
+						</ul>
+						</p>
+					</div>
+					<div class="col-md-4">
+						<img class="img" alt="Nos Valeurs" src="/res/cntao/01.jpg"> <br> <br> <img class="img" alt="Nos Valeurs" src="/res/cntao/02.jpg"> <br>
+						<br> <img class="img" alt="Nos Valeurs" src="/res/cntao/03.jpg">
+					</div>
+				</div>
+				<div class="col-md-12 page-content" id="valeurs">
+					<br> <br> <br>
+					<h5 class="classic-title">
+						<span>PRINCIPAUX AVANTAGES DE LA PLATEFORME appelsdoffres.tn :</span>
+					</h5>
+					<div class="col-md-12">
+						<ul>
+							<li>Simplicité et Ergonomie</li>
+							<li>Accessibilité 24 h /24 h, 7j/7j</li>
+							<li>Accès gratuit à la plateforme de veille réglementaire ACEF INFO 24 h /24 h, 7j/7j.</li>
+							<li>Toujours en  avance sur vos concurrents : Mise à jour quotidienne des appels d'offres et mise en ligne en temps réel</li>
+							<li>Service d’alerte quotidienne par email selon vos critères de choix</li>
+							<li>Suivi du Cycle de vie du marché (Appels d’Offres)  Prorogation, modification, annulation, Infructuosité …etc</li>
+							<li>Recherches avancées multi-critères (par annonceur, par type...)</li>
+							<li>Paiement en ligne par carte bancaire, chèque, virement bancaire ou en espèces avec expédition de votre facture à votre adresse par voie postale,</li>
+							<li>Classement par secteurs d’activités</li>
+							<li>Insertion gratuite de vos appels d'offres et de vos ventes aux enchères</li>
+							<li>Inscription gratuite de votre entreprise à la galerie des entreprises</li>
+							<li>Publication gratuite et suivi de vos annonces professionnelles (annonces de ventes, demandes d’achats, de partenariats et d’opportunités)</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock maincontainer %}
+	{% block footer %}
+	<!-- Start Footer Section -->
+	<footer>
+		<div class="container">
+			<div class="row footer-widgets">
+				<div class="col-md-2 col-xs-12">
+					<div class="footer-widget mail-subscribe-widget">
+						<h4>
+							{{ 'menu.bottom.links'|trans }}
+							<span class="head-line"></span>
+						</h4>
+						<ul>
+							<li><a href="{{ path('_front_homepage')}}">{{ 'menu.footer.home'|trans }}</a></li>
+							<li><a href="{{ path('_front_homepage')}}#cabinet">{{ 'menu.footer.cabinet'|trans }}</a></li>
+							<li><a href="{{ path('_front_homepage')}}#valeurs">{{ 'menu.footer.valeurs'|trans }}</a></li>
+							<li><a href="{{ path('_front_homepage')}}#metier">{{ 'menu.footer.metier'|trans }}</a></li>
+							<li><a href="{{ path('_front_homepage')}}#contact">{{ 'menu.footer.contact'|trans }}</a></li>
+							<li><a href="{{ path('_front_basedoc')}}">{{ 'menu.footer.basedoc'|trans }}</a></li>
+							<li><a href="{{ path('_front_devis')}}">{{ 'menu.footer.devis'|trans }}</a></li>
+							{% if is_granted('ROLE_USER') %}
+							<li><a href="{{ path('_security_profile') }}"> {{ 'menu.footer.profile'|trans }}
+							</a></li>
+							<li><a href="{{ path('_security_logout') }}"> {{ 'menu.footer.logout'|trans }}
+							</a></li>
+							{% else %}
+							<li><a href="{{ path('_security_login') }}"> {{ 'menu.footer.login'|trans }}
+							</a></li>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+				<!-- Start Contact Widget -->
+				<div class="col-md-6 col-xs-12">
+					<div class="footer-widget contact-widget">
+						<h3>
+							{{ 'site.global.addr.title'|trans }}
+						</h3>
+						<br>
+						<ul>
+							<li><i class="fa fa-map-marker"></i>&nbsp;&nbsp; {{ 'site.global.addr'|trans }}</li>
+							<li><a href="{{ 'site.global.mailto2'|trans }}"><i class="fa fa-envelope-o"></i>&nbsp;&nbsp; {{ 'site.global.mail2'|trans }}</a></li>
+							<li><a href="{{ 'site.global.phone2.call'|trans }}"><i class="fa fa-phone"></i>&nbsp;&nbsp; {{ 'site.global.phone2'|trans }}</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- .col-md-3 -->
+				<!-- End Contact Widget -->
+				<!-- Start Subscribe & Social Links Widget -->
+				<div class="col-md-4 col-xs-12">
+					<div class="footer-widget social-widget">
+						<h4>
+							<img alt="Acf" src="{{asset('bundles/acfres/images/logo_ao.jpg')}}" class="img">
+						</h4>
+						<br>
+						<br>
+						<h4>
+							{{ 'bottom.followus'|trans }}
+							<span class="head-line"></span>
+						</h4>
+						<ul class="social-icons">
+							<li><a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url2'|trans }}" target="_blank"><i
+									class="fa fa-facebook"
+								></i></a></li>
+							<li><a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url2'|trans }}" target="_blank"><i
+									class="fa fa-linkedin"
+								></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- .col-md-3 -->
+				<!-- End Subscribe & Social Links Widget -->
+			</div>
+			<!-- .row -->
+			<!-- Start Copyright -->
+			<div class="copyright-section">
+				<div class="row">
+					<div class="col-md-12">
+						<p class="text-center">
+							{{ 'now'|date('Y') }}
+							acf-expert.tn - All Rights Reserved <a href="//acf-expert.tn">ACEF <i style="font-size: xx-small;">Expert</i></a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	{% endblock footer %}
+</div>
+<!-- End Full Body Container -->
+<!-- Go To Top Link -->
+<a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+<div id="loader">
+	<div class="spinner">
+		<div class="dot1"></div>
+		<div class="dot2"></div>
+	</div>
+</div>
+{%endblock html_body_content%}
+{%block end2_dynamic_jstxt%}
+{{ parent() }}
+{%endblock end2_dynamic_jstxt%}
+{%block endappend%}
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+	var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+	(function () {
+		var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+		s1.async = true;
+		s1.src = 'https://embed.tawk.to/59654fb76edc1c10b034585a/default';
+		s1.charset = 'UTF-8';
+		s1.setAttribute('crossorigin', '*');
+		s0.parentNode.insertBefore(s1, s0);
+	})();
+</script>
+<!--End of Tawk.to Script-->
+{%endblock endappend%}

@@ -1,0 +1,64 @@
+ao_admin_homepage:
+    path:     /
+    defaults: { _controller: "AoAdminBundle:Default:index" }
+
+ao_admin_categ_list:
+    path:     /categs
+    defaults: { _controller: "AoAdminBundle:Categ:list" }
+
+ao_admin_categ_addGet:
+    path:     /categ/add
+    defaults: { _controller: "AoAdminBundle:Categ:addGet" }
+    methods: [GET]
+
+ao_admin_categ_addPost:
+    path:     /categ/add
+    defaults: { _controller: "AoAdminBundle:Categ:addPost" }
+    methods: [POST]
+
+ao_admin_categ_delete:
+    path:     /categ/delete/{uid}
+    defaults: { _controller: "AoAdminBundle:Categ:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_admin_categ_editGet:
+    path:     /categ/edit/{uid}
+    defaults: { _controller: "AoAdminBundle:Categ:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_admin_categ_editPost:
+    path:     /categ/edit/{uid}
+    defaults: { _controller: "AoAdminBundle:Categ:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+ao_admin_subcateg_addPost:
+    path:     /subcateg/add
+    defaults: { _controller: "AoAdminBundle:SubCateg:addPost" }
+    methods: [POST]
+
+ao_admin_subcateg_delete:
+    path:     /subcateg/delete/{uid}
+    defaults: { _controller: "AoAdminBundle:SubCateg:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_admin_subcateg_editGet:
+    path:     /subcateg/edit/{uid}
+    defaults: { _controller: "AoAdminBundle:SubCateg:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_admin_subcateg_editPost:
+    path:     /subcateg/edit/{uid}
+    defaults: { _controller: "AoAdminBundle:SubCateg:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+

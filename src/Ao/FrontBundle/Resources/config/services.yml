@@ -1,0 +1,4 @@
+services:
+#    ao_front.example:
+#        class: Ao\FrontBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
