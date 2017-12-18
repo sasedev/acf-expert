@@ -22,6 +22,7 @@ $(function() {
 			null,
 			null,
 			null,
+			null,
 			{ "searchable": false, "sortable": false }
 		],
 		"pageLength": 10,
@@ -96,6 +97,7 @@ $(function() {
 							<table id="subCategList" class="table table-bordered table-hover">
 								<thead>
 									<tr>
+										<th>{{ 'AoSubCateg.priority.label'|trans|raw }}</th>
 										<th>{{ 'AoSubCateg.ref.label'|trans|raw }}</th>
 										<th>{{ 'AoSubCateg.title.label'|trans|raw }}</th>
 										<th>{{ 'AoSubCateg.advertisements.label'|trans|raw }}</th>
@@ -106,6 +108,7 @@ $(function() {
 								{% if categ.subCategs|length != 0 %}
 								{% for subcateg in categ.subCategs %}
 									<tr>
+										<td>{{ subcateg.priority }}</td>
 										<td>{{ subcateg.ref }}</td>
 										<td>{{ subcateg.title }}</td>
 										<td>{{ subcateg.advertisements|length }}</td>
@@ -119,7 +122,7 @@ $(function() {
 								{% endfor %}
 								{% else %}
 									<tr>
-										<td colspan="4">{{ 'AoSubCateg.empty'|trans|raw }}</td>
+										<td colspan="5">{{ 'AoSubCateg.empty'|trans|raw }}</td>
 									</tr>
 								{% endif %}
 								</tbody>
