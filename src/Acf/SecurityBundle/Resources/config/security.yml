@@ -68,7 +68,7 @@ security:
         - { path: ^/ACEF-Admin/lang.*, role: ROLE_SUPERSUPERADMIN }
         - { path: ^/ACEF-Admin/role.*, role: ROLE_SUPERSUPERADMIN }
         - { path: ^/ACEF-Admin.*, role: ROLE_ADMIN }
-        - { path: ^/AO-Admin.*, role: ROLE_ADMIN }
+        - { path: ^/AO-Admin.*, role: ROLE_ADMIN2 }
         - { path: ^/ACEF-Cloud.*, role: ROLE_CLIENT1 }
         - { path: ^/ACEF-Info.*, role: ROLE_CLIENT2 }
         - { path: ^/ACEF-Payroll.*, role: ROLE_CLIENT3 }

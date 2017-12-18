@@ -37,11 +37,6 @@ ao_admin_categ_editPost:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
 
-ao_admin_subcateg_addPost:
-    path:     /subcateg/add
-    defaults: { _controller: "AoAdminBundle:SubCateg:addPost" }
-    methods: [POST]
-
 ao_admin_subcateg_delete:
     path:     /subcateg/delete/{uid}
     defaults: { _controller: "AoAdminBundle:SubCateg:delete" }
@@ -58,6 +53,28 @@ ao_admin_subcateg_editGet:
 ao_admin_subcateg_editPost:
     path:     /subcateg/edit/{uid}
     defaults: { _controller: "AoAdminBundle:SubCateg:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+
+ao_admin_advertisement_delete:
+    path:     /advertisement/delete/{uid}
+    defaults: { _controller: "AoAdminBundle:Advertisement:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_admin_advertisement_editGet:
+    path:     /advertisement/edit/{uid}
+    defaults: { _controller: "AoAdminBundle:Advertisement:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_admin_advertisement_editPost:
+    path:     /advertisement/edit/{uid}
+    defaults: { _controller: "AoAdminBundle:Advertisement:editPost" }
     methods: [POST]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

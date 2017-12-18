@@ -1,6 +1,149 @@
 {% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	
+	$("#AoAdvertisementImportForm_excel").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Excel", browseIcon: '{{faIco('folder-open')}}', remove1Class: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	
+	$('.advertisementList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmAdvertisement').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmAdvertisement').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmAdvertisement').modal('show');
+			});
+		}
+	});
+});
+{%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
 <ol class="breadcrumb">
 	<li class="active"><a href="{{ path('ao_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.admin2'|trans|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% for flashMessage in app.session.flashbag.get('log') %}
+		<div class="callout callout-info">
+		{{ flashMessage|raw }}
+		</div>
+		{% endfor %}
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'AoAdvertisement.tlabel.import'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(AdvertisementImportForm, {'method':'POST', 'action': path('ao_admin_homepage'), 'style': 'horizontal'})}}
+				{{form_row(AdvertisementImportForm.excel, {'label_col': 3, 'widget_col': 8})}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnExcel'|trans|raw}}</button></div></div>
+				{{form_end(AdvertisementImportForm)}}
+			</div>
+		</div>
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'AoCateg.tlabel.list'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive">
+				{% if categs|length != 0 %}
+				<ul>
+					{% for categ in categs %}
+					<li>
+						{{ categ.title }}
+						{% if categ.subCategs|length != 0 %}
+						<ul>
+							{% for subCateg in categ.subCategs %}
+							<li>
+								{{ subCateg.ref }} - {{ subCateg.title }}
+								{% if subCateg.advertisements|length != 0 %}
+								<br>
+								<br>
+								<table class="table table-bordered table-hover advertisementList">
+									<thead>
+										<tr>
+											<th>{{ 'AoAdvertisement.dtPublication.label'|trans|raw }}</th>
+											<th>{{ 'AoAdvertisement.country.label'|trans|raw }}</th>
+											<th>{{ 'AoAdvertisement.description.label'|trans|raw }}</th>
+											<th>{{ 'AoAdvertisement.company.label'|trans|raw }}</th>
+											<th>{{ 'AoAdvertisement.nature.label'|trans|raw }}</th>
+											<th>{{ 'AoAdvertisement.dtEnd.label'|trans|raw }}</th>
+											<th>{{ 'action'|trans|raw }}</th>
+										</tr>
+									</thead>
+									<tbody>
+									{% for advertisement in subCateg.advertisements %}
+										<tr>
+											<td>{% if advertisement.dtPublication is not empty %}{{advertisement.dtPublication|localeDate('medium')}}{% endif %}</td>
+											<td>{% if advertisement.country is not empty %}{{advertisement.country}}{% endif %}</td>
+											<td>{% if advertisement.description is not empty %}{{advertisement.description|raw}}{% endif %}</td>
+											<td>{% if advertisement.company is not empty %}{{advertisement.company}}{% endif %}</td>
+											<td>{% if advertisement.nature is not empty %}{{('AoAdvertisement.nature.'~advertisement.nature)|trans}}{% endif %}</td>
+											<td>{% if advertisement.dtEnd is not empty %}{{advertisement.dtEnd|localeDate('medium')}}{% endif %}</td>
+											<td>
+												<a class="btn btn-sm btn-info" href="{{path('ao_admin_advertisement_editGet',{'uid':advertisement.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+												{%if is_granted('ROLE_SUPERADMIN')%}
+												<a class="btn btn-sm btn-danger deleteConfirmAdvertisement" href="{{path('ao_admin_advertisement_delete',{'uid':advertisement.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+												{% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+									</tbody>
+								</table>
+								<br>
+								{% endif %}
+								<br>
+							</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmAdvertisement" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'AoAdvertisement.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'AoAdvertisement.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{%endblock content%}

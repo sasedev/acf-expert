@@ -135,18 +135,18 @@ class AoAdvertisement
      *      @ORM\JoinColumn(name="categ_id", referencedColumnName="id")
      *      })
      */
-    protected $group;
+    protected $grp;
 
     /**
      *
-     * @var string @ORM\Column(name="ref", type="text", nullable=false)
-     *      @Assert\NotBlank(groups={"ref"})
+     * @var integer @ORM\Column(name="ref", type="text", nullable=false)
      */
     protected $ref;
 
     /**
      *
      * @var string @ORM\Column(name="img", type="text", nullable=true)
+     *      @Assert\Image(maxSize="20480k", groups={"img"})
      */
     protected $img;
 
@@ -164,7 +164,7 @@ class AoAdvertisement
 
     /**
      *
-     * @var string @ORM\Column(name="desc", type="text", nullable=true)
+     * @var string @ORM\Column(name="description", type="text", nullable=true)
      */
     protected $description;
 
@@ -297,25 +297,25 @@ class AoAdvertisement
     }
 
     /**
-     * Get $group
+     * Get $grp
      *
      * @return AoSubCateg
      */
-    public function getGroup()
+    public function getGrp()
     {
-        return $this->group;
+        return $this->grp;
     }
 
     /**
-     * Set $group
+     * Set $grp
      *
-     * @param AoSubCateg $group
+     * @param AoSubCateg $grp
      *
      * @return AoAdvertisement
      */
-    public function setGroup($group)
+    public function setGrp(AoSubCateg $grp)
     {
-        $this->group = $group;
+        $this->grp = $grp;
 
         return $this;
     }

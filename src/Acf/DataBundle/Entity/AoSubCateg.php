@@ -22,7 +22,7 @@ class AoSubCateg
 
     /**
      *
-     * @var string @ORM\Column(name="id", type="bigint", nullable=false)
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
      *      @ORM\Id
      *      @ORM\GeneratedValue(strategy="UUID")
      */
@@ -41,6 +41,12 @@ class AoSubCateg
      *      @Assert\NotBlank(groups={"title"})
      */
     protected $title;
+
+    /**
+     *
+     * @var integer @ORM\Column(name="priority", type="bigint", nullable=false)
+     */
+    protected $priority;
 
     /**
      *
@@ -66,7 +72,7 @@ class AoSubCateg
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="AoAdvertisement", mappedBy="group", cascade={"persist", "remove"})
+     * @var Collection @ORM\OneToMany(targetEntity="AoAdvertisement", mappedBy="grp", cascade={"persist", "remove"})
      *      @ORM\OrderBy({"ref" = "ASC"})
      */
     protected $advertisements;
@@ -76,6 +82,7 @@ class AoSubCateg
      */
     public function __construct()
     {
+        $this->priority = 100;
         $this->dtCrea = new \DateTime('now');
         $this->advertisements = new ArrayCollection();
     }
@@ -134,6 +141,30 @@ class AoSubCateg
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get $priority
+     *
+     * @return integer
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * Set $priority
+     *
+     * @param integer $priority
+     *
+     * @return AoSubCateg
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
 
         return $this;
     }
@@ -203,7 +234,7 @@ class AoSubCateg
      *
      * @return AoSubCateg
      */
-    public function setCateg($categ)
+    public function setCateg(AoCateg $categ)
     {
         $this->categ = $categ;
 
@@ -220,7 +251,6 @@ class AoSubCateg
     public function addAdvertisement(AoAdvertisement $advertisement)
     {
         $this->advertisements[] = $advertisement;
-        $advertisement->addGroup($this);
 
         return $this;
     }
@@ -235,7 +265,6 @@ class AoSubCateg
     public function removeAdvertisement(AoAdvertisement $advertisement)
     {
         $this->advertisements->removeElement($advertisement);
-        $advertisement->removeGroup($this);
 
         return $this;
     }
@@ -269,7 +298,7 @@ class AoSubCateg
      */
     public function __toString()
     {
-        return $this->getRef();
+        return $this->getRef() . ' : ' . $this->getTitle();
     }
 
     /**

@@ -6,6 +6,7 @@ use Acf\DataBundle\Repository\AoCategRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -69,8 +70,13 @@ class NewTForm extends AbstractType
         $builder->add('ref', TextType::class, array(
             'label' => 'AoSubCateg.ref.label'
         ));
+
         $builder->add('title', TextType::class, array(
             'label' => 'AoSubCateg.title.label'
+        ));
+
+        $builder->add('priority', IntegerType::class, array(
+            'label' => 'AoSubCateg.priority.label'
         ));
     }
 
@@ -103,7 +109,8 @@ class NewTForm extends AbstractType
             'validation_groups' => array(
                 'categ',
                 'ref',
-                'title'
+                'title',
+                'priority'
             ),
             'categ' => null
         );

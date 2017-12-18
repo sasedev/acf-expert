@@ -32,7 +32,7 @@ class AoCategRepository extends EntityRepository
      */
     public function getAllQuery()
     {
-        $qb = $this->createQueryBuilder('c')->orderBy('c.title', 'ASC');
+        $qb = $this->createQueryBuilder('c')->orderBy('c.priority', 'ASC');
         $query = $qb->getQuery();
 
         return $query;

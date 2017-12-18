@@ -53,7 +53,8 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.monthlyBalance.label',
                 'class' => 'AcfDataBundle:MBPurchase',
                 'query_builder' => function (MBPurchaseRepository $mbsr) {
-                    return $mbsr->createQueryBuilder('mbs')->orderBy('mbs.ref', 'ASC');
+                    return $mbsr->createQueryBuilder('mbs')
+                        ->orderBy('mbs.ref', 'ASC');
                 },
                 'choice_label' => 'ref',
                 'multiple' => false,
@@ -66,7 +67,10 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.monthlyBalance.label',
                 'class' => 'AcfDataBundle:MBPurchase',
                 'query_builder' => function (MBPurchaseRepository $mbsr) use ($mbpurchaseId) {
-                    return $mbsr->createQueryBuilder('mbs')->where('mbs.id = :id')->setParameter('id', $mbpurchaseId)->orderBy('mbs.ref', 'ASC');
+                    return $mbsr->createQueryBuilder('mbs')
+                        ->where('mbs.id = :id')
+                        ->setParameter('id', $mbpurchaseId)
+                        ->orderBy('mbs.ref', 'ASC');
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
@@ -91,7 +95,8 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.relation.label',
                 'class' => 'AcfDataBundle:Supplier',
                 'query_builder' => function (SupplierRepository $sr) {
-                    return $sr->createQueryBuilder('s')->orderBy('s.label', 'ASC');
+                    return $sr->createQueryBuilder('s')
+                        ->orderBy('s.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -104,7 +109,11 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.relation.label',
                 'class' => 'AcfDataBundle:Supplier',
                 'query_builder' => function (SupplierRepository $sr) use ($companyId) {
-                    return $sr->createQueryBuilder('s')->join('s.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('s.label', 'ASC');
+                    return $sr->createQueryBuilder('s')
+                        ->join('s.company', 'c')
+                        ->where('c.id = :cid')
+                        ->setParameter('cid', $companyId)
+                        ->orderBy('s.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -178,7 +187,8 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.withholding.label',
                 'class' => 'AcfDataBundle:Withholding',
                 'query_builder' => function (WithholdingRepository $wr) {
-                    return $wr->createQueryBuilder('w')->orderBy('w.label', 'ASC');
+                    return $wr->createQueryBuilder('w')
+                        ->orderBy('w.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -191,7 +201,11 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.withholding.label',
                 'class' => 'AcfDataBundle:Withholding',
                 'query_builder' => function (WithholdingRepository $wr) use ($companyId) {
-                    return $wr->createQueryBuilder('w')->join('w.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('w.label', 'ASC');
+                    return $wr->createQueryBuilder('w')
+                        ->join('w.company', 'c')
+                        ->where('c.id = :cid')
+                        ->setParameter('cid', $companyId)
+                        ->orderBy('w.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -205,7 +219,8 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.nature.label',
                 'class' => 'AcfDataBundle:CompanyNature',
                 'query_builder' => function (CompanyNatureRepository $cnr) {
-                    return $cnr->createQueryBuilder('cn')->orderBy('cn.label', 'ASC');
+                    return $cnr->createQueryBuilder('cn')
+                        ->orderBy('cn.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -218,7 +233,11 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.nature.label',
                 'class' => 'AcfDataBundle:CompanyNature',
                 'query_builder' => function (CompanyNatureRepository $cnr) use ($companyId) {
-                    return $cnr->createQueryBuilder('cn')->join('cn.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('cn.label', 'ASC');
+                    return $cnr->createQueryBuilder('cn')
+                        ->join('cn.company', 'c')
+                        ->where('c.id = :cid')
+                        ->setParameter('cid', $companyId)
+                        ->orderBy('cn.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -256,7 +275,8 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.account.label',
                 'class' => 'AcfDataBundle:Account',
                 'query_builder' => function (AccountRepository $ar) {
-                    return $ar->createQueryBuilder('a')->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')
+                        ->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
@@ -269,7 +289,11 @@ class NewTForm extends AbstractType
                 'label' => 'Buy.account.label',
                 'class' => 'AcfDataBundle:Account',
                 'query_builder' => function (AccountRepository $ar) use ($companyId) {
-                    return $ar->createQueryBuilder('a')->join('a.company', 'c')->where('c.id = :cid')->setParameter('cid', $companyId)->orderBy('a.label', 'ASC');
+                    return $ar->createQueryBuilder('a')
+                        ->join('a.company', 'c')
+                        ->where('c.id = :cid')
+                        ->setParameter('cid', $companyId)
+                        ->orderBy('a.label', 'ASC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,

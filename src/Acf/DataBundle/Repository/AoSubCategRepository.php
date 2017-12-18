@@ -33,7 +33,9 @@ class AoSubCategRepository extends EntityRepository
      */
     public function getAllQuery()
     {
-        $qb = $this->createQueryBuilder('sc')->orderBy('sc.title', 'ASC');
+        $qb = $this->createQueryBuilder('sc')
+            ->orderBy('sc.priority', 'ASC')
+            ->addOrderBy('sc.ref', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -80,7 +82,8 @@ class AoSubCategRepository extends EntityRepository
         $qb = $this->createQueryBuilder('sc')
             ->join('sc.categ', 'c')
             ->where('c.id = :id')
-            ->orderBy('sc.title', 'ASC')
+            ->orderBy('sc.priority', 'ASC')
+            ->addOrderBy('sc.ref', 'ASC')
             ->setParameter('id', $categ->getId());
         $query = $qb->getQuery();
 

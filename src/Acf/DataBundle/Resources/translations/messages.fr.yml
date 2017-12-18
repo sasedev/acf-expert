@@ -2042,17 +2042,20 @@ Vat.title.label: "TVA :"
 
 # AoCateg
 AoCateg.title: Titre
+AoCateg.priority: Priorité
 AoCateg.subCategs: Sous-Activités
 AoCateg.dtCrea: Date d'ajout
 AoCateg.dtUpdate: Date de modification
 
 AoCateg.title.label: "Titre :"
+AoCateg.priority.label: "Priorité :"
 AoCateg.subCategs.label: "Sous-Activités :"
 
 # AoSubCateg
 AoSubCateg.categ: Activité
 AoSubCateg.ref: Ref
 AoSubCateg.title: Titre
+AoSubCateg.priority: Priorité
 AoSubCateg.advertisements: Annonces (AO/VE)
 AoSubCateg.dtCrea: Date d'ajout
 AoSubCateg.dtUpdate: Date de modification
@@ -2060,4 +2063,80 @@ AoSubCateg.dtUpdate: Date de modification
 AoSubCateg.categ.label: "Activité"
 AoSubCateg.ref.label: "Ref :"
 AoSubCateg.title.label: "Titre :"
+AoSubCateg.priority.label: "Priorité :"
 AoSubCateg.advertisements.label: "Annonces (AO/VE) :"
+
+# AoAdvertisement
+AoAdvertisement.grp: Activité
+AoAdvertisement.ref: Référence
+AoAdvertisement.img: Image
+AoAdvertisement.dtPublication: Date de Publication
+AoAdvertisement.country: Pays
+AoAdvertisement.description: Description
+AoAdvertisement.company: Société
+AoAdvertisement.nature: Nature
+AoAdvertisement.nature.Nat: National
+AoAdvertisement.nature.Inter: International
+AoAdvertisement.dtEnd: Date d'échéance
+AoAdvertisement.aoVe: Catégorie
+AoAdvertisement.aoVe.AO: Appel d'Offres
+AoAdvertisement.aoVe.VE: Vente aux enchères
+AoAdvertisement.dtOpen: Date d'ouverture des plis
+AoAdvertisement.adress: Retrait du cahier des charges
+AoAdvertisement.price: Prix du cahier des charges
+AoAdvertisement.typeAvis: Type Avis
+AoAdvertisement.typeAvis.ADC: Avis de consultation
+AoAdvertisement.typeAvis.AAO: Avis d'appel d'offres
+AoAdvertisement.typeAvis.ADR: Avis de report
+AoAdvertisement.typeAvis.ADAN: Avis d'annulation
+AoAdvertisement.typeAvis.ADAMI: Avis d'appel à manifestation d'intérêt
+AoAdvertisement.typeAvis.ADCONC: Avis de concours
+AoAdvertisement.typeAvis.ADA: Avis d'attribution
+AoAdvertisement.typeAvis.AR: Avis rectificatif
+AoAdvertisement.typeAvis.AA:  Avis additifs
+AoAdvertisement.typeAvis.ADCAND: Avis de candidature
+AoAdvertisement.typeAvis.AD: Avis divers
+AoAdvertisement.addRef: Reférence publiée
+AoAdvertisement.source: Source
+AoAdvertisement.status: Etat
+AoAdvertisement.status.2: Invisible
+AoAdvertisement.status.1: Visible
+AoAdvertisement.dtCrea: Date d'ajout
+AoAdvertisement.dtUpdate: Date de modification
+
+AoAdvertisement.grp.label: "Activité :"
+AoAdvertisement.ref.label: "Référence :"
+AoAdvertisement.img.label: "Image :"
+AoAdvertisement.dtPublication.label: "Date de Publication :"
+AoAdvertisement.country.label: "Pays :"
+AoAdvertisement.description.label: "Description :"
+AoAdvertisement.company.label: "Société :"
+AoAdvertisement.nature.label: "Nature :"
+AoAdvertisement.nature.choice.Nat: National
+AoAdvertisement.nature.choice.Inter: International
+AoAdvertisement.dtEnd.label: "Date d'échéance :"
+AoAdvertisement.aoVe.label: "Catégorie :"
+AoAdvertisement.aoVe.choice.AO: Appel d'Offres
+AoAdvertisement.aoVe.choice.VE: Vente aux enchères
+AoAdvertisement.dtOpen.label: "Date d'ouverture des plis :"
+AoAdvertisement.adress.label: "Retrait du cahier des charges :"
+AoAdvertisement.price.label: "Prix du cahier des charges :"
+AoAdvertisement.typeAvis.label: "Type Avis :"
+AoAdvertisement.typeAvis.choice.ADC: Avis de consultation
+AoAdvertisement.typeAvis.choice.AAO: Avis d'appel d'offres
+AoAdvertisement.typeAvis.choice.ADR: Avis de report
+AoAdvertisement.typeAvis.choice.ADAN: Avis d'annulation
+AoAdvertisement.typeAvis.choice.ADAMI: Avis d'appel à manifestation d'intérêt
+AoAdvertisement.typeAvis.choice.ADCONC: Avis de concours
+AoAdvertisement.typeAvis.choice.ADA: Avis d'attribution
+AoAdvertisement.typeAvis.choice.AR: Avis rectificatif
+AoAdvertisement.typeAvis.choice.AA:  Avis additifs
+AoAdvertisement.typeAvis.choice.ADCAND: Avis de candidature
+AoAdvertisement.typeAvis.choice.AD: Avis divers
+AoAdvertisement.addRef.label: "Reférence publiée :"
+AoAdvertisement.source.label: "Source :"
+AoAdvertisement.status.label: "Etat :"
+AoAdvertisement.status.choice.2: Invisible
+AoAdvertisement.status.choice.1: Visible
+
+

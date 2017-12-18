@@ -12,9 +12,9 @@
 {%block end_static_js%}
 {{ parent() }}
 <script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.3.1.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js')}}"></script>
 {%if app.request.locale != 'en'%}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.3.1.'~app.request.locale~'.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js')}}"></script>
 {% endif %}
 <script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
@@ -50,7 +50,7 @@ $(function() {
 
 	$("#SaleImportForm_excel").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Excel", browseIcon: '{{faIco('folder-open')}}', remove1Class: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
 
-	$('#SaleNewForm_dtActivation').datetimepicker({
+	$('#SaleNewForm_dtActivation').live('click', function(e) {e.preventDefault();}).datetimepicker({
 		weekStart: 1,
 		startView: 4,
 		minView: 2,
@@ -70,7 +70,7 @@ $(function() {
 
 	$('#SaleNewForm_regime').chosen({width: "100%", disable_search_threshold: 10});
 
-	$('#SaleNewForm_dtPayment').datetimepicker({
+	$('#SaleNewForm_dtPayment').live('click', function(e) {e.preventDefault();}).datetimepicker({
 		weekStart: 1,
 		startView: 4,
 		minView: 2,

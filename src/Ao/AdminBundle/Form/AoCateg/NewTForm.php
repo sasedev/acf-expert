@@ -2,6 +2,7 @@
 namespace Ao\AdminBundle\Form\AoCateg;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,6 +26,10 @@ class NewTForm extends AbstractType
     {
         $builder->add('title', TextType::class, array(
             'label' => 'AoCateg.title.label'
+        ));
+
+        $builder->add('priority', IntegerType::class, array(
+            'label' => 'AoCateg.priority.label'
         ));
     }
 
@@ -55,6 +60,7 @@ class NewTForm extends AbstractType
     {
         return array(
             'validation_groups' => array(
+                'priority',
                 'title'
             )
         );

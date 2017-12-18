@@ -52,13 +52,17 @@ $(function() {
 	<div class="col-lg-12">
 		<div class="well well-sm text-right">
 			<a href="{{ path('ao_admin_categ_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			{%if is_granted('ROLE_SUPERADMIN')%}
 			<a href="{{ path('ao_admin_categ_addGet') }}" class="btn btn-primary">{{ glyphIco('plus') }} {{ 'action.add'|trans }}</a>
+			{% endif %}
 		</div>
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
 				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'AoCateg.tab.overview'|trans|raw}}</a></li>
+				{%if is_granted('ROLE_SUPERADMIN')%}
 				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'AoCateg.tab.edit'|trans|raw}}</a></li>
 				<li {%if tabActive==3%} class="active"{%endif%}><a href="#AddSubCateg" data-toggle="tab">{{'AoCateg.tab.addSubCateg'|trans|raw}}</a></li>
+				{% endif %}
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
@@ -68,6 +72,9 @@ $(function() {
 							<div class="row">
 								<div class="col-lg-3 text-right">{{'AoCateg.title'|trans|raw}} :</div>
 								<div class="col-lg-9">{{categ.title}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.priority'|trans|raw}} :</div>
+								<div class="col-lg-9">{{categ.priority}}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'AoCateg.subCategs'|trans|raw}} :</div>
 								<div class="col-lg-9">{{categ.subCategs|length}}&nbsp;</div>
@@ -104,7 +111,9 @@ $(function() {
 										<td>{{ subcateg.advertisements|length }}</td>
 										<td>
 											<a class="btn btn-sm btn-info" href="{{path('ao_admin_subcateg_editGet',{'uid':subcateg.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+											{%if is_granted('ROLE_SUPERADMIN')%}
 											<a class="btn btn-sm btn-danger deleteConfirmSubCateg" href="{{path('ao_admin_subcateg_delete',{'uid':subcateg.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+											{% endif %}
 										</td>
 									</tr>
 								{% endfor %}
@@ -119,7 +128,7 @@ $(function() {
 					</div>
 					{% endif %}
 				</div>
-				
+				{%if is_granted('ROLE_SUPERADMIN')%}
 				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
 					<div class="panel box box-danger">
 						<div class="box-header"><h3 class="box-title">{{'AoCateg.tlabel.editTitle'|trans}}</h3></div>
@@ -128,6 +137,15 @@ $(function() {
 							{{form_row(CategUpdateTitleForm.title, {'label_col': 3, 'widget_col': 8})}}
 							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
 							{{form_end(CategUpdateTitleForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCateg.tlabel.editPriority'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CategUpdatePriorityForm, {'method':'POST', 'action': path('ao_admin_categ_editPost', {'uid': categ.id}), 'style': 'horizontal'})}}
+							{{form_row(CategUpdatePriorityForm.priority, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CategUpdatePriorityForm)}}
 						</div>
 					</div>
 				</div>
@@ -143,11 +161,13 @@ $(function() {
 							{{form_row(SubCategNewForm.categ, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
 							{{form_row(SubCategNewForm.ref, {'label_col': 3, 'widget_col': 8})}}
 							{{form_row(SubCategNewForm.title, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(SubCategNewForm.priority, {'label_col': 3, 'widget_col': 8})}}
 							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
 							{{form_end(SubCategNewForm)}}
 						</div>
 					</div>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

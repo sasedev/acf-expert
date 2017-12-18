@@ -1,4 +1,7 @@
 --DROP TRIGGER IF EXISTS "acf_autoincs_nextval" ON  IF EXISTS "acf_autoincs"; -- automatic drop with table "acf_autoincs"
+DROP TABLE IF EXISTS "ao_advertisements";
+DROP TABLE IF EXISTS "ao_subcategs";
+DROP TABLE IF EXISTS "ao_categs";
 DROP TABLE IF EXISTS "acf_liassefiles";
 DROP TABLE IF EXISTS "acf_liassefolders";
 DROP TABLE IF EXISTS "acf_online_invoice_docs";

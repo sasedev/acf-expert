@@ -1167,6 +1167,7 @@ CREATE TABLE "ao_categs" (
 	
     "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
     "title"                                                             TEXT NOT NULL,
+    "priority"                                                          INT8 NOT NULL DEFAULT 100,
     "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
     "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
     CONSTRAINT "pk_ao_categs" PRIMARY KEY ("id")
@@ -1176,6 +1177,7 @@ CREATE TABLE "ao_subcategs" (
     "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
     "ref"                                                               TEXT NOT NULL,
     "title"                                                             TEXT NOT NULL,
+    "priority"                                                          INT8 NOT NULL DEFAULT 100,
     "categ_id"                                                          UUID NOT NULL,
     "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
     "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
@@ -1190,7 +1192,7 @@ CREATE TABLE "ao_advertisements" (
     "img"                                                               TEXT NULL,
     "dtpub"                                                             DATE NOT NULL,
     "country"                                                           TEXT NULL,
-    "desc"                                                              TEXT NULL,
+    "description"                                                       TEXT NULL,
     "company"                                                           TEXT NULL,
     "nature"                                                            TEXT NULL,
     "dtend"                                                             DATE NOT NULL,

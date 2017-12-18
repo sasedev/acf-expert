@@ -5,16 +5,16 @@
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.3.1.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js')}}"></script>
 {%if app.request.locale != 'en'%}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.3.1.'~app.request.locale~'.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js')}}"></script>
 {% endif %}
 <script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
 
-	$('#NewUserForm_birthday').datetimepicker({
+	$('#NewUserForm_birthday').live('click', function(e) {e.preventDefault();}).datetimepicker({
 		weekStart: 1,
 		startView: 4,
 		minView: 2,

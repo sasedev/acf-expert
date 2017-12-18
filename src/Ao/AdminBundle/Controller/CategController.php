@@ -4,6 +4,7 @@ namespace Ao\AdminBundle\Controller;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 use Ao\AdminBundle\Form\AoCateg\NewTForm as AoCategNewTForm;
 use Ao\AdminBundle\Form\AoCateg\UpdateTitleTForm as AoCategUpdateTitleTForm;
+use Ao\AdminBundle\Form\AoCateg\UpdatePriorityTForm as AoCategUpdatePriorityTForm;
 use Ao\AdminBundle\Form\AoSubCateg\NewTForm as AoSubCategNewTForm;
 use Acf\DataBundle\Entity\AoCateg;
 use Acf\DataBundle\Entity\AoSubCateg;
@@ -47,6 +48,9 @@ class CategController extends BaseController
      */
     public function addGetAction()
     {
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            return $this->redirect($this->generateUrl('ao_admin_categ_list'));
+        }
         $categ = new AoCateg();
         $categNewForm = $this->createForm(AoCategNewTForm::class, $categ);
         $this->gvars['categ'] = $categ;
@@ -65,6 +69,9 @@ class CategController extends BaseController
      */
     public function addPostAction()
     {
+        if (!$this->hasRole('ROLE_SUPERADMIN')) {
+            return $this->redirect($this->generateUrl('ao_admin_categ_list'));
+        }
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
             return $this->redirect($this->generateUrl('ao_admin_categ_addGet'));
@@ -128,7 +135,7 @@ class CategController extends BaseController
                 $em->flush();
 
                 $this->flashMsgSession('success', $this->translate('AoCateg.delete.success', array(
-                    '%company%' => $categ->getTitle()
+                    '%categ%' => $categ->getTitle()
                 )));
             }
         } catch (\Exception $e) {
@@ -161,6 +168,7 @@ class CategController extends BaseController
                 $this->flashMsgSession('warning', $this->translate('AoCateg.edit.notfound'));
             } else {
                 $categUpdateTitleForm = $this->createForm(AoCategUpdateTitleTForm::class, $categ);
+                $categUpdatePriorityForm = $this->createForm(AoCategUpdatePriorityTForm::class, $categ);
 
                 $subCateg = new AoSubCateg();
                 $subCateg->setCateg($categ);
@@ -172,8 +180,12 @@ class CategController extends BaseController
                 $this->gvars['subCateg'] = $subCateg;
 
                 $this->gvars['CategUpdateTitleForm'] = $categUpdateTitleForm->createView();
+                $this->gvars['CategUpdatePriorityForm'] = $categUpdatePriorityForm->createView();
 
                 $this->gvars['SubCategNewForm'] = $subCategNewForm->createView();
+
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
+                $this->getSession()->remove('tabActive');
 
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.aoCateg.edit', array(
                     '%categ%' => $categ->getTitle()
@@ -212,6 +224,7 @@ class CategController extends BaseController
                 $this->flashMsgSession('warning', $this->translate('AoCateg.edit.notfound'));
             } else {
                 $categUpdateTitleForm = $this->createForm(AoCategUpdateTitleTForm::class, $categ);
+                $categUpdatePriorityForm = $this->createForm(AoCategUpdatePriorityTForm::class, $categ);
 
                 $subCateg = new AoSubCateg();
                 $subCateg->setCateg($categ);
@@ -219,16 +232,21 @@ class CategController extends BaseController
                     'categ' => $categ
                 ));
 
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
+                $this->getSession()->remove('tabActive');
+
                 $request = $this->getRequest();
                 $reqData = $request->request->all();
 
                 if (isset($reqData['AoCategUpdateTitleForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
                     $categUpdateTitleForm->handleRequest($request);
                     if ($categUpdateTitleForm->isValid()) {
                         $em->persist($categ);
                         $em->flush();
 
-                        $this->flashMsgSession('success', $this->translate('AoCateg.add.success', array(
+                        $this->flashMsgSession('success', $this->translate('AoCateg.edit.success', array(
                             '%categ%' => $categ->getTitle()
                         )));
 
@@ -236,25 +254,46 @@ class CategController extends BaseController
                             'uid' => $categ->getId()
                         )));
                     } else {
-                        $this->flashMsgSession('error', $this->translate('AoCateg.add.failure'));
+                        $this->flashMsgSession('error', $this->translate('AoCateg.edit.failure'));
+                    }
+                } elseif (isset($reqData['AoCategUpdatePriorityForm'])) {
+                    $this->gvars['tabActive'] = 2;
+                    $this->getSession()->set('tabActive', 2);
+                    $categUpdatePriorityForm->handleRequest($request);
+                    if ($categUpdatePriorityForm->isValid()) {
+                        $em->persist($categ);
+                        $em->flush();
+
+                        $this->flashMsgSession('success', $this->translate('AoCateg.edit.success', array(
+                            '%categ%' => $categ->getTitle()
+                        )));
+
+                        return $this->redirect($this->generateUrl('ao_admin_categ_editGet', array(
+                            'uid' => $categ->getId()
+                        )));
+                    } else {
+                        $this->flashMsgSession('error', $this->translate('AoCateg.edit.failure'));
                     }
                 } elseif (isset($reqData['AoSubCategNewForm'])) {
+                    $this->gvars['tabActive'] = 3;
+                    $this->getSession()->set('tabActive', 3);
                     $subCategNewForm->handleRequest($request);
                     if ($subCategNewForm->isValid()) {
                         $em->persist($subCateg);
                         $em->flush();
 
+                        $this->gvars['tabActive'] = 1;
+                        $this->getSession()->set('tabActive', 1);
+
                         $this->flashMsgSession('success', $this->translate('AoSubCateg.add.success', array(
                             '%subCateg%' => $subCateg->getRef()
                         )));
 
-                        /*
-                         * return $this->redirect($this->generateUrl('ao_admin_categ_editGet', array(
-                         * 'uid' => $categ->getId()
-                         * )));
-                         */
+                        return $this->redirect($this->generateUrl('ao_admin_subcateg_editGet', array(
+                            'uid' => $subCateg->getId()
+                        )));
                     } else {
-                        $this->flashMsgSession('error', $this->translate('AoCateg.add.failure'));
+                        $this->flashMsgSession('error', $this->translate('AoSubCateg.add.failure'));
                     }
                 }
 
@@ -262,6 +301,7 @@ class CategController extends BaseController
                 $this->gvars['subCateg'] = $subCateg;
 
                 $this->gvars['CategUpdateTitleForm'] = $categUpdateTitleForm->createView();
+                $this->gvars['CategUpdatePriorityForm'] = $categUpdatePriorityForm->createView();
 
                 $this->gvars['SubCategNewForm'] = $subCategNewForm->createView();
 

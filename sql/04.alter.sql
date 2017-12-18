@@ -7,3 +7,4 @@ ALTER TABLE "acf_online_orders" ADD CONSTRAINT "fk_acf_online_orders_company" FO
 ALTER TABLE "acf_companies" ADD COLUMN "monthdocslimit"                                                  INT8 NOT NULL DEFAULT 100;
 ALTER TABLE "acf_companies" ADD COLUMN "curmonth"                                                  INT4 NOT NULL DEFAULT 1;
 ALTER TABLE "acf_companies" ADD COLUMN "curmonthdocs"                                                  INT8 NOT NULL DEFAULT 0;
+ALTER TABLE "ao_subcategs" ADD COLUMN "priority"                                                  INT8 NOT NULL DEFAULT 100;

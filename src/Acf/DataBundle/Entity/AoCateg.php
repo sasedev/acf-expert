@@ -20,7 +20,7 @@ class AoCateg
 
     /**
      *
-     * @var string @ORM\Column(name="id", type="bigint", nullable=false)
+     * @var string @ORM\Column(name="id", type="guid", nullable=false)
      *      @ORM\Id
      *      @ORM\GeneratedValue(strategy="UUID")
      */
@@ -32,6 +32,12 @@ class AoCateg
      *      @Assert\NotBlank(groups={"title"})
      */
     protected $title;
+
+    /**
+     *
+     * @var integer @ORM\Column(name="priority", type="bigint", nullable=false)
+     */
+    protected $priority;
 
     /**
      *
@@ -49,7 +55,7 @@ class AoCateg
     /**
      *
      * @var Collection @ORM\OneToMany(targetEntity="AoSubCateg", mappedBy="categ", cascade={"persist", "remove"})
-     *      @ORM\OrderBy({"ref" = "ASC"})
+     *      @ORM\OrderBy({"priority" = "ASC", "ref" = "ASC"})
      */
     protected $subCategs;
 
@@ -58,6 +64,7 @@ class AoCateg
      */
     public function __construct()
     {
+        $this->priority = 100;
         $this->dtCrea = new \DateTime('now');
         $this->subCategs = new ArrayCollection();
     }
@@ -70,6 +77,30 @@ class AoCateg
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get $priority
+     *
+     * @return integer
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * Set $priority
+     *
+     * @param integer $priority
+     *
+     * @return AoCateg
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
     }
 
     /**
@@ -154,7 +185,6 @@ class AoCateg
     public function addSubCateg(AoSubCateg $subCateg)
     {
         $this->subCategs[] = $subCateg;
-        $subCateg->addAoCateg($this);
 
         return $this;
     }
@@ -169,7 +199,6 @@ class AoCateg
     public function removeSubCateg(AoSubCateg $subCateg)
     {
         $this->subCategs->removeElement($subCateg);
-        $subCateg->removeAoCateg($this);
 
         return $this;
     }

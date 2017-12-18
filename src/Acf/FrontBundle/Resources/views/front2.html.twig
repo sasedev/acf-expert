@@ -104,11 +104,16 @@
 				<br>
 				{% endif %}
 				{% if is_granted('ROLE_ADMIN')%}
-				<ul class="sidebar-menu" id="side-menu2">
+				<ul class="sidebar-menu" id="side-menu02">
 					<li {% if menu_active=='acefadminhome'%} class="active" {% endif %}>
 						<a href="{{ path('_admin_homepage') }}"> {{ faIco('dashboard') }}
 							<span>{{ 'menu.admin'|trans }}</span></a>
 					</li>
+				</ul>
+				<br>
+				{% endif %}
+				{% if is_granted('ROLE_ADMIN2')%}
+				<ul class="sidebar-menu" id="side-menu2">
 					<li {% if menu_active=='aoadminhome'%} class="active" {% endif %}>
 						<a href="{{ path('ao_admin_homepage') }}"> {{ faIco('dashboard') }}
 							<span>{{ 'menu.admin2'|trans }}</span></a>
@@ -120,9 +125,11 @@
 							<li {% if smenu_active=='list'%} class="active" {% endif %}><a
 								href="{{ path('ao_admin_categ_list') }}">{{ faIco('angle-double-right') }}
 									{{ 'menu.list'|trans }}</a></li>
+							{%if is_granted('ROLE_SUPERSUPERADMIN')%}
 							<li {% if smenu_active=='add'%} class="active" {% endif %}><a
 								href="{{ path('ao_admin_categ_addGet') }}">{{ faIco('angle-double-right') }}
 									{{ 'menu.add'|trans }}</a></li>
+							{% endif %}
 						</ul>
 					</li>
 				</ul>

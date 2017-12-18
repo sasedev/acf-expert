@@ -44,7 +44,8 @@ class NewUserTForm extends AbstractType
             'label' => 'NewUser.preferedLang.label',
             'class' => 'AcfDataBundle:Lang',
             'query_builder' => function (LangRepository $lr) {
-                return $lr->createQueryBuilder('l')->orderBy('l.locale', 'ASC');
+                return $lr->createQueryBuilder('l')
+                    ->orderBy('l.locale', 'ASC');
             },
             'choice_label' => 'fullLocale',
             'multiple' => false,
