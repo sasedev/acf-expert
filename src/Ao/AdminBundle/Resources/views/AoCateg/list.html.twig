@@ -76,7 +76,9 @@ $(function() {
 							<td>{{ categ.subCategs|length }}</td>
 							<td>
 								<a class="btn btn-sm btn-info" href="{{path('ao_admin_categ_editGet',{'uid':categ.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+								{%if is_granted('ROLE_SUPERADMIN')%}
 								<a class="btn btn-sm btn-danger deleteConfirmCateg" href="{{path('ao_admin_categ_delete',{'uid':categ.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+								{% endif %}
 							</td>
 						</tr>
 						{% endfor %}
