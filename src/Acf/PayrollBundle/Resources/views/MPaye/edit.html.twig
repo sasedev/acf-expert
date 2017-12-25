@@ -1,24 +1,24 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%}
 {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/jquery.dataTables.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
 	$('textarea.wysiwyg').each(function() {
 		var options = {
-			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			script_url : '{{preload(asset('bundles/acfres/js/tinymce/tinymce.min.js'))}}',
 			theme: "modern",
 			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
 			{%if app.request.locale != 'en'%}
@@ -45,7 +45,7 @@ $(function() {
 	{% if mpaye.docs|length != 0 %}
 	$('#docList').dataTable({
 		{%if app.request.locale != 'en'%}
-		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
 		{% endif %}
 		"columns": [
 			null,
@@ -66,7 +66,7 @@ $(function() {
 		"sScrollY":	  "250px",
 		"bScrollCollapse": true,
 		{%if app.request.locale != 'en'%}
-		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
 		{% endif %}
 		"columns": [
 			null,

@@ -12,19 +12,6 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('t')->select('count(t)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -48,26 +35,17 @@ class OnlineInvoiceTaxeRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByInvoice(OnlineInvoice $invoice)
-    {
-        $qb = $this->createQueryBuilder('t')->select('count(t)')->join('t.invoice', 'i')->where('i.id = :id')->setParameter('id', $invoice->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getAllByInvoiceQuery(OnlineInvoice $invoice)
     {
-        $qb = $this->createQueryBuilder('t')->join('t.invoice', 'i')->where('i.id = :id')->setParameter('id', $invoice->getId())->orderBy('t.priority', 'ASC');
+        $qb = $this->createQueryBuilder('t')
+            ->join('t.invoice', 'i')
+            ->where('i.id = :id')
+            ->setParameter('id', $invoice->getId())
+            ->orderBy('t.priority', 'ASC');
         $query = $qb->getQuery();
 
         return $query;

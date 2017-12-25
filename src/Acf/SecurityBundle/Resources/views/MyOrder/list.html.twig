@@ -1,23 +1,23 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%}
 {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/jquery.dataTables.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
     {% if orders|length != 0 %}
     $('#orderList').dataTable({
         {%if app.request.locale != 'en'%}
-        	"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+        	"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
         {% endif %}
         "columns": [ 
         	null, 

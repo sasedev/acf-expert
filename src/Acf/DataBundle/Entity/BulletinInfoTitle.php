@@ -234,6 +234,5 @@ class BulletinInfoTitle
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

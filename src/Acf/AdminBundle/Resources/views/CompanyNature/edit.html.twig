@@ -3,7 +3,7 @@
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/tinyColorPicker/jqColorPicker.min.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/tinyColorPicker/jqColorPicker.min.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {

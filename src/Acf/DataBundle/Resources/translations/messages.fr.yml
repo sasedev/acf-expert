@@ -2067,7 +2067,8 @@ AoSubCateg.priority.label: "Priorité :"
 AoSubCateg.advertisements.label: "Annonces (AO/VE) :"
 
 # AoAdvertisement
-AoAdvertisement.grp: Activité
+AoAdvertisement.categ: Activité
+AoAdvertisement.grp: Sous-Activité
 AoAdvertisement.ref: Référence
 AoAdvertisement.img: Image
 AoAdvertisement.dtPublication: Date de Publication

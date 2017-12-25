@@ -12,19 +12,6 @@ class OnlineProductRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('p')->select('count(p)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -48,26 +35,16 @@ class OnlineProductRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countVisible()
-    {
-        $qb = $this->createQueryBuilder('p')->select('count(p)')->where('p.lockout = :lockout')->setParameter('lockout', OnlineProduct::LOCKOUT_UNLOCKED);
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getAllVisibleQuery()
     {
-        $qb = $this->createQueryBuilder('p')->where('p.lockout = :lockout')->orderBy('p.dtCrea', 'DESC')->setParameter('lockout', OnlineProduct::LOCKOUT_UNLOCKED);
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.lockout = :lockout')
+            ->orderBy('p.dtCrea', 'DESC')
+            ->setParameter('lockout', OnlineProduct::LOCKOUT_UNLOCKED);
         $query = $qb->getQuery();
 
         return $query;

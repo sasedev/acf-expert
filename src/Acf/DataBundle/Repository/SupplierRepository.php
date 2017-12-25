@@ -14,21 +14,6 @@ class SupplierRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $company
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $company)
-    {
-        $qb = $this->createQueryBuilder('s')->select('count(s)')->join('s.company', 'c')->where('c.id = :id')->setParameter('id', $company->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $company
@@ -37,7 +22,11 @@ class SupplierRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $company)
     {
-        $qb = $this->createQueryBuilder('s')->join('s.company', 'c')->where('c.id = :id')->orderBy('s.label', 'ASC')->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('s')
+            ->join('s.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('s.label', 'ASC')
+            ->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query;

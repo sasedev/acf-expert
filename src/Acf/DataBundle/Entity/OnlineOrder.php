@@ -742,6 +742,5 @@ class OnlineOrder
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

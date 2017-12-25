@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Sasedev\Commons\BootstrapBundle\SasedevCommonsBootstrapBundle(),
             new Sasedev\Commons\TwigBundle\SasedevCommonsTwigBundle(),
             new Sasedev\ExtraToolsBundle\SasedevExtraToolsBundle(),
+            new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
 
             new Acf\ResBundle\AcfResBundle(),
             new Acf\DataBundle\AcfDataBundle(),
@@ -45,7 +46,7 @@ class AppKernel extends Kernel
             new Acf\LiasseBundle\AcfLiasseBundle(),
             new Acf\ToolsBundle\AcfToolsBundle(),
             new Ao\FrontBundle\AoFrontBundle(),
-            new Ao\AdminBundle\AoAdminBundle(),
+            new Ao\AdminBundle\AoAdminBundle()
         ];
 
         if (in_array($this->getEnvironment(), [

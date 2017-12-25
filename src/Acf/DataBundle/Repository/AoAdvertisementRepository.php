@@ -1,8 +1,10 @@
 <?php
 namespace Acf\DataBundle\Repository;
 
+use Acf\DataBundle\Entity\AoCateg;
 use Acf\DataBundle\Entity\AoSubCateg;
 use Doctrine\ORM\EntityRepository;
+use Acf\DataBundle\Entity\AoAdvertisement;
 
 /**
  * AoAdvertisementRepository
@@ -14,26 +16,13 @@ class AoAdvertisementRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('sc')->select('count(sc)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getAllQuery()
     {
-        $qb = $this->createQueryBuilder('sc')->orderBy('sc.title', 'ASC');
+        $qb = $this->createQueryBuilder('a')->orderBy('a.title', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -50,38 +39,16 @@ class AoAdvertisementRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @param AoSubCateg $categ
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByGroup(AoSubCateg $group)
-    {
-        $qb = $this->createQueryBuilder('sc')
-            ->select('count(ad)')
-            ->join('ad.group', 'sc')
-            ->where('sc.id = :id')
-            ->setParameter('id', $group->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
-     *
-     * @param AoSubCateg $group
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getAllByGroupQuery(AoSubCateg $group)
+    public function getAllFrontQuery()
     {
-        $qb = $this->createQueryBuilder('ad')
-            ->join('ad.group', 'sc')
-            ->where('sc.id = :id')
-            ->orderBy('ad.dtCrea', 'DESC')
-            ->setParameter('id', $group->getId());
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.status = :status')
+            ->setParameter('status', AoAdvertisement::STATUS_SHOW)
+            ->orderBy('a.dtPublication', 'DESC');
         $query = $qb->getQuery();
 
         return $query;
@@ -90,13 +57,101 @@ class AoAdvertisementRepository extends EntityRepository
     /**
      * Get All Entities
      *
-     * @param AoSubCateg $group
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function getAllFront()
+    {
+        return $this->getAllFrontQuery()->execute();
+    }
+
+    /**
+     * Get Query for All Entities
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getAllFrontByCategQuery(AoCateg $categ)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->join('a.grp', 'sc')
+            ->join('sc.categ', 'c')
+            ->where('a.status = :status')
+            ->andWhere('c.id = :cid')
+            ->setParameter('status', AoAdvertisement::STATUS_SHOW)
+            ->setParameter('cid', $categ->getId())
+            ->orderBy('a.dtPublication', 'DESC');
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get All Entities
      *
      * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
      */
-    public function getAllByGroup(AoSubCateg $group)
+    public function getAllFrontByCateg(AoCateg $categ)
     {
-        return $this->getAllByGroupQuery($group)->execute();
+        return $this->getAllFrontByCategQuery($categ)->execute();
+    }
+
+    /**
+     * Get Query for All Entities
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getAllFrontByGrpQuery(AoSubCateg $grp)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->join('a.grp', 'sc')
+            ->where('a.status = :status')
+            ->andWhere('sc.id = :scid')
+            ->setParameter('status', AoAdvertisement::STATUS_SHOW)
+            ->setParameter('scid', $grp->getId())
+            ->orderBy('a.dtPublication', 'DESC');
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get All Entities
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function getAllFrontByGrp(AoSubCateg $grp)
+    {
+        return $this->getAllFrontByGrpQuery($grp)->execute();
+    }
+
+    /**
+     * Get Query for All Entities
+     *
+     * @param AoSubCateg $grp
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getAllByGrpQuery(AoSubCateg $grp)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->join('a.grp', 'sc')
+            ->where('sc.id = :id')
+            ->orderBy('a.dtPublication', 'DESC')
+            ->setParameter('id', $grp->getId());
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get All Entities
+     *
+     * @param AoSubCateg $grp
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function getAllByGrp(AoSubCateg $grp)
+    {
+        return $this->getAllByGrpQuery($grp)->execute();
     }
 }
 

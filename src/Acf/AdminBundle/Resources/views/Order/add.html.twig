@@ -1,19 +1,19 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
 	$('textarea.wysiwyg').each(function() {
 		var options = {
-			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			script_url : '{{preload(asset('bundles/acfres/js/tinymce/tinymce.min.js'))}}',
 			theme: "modern",
 			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
 			{%if app.request.locale != 'en'%}

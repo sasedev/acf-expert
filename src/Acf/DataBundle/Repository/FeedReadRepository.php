@@ -13,19 +13,6 @@ class FeedReadRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('f')->select('count(f)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query

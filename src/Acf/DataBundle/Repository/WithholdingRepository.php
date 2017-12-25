@@ -14,21 +14,6 @@ class WithholdingRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $company
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $company)
-    {
-        $qb = $this->createQueryBuilder('w')->select('count(w)')->join('w.company', 'c')->where('c.id = :id')->setParameter('id', $company->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $company
@@ -37,7 +22,11 @@ class WithholdingRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $company)
     {
-        $qb = $this->createQueryBuilder('w')->join('w.company', 'c')->where('c.id = :id')->orderBy('w.label', 'ASC')->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('w')
+            ->join('w.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('w.label', 'ASC')
+            ->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query;

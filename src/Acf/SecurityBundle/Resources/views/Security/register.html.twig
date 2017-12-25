@@ -1,27 +1,30 @@
 {%extends 'AcfSecurityBundle::security.html.twig'%}
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js'))}}"></script>
 {%if app.request.locale != 'en'%}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js'))}}"></script>
 {% endif %}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
 
-	$('#NewUserForm_birthday').live('click', function(e) {e.preventDefault();}).datetimepicker({
-		weekStart: 1,
-		startView: 4,
-		minView: 2,
-		autoclose: true,
-		todayHighlight: true,
-		language: "{{app.request.locale}}",
-		format: 'yyyy-mm-dd'
+	$('#NewUserForm_birthday').click(function( event ) {
+		event.preventDefault();
+		$('#NewUserForm_birthday').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
 	});
 
 	$('#NewUserForm_sexe').chosen({width: "100%", disable_search_threshold: 10});
@@ -35,7 +38,7 @@ $(function() {
 {%block content%}
 {{form_start(NewUserForm, {'method':'POST', 'action': path('_security_register_post'), 'style': 'horizontal'})}}
 <div class="login-box-body">
-	<a href="{{ path('_front_homepage')}}"><img class="img img-responsive center-block" src="{{asset('bundles/acfres/images/logo_acf_footer.jpg')}}" alt="{{ sitename }}" style="height: 100px;"></a>
+	<a href="{{ path('_front_homepage')}}"><img class="img img-responsive center-block" src="{{preload(asset('bundles/acfres/images/logo_acf_footer.jpg'))}}" alt="{{ sitename }}" style="height: 100px;"></a>
 	{%if pagetitle is defined%}<hr><h1 class="text-center">{{pagetitle|raw}}</h1>{%endif%}
 	<hr>
 	<p class="text-justify">

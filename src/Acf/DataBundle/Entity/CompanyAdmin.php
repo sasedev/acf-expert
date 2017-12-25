@@ -202,6 +202,5 @@ class CompanyAdmin
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

@@ -14,21 +14,6 @@ class PhoneRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $c
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $c)
-    {
-        $qb = $this->createQueryBuilder('p')->select('count(p)')->join('p.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $c
@@ -37,7 +22,11 @@ class PhoneRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $c)
     {
-        $qb = $this->createQueryBuilder('p')->join('p.company', 'c')->where('c.id = :id')->orderBy('p.label', 'ASC')->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('p')
+            ->join('p.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('p.label', 'ASC')
+            ->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query;

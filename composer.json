@@ -57,7 +57,8 @@
 		"sasedev/commons-twig-bundle" : "1.*",
 		"sasedev/doctrine-postgresql-bundle" : "1.*",
 		"sasedev/extra-tools-bundle" : "1.*",
-		"sasedev/form-entityid-bundle" : "1.*"
+		"sasedev/form-entityid-bundle" : "1.*",
+		"tfox/mpdf-port-bundle" : "~2.0"
 	},
 	"require-dev" : {
 		"sensio/generator-bundle" : "^3.0",

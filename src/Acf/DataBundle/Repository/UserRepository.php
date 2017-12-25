@@ -87,19 +87,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     }
 
     /**
-     * Count All
-     *
-     * @return mixed
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('u')->select('count(u)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -120,35 +107,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     public function getAll()
     {
         return $this->getAllQuery()->execute();
-    }
-
-    /**
-     * Count All
-     *
-     * @param string $q
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countSearch($q)
-    {
-        $qb = $this->createQueryBuilder('u')
-            ->select('count(u)')
-            ->distinct()
-            ->where('LOWER(u.username) LIKE :key')
-            ->orWhere('LOWER(u.email) LIKE :key')
-            ->orWhere('LOWER(u.firstName) LIKE :key')
-            ->orWhere('LOWER(u.lastName) LIKE :key')
-            ->orWhere('LOWER(u.streetNum) LIKE :key')
-            ->orWhere('LOWER(u.address) LIKE :key')
-            ->orWhere('LOWER(u.address2) LIKE :key')
-            ->orWhere('LOWER(u.town) LIKE :key')
-            ->orWhere('LOWER(u.zipCode) LIKE :key')
-            ->orWhere('LOWER(u.mobile) LIKE :key')
-            ->orWhere('LOWER(u.phone) LIKE :key')
-            ->setParameter('key', '%' . strtolower($q) . '%');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
     }
 
     /**
@@ -193,31 +151,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     }
 
     /**
-     * Count All that are Active 1 minute ago
-     *
-     * @param string $strtotime
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countAllActiveNow($strtotime = null)
-    {
-        if (null == $strtotime || trim($strtotime) == '') {
-            $strtotime = '1 minutes ago';
-        }
-
-        $delay = new \DateTime();
-        $delay->setTimestamp(strtotime($strtotime));
-
-        $qb = $this->createQueryBuilder('u')
-            ->select('count(u)')
-            ->where('u.lastActivity > :delay')
-            ->setParameter('delay', $delay);
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities that are Active 1 minute ago
      *
      * @param string $strtotime
@@ -255,29 +188,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     }
 
     /**
-     * Count All for last validity date
-     *
-     * @param \DateTime $lastValidity
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countAllByLastValidity(\DateTime $lastValidity)
-    {
-        $lastValidityP1 = new \DateTime();
-        $lastValidityP1->setTimestamp($lastValidity->getTimestamp() + 3600 * 24);
-
-        $qb = $this->createQueryBuilder('u')
-            ->select('count(u)')
-            ->where('u.lastValidity >= :lastValidity')
-            ->andWhere('u.lastValidity <= :lastValidityp1')
-            ->setParameter('lastValidity', $lastValidity)
-            ->setParameter('lastValidityp1', $lastValidityP1);
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities for last validity date
      *
      * @param \DateTime $lastValidity
@@ -310,22 +220,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     public function getAllByLastValidity(\DateTime $lastValidity)
     {
         return $this->getAllByLastValidityQuery($lastValidity)->execute();
-    }
-
-    /**
-     * Count All Unlocked
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countAllUnlocked()
-    {
-        $qb = $this->createQueryBuilder('u')
-            ->select('count(u)')
-            ->where('u.lockout = :lockout')
-            ->setParameter('lockout', User::LOCKOUT_UNLOCKED);
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
     }
 
     /**

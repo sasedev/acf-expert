@@ -15,21 +15,6 @@ class CompanyUserRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $company
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $company)
-    {
-        $qb = $this->createQueryBuilder('cu')->select('count(cu)')->join('cu.company', 'c')->where('c.id = :id')->setParameter('id', $company->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $company
@@ -38,7 +23,11 @@ class CompanyUserRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $company)
     {
-        $qb = $this->createQueryBuilder('cu')->join('cu.company', 'c')->where('c.id = :id')->orderBy('cu.dtCrea', 'ASC')->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('cu')
+            ->join('cu.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('cu.dtCrea', 'ASC')
+            ->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -57,21 +46,6 @@ class CompanyUserRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @param User $user
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByUser(User $user)
-    {
-        $qb = $this->createQueryBuilder('cu')->select('count(cu)')->join('cu.user', 'u')->where('u.id = :id')->setParameter('id', $user->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param User $user
@@ -80,7 +54,11 @@ class CompanyUserRepository extends EntityRepository
      */
     public function getAllByUserQuery(User $user)
     {
-        $qb = $this->createQueryBuilder('cu')->join('cu.user', 'u')->where('u.id = :id')->orderBy('cu.dtCrea', 'ASC')->setParameter('id', $user->getId());
+        $qb = $this->createQueryBuilder('cu')
+            ->join('cu.user', 'u')
+            ->where('u.id = :id')
+            ->orderBy('cu.dtCrea', 'ASC')
+            ->setParameter('id', $user->getId());
         $query = $qb->getQuery();
 
         return $query;

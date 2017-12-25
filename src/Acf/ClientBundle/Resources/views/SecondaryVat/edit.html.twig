@@ -1,10 +1,10 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {

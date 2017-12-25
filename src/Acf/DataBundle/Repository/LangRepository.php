@@ -12,19 +12,6 @@ class LangRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('l')->select('count(l)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -48,26 +35,16 @@ class LangRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countEnabled()
-    {
-        $qb = $this->createQueryBuilder('l')->select('count(l)')->where('l.status = :st')->setParameter('st', Lang::ST_ENABLED);
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getAllEnabledQuery()
     {
-        $qb = $this->createQueryBuilder('l')->where('l.status = :st')->orderBy('l.locale', 'ASC')->setParameter('st', Lang::ST_ENABLED);
+        $qb = $this->createQueryBuilder('l')
+            ->where('l.status = :st')
+            ->orderBy('l.locale', 'ASC')
+            ->setParameter('st', Lang::ST_ENABLED);
         $query = $qb->getQuery();
 
         return $query;

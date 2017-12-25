@@ -440,6 +440,5 @@ class BulletinInfoContent
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

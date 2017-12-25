@@ -14,21 +14,6 @@ class CompanyFrameRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $c
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $c)
-    {
-        $qb = $this->createQueryBuilder('cf')->select('count(cf)')->join('cf.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $c
@@ -37,7 +22,12 @@ class CompanyFrameRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $c)
     {
-        $qb = $this->createQueryBuilder('cf')->join('cf.company', 'c')->where('c.id = :id')->orderBy('cf.lastName', 'ASC')->addOrderBy('cf.firstName', 'ASC')->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('cf')
+            ->join('cf.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('cf.lastName', 'ASC')
+            ->addOrderBy('cf.firstName', 'ASC')
+            ->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query;

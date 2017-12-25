@@ -14,26 +14,16 @@ class BulletinInfoTitleRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('bt')->select('count(bt)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getAllQuery()
     {
-        $qb = $this->createQueryBuilder('bt')->join('bt.bulletinInfo', 'bi')->orderBy('bi.num', 'ASC')->addOrderBy('bt.title', 'ASC');
+        $qb = $this->createQueryBuilder('bt')
+            ->join('bt.bulletinInfo', 'bi')
+            ->orderBy('bi.num', 'ASC')
+            ->addOrderBy('bt.title', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -50,21 +40,6 @@ class BulletinInfoTitleRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @param BulletinInfo $bi
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByBulletinInfo(BulletinInfo $bi)
-    {
-        $qb = $this->createQueryBuilder('bt')->select('count(bt)')->join('bt.bulletinInfo', 'bi')->where('bi.id = :id')->setParameter('id', $bi->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param BulletinInfo $bi
@@ -73,7 +48,11 @@ class BulletinInfoTitleRepository extends EntityRepository
      */
     public function getAllByBulletinInfoQuery(BulletinInfo $bi)
     {
-        $qb = $this->createQueryBuilder('bt')->join('bt.bulletinInfo', 'bi')->where('bi.id = :id')->orderBy('bt.title', 'ASC')->setParameter('id', $bi->getId());
+        $qb = $this->createQueryBuilder('bt')
+            ->join('bt.bulletinInfo', 'bi')
+            ->where('bi.id = :id')
+            ->orderBy('bt.title', 'ASC')
+            ->setParameter('id', $bi->getId());
         $query = $qb->getQuery();
 
         return $query;

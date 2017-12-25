@@ -41,10 +41,10 @@ services:
        tags:
            - { name: twig.extension }
 
-    get_set_method_normalizer:
-        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
-        tags:
-            - { name: serializer.normalizer }
+#    get_set_method_normalizer:
+#        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+#        tags:
+#            - { name: serializer.normalizer }
 
     validator.mapping.cache.doctrine:
         class: Symfony\Component\Validator\Mapping\Cache\DoctrineCache

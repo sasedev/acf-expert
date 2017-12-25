@@ -15,26 +15,18 @@ class BulletinInfoContentRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('bc')->select('count(bc)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getAllQuery()
     {
-        $qb = $this->createQueryBuilder('bc')->join('bc.bulletinInfoTitle', 'bt')->join('bt.bulletinInfo', 'bi')->orderBy('bi.num', 'ASC')->addOrderBy('bt.title', 'ASC')->addOrderBy('bc.dtCrea', 'ASC');
+        $qb = $this->createQueryBuilder('bc')
+            ->join('bc.bulletinInfoTitle', 'bt')
+            ->join('bt.bulletinInfo', 'bi')
+            ->orderBy('bi.num', 'ASC')
+            ->addOrderBy('bt.title', 'ASC')
+            ->addOrderBy('bc.dtCrea', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -51,21 +43,6 @@ class BulletinInfoContentRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @param BulletinInfo $bi
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByBulletinInfo(BulletinInfo $bi)
-    {
-        $qb = $this->createQueryBuilder('bc')->select('count(bc)')->join('bc.bulletinInfoTitle', 'bt')->join('bt.bulletinInfo', 'bi')->where('bi.id = :id')->setParameter('id', $bi->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param BulletinInfo $bi
@@ -74,7 +51,13 @@ class BulletinInfoContentRepository extends EntityRepository
      */
     public function getAllByBulletinInfoQuery(BulletinInfo $bi)
     {
-        $qb = $this->createQueryBuilder('bc')->join('bc.bulletinInfoTitle', 'bt')->join('bt.bulletinInfo', 'bi')->where('bi.id = :id')->orderBy('bt.title', 'ASC')->addOrderBy('bc.dtCrea', 'ASC')->setParameter('id', $bi->getId());
+        $qb = $this->createQueryBuilder('bc')
+            ->join('bc.bulletinInfoTitle', 'bt')
+            ->join('bt.bulletinInfo', 'bi')
+            ->where('bi.id = :id')
+            ->orderBy('bt.title', 'ASC')
+            ->addOrderBy('bc.dtCrea', 'ASC')
+            ->setParameter('id', $bi->getId());
         $query = $qb->getQuery();
 
         return $query;
@@ -93,21 +76,6 @@ class BulletinInfoContentRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @param BulletinInfoTitle $bt
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByBulletinInfoTitle(BulletinInfoTitle $bt)
-    {
-        $qb = $this->createQueryBuilder('bc')->select('count(bc)')->join('bc.bulletinInfoTitle', 'bt')->where('bt.id = :id')->setParameter('id', $bt->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param BulletinInfoTitle $bt
@@ -116,7 +84,12 @@ class BulletinInfoContentRepository extends EntityRepository
      */
     public function getAllByBulletinInfoTitleQuery(BulletinInfoTitle $bt)
     {
-        $qb = $this->createQueryBuilder('bc')->join('bc.bulletinInfoTitle', 'bt')->join('bt.bulletinInfo', 'bi')->where('bt.id = :id')->orderBy('bc.dtCrea', 'ASC')->setParameter('id', $bt->getId());
+        $qb = $this->createQueryBuilder('bc')
+            ->join('bc.bulletinInfoTitle', 'bt')
+            ->join('bt.bulletinInfo', 'bi')
+            ->where('bt.id = :id')
+            ->orderBy('bc.dtCrea', 'ASC')
+            ->setParameter('id', $bt->getId());
         $query = $qb->getQuery();
 
         return $query;

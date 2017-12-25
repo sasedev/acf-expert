@@ -14,19 +14,6 @@ class AoSubCategRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('sc')->select('count(sc)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -49,25 +36,6 @@ class AoSubCategRepository extends EntityRepository
     public function getAll()
     {
         return $this->getAllQuery()->execute();
-    }
-
-    /**
-     * All count
-     *
-     * @param AoCateg $categ
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCateg(AoCateg $categ)
-    {
-        $qb = $this->createQueryBuilder('sc')
-            ->select('count(sc)')
-            ->join('sc.categ', 'c')
-            ->where('c.id = :id')
-            ->setParameter('id', $categ->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
     }
 
     /**

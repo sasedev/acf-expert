@@ -14,21 +14,6 @@ class BankRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $c
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $c)
-    {
-        $qb = $this->createQueryBuilder('b')->select('count(b)')->join('b.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $c
@@ -37,7 +22,11 @@ class BankRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $c)
     {
-        $qb = $this->createQueryBuilder('b')->join('b.company', 'c')->where('c.id = :id')->orderBy('b.label', 'ASC')->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('b')
+            ->join('b.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('b.label', 'ASC')
+            ->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query;

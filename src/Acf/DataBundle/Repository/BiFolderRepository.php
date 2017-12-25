@@ -14,26 +14,15 @@ class BiFolderRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countRoots()
-    {
-        $qb = $this->createQueryBuilder('d')->select('count(d)')->where('d.parent is NULL');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getRootsQuery()
     {
-        $qb = $this->createQueryBuilder('d')->where('d.parent is NULL')->orderBy('d.title', 'ASC');
+        $qb = $this->createQueryBuilder('d')
+            ->where('d.parent is NULL')
+            ->orderBy('d.title', 'ASC');
         $query = $qb->getQuery();
 
         return $query;
@@ -47,19 +36,6 @@ class BiFolderRepository extends EntityRepository
     public function getRoots()
     {
         return $this->getRootsQuery()->execute();
-    }
-
-    /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('b')->select('count(b)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
     }
 
     /**
@@ -86,21 +62,6 @@ class BiFolderRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @param BiFolder $dg
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countAllChilds(BiFolder $dg)
-    {
-        $qb = $this->createQueryBuilder('d')->select('count(d)')->join('d.company', 'c')->where('d.pageUrlFull LIKE :url')->andWhere('d.id != :did')->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param BiFolder $dg
@@ -109,7 +70,12 @@ class BiFolderRepository extends EntityRepository
      */
     public function getAllChildsQuery(BiFolder $dg)
     {
-        $qb = $this->createQueryBuilder('d')->where('d.pageUrlFull LIKE :url')->andWhere('d.id != :did')->orderBy('d.pageUrlFull', 'ASC')->setParameter('url', $dg->getPageUrlFull() . '%')->setParameter('did', $dg->getId());
+        $qb = $this->createQueryBuilder('d')
+            ->where('d.pageUrlFull LIKE :url')
+            ->andWhere('d.id != :did')
+            ->orderBy('d.pageUrlFull', 'ASC')
+            ->setParameter('url', $dg->getPageUrlFull() . '%')
+            ->setParameter('did', $dg->getId());
         $query = $qb->getQuery();
 
         return $query;

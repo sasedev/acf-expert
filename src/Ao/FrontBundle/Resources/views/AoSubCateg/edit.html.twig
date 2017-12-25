@@ -1,0 +1,82 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css'))}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/jquery.dataTables.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js'))}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	{% if advertisements|length != 0 %}
+	$('#advertisementList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10
+	});
+	{% endif %}
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ao_front_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.ao'|trans|raw}}</a></li>
+	<li><a href="{{ path('ao_front_categ_editGet', {'uid': subCateg.categ.id}) }}">{{faIco('object-ungroup')}} &nbsp; {{subCateg.categ.title}}</a></li>
+	<li class="active"><a href="{{ path('ao_front_subcateg_editGet', {'uid': subCateg.id}) }}">{{faIco('object-group')}} &nbsp; {{subCateg.ref}} : {{subCateg.title}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'AoCateg.tlabel.list'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive">
+				<table class="table table-bordered table-hover " id="advertisementList">
+					<thead>
+						<tr>
+							<th>{{ 'AoAdvertisement.dtPublication.label'|trans|raw }}</th>
+							<th>{{ 'AoAdvertisement.country.label'|trans|raw }}</th>
+							<th>{{ 'AoAdvertisement.description.label'|trans|raw }}</th>
+							<th>{{ 'AoAdvertisement.company.label'|trans|raw }}</th>
+							<th>{{ 'AoAdvertisement.nature.label'|trans|raw }}</th>
+							<th>{{ 'AoAdvertisement.dtEnd.label'|trans|raw }}</th>
+							<th>{{ 'action'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for advertisement in advertisements %}
+						<tr>
+							<td>{% if advertisement.dtPublication is not empty %}{{advertisement.dtPublication|date('Y-m-d')}}{% endif %}</td>
+							<td>{% if advertisement.country is not empty %}{{advertisement.country}}{% endif %}</td>
+							<td>{% if advertisement.description is not empty %}{{advertisement.description|raw}}{% endif %}</td>
+							<td>{% if advertisement.company is not empty %}{{advertisement.company}}{% endif %}</td>
+							<td>{% if advertisement.nature is not empty %}{{('AoAdvertisement.nature.'~advertisement.nature)|trans}}{% endif %}</td>
+							<td>{% if advertisement.dtEnd is not empty %}{{advertisement.dtEnd|date('Y-m-d')}}{% endif %}</td>
+							<td>
+								<a class="btn btn-sm btn-info" href="{{path('ao_front_advertisement_editGet',{'uid':advertisement.id})}}">{{ glyphIco('eye-open') }} &nbsp; {{ 'action.show'|trans }}</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="7">{{ 'AoAdvertisement.empty'|trans|raw }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

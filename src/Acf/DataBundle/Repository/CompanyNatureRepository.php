@@ -14,21 +14,6 @@ class CompanyNatureRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $company
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $company)
-    {
-        $qb = $this->createQueryBuilder('n')->select('count(n)')->join('n.company', 'c')->where('c.id = :id')->setParameter('id', $company->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $company
@@ -37,7 +22,11 @@ class CompanyNatureRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $company)
     {
-        $qb = $this->createQueryBuilder('n')->join('n.company', 'c')->where('c.id = :id')->orderBy('n.label', 'ASC')->setParameter('id', $company->getId());
+        $qb = $this->createQueryBuilder('n')
+            ->join('n.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('n.label', 'ASC')
+            ->setParameter('id', $company->getId());
         $query = $qb->getQuery();
 
         return $query;

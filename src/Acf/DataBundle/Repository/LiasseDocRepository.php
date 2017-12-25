@@ -14,23 +14,6 @@ class LiasseDocRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    /**
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('l')->select('count(l)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -54,21 +37,6 @@ class LiasseDocRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @param LiasseFolder $f
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByFolder(LiasseFolder $f)
-    {
-        $qb = $this->createQueryBuilder('l')->select('count(l)')->join('l.folder', 'f')->where('f.id = :id')->setParameter('id', $f->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param LiasseFolder $f
@@ -77,7 +45,11 @@ class LiasseDocRepository extends EntityRepository
      */
     public function getAllByFolderQuery(LiasseFolder $f)
     {
-        $qb = $this->createQueryBuilder('l')->join('l.folder', 'f')->where('f.id = :id')->orderBy('l.title', 'ASC')->setParameter('id', $f->getId());
+        $qb = $this->createQueryBuilder('l')
+            ->join('l.folder', 'f')
+            ->where('f.id = :id')
+            ->orderBy('l.title', 'ASC')
+            ->setParameter('id', $f->getId());
         $query = $qb->getQuery();
 
         return $query;

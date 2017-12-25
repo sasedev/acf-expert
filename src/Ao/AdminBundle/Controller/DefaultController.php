@@ -53,6 +53,7 @@ class DefaultController extends BaseController
                 }
                 $em->persist($autoinc);
                 $em->flush();
+                $nextref = $autoinc->getValue();
 
                 ini_set('memory_limit', '4096M');
                 ini_set('max_execution_time', '0');
@@ -256,7 +257,7 @@ class DefaultController extends BaseController
                         }
 
                         $advertisement = new AoAdvertisement();
-                        $advertisement->setRef($autoinc->getValue());
+                        $advertisement->setRef($nextref);
                         $advertisement->setGrp($subCateg);
                         $advertisement->setImg($img);
                         $advertisement->setDtPublication($dtPublication);
@@ -279,6 +280,7 @@ class DefaultController extends BaseController
                         $autoinc->setCount($autoinc->getCount() + 1);
                         $em->persist($autoinc);
                         $em->flush();
+                        $nextref++;
                         $aoveNew++;
                     } else {
                         $lineError++;

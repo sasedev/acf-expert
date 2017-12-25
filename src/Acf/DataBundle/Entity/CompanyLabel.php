@@ -200,6 +200,5 @@ class CompanyLabel
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

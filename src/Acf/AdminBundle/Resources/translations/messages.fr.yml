@@ -10,6 +10,7 @@ action.btnAdd: Ajouter
 action.btnEdit: Modifier
 action.btnUpload: Uploader
 action.btnDownload: Télécharger
+action.btnPdf: PDF
 action.btnSelect: Selectionner
 action.btnCancel: Annuler
 action.btnSend: Envoyer

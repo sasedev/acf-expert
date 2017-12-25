@@ -1,3 +1,31 @@
 ao_front_homepage:
     path:     /
-    defaults: { _controller: AoFrontBundle:Default:index }
+    defaults: { _controller: "AoFrontBundle:Default:index" }
+
+ao_front_categ_editGet:
+    path:     /c/{uid}
+    defaults: { _controller: "AoFrontBundle:Categ:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_front_subcateg_editGet:
+    path:     /sc/{uid}
+    defaults: { _controller: "AoFrontBundle:SubCateg:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_front_advertisement_editGet:
+    path:     /aove/{uid}
+    defaults: { _controller: "AoFrontBundle:Advertisement:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ao_front_advertisement_pdf:
+    path:     /aovepdf/{uid}
+    defaults: { _controller: "AoFrontBundle:Advertisement:pdf" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

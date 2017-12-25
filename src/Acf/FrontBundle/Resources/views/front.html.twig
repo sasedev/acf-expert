@@ -11,9 +11,9 @@
 {%block static_css%}
 {{ parent() }}
 <link rel="stylesheet" type="text/css"
-	href="{{asset('bundles/acfres/css/theme/AdminLTE/AdminLTE.css')}}">
+	href="{{preload(asset('bundles/acfres/css/theme/AdminLTE/AdminLTE.css'))}}">
 <link rel="stylesheet" type="text/css"
-	href="{{asset('bundles/acfres/css/theme/AdminLTE/skins/_all-skins.css')}}">
+	href="{{preload(asset('bundles/acfres/css/theme/AdminLTE/skins/_all-skins.css'))}}">
 {%endblock static_css%}
 {%block html_body%}
 <body class="skin-blue">
@@ -22,7 +22,7 @@
 		{%block header%}
 		<header class="main-header">
 			<a href="{{ path('_front_homepage') }}" class="logo"> <!-- Add the class icon to your logo image or logo icon to add the margining -->
-				<img src="{{asset('bundles/acfres/images/logo_acf.jpg')}}"
+				<img src="{{preload(asset('bundles/acfres/images/logo_acf.jpg'))}}"
 				alt="{{ sitename }}" class="icon img" style="width: 190px;">
 			</a>
 			<!-- Header Navbar: style can be found in header.less -->
@@ -64,7 +64,7 @@
 							<ul class="dropdown-menu">
 								{%if app.user.avatar is not empty%}
 								<li class="user-header bg-light-blue"><img
-									src="{{asset('res/avatars/'~app.user.avatar)}}"
+									src="{{preload(asset('res/avatars/'~app.user.avatar))}}"
 									class="img-responsive img-thumbnail img-circle"
 									alt="{{app.user.fullName}}" />
 									<p>
@@ -394,6 +394,15 @@
 				</ul>
 				<br>
 				{% endif %}
+				{% if is_granted('ROLE_CLIENT10')%}
+				<ul class="sidebar-menu" id="side-menu10">
+					<li {% if menu_active=='aohome'%} class="active" {% endif %}>
+						<a href="{{ path('ao_front_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.ao'|trans }}</span></a>
+					</li>
+				</ul>
+				<br>
+				{% endif %}
 				<ul class="sidebar-menu" id="side-menu0">
 					<li {% if menu_active=='toolshome'%} class="active" {% endif %}>
 						<a href="{{ path('_tools_homepage') }}"> {{ faIco('dashboard') }}
@@ -511,7 +520,7 @@
 	{%block end_static_js%}
 	{{ parent() }}
 	<script type="text/javascript"
-		src="{{asset('bundles/acfres/js/theme/AdminLTE/app.js')}}"></script>
+		src="{{preload(asset('bundles/acfres/js/theme/AdminLTE/app.js'))}}"></script>
 	{%endblock end_static_js%}
 	{%block end_dynamic_js%}
 	{%if end_javascripts is defined%}

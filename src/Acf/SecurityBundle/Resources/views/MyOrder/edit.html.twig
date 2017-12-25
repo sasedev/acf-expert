@@ -24,7 +24,7 @@ $(function() { });
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<img src="{{asset('bundles/acfres/images/logo_acf.jpg')}}"
+				<img src="{{preload(asset('bundles/acfres/images/logo_acf.jpg'))}}"
 				alt="{{ sitename }}" class="icon img" style="width: 190px;">
 				&nbsp; &nbsp; &nbsp; Bon de Commande
 				<small class="pull-right">Date : {{order.dtCrea|date('Y-m-d')}}</small>

@@ -3,17 +3,17 @@
 {%if smenu_active is not defined%}{%set smenu_active=''%}{%endif%}
 {%if tabActive is not defined%}{%set tabActive=1%}{%endif%}
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/theme/margo/style.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/jquery/layerslider/layerslider.css')}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/theme/margo/style.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/jquery/layerslider/layerslider.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%} {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/jquery.nicescroll.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/easing/1.3.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/layerslider/kreaturamedia.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/margo/script.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/form/20130711.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/validate/jquery.validate.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/jquery/validate/localization/messages_fr.min.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/jquery.nicescroll.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/easing/1.3.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/layerslider/kreaturamedia.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/script.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/form/20130711.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/jquery.validate.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/localization/messages_fr.min.js'))}}"></script>
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
 {%endblock end_static_js%}
 {%block html_body_content%}
@@ -66,7 +66,7 @@
 						</button>
 						<!-- End Toggle Nav Link For Mobiles -->
 						<a class="navbar-brand" href="{{ path('_front_homepage') }}">
-							<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{asset('bundles/acfres/images/logo_acf.jpg')}}" width="220">
+							<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{preload(asset('bundles/acfres/images/logo_acf.jpg'))}}" width="220">
 						</a>
 					</div>
 					<div class="navbar-collapse collapse">
@@ -699,7 +699,7 @@
 					<!-- Start Subscribe & Social Links Widget -->
 					<div class="col-md-4 col-xs-12">
 						<div class="footer-widget social-widget">
-							<h4><img alt="Acf" src="{{asset('bundles/acfres/images/logo_acf_footer.jpg')}}" class="img"></h4>
+							<h4><img alt="Acf" src="{{preload(asset('bundles/acfres/images/logo_acf_footer.jpg'))}}" class="img"></h4>
 							<br><br>
 							<h4>{{ 'bottom.followus'|trans }}<span class="head-line"></span></h4>
 							<ul class="social-icons">

@@ -12,19 +12,6 @@ class OnlineTaxeRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('t')->select('count(t)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -48,26 +35,16 @@ class OnlineTaxeRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countVisible()
-    {
-        $qb = $this->createQueryBuilder('t')->select('count(t)')->where('t.visible = :visible')->setParameter('visible', OnlineTaxe::VISIBLE_SHOW);
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getAllVisibleQuery()
     {
-        $qb = $this->createQueryBuilder('t')->where('t.visible = :visible')->orderBy('t.priority', 'ASC')->setParameter('visible', OnlineTaxe::VISIBLE_SHOW);
+        $qb = $this->createQueryBuilder('t')
+            ->where('t.visible = :visible')
+            ->orderBy('t.priority', 'ASC')
+            ->setParameter('visible', OnlineTaxe::VISIBLE_SHOW);
         $query = $qb->getQuery();
 
         return $query;

@@ -280,11 +280,11 @@
 			e(n).find('iframe[src*="www.youtu"]').each(function() {
 				if (e(this).parent('[class*="ls-s"]')) {
 					var t = e(this);
-					e.getJSON("http://gdata.youtube.com/feeds/api/videos/" + e(this).attr("src").split("embed/")[1].split("?")[0] + "?v=2&alt=json&callback=?", function(e) {
+					e.getJSON("https://gdata.youtube.com/feeds/api/videos/" + e(this).attr("src").split("embed/")[1].split("?")[0] + "?v=2&alt=json&callback=?", function(e) {
 						t.data("videoDuration", parseInt(e["entry"]["media$group"]["yt$duration"]["seconds"]) * 1e3)
 					});
 					var n = e("<div>").addClass("ls-vpcontainer").appendTo(e(this).parent());
-					e("<img>").appendTo(n).addClass("ls-videopreview").attr("src", "http://img.youtube.com/vi/" + e(this).attr("src").split("embed/")[1].split("?")[0] + "/" + i.o.youtubePreview);
+					e("<img>").appendTo(n).addClass("ls-videopreview").attr("src", "https://img.youtube.com/vi/" + e(this).attr("src").split("embed/")[1].split("?")[0] + "/" + i.o.youtubePreview);
 					e("<div>").appendTo(n).addClass("ls-playvideo");
 					e(this).parent().css({
 						width: e(this).width(),
@@ -328,7 +328,7 @@
 				if (e(this).parent('[class*="ls-s"]')) {
 					var t = e(this);
 					var n = e("<div>").addClass("ls-vpcontainer").appendTo(e(this).parent());
-					e.getJSON("http://vimeo.com/api/v2/video/" + e(this).attr("src").split("video/")[1].split("?")[0] + ".json?callback=?", function(r) {
+					e.getJSON("https://vimeo.com/api/v2/video/" + e(this).attr("src").split("video/")[1].split("?")[0] + ".json?callback=?", function(r) {
 						e("<img>").appendTo(n).addClass("ls-videopreview").attr("src", r[0]["thumbnail_large"]);
 						t.data("videoDuration", parseInt(r[0]["duration"]) * 1e3);
 						e("<div>").appendTo(n).addClass("ls-playvideo")

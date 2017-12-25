@@ -2,7 +2,7 @@
 {%block content%}
 {{form_start(LoginForm, {'method':'POST', 'action': path('_security_check'), 'style': 'horizontal'})}}
 <div class="login-box-body">
-	<a href="{{ path('_front_homepage')}}"><img class="img img-responsive center-block" src="{{asset('bundles/acfres/images/logo_acf_footer.jpg')}}" alt="{{ sitename }}" style="height: 100px;"></a>
+	<a href="{{ path('_front_homepage')}}"><img class="img img-responsive center-block" src="{{preload(asset('bundles/acfres/images/logo_acf_footer.jpg'))}}" alt="{{ sitename }}" style="height: 100px;"></a>
 	{%if pagetitle is defined%}<hr><h1 class="text-center">{{pagetitle|raw}}</h1>{%endif%}
 	<hr>
 	{%include 'SasedevCommonsBootstrapBundle::flash.html.twig' with { 'close': false }%}

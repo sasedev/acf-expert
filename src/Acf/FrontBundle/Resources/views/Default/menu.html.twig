@@ -10,6 +10,10 @@
 									<li><a href="{{ path('_admin_homepage') }}">{{ 'menu.top.admin'|trans }}</a>
 									</li>
 									{% endif %}
+									{% if is_granted('ROLE_ADMIN2') %}
+									<li><a href="{{ path('ao_admin_homepage') }}">{{ 'menu.top.admin2'|trans }}</a>
+									</li>
+									{% endif %}
 									{% if is_granted('ROLE_CLIENT1') %}
 									<li><a href="{{ path('_client_homepage') }}">{{ 'menu.top.client1'|trans }}</a>
 									</li>
@@ -24,6 +28,10 @@
 									{% endif %}
                                     {% if is_granted('ROLE_CLIENT4') %}
                                     <li><a href="{{ path('_liasse_homepage') }}">{{ 'menu.top.client4'|trans }}</a>
+                                    </li>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_CLIENT10') %}
+                                    <li><a href="{{ path('ao_front_homepage') }}">{{ 'menu.top.client10'|trans }}</a>
                                     </li>
                                     {% endif %}
                                     <li><a href="{{ path('_tools_homepage') }}">{{ 'menu.top.client6'|trans }}</a>

@@ -3,7 +3,7 @@
 {%if smenu_active is not defined%}{%set smenu_active=''%}{%endif%}
 {%if tabActive is not defined%}{%set tabActive=1%}{%endif%}
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/theme/AdminLTE/AdminLTE.css')}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/theme/AdminLTE/AdminLTE.css'))}}">
 {%endblock static_css%}
 {%block html_body%}
 <body class="login-page">
@@ -22,7 +22,7 @@
 	</script>
 	{%block end_static_js%}
 	{{ parent() }}
-	<script type="text/javascript" src="{{asset('bundles/acfres/js/theme/AdminLTE/app.js')}}"></script>
+	<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/AdminLTE/app.js'))}}"></script>
 	{%endblock end_static_js%}
 	{%block end_dynamic_js%}
 		{%if end_javascripts is defined%}{%for js in end_javascripts%}

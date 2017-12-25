@@ -1,35 +1,35 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%}
 {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('bundles/acfres/css/bootstrap/modal/2.2.5.css')}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js'))}}"></script>
 {%if app.request.locale != 'en'%}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js'))}}"></script>
 {% endif %}
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/acfres/js/bootstrap/modal/2.2.5.js')}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/jquery.dataTables.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
 	$('textarea.wysiwyg').each(function() {
 		var options = {
-			script_url : '{{asset('bundles/acfres/js/tinymce/tinymce.min.js')}}',
+			script_url : '{{preload(asset('bundles/acfres/js/tinymce/tinymce.min.js'))}}',
 			theme: "modern",
 			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
 			{%if app.request.locale != 'en'%}
@@ -50,14 +50,17 @@ $(function() {
 
 	$("#SaleImportForm_excel").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Excel", browseIcon: '{{faIco('folder-open')}}', remove1Class: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
 
-	$('#SaleNewForm_dtActivation').live('click', function(e) {e.preventDefault();}).datetimepicker({
-		weekStart: 1,
-		startView: 4,
-		minView: 2,
-		autoclose: true,
-		todayHighlight: true,
-		language: "{{app.request.locale}}",
-		format: 'yyyy-mm-dd'
+	$('#SaleNewForm_dtActivation').click(function( event ) {
+		event.preventDefault();
+		$('#SaleNewForm_dtActivation').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
 	});
 
 	$('#SaleNewForm_relation').chosen({width: "100%", disable_search_threshold: 10});
@@ -70,14 +73,17 @@ $(function() {
 
 	$('#SaleNewForm_regime').chosen({width: "100%", disable_search_threshold: 10});
 
-	$('#SaleNewForm_dtPayment').live('click', function(e) {e.preventDefault();}).datetimepicker({
-		weekStart: 1,
-		startView: 4,
-		minView: 2,
-		autoclose: true,
-		todayHighlight: true,
-		language: "{{app.request.locale}}",
-		format: 'yyyy-mm-dd'
+	$('#SaleNewForm_dtPayment').click(function( event ) {
+		event.preventDefault();
+		$('#SaleNewForm_dtPayment').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
 	});
 
 	$('#SaleNewForm_account').chosen({width: "100%", disable_search_threshold: 10});
@@ -89,7 +95,7 @@ $(function() {
 		"sScrollY":	  "250px",
 		"bScrollCollapse": true,
 		{%if app.request.locale != 'en'%}
-		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
 		{% endif %}
 		"columns": [
 			null,
@@ -331,7 +337,7 @@ $(function() {
 	{% if mbsale.docs|length != 0 %}
 	$('#docList').dataTable({
 		{%if app.request.locale != 'en'%}
-		"language": {"url": '{{asset('bundles/acfres/css/dataTables/i18n/')~app.request.locale~".json"}}'},
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
 		{% endif %}
 		"columns": [
 			null,

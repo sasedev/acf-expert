@@ -12,19 +12,6 @@ class OnlineOrderProductRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('p')->select('count(p)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -48,26 +35,17 @@ class OnlineOrderProductRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByOrder(OnlineOrder $order)
-    {
-        $qb = $this->createQueryBuilder('p')->select('count(p)')->join('p.order', 'o')->where('o.id = :id')->setParameter('id', $order->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
      */
     public function getAllByOrderQuery(OnlineOrder $order)
     {
-        $qb = $this->createQueryBuilder('p')->join('p.order', 'o')->where('o.id = :id')->setParameter('id', $order->getId())->orderBy('p.dtCrea', 'ASC');
+        $qb = $this->createQueryBuilder('p')
+            ->join('p.order', 'o')
+            ->where('o.id = :id')
+            ->setParameter('id', $order->getId())
+            ->orderBy('p.dtCrea', 'ASC');
         $query = $qb->getQuery();
 
         return $query;

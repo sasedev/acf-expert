@@ -320,6 +320,5 @@ class OnlineTaxe
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

@@ -12,19 +12,6 @@ class OnlineOrderRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function count()
-    {
-        $qb = $this->createQueryBuilder('o')->select('count(o)');
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @return \Doctrine\ORM\Query
@@ -48,21 +35,6 @@ class OnlineOrderRepository extends EntityRepository
     }
 
     /**
-     * All count
-     *
-     * @param User $user
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByUser(User $user)
-    {
-        $qb = $this->createQueryBuilder('o')->select('count(o)')->join('o.user', 'u')->where('u.id = :id')->setParameter('id', $user->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param User $user
@@ -71,7 +43,11 @@ class OnlineOrderRepository extends EntityRepository
      */
     public function getAllByUserQuery(User $user)
     {
-        $qb = $this->createQueryBuilder('o')->join('o.user', 'u')->where('u.id = :id')->orderBy('o.dtCrea', 'DESC')->setParameter('id', $user->getId());
+        $qb = $this->createQueryBuilder('o')
+            ->join('o.user', 'u')
+            ->where('u.id = :id')
+            ->orderBy('o.dtCrea', 'DESC')
+            ->setParameter('id', $user->getId());
         $query = $qb->getQuery();
 
         return $query;

@@ -14,21 +14,6 @@ class AddressRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $c
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $c)
-    {
-        $qb = $this->createQueryBuilder('a')->select('count(a)')->join('a.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $c
@@ -37,7 +22,11 @@ class AddressRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $c)
     {
-        $qb = $this->createQueryBuilder('a')->join('a.company', 'c')->where('c.id = :id')->orderBy('a.label', 'ASC')->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('a')
+            ->join('a.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('a.label', 'ASC')
+            ->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query;

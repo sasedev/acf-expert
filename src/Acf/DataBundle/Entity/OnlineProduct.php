@@ -379,6 +379,5 @@ class OnlineProduct
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

@@ -27,6 +27,7 @@ menu.top.basedoc3: 'Bulletin ACEF Info'
 menu.top.connexion: 'Espace Client'
 menu.top.profile: 'Mon Profile'
 menu.top.admin: 'ACEF Admin'
+menu.top.admin2: 'AO Admin'
 menu.top.agenda: 'ACEF Agenda'
 menu.top.client1: 'ACEF Cloud'
 menu.top.client2: 'ACEF Info'
@@ -34,6 +35,7 @@ menu.top.client3: 'ACEF Paie'
 menu.top.client4: 'ACEF Liasse'
 menu.top.client5: 'ACEF Facturation'
 menu.top.client6: 'ACEF Tools'
+menu.top.client10: 'Appels d''Offres'
 menu.top.appeldoffres: "Appels d'offres"
 menu.top.ventesauxencheres: "Ventes aux encheres"
 menu.top.logout: 'Déconnexion'
@@ -43,6 +45,7 @@ menu.shopping.products: 'Nos Produits'
 menu.shopping.cart: 'Mon Panier :'
 menu.shopping.orders: 'Mes Commandes'
 menu.shopping.invoices: 'Mes Fatures'
+menu.ao: 'Appels d''Offres'
 
 menu.bottom.links: Liens
 menu.footer.home: Accueil

@@ -14,21 +14,6 @@ class DocRepository extends EntityRepository
 {
 
     /**
-     * All count
-     *
-     * @param Company $c
-     *
-     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
-     */
-    public function countByCompany(Company $c)
-    {
-        $qb = $this->createQueryBuilder('d')->select('count(d)')->join('d.company', 'c')->where('c.id = :id')->setParameter('id', $c->getId());
-        $query = $qb->getQuery();
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
      * Get Query for All Entities
      *
      * @param Company $c
@@ -37,7 +22,11 @@ class DocRepository extends EntityRepository
      */
     public function getAllByCompanyQuery(Company $c)
     {
-        $qb = $this->createQueryBuilder('d')->join('d.company', 'c')->where('c.id = :id')->orderBy('d.dtCrea', 'DESC')->setParameter('id', $c->getId());
+        $qb = $this->createQueryBuilder('d')
+            ->join('d.company', 'c')
+            ->where('c.id = :id')
+            ->orderBy('d.dtCrea', 'DESC')
+            ->setParameter('id', $c->getId());
         $query = $qb->getQuery();
 
         return $query;
