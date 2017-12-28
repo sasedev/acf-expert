@@ -1704,7 +1704,7 @@ class User implements UserInterface, \Serializable
         // keys when
         // unserializing
         // older data which does not include all properties.
-        $data = array_merge($data, array_fill(0, 2, null));
+        $data = array_merge($data, \array_fill(0, 2, null));
 
         list ($this->password, $this->salt, $this->username, $this->email, $this->lockout, $this->id) = $data;
     }

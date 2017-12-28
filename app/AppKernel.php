@@ -17,15 +17,13 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
-            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-            new JMS\AopBundle\JMSAopBundle(),
             new Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
             new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
 
             new Sasedev\Form\EntityidBundle\SasedevFormEntityidBundle(),
             new Sasedev\Doctrine\PostgresqlBundle\SasedevDoctrinePostgresqlBundle(),
@@ -33,7 +31,6 @@ class AppKernel extends Kernel
             new Sasedev\Commons\BootstrapBundle\SasedevCommonsBootstrapBundle(),
             new Sasedev\Commons\TwigBundle\SasedevCommonsTwigBundle(),
             new Sasedev\ExtraToolsBundle\SasedevExtraToolsBundle(),
-            new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
 
             new Acf\ResBundle\AcfResBundle(),
             new Acf\DataBundle\AcfDataBundle(),
@@ -45,8 +42,9 @@ class AppKernel extends Kernel
             new Acf\PayrollBundle\AcfPayrollBundle(),
             new Acf\LiasseBundle\AcfLiasseBundle(),
             new Acf\ToolsBundle\AcfToolsBundle(),
+            new AoVe\AdminBundle\AoVeAdminBundle(),
             new Ao\FrontBundle\AoFrontBundle(),
-            new Ao\AdminBundle\AoAdminBundle()
+            new Ve\FrontBundle\VeFrontBundle(),
         ];
 
         if (in_array($this->getEnvironment(), [

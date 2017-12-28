@@ -114,24 +114,35 @@
 				{% endif %}
 				{% if is_granted('ROLE_ADMIN2')%}
 				<ul class="sidebar-menu" id="side-menu2">
-					<li {% if menu_active=='aoadminhome'%} class="active" {% endif %}>
-						<a href="{{ path('ao_admin_homepage') }}"> {{ faIco('dashboard') }}
-							<span>{{ 'menu.admin2'|trans }}</span></a>
+					<li {% if menu_active=='aoveadminhome'%} class="active" {% endif %}>
+						<a href="{{ path('aove_admin_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.adminaove'|trans }}</span></a>
 					</li>
 					<li class="treeview{% if menu_active=='aocateg'%} active{% endif %}">
 						<a href="#"> {{ faIco('object-group') }} <span>{{ 'menu.admin.aocateg'|trans }}</span>
 							<i class="fa fa-angle-left pull-right"></i></a>
 						<ul class="treeview-menu">
 							<li {% if smenu_active=='list'%} class="active" {% endif %}><a
-								href="{{ path('ao_admin_categ_list') }}">{{ faIco('angle-double-right') }}
+								href="{{ path('aove_admin_categ_list') }}">{{ faIco('angle-double-right') }}
 									{{ 'menu.list'|trans }}</a></li>
 							{%if is_granted('ROLE_SUPERSUPERADMIN')%}
 							<li {% if smenu_active=='add'%} class="active" {% endif %}><a
-								href="{{ path('ao_admin_categ_addGet') }}">{{ faIco('angle-double-right') }}
+								href="{{ path('aove_admin_categ_addGet') }}">{{ faIco('angle-double-right') }}
 									{{ 'menu.add'|trans }}</a></li>
 							{% endif %}
 						</ul>
 					</li>
+					{%if is_granted('ROLE_SUPERSUPERADMIN')%}
+					<li class="treeview{% if menu_active=='aoauction'%} active{% endif %}">
+						<a href="#"> {{ faIco('object-group') }} <span>{{ 'menu.admin.auction'|trans }}</span>
+							<i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+							<li {% if smenu_active=='add'%} class="active" {% endif %}><a
+								href="{{ path('aove_admin_auction_addGet') }}">{{ faIco('angle-double-right') }}
+									{{ 'menu.add'|trans }}</a></li>
+						</ul>
+					</li>
+					{% endif %}
 				</ul>
 				<br>
 				{% endif %}
@@ -176,6 +187,15 @@
 					<li {% if menu_active=='aohome'%} class="active" {% endif %}>
 						<a href="{{ path('ao_front_homepage') }}"> {{ faIco('dashboard') }}
 							<span>{{ 'menu.ao'|trans }}</span></a>
+					</li>
+				</ul>
+				<br>
+				{% endif %}
+				{% if is_granted('ROLE_CLIENT11')%}
+				<ul class="sidebar-menu" id="side-menu11">
+					<li {% if menu_active=='vehome'%} class="active" {% endif %}>
+						<a href="{{ path('ve_front_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.ve'|trans }}</span></a>
 					</li>
 				</ul>
 				<br>
@@ -250,21 +270,15 @@
 	</script>
 	{%block endappend%}
 	{%endblock endappend%}
+{% if app.environment == 'prod' %}
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108802298-1"></script>
-
 <script>
-
   window.dataLayer = window.dataLayer || [];
-
   function gtag(){dataLayer.push(arguments);}
-
   gtag('js', new Date());
-
-
   gtag('config', 'UA-108802298-1');
-
 </script>
+{% endif %}
 </body>
 {%endblock html_body%}

@@ -1,0 +1,190 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5.css'))}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/jquery.dataTables.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5.js'))}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	{% if categ.subCategs|length != 0 %}
+	$('#subCategList').dataTable({
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmSubCateg').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmSubCateg').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmSubCateg').modal('show');
+			});
+		}
+	});
+	{% endif %}
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('aove_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.adminaove'|trans|raw}}</a></li>
+	<li><a href="{{ path('aove_admin_categ_list') }}">{{ faIco('object-group') }} &nbsp; {{'breadcrumb.aocateg.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('aove_admin_categ_editGet', {'uid': categ.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.aocateg.edit'|trans({'%categ%': categ.title})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('aove_admin_categ_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			{%if is_granted('ROLE_SUPERADMIN')%}
+			<a href="{{ path('aove_admin_categ_addGet') }}" class="btn btn-primary">{{ glyphIco('plus') }} {{ 'action.add'|trans }}</a>
+			{% endif %}
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'AoCateg.tab.overview'|trans|raw}}</a></li>
+				{%if is_granted('ROLE_SUPERADMIN')%}
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'AoCateg.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#AddSubCateg" data-toggle="tab">{{'AoCateg.tab.addSubCateg'|trans|raw}}</a></li>
+				{% endif %}
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'AoCateg.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'AoCateg.title'|trans|raw}} :</div>
+								<div class="col-lg-9">{{categ.title}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.priority'|trans|raw}} :</div>
+								<div class="col-lg-9">{{categ.priority}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.subCategs'|trans|raw}} :</div>
+								<div class="col-lg-9">{{categ.subCategs|length}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{categ.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{categ.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{categ.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{categ.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+					{% if categ.subCategs|length != 0 %}
+					<div class="panel box">
+						<div class="box-header">
+							<h3 class="box-title">{{ 'AoSubCateg.tlabel.list'|trans|raw}}</h3>
+						</div>
+						<div class="box-body table-responsive">
+							<table id="subCategList" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>{{ 'AoSubCateg.priority.label'|trans|raw }}</th>
+										<th>{{ 'AoSubCateg.ref.label'|trans|raw }}</th>
+										<th>{{ 'AoSubCateg.title.label'|trans|raw }}</th>
+										<th>{{ 'AoSubCateg.callfortenders.label'|trans|raw }}</th>
+										<th>{{ 'action'|trans|raw }}</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% if categ.subCategs|length != 0 %}
+								{% for subcateg in categ.subCategs %}
+									<tr>
+										<td>{{ subcateg.priority }}</td>
+										<td>{{ subcateg.ref }}</td>
+										<td>{{ subcateg.title }}</td>
+										<td>{{ subcateg.callfortenders|length }}</td>
+										<td>
+											<a class="btn btn-sm btn-info" href="{{path('aove_admin_subcateg_editGet',{'uid':subcateg.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+											{%if is_granted('ROLE_SUPERADMIN')%}
+											<a class="btn btn-sm btn-danger deleteConfirmSubCateg" href="{{path('aove_admin_subcateg_delete',{'uid':subcateg.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+											{% endif %}
+										</td>
+									</tr>
+								{% endfor %}
+								{% else %}
+									<tr>
+										<td colspan="5">{{ 'AoSubCateg.empty'|trans|raw }}</td>
+									</tr>
+								{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				{%if is_granted('ROLE_SUPERADMIN')%}
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCateg.tlabel.editTitle'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CategUpdateTitleForm, {'method':'POST', 'action': path('aove_admin_categ_editPost', {'uid': categ.id}), 'style': 'horizontal'})}}
+							{{form_row(CategUpdateTitleForm.title, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CategUpdateTitleForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCateg.tlabel.editPriority'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CategUpdatePriorityForm, {'method':'POST', 'action': path('aove_admin_categ_editPost', {'uid': categ.id}), 'style': 'horizontal'})}}
+							{{form_row(CategUpdatePriorityForm.priority, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CategUpdatePriorityForm)}}
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="AddSubCateg">
+					<div class="panel box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">{{ 'AoSubCateg.tlabel.add'|trans|raw}}</h3>
+						</div>
+						<div class="box-body">
+							{{form_start(SubCategNewForm, {'method':'POST', 'action': path('aove_admin_categ_editPost', {'uid': categ.id}), 'style': 'horizontal'})}}
+							{{form_row(SubCategNewForm.categ, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+							{{form_row(SubCategNewForm.ref, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(SubCategNewForm.title, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(SubCategNewForm.priority, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+							{{form_end(SubCategNewForm)}}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmSubCateg" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'AoSubCateg.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'AoSubCateg.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{%endblock content%}

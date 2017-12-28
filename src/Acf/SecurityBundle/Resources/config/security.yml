@@ -33,7 +33,7 @@ security:
             anonymous:  true
         main:
             pattern:      .*
-            provider: chain_provider
+            provider: user_provider
             form_login:
                 check_path:     /login_check
                 login_path:     /login
@@ -42,39 +42,42 @@ security:
                 password_parameter:     "LoginForm[password]"
                 target_path_parameter:  "LoginForm[target_path]"
                 default_target_path: /myProfile
-                always_use_default_target_path: true
+                always_use_default_target_path: false
                 use_referer:    true
                 use_forward:    false
 #                intention: authentication
-                require_previous_session: true
+                require_previous_session: false
                 remember_me:    true
 #                success_handler: login.listener
             logout:
                 path:   /logout
                 target: /
+                invalidate_session: true
 #                success_handler: logout_listener
             remember_me:
                 secret: "%secret%"
                 name: AcfSec
                 lifetime: 3600 # 2 days in seconds
                 path: ^/
-                always_remember_me: false
+                always_remember_me: true
                 remember_me_parameter: "LoginForm[remember_me]"
             security: true
             anonymous:    true
+            logout_on_user_change: true
     access_control:
         - { path: ^/ACEF-Admin/autoinc.*, role: ROLE_SUPERSUPERADMIN }
         - { path: ^/ACEF-Admin/constant.*, role: ROLE_SUPERSUPERADMIN }
         - { path: ^/ACEF-Admin/lang.*, role: ROLE_SUPERSUPERADMIN }
         - { path: ^/ACEF-Admin/role.*, role: ROLE_SUPERSUPERADMIN }
         - { path: ^/ACEF-Admin.*, role: ROLE_ADMIN }
-        - { path: ^/AO-Admin.*, role: ROLE_ADMIN2 }
+        - { path: ^/AOVE-Admin.*, role: ROLE_ADMIN2 }
         - { path: ^/ACEF-Cloud.*, role: ROLE_CLIENT1 }
         - { path: ^/ACEF-Info.*, role: ROLE_CLIENT2 }
         - { path: ^/ACEF-Payroll.*, role: ROLE_CLIENT3 }
         - { path: ^/ACEF-Liasse.*, role: ROLE_CLIENT4 }
         - { path: ^/ACEF-Tools.*, role: ROLE_USER }
         - { path: ^/AO-Front.*, role: ROLE_CLIENT10 }
+        - { path: ^/VE-Front.*, role: ROLE_CLIENT11 }
         - { path: ^/myProfile.*, role: ROLE_USER }
         - { path: ^/Agenda.*, role: ROLE_USER }
         - { path: ^/onlineProduct.*, role: ROLE_USER }

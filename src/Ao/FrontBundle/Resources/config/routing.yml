@@ -16,16 +16,16 @@ ao_front_subcateg_editGet:
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
-ao_front_advertisement_editGet:
-    path:     /aove/{uid}
-    defaults: { _controller: "AoFrontBundle:Advertisement:editGet" }
+ao_front_callfortender_editGet:
+    path:     /ao/{uid}
+    defaults: { _controller: "AoFrontBundle:Callfortender:editGet" }
     methods: [GET]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
-ao_front_advertisement_pdf:
-    path:     /aovepdf/{uid}
-    defaults: { _controller: "AoFrontBundle:Advertisement:pdf" }
+ao_front_callfortender_pdf:
+    path:     /aopdf/{uid}
+    defaults: { _controller: "AoFrontBundle:Callfortender:pdf" }
     methods: [GET]
     requirements:
         uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

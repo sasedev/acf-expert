@@ -44,8 +44,8 @@ class SubCategController extends BaseController
                 $this->flashMsgSession('warning', $this->translate('AoSubCateg.edit.notfound'));
             } else {
 
-                $advertisements = $em->getRepository('AcfDataBundle:AoAdvertisement')->getAllFrontByGrp($subCateg);
-                $this->gvars['advertisements'] = $advertisements;
+                $callfortenders = $em->getRepository('AcfDataBundle:AoCallfortender')->getAllFrontByGrp($subCateg);
+                $this->gvars['callfortenders'] = $callfortenders;
 
                 $this->gvars['subCateg'] = $subCateg;
 

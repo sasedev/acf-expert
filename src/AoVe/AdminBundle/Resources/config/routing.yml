@@ -1,0 +1,114 @@
+aove_admin_homepage:
+    path:     /
+    defaults: { _controller: "AoVeAdminBundle:Default:index" }
+
+aove_admin_categ_list:
+    path:     /categs
+    defaults: { _controller: "AoVeAdminBundle:Categ:list" }
+
+aove_admin_categ_addGet:
+    path:     /categ/add
+    defaults: { _controller: "AoVeAdminBundle:Categ:addGet" }
+    methods: [GET]
+
+aove_admin_categ_addPost:
+    path:     /categ/add
+    defaults: { _controller: "AoVeAdminBundle:Categ:addPost" }
+    methods: [POST]
+
+aove_admin_categ_delete:
+    path:     /categ/delete/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Categ:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+aove_admin_categ_editGet:
+    path:     /categ/edit/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Categ:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+aove_admin_categ_editPost:
+    path:     /categ/edit/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Categ:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+aove_admin_subcateg_delete:
+    path:     /subcateg/delete/{uid}
+    defaults: { _controller: "AoVeAdminBundle:SubCateg:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+aove_admin_subcateg_editGet:
+    path:     /subcateg/edit/{uid}
+    defaults: { _controller: "AoVeAdminBundle:SubCateg:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+aove_admin_subcateg_editPost:
+    path:     /subcateg/edit/{uid}
+    defaults: { _controller: "AoVeAdminBundle:SubCateg:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+
+aove_admin_callfortender_delete:
+    path:     /callfortender/delete/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Callfortender:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+aove_admin_callfortender_editGet:
+    path:     /callfortender/edit/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Callfortender:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+aove_admin_callfortender_editPost:
+    path:     /callfortender/edit/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Callfortender:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+
+
+aove_admin_auction_addGet:
+    path:     /auction/add
+    defaults: { _controller: "AoVeAdminBundle:Auction:addGet" }
+    methods: [GET]
+
+aove_admin_auction_addPost:
+    path:     /auction/add
+    defaults: { _controller: "AoVeAdminBundle:Auction:addPost" }
+    methods: [POST]
+
+aove_admin_auction_delete:
+    path:     /auction/delete/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Auction:delete" }
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+aove_admin_auction_editGet:
+    path:     /auction/edit/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Auction:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+aove_admin_auction_editPost:
+    path:     /auction/edit/{uid}
+    defaults: { _controller: "AoVeAdminBundle:Auction:editPost" }
+    methods: [POST]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+

@@ -44,8 +44,8 @@ class CategController extends BaseController
                 $this->flashMsgSession('warning', $this->translate('AoCateg.edit.notfound'));
             } else {
 
-                $advertisements = $em->getRepository('AcfDataBundle:AoAdvertisement')->getAllFrontByCateg($categ);
-                $this->gvars['advertisements'] = $advertisements;
+                $callfortenders = $em->getRepository('AcfDataBundle:AoCallfortender')->getAllFrontByCateg($categ);
+                $this->gvars['callfortenders'] = $callfortenders;
 
                 $this->gvars['categ'] = $categ;
 

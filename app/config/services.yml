@@ -21,44 +21,48 @@ services:
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
         public: false
-    twig.extension.text:
+    Twig_Extensions_Extension_Text:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
 
-    twig.extension.intl:
+    Twig_Extensions_Extension_Intl:
        class: Twig_Extensions_Extension_Intl
        tags:
            - { name: twig.extension }
 
-    twig.extension.i18n:
+    Twig_Extensions_Extension_I18n:
        class: Twig_Extensions_Extension_I18n
        tags:
            - { name: twig.extension }
 
-    twig.extension.array:
+    Twig_Extensions_Extension_Array:
        class: Twig_Extensions_Extension_Array
        tags:
            - { name: twig.extension }
+
+#    Symfony\Bridge\Twig\Extension\WebLinkExtension:
+#        arguments: ["@request_stack"]
 
 #    get_set_method_normalizer:
 #        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
 #        tags:
 #            - { name: serializer.normalizer }
 
-    validator.mapping.cache.doctrine:
-        class: Symfony\Component\Validator\Mapping\Cache\DoctrineCache
+    Symfony\Component\Validator\Mapping\Cache\DoctrineCache:
         arguments:
             - '@doctrine_cache.providers.vendor_filesystem_validation_cache'
     # ...
     mongo_client:
-        class: MongoClient
+        class: MongoDB\Client
         # if using a username and password
         arguments:
             - 'mongodb://%mongodb_host%:%mongodb_port%'
             - { username: "%mongodb_user%", password: "%mongodb_pass%", db: "%mongodb_auth%"}
-    session.handler.mongo:
-        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
-        arguments: ['@mongo_client', '%mongo.session.options%']
-        
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler: 
+        arguments: 
+            - '@mongo_client' 
+            - '%mongo.session.options%'
+
 

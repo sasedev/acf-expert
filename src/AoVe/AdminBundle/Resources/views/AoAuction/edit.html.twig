@@ -1,0 +1,283 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css'))}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js'))}}"></script>
+{%if app.request.locale != 'en'%}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js'))}}"></script>
+{% endif %}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js'))}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{preload(asset('bundles/acfres/js/tinymce/tinymce.min.js'))}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+	
+	$('#AoAuctionUpdateNatureForm_nature').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$('#AoAuctionUpdateStatusForm_status').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$("#AoAuctionUpdateImgForm_image").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " Image", browseIcon: '{{glyphIco('picture')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	
+	$('#AoAuctionUpdateDtPublicationForm_dtPublication').click(function( event ) {
+		event.preventDefault();
+		$('#AoAuctionUpdateDtPublicationForm_dtPublication').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+	
+	$('#AoAuctionUpdateDtEndForm_dtEnd').click(function( event ) {
+		event.preventDefault();
+		$('#AoAuctionUpdateDtEndForm_dtEnd').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+	
+	$('#AoAuctionUpdateDtOpenForm_dtOpen').click(function( event ) {
+		event.preventDefault();
+		$('#AoAuctionUpdateDtOpenForm_dtOpen').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('aove_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.adminaove'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('aove_admin_auction_editGet', {'uid': auction.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.aoauction.edit'|trans({'%auction%': auction.ref})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('aove_admin_categ_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'AoAuction.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'AoAuction.tab.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'AoAuction.ref'|trans|raw}} :</div>
+								<div class="col-lg-9">{{auction.ref}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.img'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.img is not empty %}<img src="/res/Ve/{{auction.img}}">{% else %}{{ '_NA'|trans }}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.dtPublication'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.dtPublication is not empty %}{{auction.dtPublication|localeDate('medium')}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.country'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.country is not empty %}{{auction.country}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.description'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.description is not empty %}{{auction.description|raw}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.company'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.company is not empty %}{{auction.company}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.nature'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.nature is not empty %}{{('AoAuction.nature.'~auction.nature)|trans}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.dtEnd'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.dtEnd is not empty %}{{auction.dtEnd|localeDate('medium')}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.dtOpen'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.dtOpen is not empty %}{{auction.dtOpen|localeDate('medium')}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.adress'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.adress is not empty %}{{auction.adress}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.price'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.price is not empty %}{{auction.price}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.addRef'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.addRef is not empty %}{{auction.addRef}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoAuction.status'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if auction.status is not empty %}{{('AoAuction.status.'~auction.status)|trans}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{auction.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{auction.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{auction.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{auction.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editImg'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateImgForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateImgForm.image, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateImgForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editDtPublication'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateDtPublicationForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateDtPublicationForm.dtPublication, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateDtPublicationForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editCountry'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateCountryForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateCountryForm.country, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateCountryForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editDescription'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateDescriptionForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateDescriptionForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editCompany'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateCompanyForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateCompanyForm.company, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateCompanyForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editNature'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateNatureForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateNatureForm.nature, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateNatureForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editDtEnd'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateDtEndForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateDtEndForm.dtEnd, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateDtEndForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editDtOpen'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateDtOpenForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateDtOpenForm.dtOpen, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateDtOpenForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editAdress'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateAdressForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateAdressForm.adress, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateAdressForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editPrice'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdatePriceForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdatePriceForm.price, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdatePriceForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editAddRef'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateAddRefForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateAddRefForm.addRef, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateAddRefForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editSource'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateSourceForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateSourceForm.source, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateSourceForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoAuction.tlabel.editStatus'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(AuctionUpdateStatusForm, {'method':'POST', 'action': path('aove_admin_auction_editPost', {'uid': auction.id}), 'style': 'horizontal'})}}
+							{{form_row(AuctionUpdateStatusForm.status, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(AuctionUpdateStatusForm)}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

@@ -105,9 +105,9 @@
 				{% endif %}
 				{% if is_granted('ROLE_ADMIN2')%}
 				<ul class="sidebar-menu" id="side-menu02">
-					<li {% if menu_active=='aoadminhome'%} class="active" {% endif %}>
-						<a href="{{ path('ao_admin_homepage') }}"> {{ faIco('dashboard') }}
-							<span>{{ 'menu.admin2'|trans }}</span></a>
+					<li {% if menu_active=='aoveadminhome'%} class="active" {% endif %}>
+						<a href="{{ path('aove_admin_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.adminaove'|trans }}</span></a>
 					</li>
 				</ul>
 				<br>
@@ -403,6 +403,15 @@
 				</ul>
 				<br>
 				{% endif %}
+				{% if is_granted('ROLE_CLIENT11')%}
+				<ul class="sidebar-menu" id="side-menu11">
+					<li {% if menu_active=='vehome'%} class="active" {% endif %}>
+						<a href="{{ path('ve_front_homepage') }}"> {{ faIco('dashboard') }}
+							<span>{{ 'menu.ve'|trans }}</span></a>
+					</li>
+				</ul>
+				<br>
+				{% endif %}
 				<ul class="sidebar-menu" id="side-menu0">
 					<li {% if menu_active=='toolshome'%} class="active" {% endif %}>
 						<a href="{{ path('_tools_homepage') }}"> {{ faIco('dashboard') }}
@@ -537,21 +546,15 @@
 	</script>
 	{%block endappend%}
 	{%endblock endappend%}
+{% if app.environment == 'prod' %}
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108802298-1"></script>
-
 <script>
-
   window.dataLayer = window.dataLayer || [];
-
   function gtag(){dataLayer.push(arguments);}
-
   gtag('js', new Date());
-
-
   gtag('config', 'UA-108802298-1');
-
 </script>
+{% endif %}
 </body>
 {%endblock html_body%}

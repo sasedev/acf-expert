@@ -72,10 +72,10 @@ class AoSubCateg
 
     /**
      *
-     * @var Collection @ORM\OneToMany(targetEntity="AoAdvertisement", mappedBy="grp", cascade={"persist", "remove"})
+     * @var Collection @ORM\OneToMany(targetEntity="AoCallfortender", mappedBy="grp", cascade={"persist", "remove"})
      *      @ORM\OrderBy({"ref" = "ASC"})
      */
-    protected $advertisements;
+    protected $callfortenders;
 
     /**
      * Constructor
@@ -84,7 +84,7 @@ class AoSubCateg
     {
         $this->priority = 100;
         $this->dtCrea = new \DateTime('now');
-        $this->advertisements = new ArrayCollection();
+        $this->callfortenders = new ArrayCollection();
     }
 
     /**
@@ -242,52 +242,52 @@ class AoSubCateg
     }
 
     /**
-     * Add advertisement
+     * Add callfortender
      *
-     * @param AoAdvertisement $advertisement
+     * @param AoCallfortender $callfortender
      *
      * @return AoSubCateg
      */
-    public function addAdvertisement(AoAdvertisement $advertisement)
+    public function addCallfortender(AoCallfortender $callfortender)
     {
-        $this->advertisements[] = $advertisement;
+        $this->callfortenders[] = $callfortender;
 
         return $this;
     }
 
     /**
-     * Remove advertisement
+     * Remove callfortender
      *
-     * @param AoAdvertisement $advertisement
+     * @param AoCallfortender $callfortender
      *
      * @return AoSubCateg
      */
-    public function removeAdvertisement(AoAdvertisement $advertisement)
+    public function removeCallfortender(AoCallfortender $callfortender)
     {
-        $this->advertisements->removeElement($advertisement);
+        $this->callfortenders->removeElement($callfortender);
 
         return $this;
     }
 
     /**
-     * Get advertisements
+     * Get callfortenders
      *
      * @return ArrayCollection
      */
-    public function getAdvertisements()
+    public function getCallfortenders()
     {
-        return $this->advertisements;
+        return $this->callfortenders;
     }
 
     /**
      *
-     * @param Collection $advertisements
+     * @param Collection $callfortenders
      *
      * @return AoSubCateg
      */
-    public function setAdvertisements(Collection $advertisements)
+    public function setCallfortenders(Collection $callfortenders)
     {
-        $this->advertisements = $advertisements;
+        $this->callfortenders = $callfortenders;
 
         return $this;
     }

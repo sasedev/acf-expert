@@ -2056,7 +2056,7 @@ AoSubCateg.categ: Activité
 AoSubCateg.ref: Ref
 AoSubCateg.title: Titre
 AoSubCateg.priority: Priorité
-AoSubCateg.advertisements: Annonces (AO/VE)
+AoSubCateg.callfortenders: Appels d'Offres
 AoSubCateg.dtCrea: Date d'ajout
 AoSubCateg.dtUpdate: Date de modification
 
@@ -2064,80 +2064,118 @@ AoSubCateg.categ.label: "Activité"
 AoSubCateg.ref.label: "Ref :"
 AoSubCateg.title.label: "Titre :"
 AoSubCateg.priority.label: "Priorité :"
-AoSubCateg.advertisements.label: "Annonces (AO/VE) :"
+AoSubCateg.callfortenders.label: "Appels d'Offres :"
 
-# AoAdvertisement
-AoAdvertisement.categ: Activité
-AoAdvertisement.grp: Sous-Activité
-AoAdvertisement.ref: Référence
-AoAdvertisement.img: Image
-AoAdvertisement.dtPublication: Date de Publication
-AoAdvertisement.country: Pays
-AoAdvertisement.description: Description
-AoAdvertisement.company: Société
-AoAdvertisement.nature: Nature
-AoAdvertisement.nature.Nat: National
-AoAdvertisement.nature.Inter: International
-AoAdvertisement.dtEnd: Date d'échéance
-AoAdvertisement.aoVe: Catégorie
-AoAdvertisement.aoVe.AO: Appel d'Offres
-AoAdvertisement.aoVe.VE: Vente aux enchères
-AoAdvertisement.dtOpen: Date d'ouverture des plis
-AoAdvertisement.adress: Retrait du cahier des charges
-AoAdvertisement.price: Prix du cahier des charges
-AoAdvertisement.typeAvis: Type Avis
-AoAdvertisement.typeAvis.ADC: Avis de consultation
-AoAdvertisement.typeAvis.AAO: Avis d'appel d'offres
-AoAdvertisement.typeAvis.ADR: Avis de report
-AoAdvertisement.typeAvis.ADAN: Avis d'annulation
-AoAdvertisement.typeAvis.ADAMI: Avis d'appel à manifestation d'intérêt
-AoAdvertisement.typeAvis.ADCONC: Avis de concours
-AoAdvertisement.typeAvis.ADA: Avis d'attribution
-AoAdvertisement.typeAvis.AR: Avis rectificatif
-AoAdvertisement.typeAvis.AA:  Avis additifs
-AoAdvertisement.typeAvis.ADCAND: Avis de candidature
-AoAdvertisement.typeAvis.AD: Avis divers
-AoAdvertisement.addRef: Reférence publiée
-AoAdvertisement.source: Source
-AoAdvertisement.status: Etat
-AoAdvertisement.status.2: Invisible
-AoAdvertisement.status.1: Visible
-AoAdvertisement.dtCrea: Date d'ajout
-AoAdvertisement.dtUpdate: Date de modification
+# AoCallfortender
+AoCallfortender: Appel d'Offre
+AoCallfortender.categ: Activité
+AoCallfortender.grp: Sous-Activité
+AoCallfortender.ref: Référence
+AoCallfortender.img: Image
+AoCallfortender.dtPublication: Date de Publication
+AoCallfortender.country: Pays
+AoCallfortender.description: Description
+AoCallfortender.company: Société
+AoCallfortender.nature: Nature
+AoCallfortender.nature.Nat: National
+AoCallfortender.nature.Inter: International
+AoCallfortender.dtEnd: Date d'échéance
+AoCallfortender.dtOpen: Date d'ouverture des plis
+AoCallfortender.adress: Retrait du cahier des charges
+AoCallfortender.price: Prix du cahier des charges
+AoCallfortender.typeAvis: Type Avis
+AoCallfortender.typeAvis.ADC: Avis de consultation
+AoCallfortender.typeAvis.AAO: Avis d'appel d'offres
+AoCallfortender.typeAvis.ADR: Avis de report
+AoCallfortender.typeAvis.ADAN: Avis d'annulation
+AoCallfortender.typeAvis.ADAMI: Avis d'appel à manifestation d'intérêt
+AoCallfortender.typeAvis.ADCONC: Avis de concours
+AoCallfortender.typeAvis.ADA: Avis d'attribution
+AoCallfortender.typeAvis.AR: Avis rectificatif
+AoCallfortender.typeAvis.AA:  Avis additifs
+AoCallfortender.typeAvis.ADCAND: Avis de candidature
+AoCallfortender.typeAvis.AD: Avis divers
+AoCallfortender.addRef: Reférence publiée
+AoCallfortender.source: Source
+AoCallfortender.status: Etat
+AoCallfortender.status.2: Invisible
+AoCallfortender.status.1: Visible
+AoCallfortender.dtCrea: Date d'ajout
+AoCallfortender.dtUpdate: Date de modification
 
-AoAdvertisement.grp.label: "Activité :"
-AoAdvertisement.ref.label: "Référence :"
-AoAdvertisement.img.label: "Image :"
-AoAdvertisement.dtPublication.label: "Date de Publication :"
-AoAdvertisement.country.label: "Pays :"
-AoAdvertisement.description.label: "Description :"
-AoAdvertisement.company.label: "Société :"
-AoAdvertisement.nature.label: "Nature :"
-AoAdvertisement.nature.choice.Nat: National
-AoAdvertisement.nature.choice.Inter: International
-AoAdvertisement.dtEnd.label: "Date d'échéance :"
-AoAdvertisement.aoVe.label: "Catégorie :"
-AoAdvertisement.aoVe.choice.AO: Appel d'Offres
-AoAdvertisement.aoVe.choice.VE: Vente aux enchères
-AoAdvertisement.dtOpen.label: "Date d'ouverture des plis :"
-AoAdvertisement.adress.label: "Retrait du cahier des charges :"
-AoAdvertisement.price.label: "Prix du cahier des charges :"
-AoAdvertisement.typeAvis.label: "Type Avis :"
-AoAdvertisement.typeAvis.choice.ADC: Avis de consultation
-AoAdvertisement.typeAvis.choice.AAO: Avis d'appel d'offres
-AoAdvertisement.typeAvis.choice.ADR: Avis de report
-AoAdvertisement.typeAvis.choice.ADAN: Avis d'annulation
-AoAdvertisement.typeAvis.choice.ADAMI: Avis d'appel à manifestation d'intérêt
-AoAdvertisement.typeAvis.choice.ADCONC: Avis de concours
-AoAdvertisement.typeAvis.choice.ADA: Avis d'attribution
-AoAdvertisement.typeAvis.choice.AR: Avis rectificatif
-AoAdvertisement.typeAvis.choice.AA:  Avis additifs
-AoAdvertisement.typeAvis.choice.ADCAND: Avis de candidature
-AoAdvertisement.typeAvis.choice.AD: Avis divers
-AoAdvertisement.addRef.label: "Reférence publiée :"
-AoAdvertisement.source.label: "Source :"
-AoAdvertisement.status.label: "Etat :"
-AoAdvertisement.status.choice.2: Invisible
-AoAdvertisement.status.choice.1: Visible
+AoCallfortender.categ.label: "Activité :"
+AoCallfortender.grp.label: "Sous-Activité :"
+AoCallfortender.ref.label: "Référence :"
+AoCallfortender.img.label: "Image :"
+AoCallfortender.dtPublication.label: "Date de Publication :"
+AoCallfortender.country.label: "Pays :"
+AoCallfortender.description.label: "Description :"
+AoCallfortender.company.label: "Société :"
+AoCallfortender.nature.label: "Nature :"
+AoCallfortender.nature.choice.Nat: National
+AoCallfortender.nature.choice.Inter: International
+AoCallfortender.dtEnd.label: "Date d'échéance :"
+AoCallfortender.dtOpen.label: "Date d'ouverture des plis :"
+AoCallfortender.adress.label: "Retrait du cahier des charges :"
+AoCallfortender.price.label: "Prix du cahier des charges :"
+AoCallfortender.typeAvis.label: "Type Avis :"
+AoCallfortender.typeAvis.choice.ADC: Avis de consultation
+AoCallfortender.typeAvis.choice.AAO: Avis d'appel d'offres
+AoCallfortender.typeAvis.choice.ADR: Avis de report
+AoCallfortender.typeAvis.choice.ADAN: Avis d'annulation
+AoCallfortender.typeAvis.choice.ADAMI: Avis d'appel à manifestation d'intérêt
+AoCallfortender.typeAvis.choice.ADCONC: Avis de concours
+AoCallfortender.typeAvis.choice.ADA: Avis d'attribution
+AoCallfortender.typeAvis.choice.AR: Avis rectificatif
+AoCallfortender.typeAvis.choice.AA:  Avis additifs
+AoCallfortender.typeAvis.choice.ADCAND: Avis de candidature
+AoCallfortender.typeAvis.choice.AD: Avis divers
+AoCallfortender.addRef.label: "Reférence publiée :"
+AoCallfortender.source.label: "Source :"
+AoCallfortender.status.label: "Etat :"
+AoCallfortender.status.choice.2: Invisible
+AoCallfortender.status.choice.1: Visible
+
+# AoAuction
+AoAuction: Vente aux enchères
+AoAuction.ref: Référence
+AoAuction.img: Image
+AoAuction.dtPublication: Date de Publication
+AoAuction.country: Pays
+AoAuction.description: Description
+AoAuction.company: Société
+AoAuction.nature: Nature
+AoAuction.nature.Nat: National
+AoAuction.nature.Inter: International
+AoAuction.dtEnd: Date d'échéance
+AoAuction.dtOpen: Date d'ouverture des plis
+AoAuction.adress: Retrait du cahier des charges
+AoAuction.price: Prix du cahier des charges
+AoAuction.addRef: Reférence publiée
+AoAuction.source: Source
+AoAuction.status: Etat
+AoAuction.status.2: Invisible
+AoAuction.status.1: Visible
+AoAuction.dtCrea: Date d'ajout
+AoAuction.dtUpdate: Date de modification
+
+AoAuction.ref.label: "Référence :"
+AoAuction.img.label: "Image :"
+AoAuction.dtPublication.label: "Date de Publication :"
+AoAuction.country.label: "Pays :"
+AoAuction.description.label: "Description :"
+AoAuction.company.label: "Société :"
+AoAuction.nature.label: "Nature :"
+AoAuction.nature.choice.Nat: National
+AoAuction.nature.choice.Inter: International
+AoAuction.dtEnd.label: "Date d'échéance :"
+AoAuction.dtOpen.label: "Date d'ouverture des plis :"
+AoAuction.adress.label: "Retrait du cahier des charges :"
+AoAuction.price.label: "Prix du cahier des charges :"
+AoAuction.addRef.label: "Reférence publiée :"
+AoAuction.source.label: "Source :"
+AoAuction.status.label: "Etat :"
+AoAuction.status.choice.2: Invisible
+AoAuction.status.choice.1: Visible
 
 

@@ -24,8 +24,8 @@ class DefaultController extends BaseController
     {
         $em = $this->getEntityManager();
 
-        $advertisements = $em->getRepository('AcfDataBundle:AoAdvertisement')->getAllFront();
-        $this->gvars['advertisements'] = $advertisements;
+        $callfortenders = $em->getRepository('AcfDataBundle:AoCallfortender')->getAllFront();
+        $this->gvars['callfortenders'] = $callfortenders;
 
         $this->gvars['pagetitle'] = $this->translate('pagetitle.dasboard2');
         $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.dasboard2');

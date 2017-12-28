@@ -1,0 +1,98 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ao_front_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.ao'|trans|raw}}</a></li>
+	<li><a href="{{ path('ao_front_categ_editGet', {'uid': callfortender.grp.categ.id}) }}">{{faIco('object-ungroup')}} &nbsp; {{callfortender.grp.categ.title}}</a></li>
+	<li><a href="{{ path('ao_front_subcateg_editGet', {'uid': callfortender.grp.id}) }}">{{faIco('object-group')}} &nbsp; {{callfortender.grp.ref}} : {{callfortender.grp.title}}</a></li>
+	<li class="active"><a href="{{ path('ao_front_callfortender_editGet', {'uid': callfortender.id}) }}">{{faIco('newspaper-o')}} {{('AoCallfortender')|trans}} &nbsp; {{ callfortender.ref}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ao_front_callfortender_pdf', {'uid': callfortender.id}) }}" class="btn btn-primary">{{ faIco('file-pdf-o') }} {{ 'action.btnPdf'|trans }}</a>
+		</div>
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{('AoCallfortender')|trans}} &nbsp; {{callfortender.ref}}</h3>
+			</div>
+			<div class="box-body">
+				{% if callfortender.description is not empty %}
+				<div class="row">
+					<div class="col-lg-12">{{callfortender.description|raw}}&nbsp;</div>
+					<div class="col-lg-12">&nbsp;</div>
+				</div>
+				<br>
+				{% endif %}
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoCallfortender.nature'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.nature is not empty %}{{('AoCallfortender.nature.'~callfortender.nature)|trans}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoCallfortender.country'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.country is not empty %}{{callfortender.country}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoCallfortender.company'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.company is not empty %}{{callfortender.company}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoCallfortender.typeAvis'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.typeAvis is not empty %}{{('AoCallfortender.typeAvis.'~callfortender.typeAvis)|trans}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoCallfortender.dtOpen'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.dtOpen is not empty %}{{callfortender.dtOpen|localeDate('medium')}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoCallfortender.adress'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.adress is not empty %}{{callfortender.adress}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoCallfortender.price'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.price is not empty %}{{callfortender.price}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoCallfortender.categ'|trans|raw}} :</b></div>
+							<div class="col-lg-8"><a href="{{ path('ao_front_categ_editGet', {'uid': callfortender.grp.categ.id}) }}">{{ callfortender.grp.categ.title }}</a>&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoCallfortender.grp'|trans|raw}} :</b></div>
+							<div class="col-lg-8"><a href="{{ path('ao_front_subcateg_editGet', {'uid': callfortender.grp.id}) }}">{{ callfortender.grp.ref }} : {{ callfortender.grp.title }} </a>&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoCallfortender.dtPublication'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.dtPublication is not empty %}{{callfortender.dtPublication|localeDate('full')}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoCallfortender.dtEnd'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|localeDate('full')}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoCallfortender.source'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.source is not empty %}{{callfortender.source}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoCallfortender.addRef'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if callfortender.addRef is not empty %}{{callfortender.addRef}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+					</div>
+					{% if callfortender.img is not empty %}
+					<div class="col-lg-12"><img src="/res/Ao/{{callfortender.img}}" class="img-responsive center-block"></div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

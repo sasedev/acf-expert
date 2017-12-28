@@ -34,12 +34,16 @@ acf_tools:
     resource: "@AcfToolsBundle/Resources/config/routing.yml"
     prefix:   /ACEF-Tools
 
-ao_admin:
-    resource: "@AoAdminBundle/Resources/config/routing.yml"
-    prefix:   /AO-Admin
+aove_admin:
+    resource: "@AoVeAdminBundle/Resources/config/routing.yml"
+    prefix:   /AOVE-Admin
 
 ao_front:
     resource: "@AoFrontBundle/Resources/config/routing.yml"
     prefix:   /AO-Front
+
+ve_front:
+    resource: "@VeFrontBundle/Resources/config/routing.yml"
+    prefix:   /VE-Front
 
 

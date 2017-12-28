@@ -1,0 +1,4 @@
+services:
+#    ve_front.example:
+#        class: Ve\FrontBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

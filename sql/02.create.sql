@@ -1186,17 +1186,16 @@ CREATE TABLE "ao_subcategs" (
 );
 
 
-CREATE TABLE "ao_advertisements" (
+CREATE TABLE "ao_callfortenders" (
     "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
     "ref"                                                               TEXT NOT NULL,
     "img"                                                               TEXT NULL,
-    "dtpub"                                                             DATE NOT NULL,
+    "dtpub"                                                             DATE NULL,
     "country"                                                           TEXT NULL,
     "description"                                                       TEXT NULL,
     "company"                                                           TEXT NULL,
     "nature"                                                            TEXT NULL,
-    "dtend"                                                             DATE NOT NULL,
-    "grp"                                                               TEXT NULL,
+    "dtend"                                                             DATE NULL,
     "dtopen"                                                            DATE NULL,
     "adress"                                                            TEXT NULL,
     "price"                                                             TEXT NULL,
@@ -1207,7 +1206,29 @@ CREATE TABLE "ao_advertisements" (
     "categ_id"                                                          UUID NOT NULL,
     "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
     "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-    CONSTRAINT "pk_ao_advertisements" PRIMARY KEY ("id"),
-    CONSTRAINT "fk_ao_subcategs_categ" FOREIGN KEY ("categ_id") REFERENCES "ao_subcategs" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+    CONSTRAINT "pk_ao_callfortenders" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_ao_callfortenders_categ" FOREIGN KEY ("categ_id") REFERENCES "ao_subcategs" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE "ao_auctions" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "ref"                                                               TEXT NOT NULL,
+    "img"                                                               TEXT NULL,
+    "dtpub"                                                             DATE NULL,
+    "country"                                                           TEXT NULL,
+    "description"                                                       TEXT NULL,
+    "company"                                                           TEXT NULL,
+    "nature"                                                            TEXT NULL,
+    "dtend"                                                             DATE NULL,
+    "dtopen"                                                            DATE NULL,
+    "adress"                                                            TEXT NULL,
+    "price"                                                             TEXT NULL,
+    "adref"                                                             TEXT NULL,
+    "source"                                                            TEXT NULL,
+    "status"                                                            INT4 NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ao_auctions" PRIMARY KEY ("id")
 );
 

@@ -1,0 +1,242 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5.css'))}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/jquery.dataTables.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5.js'))}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	
+	$("#AoCallfortenderImportForm_excel").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Excel", browseIcon: '{{faIco('folder-open')}}', remove1Class: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	
+	$("#AoAuctionImportForm_excel").fileinput({'showUpload':false, browseClass: "btn btn-success", browseLabel: " Excel", browseIcon: '{{faIco('folder-open')}}', remove1Class: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	
+	{% if callfortenders|length != 0 %}
+	$('#callfortenderList').dataTable({
+		"order": [[ 0, "desc" ]],
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmCallfortender').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmCallfortender').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmCallfortender').modal('show');
+			});
+		}
+	});
+	{% endif %}
+	
+	{% if auctions|length != 0 %}
+	$('#auctionList').dataTable({
+		"order": [[ 0, "desc" ]],
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmAuction').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmAuction').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmAuction').modal('show');
+			});
+		}
+	});
+	{% endif %}
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li class="active"><a href="{{ path('aove_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.adminaove'|trans|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		{% for flashMessage in app.session.flashbag.get('log') %}
+		<div class="callout callout-info">
+		{{ flashMessage|raw }}
+		</div>
+		{% endfor %}
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'AoCallfortender.tlabel.import'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(CallfortenderImportForm, {'method':'POST', 'action': path('aove_admin_homepage'), 'style': 'horizontal'})}}
+				{{form_row(CallfortenderImportForm.excel, {'label_col': 3, 'widget_col': 8})}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnExcel'|trans|raw}}</button></div></div>
+				{{form_end(CallfortenderImportForm)}}
+			</div>
+		</div>
+		{% for flashMessage in app.session.flashbag.get('log2') %}
+		<div class="callout callout-info">
+		{{ flashMessage|raw }}
+		</div>
+		{% endfor %}
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'AoAuction.tlabel.import'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(AuctionImportForm, {'method':'POST', 'action': path('aove_admin_homepage'), 'style': 'horizontal'})}}
+				{{form_row(AuctionImportForm.excel, {'label_col': 3, 'widget_col': 8})}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnExcel'|trans|raw}}</button></div></div>
+				{{form_end(AuctionImportForm)}}
+			</div>
+		</div>
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'AoCallfortender.tlabel.list'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive">
+				<table class="table table-bordered table-hover " id="callfortenderList">
+					<thead>
+						<tr>
+							<th>{{ 'AoCallfortender.ref.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.dtPublication.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.country.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.description.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.company.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.nature.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.dtEnd.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.grp.label'|trans|raw }}</th>
+							<th>{{ 'action'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for callfortender in callfortenders %}
+						<tr>
+							<td>{% if callfortender.ref is not empty %}{{callfortender.ref}}{% endif %}</td>
+							<td>{% if callfortender.dtPublication is not empty %}{{callfortender.dtPublication|date('Y-m-d')}}{% endif %}</td>
+							<td>{% if callfortender.country is not empty %}{{callfortender.country}}{% endif %}</td>
+							<td>{% if callfortender.description is not empty %}{{callfortender.description|raw}}{% endif %}</td>
+							<td>{% if callfortender.company is not empty %}{{callfortender.company}}{% endif %}</td>
+							<td>{% if callfortender.nature is not empty %}{{('AoCallfortender.nature.'~callfortender.nature)|trans}}{% endif %}</td>
+							<td>{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|date('Y-m-d')}}{% endif %}</td>
+							<td><a href="{{ path('aove_admin_categ_editGet', {'uid': callfortender.grp.categ.id}) }}">{{ callfortender.grp.categ.title }}</a> / <a href="{{ path('aove_admin_subcateg_editGet', {'uid': callfortender.grp.id}) }}">{{ callfortender.grp.ref }} - {{ callfortender.grp.title }}</a></td>
+							<td>
+								<a class="btn btn-sm btn-info" href="{{path('aove_admin_callfortender_editGet',{'uid':callfortender.id})}}">{{ glyphIco('eye-open') }} &nbsp; {{ 'action.show'|trans }}</a>
+								{%if is_granted('ROLE_SUPERADMIN')%}
+								<a class="btn btn-sm btn-danger deleteConfirmCallfortender" href="{{path('aove_admin_callfortender_delete',{'uid':callfortender.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="9">{{ 'AoCallfortender.empty'|trans|raw }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'AoAuction.tlabel.list'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive">
+				<table class="table table-bordered table-hover " id="auctionList">
+					<thead>
+						<tr>
+							<th>{{ 'AoAuction.ref.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.dtPublication.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.country.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.description.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.company.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.nature.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.dtEnd.label'|trans|raw }}</th>
+							<th>{{ 'action'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for auction in auctions %}
+						<tr>
+							<td>{% if auction.ref is not empty %}{{auction.ref}}{% endif %}</td>
+							<td>{% if auction.dtPublication is not empty %}{{auction.dtPublication|date('Y-m-d')}}{% endif %}</td>
+							<td>{% if auction.country is not empty %}{{auction.country}}{% endif %}</td>
+							<td>{% if auction.description is not empty %}{{auction.description|raw}}{% endif %}</td>
+							<td>{% if auction.company is not empty %}{{auction.company}}{% endif %}</td>
+							<td>{% if auction.nature is not empty %}{{('AoAuction.nature.'~auction.nature)|trans}}{% endif %}</td>
+							<td>{% if auction.dtEnd is not empty %}{{auction.dtEnd|date('Y-m-d')}}{% endif %}</td>
+							<td>
+								<a class="btn btn-sm btn-info" href="{{path('aove_admin_auction_editGet',{'uid':auction.id})}}">{{ glyphIco('eye-open') }} &nbsp; {{ 'action.show'|trans }}</a>
+								{%if is_granted('ROLE_SUPERADMIN')%}
+								<a class="btn btn-sm btn-danger deleteConfirmAuction" href="{{path('aove_admin_auction_delete',{'uid':auction.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="8">{{ 'AoAuction.empty'|trans|raw }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmCallfortender" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'AoCallfortender.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'AoCallfortender.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+<div id="deleteConfirmAuction" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'AoAuction.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'AoAuction.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{%endblock content%}

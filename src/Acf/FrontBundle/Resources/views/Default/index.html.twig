@@ -14,12 +14,10 @@
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/form/20130711.min.js'))}}"></script>
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/jquery.validate.min.js'))}}"></script>
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/localization/messages_fr.min.js'))}}"></script>
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwtpJunqIv2T7k_UJaGhENreqa4YpzXjg"></script>
 {%endblock end_static_js%}
 {%block html_body_content%}
 <div id="container">
-
-
 		{% block header %}
 		<div class="hidden-header"></div>
 		<header class="clearfix">
@@ -806,6 +804,7 @@
 	}
 {%endblock end2_dynamic_jstxt%}
 {%block endappend%}
+{% if app.environment == 'prod' %}
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
@@ -819,4 +818,5 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+{% endif %}
 {%endblock endappend%}

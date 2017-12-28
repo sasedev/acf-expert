@@ -1,0 +1,314 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5.css'))}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js'))}}"></script>
+{%if app.request.locale != 'en'%}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js'))}}"></script>
+{% endif %}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/jquery.dataTables.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5manager.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/modal/2.2.5.js'))}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{preload(asset('bundles/acfres/js/tinymce/tinymce.min.js'))}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+	{% if subCateg.callfortenders|length != 0 %}
+	$('#callfortenderList').dataTable({
+		"order": [[ 0, "desc" ]],
+		{%if app.request.locale != 'en'%}
+		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
+		{% endif %}
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10,
+		fnDrawCallback : function() {
+			$('.deleteConfirmCallfortender').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmCallfortender').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmCallfortender').modal('show');
+			});
+		}
+	});
+	{% endif %}
+	
+	$('#AoSubCategUpdateCategForm_categ').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$('#AoCallfortenderNewForm_nature').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$('#AoCallfortenderNewForm_typeAvis').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$('#AoCallfortenderNewForm_status').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$("#AoCallfortenderNewForm_img").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " Image", browseIcon: '{{glyphIco('picture')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	
+	$('#AoCallfortenderNewForm_dtPublication').click(function( event ) {
+		event.preventDefault();
+		$('#AoCallfortenderNewForm_dtPublication').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+	
+	$('#AoCallfortenderNewForm_dtEnd').click(function( event ) {
+		event.preventDefault();
+		$('#AoCallfortenderNewForm_dtEnd').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+	
+	$('#AoCallfortenderNewForm_dtOpen').click(function( event ) {
+		event.preventDefault();
+		$('#AoCallfortenderNewForm_dtOpen').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('aove_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.adminaove'|trans|raw}}</a></li>
+	<li><a href="{{ path('aove_admin_categ_list') }}">{{ faIco('object-group') }} &nbsp; {{'breadcrumb.aocateg.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('aove_admin_categ_editGet', {'uid': subCateg.categ.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.aocateg.edit'|trans({'%categ%': subCateg.categ.title})|raw}}</a></li>
+	<li class="active"><a href="{{ path('aove_admin_subcateg_editGet', {'uid': subCateg.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.aosubcateg.edit'|trans({'%subCateg%': subCateg.ref})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('aove_admin_categ_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'AoSubCateg.tab.overview'|trans|raw}}</a></li>
+				{%if is_granted('ROLE_SUPERADMIN')%}
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'AoSubCateg.tab.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#AddCallfortender" data-toggle="tab">{{'AoSubCateg.tab.addCallfortender'|trans|raw}}</a></li>
+				{% endif %}
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'AoSubCateg.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'AoSubCateg.categ'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('aove_admin_categ_editGet', {'uid': subCateg.categ.id}) }}">{{subCateg.categ.title}}</a>&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoSubCateg.ref'|trans|raw}} :</div>
+								<div class="col-lg-9">{{subCateg.ref}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoSubCateg.title'|trans|raw}} :</div>
+								<div class="col-lg-9">{{subCateg.title}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoSubCateg.priority'|trans|raw}} :</div>
+								<div class="col-lg-9">{{subCateg.priority}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoSubCateg.callfortenders'|trans|raw}} :</div>
+								<div class="col-lg-9">{{subCateg.callfortenders|length}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{subCateg.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{subCateg.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{subCateg.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{subCateg.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+					{% if subCateg.callfortenders|length != 0 %}
+					<div class="panel box">
+						<div class="box-header">
+							<h3 class="box-title">{{ 'AoCallfortender.tlabel.list'|trans|raw}}</h3>
+						</div>
+						<div class="box-body table-responsive">
+							<table id="callfortenderList" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>{{ 'AoCallfortender.ref.label'|trans|raw }}</th>
+										<th>{{ 'AoCallfortender.dtPublication.label'|trans|raw }}</th>
+										<th>{{ 'AoCallfortender.country.label'|trans|raw }}</th>
+										<th>{{ 'AoCallfortender.description.label'|trans|raw }}</th>
+										<th>{{ 'AoCallfortender.company.label'|trans|raw }}</th>
+										<th>{{ 'AoCallfortender.nature.label'|trans|raw }}</th>
+										<th>{{ 'AoCallfortender.dtEnd.label'|trans|raw }}</th>
+										<th>{{ 'action'|trans|raw }}</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% if subCateg.callfortenders|length != 0 %}
+								{% for callfortender in subCateg.callfortenders %}
+									<tr>
+										<td>{% if callfortender.ref is not empty %}{{callfortender.ref}}{% endif %}</td>
+										<td>{% if callfortender.dtPublication is not empty %}{{callfortender.dtPublication|localeDate('medium')}}{% endif %}</td>
+										<td>{% if callfortender.country is not empty %}{{callfortender.country}}{% endif %}</td>
+										<td>{% if callfortender.description is not empty %}{{callfortender.description|raw}}{% endif %}</td>
+										<td>{% if callfortender.company is not empty %}{{callfortender.company}}{% endif %}</td>
+										<td>{% if callfortender.nature is not empty %}{{('AoCallfortender.nature.'~callfortender.nature)|trans}}{% endif %}</td>
+										<td>{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|localeDate('medium')}}{% endif %}</td>
+										<td>
+											<a class="btn btn-sm btn-info" href="{{path('aove_admin_callfortender_editGet',{'uid':callfortender.id})}}">{{ glyphIco('edit') }} {{ 'action.edit'|trans }}</a>
+											{%if is_granted('ROLE_SUPERADMIN')%}
+											<a class="btn btn-sm btn-danger deleteConfirmCallfortender" href="{{path('aove_admin_callfortender_delete',{'uid':callfortender.id})}}">{{ glyphIco('trash') }} {{ 'action.delete'|trans }}</a>
+											{% endif %}
+										</td>
+									</tr>
+								{% endfor %}
+								{% else %}
+									<tr>
+										<td colspan="8">{{ 'AoCallfortender.empty'|trans|raw }}</td>
+									</tr>
+								{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				
+				{%if is_granted('ROLE_SUPERADMIN')%}
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoSubCateg.tlabel.editRef'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(SubCategUpdateRefForm, {'method':'POST', 'action': path('aove_admin_subcateg_editPost', {'uid': subCateg.id}), 'style': 'horizontal'})}}
+							{{form_row(SubCategUpdateRefForm.ref, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(SubCategUpdateRefForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoSubCateg.tlabel.editTitle'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(SubCategUpdateTitleForm, {'method':'POST', 'action': path('aove_admin_subcateg_editPost', {'uid': subCateg.id}), 'style': 'horizontal'})}}
+							{{form_row(SubCategUpdateTitleForm.title, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(SubCategUpdateTitleForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoSubCateg.tlabel.editCateg'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(SubCategUpdateCategForm, {'method':'POST', 'action': path('aove_admin_subcateg_editPost', {'uid': subCateg.id}), 'style': 'horizontal'})}}
+							{{form_row(SubCategUpdateCategForm.categ, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(SubCategUpdateCategForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoSubCateg.tlabel.editPriority'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(SubCategUpdatePriorityForm, {'method':'POST', 'action': path('aove_admin_subcateg_editPost', {'uid': subCateg.id}), 'style': 'horizontal'})}}
+							{{form_row(SubCategUpdatePriorityForm.priority, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(SubCategUpdatePriorityForm)}}
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="AddCallfortender">
+					<div class="panel box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">{{ 'AoCallfortender.tlabel.add'|trans|raw}}</h3>
+						</div>
+						<div class="box-body">
+							{{form_start(CallfortenderNewForm, {'method':'POST', 'action': path('aove_admin_subcateg_editPost', {'uid': subCateg.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderNewForm.grp, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+							{{form_row(CallfortenderNewForm.img, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.dtPublication, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.country, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							{{form_row(CallfortenderNewForm.company, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.nature, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.dtEnd, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.dtOpen, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.adress, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.price, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.typeAvis, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.addRef, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.source, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(CallfortenderNewForm.status, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderNewForm)}}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmCallfortender" class="modal fade in" tabindex="-1" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 class="text-center">{{'AoCallfortender.delete.confirm.title'|trans|raw}}</h3>
+	</div>
+	<div class="modal-body">
+		{{'AoCallfortender.delete.confirm.txt'|trans|raw}}
+	</div>
+	<div class="modal-footer">
+		<a href="" class="btn btn-xs btn-danger danger">{{'_yes'|trans|raw}}</a>
+		<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+	</div>
+</div>
+{%endblock content%}

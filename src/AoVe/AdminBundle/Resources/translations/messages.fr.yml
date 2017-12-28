@@ -1,0 +1,190 @@
+breadcrumb.adminaove: AOVE-Admin
+
+pagetitle.dasboard2: "L'EXPERT DES MARCHES"
+
+# AoCateg
+menu.admin.aocateg: Activités
+breadcrumb.aocateg.list: Liste des Activités
+breadcrumb.aocateg.add: Ajouter Activité
+breadcrumb.aocateg.edit: Activité <b>%categ%</b>
+
+pagetitle.aoCateg.list: Liste des Activités
+pagetitle.aoCateg.list.txt: Liste des Activités
+pagetitle.aoCateg.add: Ajouter Activité
+pagetitle.aoCateg.add.txt: Ajouter Activité
+pagetitle.aoCateg.edit: Edition Activité <b>%categ%</b>
+pagetitle.aoCateg.edit.txt: Edition Activité "%categ%"
+
+AoCateg.tab.overview: Détails
+AoCateg.tab.edit: Edition
+AoCateg.tab.addSubCateg: Nouvelle Sous-Activité
+
+AoCateg.tlabel.list: Liste des Activités
+AoCateg.tlabel.add: Ajouter nouvelle Activité
+AoCateg.tlabel.overview: Aperçu des détails de l'Activité
+AoCateg.tlabel.edit: Modification des détails de l'Activité
+AoCateg.tlabel.editTitle: Modification du Titre de l'Activité
+AoCateg.tlabel.editPriority: Modification de la Priorité de l'Activité
+
+
+AoCateg.empty: Aucune Activité trouvée dans la base de donnée
+
+AoCateg.add.success: Succès de l'ajout de l'Activité <b>%categ%</b>
+AoCateg.add.failure: Echec de l'ajout de l'Activité
+AoCateg.delete.confirm.title: Demande de Confirmation
+AoCateg.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Activité ?<br/> Cette action est irreversible!
+AoCateg.delete.notfound: Activité inconnue
+AoCateg.delete.success: Succès de la suppression de l'Activité <b>%categ%</b>
+AoCateg.delete.failure: Echec de la suppression de l'Activité
+AoCateg.edit.notfound: Activité inconnue
+AoCateg.edit.success: Succès de la modification de l'Activité <b>%categ%</b>
+AoCateg.edit.failure: Echec de la modification de l'Activité
+
+# AoSubCateg
+menu.admin.aosubcateg: Sous-Activités
+breadcrumb.aosubcateg.list: Liste des Sous-Activités
+breadcrumb.aosubcateg.add: Ajouter Sous-Activité
+breadcrumb.aosubcateg.edit: Sous-Activité <b>%subCateg%</b>
+
+pagetitle.aoSubCateg.list: Liste des Sous-Activités
+pagetitle.aoSubCateg.list.txt: Liste des Sous-Activités
+pagetitle.aoSubCateg.add: Ajouter Sous-Activité
+pagetitle.aoSubCateg.add.txt: Ajouter Sous-Activité
+pagetitle.aoSubCateg.edit: Edition Sous-Activité <b>%subCateg%</b>
+pagetitle.aoSubCateg.edit.txt: Edition Sous-Activité "%subCateg%"
+
+AoSubCateg.tab.overview: Détails
+AoSubCateg.tab.edit: Edition
+AoSubCateg.tab.addCallfortender: Nouvel Appel d'Offre
+
+AoSubCateg.tlabel.list: Liste des Sous-Activités
+AoSubCateg.tlabel.add: Ajouter nouvelle Sous-Activité
+AoSubCateg.tlabel.overview: Aperçu des détails de la Sous-Activité
+AoSubCateg.tlabel.edit: Modification des détails de la Sous-Activité
+AoSubCateg.tlabel.editTitle: Modification du Titre de la Sous-Activité
+AoSubCateg.tlabel.editRef: Modification de la Reférence de la Sous-Activité
+AoSubCateg.tlabel.editPriority: Modification de la Priorité de la Sous-Activité
+AoSubCateg.tlabel.editCateg: Modification de l'Activité de la Sous-Activité
+
+
+AoSubCateg.empty: Aucune Sous-Activité trouvée dans la base de donnée
+
+AoSubCateg.add.success: Succès de l'ajout de la Sous-Activité <b>%subCateg%</b>
+AoSubCateg.add.failure: Echec de l'ajout de la Sous-Activité
+AoSubCateg.delete.confirm.title: Demande de Confirmation
+AoSubCateg.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Sous-Activité ?<br/> Cette action est irreversible!
+AoSubCateg.delete.notfound: Sous-Activité inconnue
+AoSubCateg.delete.success: Succès de la suppression de la Sous-Activité <b>%subCateg%</b>
+AoSubCateg.delete.failure: Echec de la suppression de la Sous-Activité
+AoSubCateg.edit.notfound: Sous-Activité inconnue
+AoSubCateg.edit.success: Succès de la modification de la Sous-Activité <b>%subCateg%</b>
+AoSubCateg.edit.failure: Echec de la modification de la Sous-Activité
+
+# AoCallfortender
+menu.admin.aocallfortender: Appels d'Offres
+breadcrumb.aocallfortender.list: Liste des Appels d'Offres
+breadcrumb.aocallfortender.add: Ajouter Appel d'Offre
+breadcrumb.aocallfortender.edit: Appel d'Offres <b>%callfortender%</b>
+
+pagetitle.aoCallfortender.list: Liste des Appels d'Offres
+pagetitle.aoCallfortender.list.txt: Liste des Appels d'Offres
+pagetitle.aoCallfortender.add: Appel d'Offre
+pagetitle.aoCallfortender.add.txt: Ajouter Appel d'Offre
+pagetitle.aoCallfortender.edit : Edition Appel d'Offre <b>%callfortender%</b>
+pagetitle.aoCallfortender.edit.txt: Edition Appel d'Offre "%callfortender%"
+
+AoCallfortender.tab.overview: Détails
+AoCallfortender.tab.edit: Edition
+
+AoCallfortender.tlabel.list: Liste des Appels d'Offre
+AoCallfortender.tlabel.add: Ajouter nouvel Appel d'Offre
+AoCallfortender.tlabel.overview: Aperçu des détails de l'Appel d'Offre
+AoCallfortender.tlabel.edit: Modification des détails de l'Appel d'Offre
+AoCallfortender.tlabel.editGrp: Modification de l'Activité de l'Appel d'Offre
+AoCallfortender.tlabel.editImg: Modification de l'Image de l'Appel d'Offre
+AoCallfortender.tlabel.editDtPublication: Modification de la Date de Publication de l'Appel d'Offre
+AoCallfortender.tlabel.editCountry: Modification du Pays de l'Appel d'Offre
+AoCallfortender.tlabel.editDescription: Modification de la Description de l'Appel d'Offre
+AoCallfortender.tlabel.editCompany: Modification de la Société de l'Appel d'Offre
+AoCallfortender.tlabel.editNature: Modification de la Nature de l'Appel d'Offre
+AoCallfortender.tlabel.editDtEnd: Modification de la Date d'échéance de l'Appel d'Offre
+AoCallfortender.tlabel.editDtOpen: Modification de la Date d'ouverture des plis de l'Appel d'Offre
+AoCallfortender.tlabel.editAdress: Modification de l'Adresse de retait du cahier des charges de l'Appel d'Offre
+AoCallfortender.tlabel.editPrice: Modification du Prix du cahier des charges de l'Appel d'Offre
+AoCallfortender.tlabel.editTypeAvis: Modification du Type d'avis de l'Appel d'Offre
+AoCallfortender.tlabel.editAddRef: Modification de la Référence publiée de l'Appel d'Offre
+AoCallfortender.tlabel.editSource: Modification de la Source de l'Appel d'Offre
+AoCallfortender.tlabel.editStatus: Modification de Etat de l'Appel d'Offre
+
+
+AoCallfortender.empty: Aucun Appel d'Offre trouvé dans la base de donnée
+
+AoCallfortender.add.success: Succès de l'ajout de l'Appel d'Offre <b>%callfortender%</b>
+AoCallfortender.add.failure: Echec de l'ajout de l'Appel d'Offre
+AoCallfortender.delete.confirm.title: Demande de Confirmation
+AoCallfortender.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cet Appel d'Offre ?<br/> Cette action est irreversible!
+AoCallfortender.delete.notfound: Appel d'Offre inconnu
+AoCallfortender.delete.success: Succès de la suppression de l'Appel d'Offre <b>%callfortender%</b>
+AoCallfortender.delete.failure: Echec de la suppression de l'Appel d'Offre
+AoCallfortender.edit.notfound: Appel d'Offre inconnu
+AoCallfortender.edit.success: Succès de la modification de l'Appel d'Offre <b>%callfortender%</b>
+AoCallfortender.edit.failure: Echec de la modification de l'Appel d'Offre
+AoCallfortender.import.success: Succès de l'Import du Fichier Excel
+AoCallfortender.import.failure: Echec de l'Import du Fichier Excel
+AoCallfortender.excel.label: 'Appels d''Offre (Excel) :'
+AoCallfortender.tlabel.import: 'Import Excel d''Appels d''Offre'
+
+#AoAuction
+menu.admin.auction: Ventes Aux enchères
+menu.admin.aoauction.add: Ajouter Vente aux enchères
+breadcrumb.aoauction.add: Ajouter  Vente aux enchères
+breadcrumb.aoauction.edit: Vente aux enchères <b>%auction%</b>
+
+pagetitle.aoAuction.list: Liste des Ventes Aux enchéres
+pagetitle.aoAuction.add: Ajouter Vente aux enchères
+pagetitle.aoAuction.add.txt: Ajouter Vente aux enchères
+pagetitle.aoAuction.edit: Edition Vente aux enchères <b>%auction%</b>
+pagetitle.aoAuction.edit.txt: Edition Vente aux enchères "%auction%"
+
+AoAuction.tab.overview: Détails
+AoAuction.tab.edit: Edition
+
+AoAuction.tlabel.list: Liste des Ventes Aux enchères
+AoAuction.tlabel.add: Ajouter nouvelle Vente Aux enchères
+AoAuction.tlabel.overview: Aperçu des détails de la Vente Aux enchères
+AoAuction.tlabel.edit: Modification des détails de la Vente Aux enchères
+AoAuction.tlabel.editGrp: Modification de l'Activité de la Vente Aux enchères
+AoAuction.tlabel.editImg: Modification de l'Image de la Vente Aux enchères
+AoAuction.tlabel.editDtPublication: Modification de la Date de Publication de la Vente Aux enchères
+AoAuction.tlabel.editCountry: Modification du Pays de la Vente Aux enchères
+AoAuction.tlabel.editDescription: Modification de la Description de la Vente Aux enchères
+AoAuction.tlabel.editCompany: Modification de la Société de la Vente Aux enchères
+AoAuction.tlabel.editNature: Modification de la Nature de la Vente Aux enchères
+AoAuction.tlabel.editDtEnd: Modification de la Date d'échéance de la Vente Aux enchères
+AoAuction.tlabel.editDtOpen: Modification de la Date d'ouverture des plis de la Vente Aux enchères
+AoAuction.tlabel.editAdress: Modification de l'Adresse de retait du cahier des charges de la Vente Aux enchères
+AoAuction.tlabel.editPrice: Modification du Prix du cahier des charges de la Vente Aux enchères
+AoAuction.tlabel.editTypeAvis: Modification du Type d'avis de la Vente Aux enchères
+AoAuction.tlabel.editAddRef: Modification de la Référence publiée de la Vente Aux enchères
+AoAuction.tlabel.editSource: Modification de la Source de la Vente Aux enchères
+AoAuction.tlabel.editStatus: Modification de Etat de la Vente Aux enchères
+
+
+AoAuction.empty: Aucune Vente Aux enchères trouvée dans la base de donnée
+
+AoAuction.add.success: Succès de l'ajout de la Vente Aux enchères <b>%auction%</b>
+AoAuction.add.failure: Echec de l'ajout de la Vente Aux enchères
+AoAuction.delete.confirm.title: Demande de Confirmation
+AoAuction.delete.confirm.txt: Etes-vous sûre de vouloir supprimer cette Vente Aux enchères ?<br/> Cette action est irreversible!
+AoAuction.delete.notfound: Vente Aux enchères inconnu
+AoAuction.delete.success: Succès de la suppression de la Vente Aux enchères <b>%auction%</b>
+AoAuction.delete.failure: Echec de la suppression de la Vente Aux enchères
+AoAuction.edit.notfound: Vente Aux enchères inconnue
+AoAuction.edit.success: Succès de la modification de la Vente Aux enchères <b>%auction%</b>
+AoAuction.edit.failure: Echec de la modification de la Vente Aux enchères
+AoAuction.import.success: Succès de l'Import du Fichier Excel
+AoAuction.import.failure: Echec de l'Import du Fichier Excel
+AoAuction.excel.label: 'Vente Aux enchères (Excel) :'
+AoAuction.tlabel.import: 'Import Excel de Ventes Aux Enchères'
+
+

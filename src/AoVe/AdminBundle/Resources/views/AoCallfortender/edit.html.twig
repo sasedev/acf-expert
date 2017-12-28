@@ -1,0 +1,314 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/fileinput/4.2.7-7.css'))}}">
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js'))}}"></script>
+{%if app.request.locale != 'en'%}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js'))}}"></script>
+{% endif %}
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/plugins/canvas-to-blob.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/fileinput/4.2.7-7.js'))}}"></script>
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			script_url : '{{preload(asset('bundles/acfres/js/tinymce/tinymce.min.js'))}}',
+			theme: "modern",
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			{%if app.request.locale != 'en'%}
+			language : '{{ app.request.locale }}',
+			{% endif %}
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+	
+	$('#AoCallfortenderUpdateGrpForm_grp').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$('#AoCallfortenderUpdateNatureForm_nature').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$('#AoCallfortenderUpdateTypeAvisForm_typeAvis').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$('#AoCallfortenderUpdateStatusForm_status').chosen({width: "100%", disable_search_threshold: 10});
+	
+	$("#AoCallfortenderUpdateImgForm_image").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " Image", browseIcon: '{{glyphIco('picture')}}', removeClass: "btn btn-danger", removeLabel: "Delete", removeIcon: '{{glyphIco('trash')}}'});
+	
+	$('#AoCallfortenderUpdateDtPublicationForm_dtPublication').click(function( event ) {
+		event.preventDefault();
+		$('#AoCallfortenderUpdateDtPublicationForm_dtPublication').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+	
+	$('#AoCallfortenderUpdateDtEndForm_dtEnd').click(function( event ) {
+		event.preventDefault();
+		$('#AoCallfortenderUpdateDtEndForm_dtEnd').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+	
+	$('#AoCallfortenderUpdateDtOpenForm_dtOpen').click(function( event ) {
+		event.preventDefault();
+		$('#AoCallfortenderUpdateDtOpenForm_dtOpen').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd'
+		}).datetimepicker('show');
+	});
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('aove_admin_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.adminaove'|trans|raw}}</a></li>
+	<li><a href="{{ path('aove_admin_categ_list') }}">{{ faIco('object-group') }} &nbsp; {{'breadcrumb.aocateg.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('aove_admin_categ_editGet', {'uid': callfortender.grp.categ.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.aocateg.edit'|trans({'%categ%': callfortender.grp.categ.title})|raw}}</a></li>
+	<li><a href="{{ path('aove_admin_subcateg_editGet', {'uid': callfortender.grp.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.aosubcateg.edit'|trans({'%subCateg%': callfortender.grp.ref})|raw}}</a></li>
+	<li class="active"><a href="{{ path('aove_admin_callfortender_editGet', {'uid': callfortender.id}) }}">{{glyphIco('edit')}} &nbsp; {{'breadcrumb.aocallfortender.edit'|trans({'%callfortender%': callfortender.ref})|raw}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('aove_admin_categ_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'AoCallfortender.tab.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'AoCallfortender.tab.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'AoCallfortender.grp'|trans|raw}} :</div>
+								<div class="col-lg-9"><a href="{{ path('aove_admin_subcateg_editGet', {'uid': callfortender.grp.id}) }}">{{ callfortender.grp.ref }} : {{ callfortender.grp.title }} </a> (<a href="{{ path('aove_admin_categ_editGet', {'uid': callfortender.grp.categ.id}) }}">{{ callfortender.grp.categ.title }}</a>)&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.ref'|trans|raw}} :</div>
+								<div class="col-lg-9">{{callfortender.ref}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.img'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.img is not empty %}<img src="/res/Ao/{{callfortender.img}}">{% else %}{{ '_NA'|trans }}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.dtPublication'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.dtPublication is not empty %}{{callfortender.dtPublication|localeDate('medium')}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.country'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.country is not empty %}{{callfortender.country}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.description'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.description is not empty %}{{callfortender.description|raw}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.company'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.company is not empty %}{{callfortender.company}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.nature'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.nature is not empty %}{{('AoCallfortender.nature.'~callfortender.nature)|trans}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.dtEnd'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|localeDate('medium')}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.dtOpen'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.dtOpen is not empty %}{{callfortender.dtOpen|localeDate('medium')}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.adress'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.adress is not empty %}{{callfortender.adress}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.price'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.price is not empty %}{{callfortender.price}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.typeAvis'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.typeAvis is not empty %}{{('AoCallfortender.typeAvis.'~callfortender.typeAvis)|trans}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.addRef'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.addRef is not empty %}{{callfortender.addRef}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCallfortender.status'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if callfortender.status is not empty %}{{('AoCallfortender.status.'~callfortender.status)|trans}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{callfortender.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{callfortender.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'AoCateg.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{callfortender.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{callfortender.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editGrp'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateGrpForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateGrpForm.grp, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateGrpForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editImg'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateImgForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateImgForm.image, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateImgForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editDtPublication'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateDtPublicationForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateDtPublicationForm.dtPublication, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateDtPublicationForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editCountry'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateCountryForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateCountryForm.country, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateCountryForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editDescription'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateDescriptionForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class':'wysiwyg'}})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateDescriptionForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editCompany'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateCompanyForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateCompanyForm.company, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateCompanyForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editNature'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateNatureForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateNatureForm.nature, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateNatureForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editDtEnd'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateDtEndForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateDtEndForm.dtEnd, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateDtEndForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editDtOpen'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateDtOpenForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateDtOpenForm.dtOpen, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateDtOpenForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editAdress'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateAdressForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateAdressForm.adress, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateAdressForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editPrice'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdatePriceForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdatePriceForm.price, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdatePriceForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editTypeAvis'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateTypeAvisForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateTypeAvisForm.typeAvis, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateTypeAvisForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editAddRef'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateAddRefForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateAddRefForm.addRef, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateAddRefForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editSource'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateSourceForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateSourceForm.source, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateSourceForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'AoCallfortender.tlabel.editStatus'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(CallfortenderUpdateStatusForm, {'method':'POST', 'action': path('aove_admin_callfortender_editPost', {'uid': callfortender.id}), 'style': 'horizontal'})}}
+							{{form_row(CallfortenderUpdateStatusForm.status, {'label_col': 3, 'widget_col': 8})}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(CallfortenderUpdateStatusForm)}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

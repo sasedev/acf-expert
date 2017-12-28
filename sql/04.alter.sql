@@ -8,3 +8,11 @@ ALTER TABLE "acf_companies" ADD COLUMN "monthdocslimit"                         
 ALTER TABLE "acf_companies" ADD COLUMN "curmonth"                                                  INT4 NOT NULL DEFAULT 1;
 ALTER TABLE "acf_companies" ADD COLUMN "curmonthdocs"                                                  INT8 NOT NULL DEFAULT 0;
 ALTER TABLE "ao_subcategs" ADD COLUMN "priority"                                                  INT8 NOT NULL DEFAULT 100;
+
+ALTER TABLE "ao_advertisements" RENAME TO "ao_callfortenders";
+ALTER TABLE "ao_callfortenders" RENAME CONSTRAINT "pk_ao_advertisements" TO "pk_ao_callfortenders";
+ALTER TABLE "ao_callfortenders" RENAME CONSTRAINT "fk_ao_subcategs_categ" TO "fk_ao_callfortenders_categ";
+ALTER TABLE "ao_callfortenders" DROP COLUMN "grp";
+ALTER TABLE "ao_callfortenders" ALTER COLUMN "dtpub" DROP NOT NULL;
+ALTER TABLE "ao_callfortenders" ALTER COLUMN "dtend" DROP NOT NULL;
+ALTER TABLE "ao_callfortenders" ALTER COLUMN "dtend" DROP NOT NULL;

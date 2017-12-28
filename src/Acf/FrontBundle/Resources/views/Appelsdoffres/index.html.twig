@@ -22,7 +22,6 @@
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/form/20130711.min.js'))}}"></script>
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/jquery.validate.min.js'))}}"></script>
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/localization/messages_fr.min.js'))}}"></script>
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
 {%endblock end_static_js%}
 {%block html_body_content%}
 <div id="container">
@@ -275,17 +274,19 @@
 {{ parent() }}
 {%endblock end2_dynamic_jstxt%}
 {%block endappend%}
+{% if app.environment == 'prod' %}
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
-	var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-	(function () {
-		var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-		s1.async = true;
-		s1.src = 'https://embed.tawk.to/59654fb76edc1c10b034585a/default';
-		s1.charset = 'UTF-8';
-		s1.setAttribute('crossorigin', '*');
-		s0.parentNode.insertBefore(s1, s0);
-	})();
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/59654fb76edc1c10b034585a/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 </script>
 <!--End of Tawk.to Script-->
+{% endif %}
 {%endblock endappend%}

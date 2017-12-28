@@ -28,8 +28,10 @@
 /web/res/biDocs/*
 !/web/res/liasseDocs/
 /web/res/liasseDocs/*
-!/web/res/AoVe/
-/web/res/AoVe/*
+!/web/res/Ao/
+/web/res/Ao/*
+!/web/res/Ve/
+/web/res/Ve/*
 /phpunit.xml
 /composer.phar
 /composer.lock
