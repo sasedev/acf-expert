@@ -1,11 +1,11 @@
 {% extends 'AcfFrontBundle::front2.html.twig' %}
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/dataTables/dataTables.bootstrap.css'))}}">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/dataTables.bootstrap.min.css" integrity="sha256-PbaYLBab86/uCEz3diunGMEYvjah3uDFIiID+jAtIfw=" crossorigin="anonymous" />
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/jquery.dataTables.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/dataTables/dataTables.bootstrap.js'))}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js" integrity="sha256-qcV1wr+bn4NoBtxYqghmy1WIBvxeoe8vQlCowLG+cng=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap.min.js" integrity="sha256-X/58s5WblGMAw9SpDtqnV8dLRNCawsyGwNqnZD0Je/s=" crossorigin="anonymous"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
@@ -13,9 +13,11 @@ $(function() {
 	$('#callfortenderList').dataTable({
 		"order": [[ 0, "desc" ]],
 		{%if app.request.locale != 'en'%}
-		"language": {"url": '{{preload(asset('bundles/acfres/css/dataTables/i18n/'~app.request.locale~'.json'))}}'},
+		"language": {"url": '{{preload(asset('bundles/acfres/json/dataTables/i18n/'~app.request.locale~'.json'))}}'},
 		{% endif %}
 		"columns": [
+			null,
+			null,
 			null,
 			null,
 			null,
@@ -53,6 +55,8 @@ $(function() {
 							<th>{{ 'AoCallfortender.company.label'|trans|raw }}</th>
 							<th>{{ 'AoCallfortender.nature.label'|trans|raw }}</th>
 							<th>{{ 'AoCallfortender.dtEnd.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.daysleft.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.refn.label'|trans|raw }}</th>
 							<th>{{ 'AoCallfortender.grp.label'|trans|raw }}</th>
 							<th>{{ 'action'|trans|raw }}</th>
 						</tr>
@@ -60,12 +64,14 @@ $(function() {
 					<tbody>
 					{% for callfortender in callfortenders %}
 						<tr>
-							<td>{% if callfortender.dtPublication is not empty %}{{callfortender.dtPublication|date('Y-m-d')}}{% endif %}</td>
-							<td>{% if callfortender.country is not empty %}{{callfortender.country}}{% endif %}</td>
-							<td>{% if callfortender.description is not empty %}{{callfortender.description|raw}}{% endif %}</td>
-							<td>{% if callfortender.company is not empty %}{{callfortender.company}}{% endif %}</td>
-							<td>{% if callfortender.nature is not empty %}{{('AoCallfortender.nature.'~callfortender.nature)|trans}}{% endif %}</td>
-							<td>{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|date('Y-m-d')}}{% endif %}</td>
+							<td>{% if callfortender.dtPublication is not empty %}{{callfortender.dtPublication|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if callfortender.country is not empty %}{{callfortender.country}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if callfortender.description is not empty %}{{callfortender.description|raw}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if callfortender.company is not empty %}{{callfortender.company}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if callfortender.nature is not empty %}{{('AoCallfortender.nature.'~callfortender.nature)|trans}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if callfortender.dtEnd is not empty and callfortender.dtEnd > date("now") %}{{ callfortender.dtEnd.diff(date("now")).days }}{%else%}{{'AoCallfortender.expired'|trans}}{% endif %}</td>
+							<td>{% if callfortender.ref is not empty %}{{callfortender.ref}}{%else%}{{'_NA'|trans}}{% endif %}</td>
 							<td><a href="{{ path('ao_front_subcateg_editGet', {'uid': callfortender.grp.id}) }}">{{ callfortender.grp.ref }} - {{ callfortender.grp.title }}</a></td>
 							<td>
 								<a class="btn btn-sm btn-info" href="{{path('ao_front_callfortender_editGet',{'uid':callfortender.id})}}">{{ glyphIco('eye-open') }} &nbsp; {{ 'action.show'|trans }}</a>
@@ -73,7 +79,7 @@ $(function() {
 						</tr>
 					{% else %}
 						<tr>
-							<td colspan="8">{{ 'AoCallfortender.empty'|trans|raw }}</td>
+							<td colspan="10">{{ 'AoCallfortender.empty'|trans|raw }}</td>
 						</tr>
 					{% endfor %}
 					</tbody>

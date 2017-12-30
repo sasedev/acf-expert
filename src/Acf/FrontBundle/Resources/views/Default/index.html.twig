@@ -3,17 +3,17 @@
 {%if smenu_active is not defined%}{%set smenu_active=''%}{%endif%}
 {%if tabActive is not defined%}{%set tabActive=1%}{%endif%}
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/theme/margo/style.css'))}}">
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/jquery/layerslider/layerslider.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/theme/margo/style.min.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/jquery/layerslider/layerslider.min.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%} {{ parent() }}
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/jquery.nicescroll.min.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/easing/1.3.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/layerslider/kreaturamedia.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/script.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/form/20130711.min.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/jquery.validate.min.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/localization/messages_fr.min.js'))}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js" integrity="sha256-LJkWYMcB83+zN8VO3EnSoNYHiBo93miOF47ZfsPSNDQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/layerslider/kreaturamedia.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/script.min.js'))}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js" integrity="sha256-F6h55Qw6sweK+t7SiOJX+2bpSAa3b/fnlrVCJvmEj1A=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/localization/messages_fr.min.js" integrity="sha256-4MXRBRjHxc8R2rx9XvinpkFBHoUjZCr3OpkG540p2nM=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwtpJunqIv2T7k_UJaGhENreqa4YpzXjg"></script>
 {%endblock end_static_js%}
 {%block html_body_content%}
@@ -39,13 +39,13 @@
 								<li><a>Votre Cabinet d'Expertise Comptable en ligne</a>
 								</li>
 								<li>
-									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
+									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook URL" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
 								</li>
 								<li>
-									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin URL" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
 								</li>
 								<li>
-									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
+									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter URL" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -702,19 +702,19 @@
 							<h4>{{ 'bottom.followus'|trans }}<span class="head-line"></span></h4>
 							<ul class="social-icons">
 								<li>
-									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
+									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook URL" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
 								</li>
 								<li>
-									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin URL" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
 								</li>
 								<li>
-									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
+									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter URL" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
 								</li>
 								<li>
-									<a class="google itl-tooltip" data-placement="bottom" title="Google Plus" href="{{ 'googleplus.url'|trans }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+									<a class="google itl-tooltip" data-placement="bottom" title="Google Plus URL" href="{{ 'googleplus.url'|trans }}" target="_blank"><i class="fa fa-google-plus"></i></a>
 								</li>
 								<li>
-									<a class="skype itl-tooltip" data-placement="bottom" title="Skype" href="{{ 'skype.url'|trans }}" target="_blank"><i class="fa fa-skype"></i></a>
+									<a class="skype itl-tooltip" data-placement="bottom" title="Skype URL" href="{{ 'skype.url'|trans }}" target="_blank"><i class="fa fa-skype"></i></a>
 								</li>
 							</ul>
 						</div>

@@ -2102,6 +2102,7 @@ AoCallfortender.status.2: Invisible
 AoCallfortender.status.1: Visible
 AoCallfortender.dtCrea: Date d'ajout
 AoCallfortender.dtUpdate: Date de modification
+AoCallfortender.expired: Expiré
 
 AoCallfortender.categ.label: "Activité :"
 AoCallfortender.grp.label: "Sous-Activité :"
@@ -2135,6 +2136,8 @@ AoCallfortender.source.label: "Source :"
 AoCallfortender.status.label: "Etat :"
 AoCallfortender.status.choice.2: Invisible
 AoCallfortender.status.choice.1: Visible
+AoCallfortender.daysleft.label: "Jours restants :"
+AoCallfortender.refn.label: "Ref n° :"
 
 # AoAuction
 AoAuction: Vente aux enchères
@@ -2158,6 +2161,7 @@ AoAuction.status.2: Invisible
 AoAuction.status.1: Visible
 AoAuction.dtCrea: Date d'ajout
 AoAuction.dtUpdate: Date de modification
+AoAuction.expired: Expiré
 
 AoAuction.ref.label: "Référence :"
 AoAuction.img.label: "Image :"
@@ -2177,5 +2181,7 @@ AoAuction.source.label: "Source :"
 AoAuction.status.label: "Etat :"
 AoAuction.status.choice.2: Invisible
 AoAuction.status.choice.1: Visible
+AoAuction.daysleft.label: "Jours restants :"
+AoAuction.refn.label: "Ref n° :"
 
 

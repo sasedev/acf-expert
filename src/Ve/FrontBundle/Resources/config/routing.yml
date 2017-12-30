@@ -1,3 +1,18 @@
 ve_front_homepage:
     path:     /
     defaults: { _controller: "VeFrontBundle:Default:index" }
+
+
+ve_front_auction_editGet:
+    path:     /ve/{uid}
+    defaults: { _controller: "VeFrontBundle:Auction:editGet" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ve_front_auction_pdf:
+    path:     /vepdf/{uid}
+    defaults: { _controller: "VeFrontBundle:Auction:pdf" }
+    methods: [GET]
+    requirements:
+        uid: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"

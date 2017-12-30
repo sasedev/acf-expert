@@ -1,12 +1,12 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/chosen/1.2.0.css'))}}">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.min.css" integrity="sha256-mmiAhiWsn5EjME5u13M5klIesdx2mQQnvwSDFWwAW4E=" crossorigin="anonymous" />
 <link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/chosen/1.2.0.js'))}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js" integrity="sha256-j9yXOqKOlGKkAerTz/6KCllekmWP3Kt3a7sBvMK8IGI=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}

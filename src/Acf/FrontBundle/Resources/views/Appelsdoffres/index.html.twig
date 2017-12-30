@@ -10,18 +10,13 @@
 {%endif%}
 {%block static_css%}
 {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/theme/margo/style.css'))}}">
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/jquery/layerslider/layerslider.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/theme/margo/style.min.css'))}}">
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/jquery.nicescroll.min.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/easing/1.3.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/layerslider/kreaturamedia.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/script.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/form/20130711.min.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/jquery.validate.min.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/jquery/validate/localization/messages_fr.min.js'))}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js" integrity="sha256-LJkWYMcB83+zN8VO3EnSoNYHiBo93miOF47ZfsPSNDQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/script.min.js'))}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" crossorigin="anonymous"></script>
 {%endblock end_static_js%}
 {%block html_body_content%}
 <div id="container">
@@ -36,10 +31,10 @@
 						<ul class="contact-details">
 							<li><a href="{{ 'site.global.mailto2'|trans }}"><i class="fa fa-envelope-o"></i> {{ 'site.global.mail2'|trans }}</a></li>
 							<li><a href="{{ 'site.global.phone2.call'|trans }}"><i class="fa fa-phone"></i> {{ 'site.global.phone2'|trans }}</a></li>
-							<li><a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url2'|trans }}" target="_blank"><i
+							<li><a class="facebook itl-tooltip" data-placement="bottom" title="Facebook URL" href="{{ 'facebook.url2'|trans }}" target="_blank"><i
 									class="fa fa-facebook"
 								></i></a></li>
-							<li><a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url2'|trans }}" target="_blank"><i
+							<li><a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin URL" href="{{ 'linkedin.url2'|trans }}" target="_blank"><i
 									class="fa fa-linkedin"
 								></i></a></li>
 						</ul>
@@ -232,10 +227,10 @@
 							<span class="head-line"></span>
 						</h4>
 						<ul class="social-icons">
-							<li><a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url2'|trans }}" target="_blank"><i
+							<li><a class="facebook itl-tooltip" data-placement="bottom" title="Facebook URL" href="{{ 'facebook.url2'|trans }}" target="_blank"><i
 									class="fa fa-facebook"
 								></i></a></li>
-							<li><a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url2'|trans }}" target="_blank"><i
+							<li><a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin URL" href="{{ 'linkedin.url2'|trans }}" target="_blank"><i
 									class="fa fa-linkedin"
 								></i></a></li>
 						</ul>

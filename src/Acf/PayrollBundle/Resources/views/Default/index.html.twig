@@ -1,7 +1,7 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/chartjs/1.1.min.js'))}}"></script>
+<script type="text/javascript" src="{{preload(preload(asset('bundles/acfres/js/chartjs/1.1.min.js')))}}"></script>
 <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}

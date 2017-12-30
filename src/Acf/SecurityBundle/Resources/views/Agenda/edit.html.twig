@@ -1,8 +1,8 @@
 {% extends 'AcfFrontBundle::front.html.twig' %}
 {%block static_css%} {{ parent() }}
 <link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/duallistbox/3.0.2.css'))}}">
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5-bs3patch.css'))}}">
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/modal/2.2.5.css'))}}">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/css/bootstrap-modal-bs3patch.min.css" integrity="sha256-8qPt0X/JAwhOGkBVHs+gP6PjHgtLBJihYlHMKRQQ8uU=" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/css/bootstrap-modal.min.css" integrity="sha256-Ad60rSeqfXQzkDAmvKgT7Zm5lgfVJ1dMAwNBCD4rtt4=" crossorigin="anonymous" />
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}

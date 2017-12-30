@@ -1,0 +1,84 @@
+{% extends 'AcfFrontBundle::front2.html.twig' %}
+{%block static_css%} {{ parent() }}
+{%endblock static_css%}
+{%block end_static_js%}
+{{ parent() }}
+{%endblock end_static_js%}
+{%block end2_dynamic_jstxt%}
+$(function() {
+
+});
+{%endblock end2_dynamic_jstxt%}
+{%block breadcrumb%}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ve_front_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.ve'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ve_front_auction_editGet', {'uid': auction.id}) }}">{{faIco('newspaper-o')}} {{('AoAuction')|trans}} &nbsp; {{ auction.ref}}</a></li>
+</ol>
+{%endblock breadcrumb%}
+{%block content%}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ve_front_auction_pdf', {'uid': auction.id}) }}" class="btn btn-primary">{{ faIco('file-pdf-o') }} {{ 'action.btnPdf'|trans }}</a>
+		</div>
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{('AoAuction')|trans}} &nbsp; {{auction.ref}}</h3>
+			</div>
+			<div class="box-body">
+				{% if auction.description is not empty %}
+				<div class="row">
+					<div class="col-lg-12">{{auction.description|raw}}&nbsp;</div>
+					<div class="col-lg-12">&nbsp;</div>
+				</div>
+				<br>
+				{% endif %}
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoAuction.nature'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.nature is not empty %}{{('AoAuction.nature.'~auction.nature)|trans}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoAuction.country'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.country is not empty %}{{auction.country}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoAuction.company'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.company is not empty %}{{auction.company}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoAuction.dtOpen'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.dtOpen is not empty %}{{auction.dtOpen|localeDate('medium')}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoAuction.adress'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.adress is not empty %}{{auction.adress}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoAuction.price'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.price is not empty %}{{auction.price}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoAuction.dtPublication'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.dtPublication is not empty %}{{auction.dtPublication|localeDate('full')}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoAuction.dtEnd'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.dtEnd is not empty %}{{auction.dtEnd|localeDate('full')}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4"><b>{{'AoAuction.source'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.source is not empty %}{{auction.source}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-4"><b>{{'AoAuction.addRef'|trans|raw}} :</b></div>
+							<div class="col-lg-8">{% if auction.addRef is not empty %}{{auction.addRef}}{%else%}{{'_NA'|trans}}{% endif %}&nbsp;</div>
+							<div class="col-lg-12">&nbsp;</div>
+						</div>
+					</div>
+					{% if auction.img is not empty %}
+					<div class="col-lg-12"><img src="/res/Ve/{{auction.img}}" class="img-responsive center-block"></div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock content%}

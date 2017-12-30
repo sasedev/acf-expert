@@ -4,17 +4,15 @@
 {%if tabActive is not defined%}{%set tabActive=1%}{%endif%}
 
 {%block static_css%} {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/theme/margo/style.css'))}}">
-<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/bootstrap/datetimepicker/2.3.1.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{preload(asset('bundles/acfres/css/theme/margo/style.min.css'))}}">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css" integrity="sha256-ff4Vuur4aYrm0ZOAEC/me1LBOcid7PJ5oP9xxvJ0AKQ=" crossorigin="anonymous" />
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/jquery.nicescroll.min.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/script.js'))}}"></script>
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/2.4.4.min.js'))}}"></script>
-{%if app.request.locale != 'en'%}
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/datetimepicker/locales/2.4.4.'~app.request.locale~'.js'))}}"></script>
-{% endif %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js" integrity="sha256-LJkWYMcB83+zN8VO3EnSoNYHiBo93miOF47ZfsPSNDQ=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/theme/margo/script.min.js'))}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js" integrity="sha256-KWLvsoTXFF8o3o9zKOjUsYC/NPKjgYmUXbrxNk90F8k=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/js/locales/bootstrap-datetimepicker.fr.js" integrity="sha256-3Xo/i0I6uTxVQCt8dPM7aO7afz1kWel46LNiT16cUXw=" crossorigin="anonymous"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
@@ -58,13 +56,13 @@ $(function() {
 								<li><a>Votre Cabinet d'Expertise Comptable en ligne</a>
 								</li>
 								<li>
-									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
+									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook URL" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
 								</li>
 								<li>
-									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin URL" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
 								</li>
 								<li>
-									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
+									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter URL" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -317,19 +315,19 @@ $(function() {
 							<h4>{{ 'bottom.followus'|trans }}<span class="head-line"></span></h4>
 							<ul class="social-icons">
 								<li>
-									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
+									<a class="facebook itl-tooltip" data-placement="bottom" title="Facebook URL" href="{{ 'facebook.url'|trans }}" target="_blank"><i class="fa fa-facebook"></i></a>
 								</li>
 								<li>
-									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+									<a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin URL" href="{{ 'linkedin.url'|trans }}" target="_blank"><i class="fa fa-linkedin"></i></a>
 								</li>
 								<li>
-									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
+									<a class="twitter itl-tooltip" data-placement="bottom" title="Twitter URL" href="{{ 'twitter.url'|trans }}" target="_blank"><i class="fa fa-twitter"></i></a>
 								</li>
 								<li>
-									<a class="google itl-tooltip" data-placement="bottom" title="Google Plus" href="{{ 'googleplus.url'|trans }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+									<a class="google itl-tooltip" data-placement="bottom" title="Google Plus URL" href="{{ 'googleplus.url'|trans }}" target="_blank"><i class="fa fa-google-plus"></i></a>
 								</li>
 								<li>
-									<a class="skype itl-tooltip" data-placement="bottom" title="Skype" href="{{ 'skype.url'|trans }}" target="_blank"><i class="fa fa-skype"></i></a>
+									<a class="skype itl-tooltip" data-placement="bottom" title="Skype URL" href="{{ 'skype.url'|trans }}" target="_blank"><i class="fa fa-skype"></i></a>
 								</li>
 							</ul>
 						</div>
