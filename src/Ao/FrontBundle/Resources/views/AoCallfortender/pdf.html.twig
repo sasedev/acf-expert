@@ -10,11 +10,11 @@
 {%endif%}
 {%block static_css%}
 {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{app.request.scheme ~'://' ~ app.request.httpHost ~ preload(asset('bundles/acfres/css/theme/AdminLTE/AdminLTE.css'))}}">
+<link rel="stylesheet" type="text/css" href="{{'http://' ~ app.request.httpHost ~ preload(asset('bundles/acfres/css/theme/AdminLTE/AdminLTE.css'))}}">
 <link rel="stylesheet" type="text/css"
-	href="{{app.request.scheme ~'://' ~ app.request.httpHost ~ preload(asset('bundles/acfres/css/theme/AdminLTE/skins/_all-skins.css'))}}"
+	href="{{'http://' ~ app.request.httpHost ~ preload(asset('bundles/acfres/css/theme/AdminLTE/skins/_all-skins.css'))}}"
 >
-<link rel="stylesheet" type="text/css" href="{{app.request.scheme ~'://' ~ app.request.httpHost ~ asset('bundles/acfres/css/theme/Mpdf/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{'http://' ~ app.request.httpHost ~ asset('bundles/acfres/css/theme/Mpdf/style.css')}}">
 {%endblock static_css%}
 {%block html_body%}
 <body class="skin-blue">
@@ -28,11 +28,11 @@
 								<table class="table table-condensed table-borderless">
 									<tr>
 										<td width="50%" class="text-left" style="background-color: white;"><a href="{{ path('_front_appelsdoffres') }}" class="center-block"><img
-												src="{{app.request.scheme ~'://' ~ app.request.httpHost ~ preload(asset('bundles/acfres/images/logo_ao.jpg'))}}" alt="{{ sitename }}" class="img-responsive"
+												src="{{'http://' ~ app.request.httpHost ~ preload(asset('bundles/acfres/images/logo_ao.jpg'))}}" alt="{{ sitename }}" class="img-responsive"
 												style="width: 200px"
 											></a></td>
 										<td width="50%" class="text-right" style="background-color: white;"><a href="{{ path('_front_homepage') }}" class="center-block"><img
-												src="{{app.request.scheme ~'://' ~ app.request.httpHost ~ preload(asset('bundles/acfres/images/logo_acf.jpg'))}}" alt="{{ sitename }}" class="img-responsive"
+												src="{{'http://' ~ app.request.httpHost ~ preload(asset('bundles/acfres/images/logo_acf.jpg'))}}" alt="{{ sitename }}" class="img-responsive"
 												style="width: 200px"
 											></a></td>
 									</tr>
@@ -198,7 +198,7 @@
 										<td colspan="2" class="text-center">&nbsp;</td>
 									</tr>
 									<tr>
-										<td colspan="2" class="text-center"><img src="{{app.request.scheme ~'://' ~ app.request.httpHost ~ asset('/res/Ao/'~callfortender.img)}}"
+										<td colspan="2" class="text-center"><img src="{{'http://' ~ app.request.httpHost ~ asset('/res/Ao/'~callfortender.img)}}"
 											class="img-responsive img-thumbnail center-block"
 										></td>
 									</tr>

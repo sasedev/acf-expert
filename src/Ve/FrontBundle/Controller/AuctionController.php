@@ -107,13 +107,6 @@ class AuctionController extends BaseController
                     'Content-Type' => 'application/pdf',
                     'Content-Disposition' => 'inline; filename="' . $auction->getRef() . '.pdf"'
                 ));
-
-                /*
-                 * return new Response($pdfGenerator->generatePDF($html), 200, array(
-                 * 'Content-Type' => 'application/pdf',
-                 * 'Content-Disposition' => 'inline; filename="out.pdf"'
-                 * ));
-                 */
             }
         } catch (\Exception $e) {
             $logger = $this->getLogger();
