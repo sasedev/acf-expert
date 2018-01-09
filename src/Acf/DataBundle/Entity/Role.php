@@ -444,6 +444,5 @@ class Role extends BaseRole implements \Serializable
     /**
      */
     public function __clone()
-    {
-    }
+    {}
 }

@@ -153,5 +153,67 @@ class AoCallfortenderRepository extends EntityRepository
     {
         return $this->getAllByGrpQuery($grp)->execute();
     }
+
+    /**
+     * Get Query for Next Element
+     *
+     * @param AoCallfortender $callfortender
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getNextByIdQuery(AoCallfortender $callfortender)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.ref > :ref')
+            ->orderBy('a.ref', 'ASC')
+            ->setMaxResults(1)
+            ->setParameter('ref', $callfortender->getRef());
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get Query for Next Element
+     *
+     * @param AoCallfortender $callfortender
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getNextById(AoCallfortender $callfortender)
+    {
+        return $this->getNextByIdQuery($callfortender)->getOneOrNullResult();
+    }
+
+    /**
+     * Get Query for Next Element
+     *
+     * @param AoCallfortender $callfortender
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getPrevByIdQuery(AoCallfortender $callfortender)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.ref < :ref')
+            ->orderBy('a.ref', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('ref', $callfortender->getRef());
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get Query for Next Element
+     *
+     * @param AoCallfortender $callfortender
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getPrevById(AoCallfortender $callfortender)
+    {
+        return $this->getPrevByIdQuery($callfortender)->getOneOrNullResult();
+    }
 }
 

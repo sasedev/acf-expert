@@ -46,7 +46,7 @@ security:
                 use_referer:    true
                 use_forward:    false
 #                intention: authentication
-                require_previous_session: false
+                require_previous_session: true
                 remember_me:    true
 #                success_handler: login.listener
             logout:

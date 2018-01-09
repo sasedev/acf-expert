@@ -128,7 +128,13 @@ class CallfortenderController extends BaseController
                 $this->gvars['CallfortenderUpdateStatusForm'] = $callfortenderUpdateStatusForm->createView();
                 $this->gvars['CallfortenderUpdateSourceForm'] = $callfortenderUpdateSourceForm->createView();
 
-                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
+                $nextCallfortender = $em->getRepository('AcfDataBundle:AoCallfortender')->getNextById($callfortender);
+                $this->gvars['next'] = $nextCallfortender;
+
+                $prevCallfortender = $em->getRepository('AcfDataBundle:AoCallfortender')->getPrevById($callfortender);
+                $this->gvars['prev'] = $prevCallfortender;
+
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
                 $this->getSession()->remove('tabActive');
 
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.aoCallfortender.edit', array(
@@ -488,6 +494,12 @@ class CallfortenderController extends BaseController
                 $this->gvars['CallfortenderUpdateAddRefForm'] = $callfortenderUpdateAddRefForm->createView();
                 $this->gvars['CallfortenderUpdateStatusForm'] = $callfortenderUpdateStatusForm->createView();
                 $this->gvars['CallfortenderUpdateSourceForm'] = $callfortenderUpdateSourceForm->createView();
+
+                $nextCallfortender = $em->getRepository('AcfDataBundle:AoCallfortender')->getNextById($callfortender);
+                $this->gvars['next'] = $nextCallfortender;
+
+                $prevCallfortender = $em->getRepository('AcfDataBundle:AoCallfortender')->getPrevById($callfortender);
+                $this->gvars['prev'] = $prevCallfortender;
 
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.aoCallfortender.edit', array(
                     '%callfortender%' => $callfortender->getRef()

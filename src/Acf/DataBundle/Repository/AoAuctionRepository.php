@@ -61,5 +61,67 @@ class AoAuctionRepository extends EntityRepository
     {
         return $this->getAllFrontQuery()->execute();
     }
+
+    /**
+     * Get Query for Next Element
+     *
+     * @param AoAuction $auction
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getNextByIdQuery(AoAuction $auction)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.ref > :ref')
+            ->orderBy('a.ref', 'ASC')
+            ->setMaxResults(1)
+            ->setParameter('ref', $auction->getRef());
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get Query for Next Element
+     *
+     * @param AoAuction $auction
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getNextById(AoAuction $auction)
+    {
+        return $this->getNextByIdQuery($auction)->getOneOrNullResult();
+    }
+
+    /**
+     * Get Query for Next Element
+     *
+     * @param AoAuction $auction
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getPrevByIdQuery(AoAuction $auction)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.ref < :ref')
+            ->orderBy('a.ref', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('ref', $auction->getRef());
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get Query for Next Element
+     *
+     * @param AoAuction $auction
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getPrevById(AoAuction $auction)
+    {
+        return $this->getPrevByIdQuery($auction)->getOneOrNullResult();
+    }
 }
 

@@ -15,4 +15,5 @@ ALTER TABLE "ao_callfortenders" RENAME CONSTRAINT "fk_ao_subcategs_categ" TO "fk
 ALTER TABLE "ao_callfortenders" DROP COLUMN "grp";
 ALTER TABLE "ao_callfortenders" ALTER COLUMN "dtpub" DROP NOT NULL;
 ALTER TABLE "ao_callfortenders" ALTER COLUMN "dtend" DROP NOT NULL;
-ALTER TABLE "ao_callfortenders" ALTER COLUMN "dtend" DROP NOT NULL;
+ALTER TABLE "ao_callfortenders" ALTER COLUMN "ref" SET DATA TYPE INT8;
+ALTER TABLE "ao_auctions" ALTER COLUMN "ref" SET DATA TYPE INT8;

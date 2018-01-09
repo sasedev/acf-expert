@@ -95,6 +95,19 @@ $(function() {
 		<div class="well well-sm text-right">
 			<a href="{{ path('aove_admin_categ_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
 		</div>
+		<div class="row">
+			<div class="col-lg-6 text-left">
+				{% if null != prev %}
+				<a class="btn btn-primary" href="{{ path('aove_admin_auction_editGet', {'uid': prev.id}) }}">{{faIco('backward')}} &nbsp; {{'breadcrumb.aoauction.edit'|trans({'%auction%': prev.ref})|raw}}</a>
+				{% endif %}
+			</div>
+			<div class="col-lg-6 text-right">
+				{% if null != next %}
+				<a class="btn btn-primary" href="{{ path('aove_admin_auction_editGet', {'uid': next.id}) }}">{{'breadcrumb.aoauction.edit'|trans({'%auction%': next.ref})|raw}} &nbsp; {{faIco('forward')}} </a>
+				{% endif %}
+			</div>
+			<div class="col-lg-12">&nbsp;</div>
+		</div>
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
 				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'AoAuction.tab.overview'|trans|raw}}</a></li>

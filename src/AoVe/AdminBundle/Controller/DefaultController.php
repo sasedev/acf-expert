@@ -42,7 +42,7 @@ class DefaultController extends BaseController
             if ($auctionImportForm->isValid()) {
                 // $logger = $this->getLogger();
 
-                $imgDir = $this->getParameter('kernel.root_dir') . '/../web/res/Ve';
+                $imgVeDir = $this->getParameter('kernel.root_dir') . '/../web/res/Ve';
 
                 $autoinc = $em->getRepository('AcfDataBundle:Autoinc')->findOneBy(array(
                     'name' => 'VE'
@@ -95,8 +95,8 @@ class DefaultController extends BaseController
                     $lineUnprocessed = 0;
                     $lineError = 0;
 
-                    for ($row = 2; $row <= $highestRow; $row++) {
-                        $lineRead++;
+                    for ($row = 2; $row <= $highestRow; $row ++) {
+                        $lineRead ++;
 
                         $dtPublication = \PHPExcel_Shared_Date::ExcelToPHPObject($worksheet->getCellByColumnAndRow(1, $row)->getValue()); // B
                         $country = \trim(\strval($worksheet->getCellByColumnAndRow(2, $row)->getValue())); // C
@@ -177,7 +177,7 @@ class DefaultController extends BaseController
                                                 $new_file = "";
                                         }
                                         if ($new_file != "") {
-                                            copy($drawing->getPath(), $imgDir . "/" . $new_file);
+                                            copy($drawing->getPath(), $imgVeDir . "/" . $new_file);
                                         }
                                     }
                                 } elseif ($drawing instanceof \PHPExcel_Worksheet_MemoryDrawing) {
@@ -198,19 +198,19 @@ class DefaultController extends BaseController
                                             case 'image/gif':
                                                 $image = \imagecreatefromstring($imageContents);
                                                 $new_file = $fileName . ".gif";
-                                                \imagegif($image, $imgDir . "/" . $new_file, 100);
+                                                \imagegif($image, $imgVeDir . "/" . $new_file, 100);
                                                 break;
 
                                             case 'image/jpeg':
                                                 $image = \imagecreatefromstring($imageContents);
                                                 $new_file = $fileName . ".jpeg";
-                                                \imagejpeg($image, $imgDir . "/" . $new_file, 100);
+                                                \imagejpeg($image, $imgVeDir . "/" . $new_file, 100);
                                                 break;
 
                                             case 'image/png':
                                                 $image = \imagecreatefromstring($imageContents);
                                                 $new_file = $fileName . ".png";
-                                                \imagepng($image, $imgDir . "/" . $new_file, 100);
+                                                \imagepng($image, $imgVeDir . "/" . $new_file, 100);
                                                 break;
 
                                             default:
@@ -247,10 +247,10 @@ class DefaultController extends BaseController
                             $autoinc->setCount($autoinc->getCount() + 1);
                             $em->persist($autoinc);
                             $em->flush();
-                            $nextref++;
-                            $veNew++;
+                            $nextref ++;
+                            $veNew ++;
                         } else {
-                            $lineError++;
+                            $lineError ++;
                             $log2 .= 'la ligne ' . $lineRead . ' contient des erreurs<br>';
                         }
                     }
@@ -276,7 +276,7 @@ class DefaultController extends BaseController
             if ($callfortenderImportForm->isValid()) {
                 // $logger = $this->getLogger();
 
-                $imgDir = $this->getParameter('kernel.root_dir') . '/../web/res/Ao';
+                $imgAoDir = $this->getParameter('kernel.root_dir') . '/../web/res/Ao';
 
                 $autoinc = $em->getRepository('AcfDataBundle:Autoinc')->findOneBy(array(
                     'name' => 'AO'
@@ -331,8 +331,8 @@ class DefaultController extends BaseController
                 $lineUnprocessed = 0;
                 $lineError = 0;
 
-                for ($row = 2; $row <= $highestRow; $row++) {
-                    $lineRead++;
+                for ($row = 2; $row <= $highestRow; $row ++) {
+                    $lineRead ++;
 
                     $dtPublication = \PHPExcel_Shared_Date::ExcelToPHPObject($worksheet->getCellByColumnAndRow(1, $row)->getValue()); // B
                     $country = \trim(\strval($worksheet->getCellByColumnAndRow(2, $row)->getValue())); // C
@@ -435,7 +435,7 @@ class DefaultController extends BaseController
                                             $new_file = "";
                                     }
                                     if ($new_file != "") {
-                                        copy($drawing->getPath(), $imgDir . "/" . $new_file);
+                                        copy($drawing->getPath(), $imgAoDir . "/" . $new_file);
                                     }
                                 }
                             } elseif ($drawing instanceof \PHPExcel_Worksheet_MemoryDrawing) {
@@ -456,19 +456,19 @@ class DefaultController extends BaseController
                                         case 'image/gif':
                                             $image = \imagecreatefromstring($imageContents);
                                             $new_file = $fileName . ".gif";
-                                            \imagegif($image, $imgDir . "/" . $new_file, 100);
+                                            \imagegif($image, $imgAoDir . "/" . $new_file, 100);
                                             break;
 
                                         case 'image/jpeg':
                                             $image = \imagecreatefromstring($imageContents);
                                             $new_file = $fileName . ".jpeg";
-                                            \imagejpeg($image, $imgDir . "/" . $new_file, 100);
+                                            \imagejpeg($image, $imgAoDir . "/" . $new_file, 100);
                                             break;
 
                                         case 'image/png':
                                             $image = \imagecreatefromstring($imageContents);
                                             $new_file = $fileName . ".png";
-                                            \imagepng($image, $imgDir . "/" . $new_file, 100);
+                                            \imagepng($image, $imgAoDir . "/" . $new_file, 100);
                                             break;
 
                                         default:
@@ -507,10 +507,10 @@ class DefaultController extends BaseController
                         $autoinc->setCount($autoinc->getCount() + 1);
                         $em->persist($autoinc);
                         $em->flush();
-                        $nextref++;
-                        $aoNew++;
+                        $nextref ++;
+                        $aoNew ++;
                     } else {
-                        $lineError++;
+                        $lineError ++;
                         $log .= 'la ligne ' . $lineRead . ' contient des erreurs<br>';
                     }
                 }

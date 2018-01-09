@@ -52,7 +52,7 @@ class AoAuction
 
     /**
      *
-     * @var integer @ORM\Column(name="ref", type="text", nullable=false)
+     * @var integer @ORM\Column(name="ref", type="integer", nullable=false)
      */
     protected $ref;
 

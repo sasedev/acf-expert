@@ -194,8 +194,14 @@ class AuctionController extends BaseController
                 $this->gvars['AuctionUpdateStatusForm'] = $auctionUpdateStatusForm->createView();
                 $this->gvars['AuctionUpdateSourceForm'] = $auctionUpdateSourceForm->createView();
 
-                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 1);
+                $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
                 $this->getSession()->remove('tabActive');
+
+                $nextAuction = $em->getRepository('AcfDataBundle:AoAuction')->getNextById($auction);
+                $this->gvars['next'] = $nextAuction;
+
+                $prevAuction = $em->getRepository('AcfDataBundle:AoAuction')->getPrevById($auction);
+                $this->gvars['prev'] = $prevAuction;
 
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.aoAuction.edit', array(
                     '%auction%' => $auction->getRef()
@@ -261,7 +267,7 @@ class AuctionController extends BaseController
                         $imgFile = $auctionUpdateImgForm['image']->getData();
 
                         if (null != $imgFile) {
-                            $imgDir = $this->getParameter('kernel.root_dir') . '/../web/res/Ao';
+                            $imgDir = $this->getParameter('kernel.root_dir') . '/../web/res/Ve';
                             $fileName = sha1(uniqid(mt_rand(), true)) . '.' . strtolower($imgFile->getClientOriginalExtension());
                             $imgFile->move($imgDir, $fileName);
                             $auction->setImg($fileName);
@@ -514,6 +520,12 @@ class AuctionController extends BaseController
                 $this->gvars['AuctionUpdateAddRefForm'] = $auctionUpdateAddRefForm->createView();
                 $this->gvars['AuctionUpdateStatusForm'] = $auctionUpdateStatusForm->createView();
                 $this->gvars['AuctionUpdateSourceForm'] = $auctionUpdateSourceForm->createView();
+
+                $nextAuction = $em->getRepository('AcfDataBundle:AoAuction')->getNextById($auction);
+                $this->gvars['next'] = $nextAuction;
+
+                $prevAuction = $em->getRepository('AcfDataBundle:AoAuction')->getPrevById($auction);
+                $this->gvars['prev'] = $prevAuction;
 
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.aoAuction.edit', array(
                     '%auction%' => $auction->getRef()
