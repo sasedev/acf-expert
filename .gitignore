@@ -35,6 +35,7 @@
 /phpunit.xml
 /composer.phar
 /composer.lock
+/web/webMail*
 /.settings/
 /.buildpath
 /.classpath

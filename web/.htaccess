@@ -5,7 +5,7 @@ DirectoryIndex app_dev.php
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
-	RewriteRule ^(bundles|res)($|/) - [L]
+	RewriteRule ^(bundles|res|webMail|webMail2)($|/) - [L]
 
 	RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
 	RewriteRule ^(.*) - [E=BASE:%1]
