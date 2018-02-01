@@ -1,0 +1,12 @@
+{% use "bootstrap_3_horizontal_layout.html.twig" %}
+
+{% block form_label_class -%}
+{% if attr.label_col is defined and attr.label_col is not empty %}{% set label_col = attr.label_col %}{% endif %}
+{% if label_col is defined %}col-sm-{{ label_col }}{% else %}col-sm-2{% endif %}
+{%- endblock form_label_class %}
+
+{% block form_group_class -%}
+{% if attr.widget_col is defined and attr.widget_col is not empty %}{% set widget_col = attr.widget_col %}{% endif %}
+{% if widget_col is defined %}col-sm-{{ widget_col }}{% else %}col-sm-10{% endif %}
+{%- endblock form_group_class %}
+
