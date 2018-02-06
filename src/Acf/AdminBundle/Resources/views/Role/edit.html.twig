@@ -4,31 +4,10 @@
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
-<script type="text/javascript" src="{{preload(asset('bundles/acfres/js/tinymce/jquery.tinymce.min.js'))}}"></script>
 <script type="text/javascript" src="{{preload(asset('bundles/acfres/js/bootstrap/duallistbox/3.0.2.js'))}}"></script>
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
-	$('textarea.wysiwyg').each(function() {
-		var options = {
-			script_url : '{{preload(asset('bundles/acfres/js/tinymce/tinymce.min.js'))}}',
-			theme: "modern",
-			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
-			{%if app.request.locale != 'en'%}
-			language : '{{ app.request.locale }}',
-			{% endif %}
-			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
-		};
-		$this = $(this);
-		if($this.is('[required]')) {
-			options.oninit = function(editor) {
-				editor.on('change', function(e) {
-					editor.save();
-				});
-			}
-		}
-		$this.tinymce(options);
-	});
 	$('#RoleUpdateParentsForm_parents').bootstrapDualListbox({
 		nonselectedlistlabel: 'Non-selected',
 		selectedlistlabel: 'Selected',
@@ -64,7 +43,7 @@ $(function() {
 						<div class="box-body">
 							<div class="row">
 								<div class="col-lg-3 text-right">{{'Role.name'|trans|raw}} :</div>
-								<div class="col-lg-9">{{role.name}}&nbsp; &nbsp;({{role.name|trans}})&nbsp;</div>
+								<div class="col-lg-9">{{role.name}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Role.description'|trans|raw}} :</div>
 								<div class="col-lg-9">{%if role.description is not empty%}{{role.description|raw}}{%else%}{{bsLabelWarning('_NA'|trans)}}{%endif%}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
@@ -73,7 +52,7 @@ $(function() {
 									{%if role.parents|length!=0%}
 									<ul class="list-unstyled">
 									{% for r in role.parents %}
-										<li><a href="{{path('_admin_role_editGet', {'id': r.id})}}">{{r.name|trans}}</a></li>
+										<li><a href="{{path('_admin_role_editGet', {'id': r.id})}}">{{r.description}}</a></li>
 									{% endfor %}
 									</ul>
 									{%else%}
@@ -86,7 +65,7 @@ $(function() {
 									{%if role.childs|length!=0%}
 									<ul class="list-unstyled">
 									{% for r in role.childs %}
-										<li><a href="{{path('_admin_role_editGet', {'id': r.id})}}">{{r.name}}</a></li>
+										<li><a href="{{path('_admin_role_editGet', {'id': r.id})}}">{{r.description}}</a></li>
 									{% endfor %}
 									</ul>
 									{%else%}
@@ -108,7 +87,7 @@ $(function() {
 						<div class="box-header"><h3 class="box-title">{{'Role.tlabel.editDescription'|trans}}</h3></div>
 						<div class="box-body">
 							{{form_start(RoleUpdateDescriptionForm, {'method':'POST', 'action': path('_admin_role_editPost', {'id': role.id}), 'style': 'horizontal'})}}
-							{{form_row(RoleUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							{{form_row(RoleUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8 })}}
 							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
 							{{form_end(RoleUpdateDescriptionForm)}}
 						</div>

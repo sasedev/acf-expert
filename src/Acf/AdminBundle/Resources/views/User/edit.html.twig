@@ -160,9 +160,9 @@ $(function() {
 									<ul class="list-unstyled">
 									{% for r in user.userRoles %}
 										{% if is_granted('ROLE_SUPERADMIN') %}
-										<li><a href="{{path('_admin_role_editGet', {'id': r.id})}}">{{r.name|trans}}</a></li>
+										<li><a href="{{path('_admin_role_editGet', {'id': r.id})}}">{{r.description}}</a></li>
 										{% else %}
-										<li>{{r.name|trans}}</li>
+										<li>{{r.description}}</li>
 										{% endif %}
 									{% endfor %}
 									</ul>

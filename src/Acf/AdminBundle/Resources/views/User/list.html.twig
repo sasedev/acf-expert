@@ -89,7 +89,7 @@ $(function() {
 								{%else%}
 								<ul class="list-unstyled">
 								{% for role in user.userRoles %}
-									<li>{{role.name|trans}}</li>
+									<li>{{role.description}}</li>
 								{% endfor %}
 								</ul>
 								{%endif%}

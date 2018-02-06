@@ -28,15 +28,13 @@ class UpdateUserRolesTForm extends AbstractType
             'label' => 'User.userRoles.label',
             'class' => 'AcfDataBundle:Role',
             'query_builder' => function (RoleRepository $rr) {
-                return $rr->createQueryBuilder('r')->orderBy('r.name', 'ASC');
+                return $rr->createQueryBuilder('r')
+                    ->orderBy('r.name', 'ASC');
             },
-            'choice_label' => 'name',
+            'choice_label' => 'description',
             'multiple' => true,
             'by_reference' => true,
-            'required' => true,
-            'attr' => array(
-                'choice_label_trans' => true
-            )
+            'required' => true
         ));
     }
 

@@ -73,7 +73,7 @@ $(function() {
 					{% if roles|length != 0 %}
 						{% for role in roles %}
 						<tr>
-							<td>{{ role.name }} ({{ role.name|trans }}) </td>
+							<td>{{ role.name }} </td>
 							<td>{{ role.description|raw }}</td>
 							<td>
 								{%if role.parents|length==0%}
@@ -81,7 +81,7 @@ $(function() {
 								{%else%}
 								<ul class="list-unstyled">
 								{% for role in role.parents %}
-									<li>{{role.name|trans}}</li>
+									<li>{{role.description}}</li>
 								{% endfor %}
 								</ul>
 								{%endif%}
@@ -92,7 +92,7 @@ $(function() {
 								{%else%}
 								<ul class="list-unstyled">
 								{% for role in role.childs %}
-									<li>{{role.name|trans}}</li>
+									<li>{{role.description}}</li>
 								{% endfor %}
 								</ul>
 								{%endif%}
