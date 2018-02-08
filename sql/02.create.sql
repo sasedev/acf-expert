@@ -1185,6 +1185,14 @@ CREATE TABLE "ao_subcategs" (
     CONSTRAINT "fk_ao_categs_categ" FOREIGN KEY ("categ_id") REFERENCES "ao_categs" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE "acf_users_ao_subcategs" (
+    "user_id"                                                           INT8 NOT NULL,
+    "subcateg_id"                                                       UUID NOT NULL,
+    CONSTRAINT "pk_acf_users_ao_subcategs" PRIMARY KEY ("user_id", "subcateg_id"),
+    CONSTRAINT "fk_acf_users_ao_subcategs_user" FOREIGN KEY ("user_id") REFERENCES "acf_users" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT "fk_acf_users_ao_subcategs_subcateg" FOREIGN KEY ("subcateg_id") REFERENCES "ao_subcategs" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 
 CREATE TABLE "ao_callfortenders" (
     "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),

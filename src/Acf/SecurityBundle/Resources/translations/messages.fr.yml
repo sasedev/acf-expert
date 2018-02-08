@@ -60,6 +60,7 @@ pagetitle.profile.txt: Mon Profil Utilisateur
 Profile.tab.overview: Détails
 Profile.tab.edit: Edition
 Profile.tab.orders: Commandes
+Profile.tab.subcategs: Abonnements Appels d'Offres
 Profile.tlabel.overview: 'Aperçu des détails de mon Profil'
 Profile.tlabel.editAvatar: 'Modification de mon Avatar'
 Profile.tlabel.editAvatar.crop: 'Selectionner la partie visible'
@@ -68,6 +69,8 @@ Profile.tlabel.editPreferedLang: 'Modification du Paramètre de Langue'
 Profile.tlabel.editEmail: 'Modification de mon Email'
 Profile.tlabel.editPassword: 'Modification de mon Mot de passe'
 Profile.tlabel.listOrders: 'Mes Commandes'
+Profile.tlabel.subcategs: Mes Abonnements aux Appels d'Offres
+Profile.tlabel.editSubcategs: Modifier Mes Abonnements aux Appels d'Offres
 Profile.edit.success: 'Succès de la modification de votre Profile'
 Profile.edit.failure: 'Echec de la modification de votre Profile'
 

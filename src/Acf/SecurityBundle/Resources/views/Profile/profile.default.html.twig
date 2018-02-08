@@ -108,6 +108,9 @@ $(function() {
 		<ul class="nav nav-tabs">
 			<li {%if tabActive==1%} class="active" {%endif%}><a href="#overview" data-toggle="tab">{{'Profile.tab.overview'|trans|raw}}</a></li>
 			<li {%if tabActive==2%} class="active" {%endif%}><a href="#edit" data-toggle="tab">{{'Profile.tab.edit'|trans|raw}}</a></li>
+			{% if is_granted('ROLE_CLIENT10') %}
+			<li {%if tabActive==3%} class="active" {%endif%}><a href="#aosubcategs" data-toggle="tab">{{'Profile.tab.subcategs'|trans|raw}}</a></li>
+			{% endif %}
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
@@ -226,6 +229,7 @@ $(function() {
 					</div>
 				</div>
 #}
+				
 				<div class="box box-danger">
 					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.editEmail'|trans|raw}}</h3></div>
 					<div class="box-body">
@@ -247,6 +251,38 @@ $(function() {
 					</div>
 				</div>
 			</div>
+			{% if is_granted('ROLE_CLIENT10') %}
+			<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="aosubcategs">
+				<div class="box box-primary">
+					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.subcategs'|trans}}</h3></div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-lg-3 text-right">{{'User.subcategs'|trans }} :</div>
+							<div class="col-lg-9">
+								{% if user.subcategs|length != 0 %}
+								<ul>
+									{% for subcateg in user.subcategs %}
+									<li>{{ subcateg.categ.title }} - {{ subcateg.ref }} {{ subcateg.title }}</li>
+									{% endfor %}
+								</ul>
+								{% else %}
+								Vous n'êtes abonnés à aucun type d'Appel d'Offres
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box box-danger">
+					<div class="box-header"><h3 class="box-title">{{'Profile.tlabel.editSubcategs'|trans|raw}}</h3></div>
+					<div class="box-body">
+						{{form_start(UserUpdateSubcategsForm, {'method':'POST','action': path('_security_profile_post') ,'style': 'horizontal' }) }}
+						{{form_row(UserUpdateSubcategsForm.subcategs, {'label_col': 3, 'widget_col': 8 })}}
+						<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+						{{form_end(UserUpdateSubcategsForm)}}
+					</div>
+				</div>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 	</div>

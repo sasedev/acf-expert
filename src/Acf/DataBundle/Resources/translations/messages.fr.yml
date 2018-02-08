@@ -104,6 +104,7 @@ User.country: Pays
 User.phone: Tel Fixe
 User.mobile: Tel Mobile
 User.userRoles: Privilèges
+User.subcategs: Abonnements Appels d'Offres
 User.dtCrea: Date d'ajout
 User.dtUpdate: Date de modification
 
@@ -135,6 +136,7 @@ User.country.label: "Pays :"
 User.phone.label: "Tel Fixe :"
 User.mobile.label: "Tel Mobile :"
 User.userRoles.label: "Privilèges :"
+User.subcategs.label: "Abonnements Appels d'Offres :"
 User.oldPassword.label: "Ancien Mot de passe :"
 User.newPassword.first: "Nouveau Mot de passe :"
 User.newPassword.second: "Confirmation Mot de passe :"

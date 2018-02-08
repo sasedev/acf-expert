@@ -9,6 +9,7 @@ use Acf\SecurityBundle\Form\UpdateEmailTForm as UserUpdateEmailTForm;
 use Acf\SecurityBundle\Form\UpdatePasswordTForm as UserUpdatePasswordTForm;
 // use Acf\SecurityBundle\Form\UpdatePreferedLangTForm as UserUpdatePreferedLangTForm;
 use Acf\SecurityBundle\Form\UpdateProfileTForm as UserUpdateProfileTForm;
+use Acf\SecurityBundle\Form\UpdateSubcategsTForm as UserUpdateSubcategsTForm;
 use Imagine\Imagick\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
@@ -51,6 +52,7 @@ class ProfileController extends BaseController
         $userUpdateProfileForm = $this->createForm(UserUpdateProfileTForm::class, $user);
         $userUpdateEmailForm = $this->createForm(UserUpdateEmailTForm::class, $user);
         $userUpdatePasswordForm = $this->createForm(UserUpdatePasswordTForm::class, $user);
+        $userUpdateSubcategsForm = $this->createForm(UserUpdateSubcategsTForm::class, $user);
         $userUploadAvatarForm = $this->createForm(UserUploadAvatarTForm::class, $user);
         $userCropAvatarForm = $this->createForm(UserCropAvatarTForm::class);
 
@@ -60,6 +62,7 @@ class ProfileController extends BaseController
         $this->gvars['UserUpdatePasswordForm'] = $userUpdatePasswordForm->createView();
         $this->gvars['UserUploadAvatarForm'] = $userUploadAvatarForm->createView();
         $this->gvars['UserCropAvatarForm'] = $userCropAvatarForm->createView();
+        $this->gvars['UserUpdateSubcategsForm'] = $userUpdateSubcategsForm->createView();
 
         $this->gvars['pagetitle'] = $this->translate('pagetitle.profile');
         $this->gvars['pagetitle_txt'] = $this->translate('pagetitle.profile.txt');
@@ -80,11 +83,13 @@ class ProfileController extends BaseController
         $oldDbpass = $user->getPassword();
 
         $em = $this->getEntityManager();
+        $user = $em->getRepository('AcfDataBundle:User')->find($user->getId());
 
         $userUpdateProfileForm = $this->createForm(UserUpdateProfileTForm::class, $user);
         // $userUpdatePreferedLangForm = $this->createForm(UserUpdatePreferedLangTForm::class, $user);
         $userUpdateEmailForm = $this->createForm(UserUpdateEmailTForm::class, $user);
         $userUpdatePasswordForm = $this->createForm(UserUpdatePasswordTForm::class, $user);
+        $userUpdateSubcategsForm = $this->createForm(UserUpdateSubcategsTForm::class, $user);
         $userUploadAvatarForm = $this->createForm(UserUploadAvatarTForm::class, $user);
         $userCropAvatarForm = $this->createForm(UserCropAvatarTForm::class);
 
@@ -197,7 +202,9 @@ class ProfileController extends BaseController
                 $lastbox = new Box(130, 130);
                 $mode = ImageInterface::THUMBNAIL_OUTBOUND;
 
-                $image->crop($firstpoint, $selbox)->thumbnail($lastbox, $mode)->save($path);
+                $image->crop($firstpoint, $selbox)
+                    ->thumbnail($lastbox, $mode)
+                    ->save($path);
 
                 $file = new File($path);
                 $avatarDir = $this->getParameter('kernel.root_dir') . '/../web/res/avatars';
@@ -219,12 +226,30 @@ class ProfileController extends BaseController
 
                 $this->flashMsgSession('error', $this->translate('Profile.edit.failure'));
             }
+        } elseif (isset($reqData['UserUpdateSubcategsForm'])) {
+            $this->gvars['tabActive'] = 3;
+            $this->getSession()->set('tabActive', 3);
+            $userUpdateSubcategsForm->handleRequest($request);
+            if ($userUpdateSubcategsForm->isValid()) {
+                $em->persist($user);
+                $em->flush();
+                $this->flashMsgSession('success', $this->translate('Profile.edit.success'));
+
+                // $this->traceEntity($cloneUser, $user);
+
+                return $this->redirect($this->generateUrl('_security_profile'));
+            } else {
+                $em->refresh($user);
+
+                $this->flashMsgSession('error', $this->translate('Profile.edit.failure'));
+            }
         }
 
         $this->gvars['user'] = $user;
         $this->gvars['UserUpdateProfileForm'] = $userUpdateProfileForm->createView();
         $this->gvars['UserUpdateEmailForm'] = $userUpdateEmailForm->createView();
         $this->gvars['UserUpdatePasswordForm'] = $userUpdatePasswordForm->createView();
+        $this->gvars['UserUpdateSubcategsForm'] = $userUpdateSubcategsForm->createView();
         $this->gvars['UserUploadAvatarForm'] = $userUploadAvatarForm->createView();
         $this->gvars['UserCropAvatarForm'] = $userCropAvatarForm->createView();
 
@@ -236,7 +261,9 @@ class ProfileController extends BaseController
 
     protected function traceEntity(User $cloneUser, User $user)
     {
-        $curUser = $this->getSecurityTokenStorage()->getToken()->getUser();
+        $curUser = $this->getSecurityTokenStorage()
+            ->getToken()
+            ->getUser();
         $trace = new Trace();
         $trace->setActionId($user->getId());
         $trace->setActionType(Trace::AT_UPDATE);

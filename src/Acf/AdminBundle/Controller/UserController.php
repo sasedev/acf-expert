@@ -11,6 +11,7 @@ use Acf\AdminBundle\Form\User\UpdateLockoutTForm as UserUpdateLockoutTForm;
 use Acf\AdminBundle\Form\User\UpdatePasswordTForm as UserUpdatePasswordTForm;
 use Acf\AdminBundle\Form\User\UpdatePreferedLangTForm as UserUpdatePreferedLangTForm;
 use Acf\AdminBundle\Form\User\UpdateProfileTForm as UserUpdateProfileTForm;
+use Acf\AdminBundle\Form\User\UpdateSubcategsTForm as UserUpdateSubcategsTForm;
 use Acf\AdminBundle\Form\User\UpdateUserRolesTForm as UserUpdateUserRolesTForm;
 use Acf\AdminBundle\Form\User\UploadAvatarTForm as UserUploadAvatarTForm;
 use Imagine\Imagick\Imagine;
@@ -20,6 +21,7 @@ use Imagine\Image\ImageInterface;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Intl\Intl;
+use Acf\DataBundle\Entity\AoSubCateg;
 
 /**
  *
@@ -486,6 +488,7 @@ class UserController extends BaseController
                 $userUpdateUserRolesForm = $this->createForm(UserUpdateUserRolesTForm::class, $user);
                 $userUploadAvatarForm = $this->createForm(UserUploadAvatarTForm::class, $user);
                 $userCropAvatarForm = $this->createForm(UserCropAvatarTForm::class);
+                $userUpdateSubcategsForm = $this->createForm(UserUpdateSubcategsTForm::class, $user);
 
                 $this->gvars['user'] = $user;
                 $this->gvars['UserUpdateEmailForm'] = $userUpdateEmailForm->createView();
@@ -494,6 +497,7 @@ class UserController extends BaseController
                 $this->gvars['UserUpdatePasswordForm'] = $userUpdatePasswordForm->createView();
                 $this->gvars['UserUpdatePreferedLangForm'] = $userUpdatePreferedLangForm->createView();
                 $this->gvars['UserUpdateProfileForm'] = $userUpdateProfileForm->createView();
+                $this->gvars['UserUpdateSubcategsForm'] = $userUpdateSubcategsForm->createView();
                 $this->gvars['UserUpdateUserRolesForm'] = $userUpdateUserRolesForm->createView();
                 $this->gvars['UserUploadAvatarForm'] = $userUploadAvatarForm->createView();
                 $this->gvars['UserCropAvatarForm'] = $userCropAvatarForm->createView();
@@ -551,6 +555,7 @@ class UserController extends BaseController
                 $userUpdateUserRolesForm = $this->createForm(UserUpdateUserRolesTForm::class, $user);
                 $userUploadAvatarForm = $this->createForm(UserUploadAvatarTForm::class, $user);
                 $userCropAvatarForm = $this->createForm(UserCropAvatarTForm::class);
+                $userUpdateSubcategsForm = $this->createForm(UserUpdateSubcategsTForm::class, $user);
 
                 $this->gvars['tabActive'] = $this->getSession()->get('tabActive', 2);
                 $this->getSession()->remove('tabActive');
@@ -709,6 +714,29 @@ class UserController extends BaseController
                             '%user%' => $user->getUsername()
                         )));
                     }
+                } elseif (isset($reqData['UserUpdateSubcategsForm'])) {
+                    $this->gvars['tabActive'] = 3;
+                    $this->getSession()->set('tabActive', 3);
+                    $userUpdateSubcategsForm->handleRequest($request);
+                    if ($userUpdateSubcategsForm->isValid()) {
+                        $user->setSubcategs($userUpdateSubcategsForm['subcategs']->getData());
+                        $em->persist($user);
+
+                        $em->flush();
+                        $this->flashMsgSession('success', $this->translate('User.edit.success', array(
+                            '%user%' => $user->getUsername()
+                        )));
+
+                        // $this->traceEntity($cloneUser, $user);
+
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($user);
+
+                        $this->flashMsgSession('error', $this->translate('User.edit.failure', array(
+                            '%user%' => $user->getUsername()
+                        )));
+                    }
                 } elseif (isset($reqData['UserUpdateUserRolesForm'])) {
                     $this->gvars['tabActive'] = 2;
                     $this->getSession()->set('tabActive', 2);
@@ -824,6 +852,7 @@ class UserController extends BaseController
                 $this->gvars['UserUpdateUserRolesForm'] = $userUpdateUserRolesForm->createView();
                 $this->gvars['UserUploadAvatarForm'] = $userUploadAvatarForm->createView();
                 $this->gvars['UserCropAvatarForm'] = $userCropAvatarForm->createView();
+                $this->gvars['UserUpdateSubcategsForm'] = $userUpdateSubcategsForm->createView();
 
                 $this->gvars['pagetitle'] = $this->translate('pagetitle.user.edit', array(
                     '%user%' => $user->getUsername()

@@ -63,6 +63,20 @@ class AoSubCateg
 
     /**
      *
+     * @var Collection @ORM\ManyToMany(targetEntity="User", mappedBy="subcategs")
+     *      @ORM\JoinTable(name="acf_users_ao_subcategs",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="subcateg_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *      }
+     *      )
+     */
+    protected $users;
+
+    /**
+     *
      * @var AoCateg @ORM\ManyToOne(targetEntity="AoCateg", inversedBy="subCategs", cascade={"persist"})
      *      @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="categ_id", referencedColumnName="id")
@@ -85,6 +99,7 @@ class AoSubCateg
         $this->priority = 100;
         $this->dtCrea = new \DateTime('now');
         $this->callfortenders = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -201,6 +216,60 @@ class AoSubCateg
     public function getDtUpdate()
     {
         return $this->dtUpdate;
+    }
+
+    /**
+     * Add user
+     *
+     * @param User $user
+     *
+     * @return AoSubCateg $this
+     */
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+        $user->addSubcateg($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param User $user
+     *
+     * @return AoSubCateg $this
+     */
+    public function removeUser(User $user)
+    {
+        $this->users->removeElement($user);
+        $user->removeSubcateg($this);
+
+        return $this;
+    }
+
+    /**
+     * Get $users
+     *
+     * @return ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Set $users
+     *
+     * @param Collection $users
+     *
+     * @return AoSubCateg $this
+     */
+    public function setUsers(Collection $users)
+    {
+        $this->users = $users;
+
+        return $this;
     }
 
     /**

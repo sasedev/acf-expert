@@ -262,6 +262,22 @@ class User implements UserInterface, \Serializable
 
     /**
      *
+     * @var Collection @ORM\ManyToMany(targetEntity="AoSubCateg", inversedBy="users", cascade={"persist"})
+     *      @ORM\JoinTable(name="acf_users_ao_subcategs",
+     *      joinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *      @ORM\JoinColumn(name="subcateg_id", referencedColumnName="id")
+     *      }
+     *      )
+     *      @ORM\OrderBy({"priority" = "ASC", "ref" = "ASC"})
+     *      @Assert\Count(min = 0, max = 15, groups={"subcategs"})
+     */
+    protected $subcategs;
+
+    /**
+     *
      * @var Collection @ORM\ManyToMany(targetEntity="Company", mappedBy="users")
      *      @ORM\JoinTable(name="acf_company_users",
      *      joinColumns={
@@ -372,6 +388,7 @@ class User implements UserInterface, \Serializable
         $this->notifs = new ArrayCollection();
         $this->sharedNotifs = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->subcategs = new ArrayCollection();
     }
 
     /**
@@ -1103,6 +1120,58 @@ class User implements UserInterface, \Serializable
     public function setUserRoles(Collection $userRoles)
     {
         $this->userRoles = $userRoles;
+
+        return $this;
+    }
+
+    /**
+     * Add $subcateg
+     *
+     * @param AoSubCateg $subcateg
+     *
+     * @return User
+     */
+    public function addSubcateg(AoSubCateg $subcateg)
+    {
+        $this->subcategs[] = $subcateg;
+
+        return $this;
+    }
+
+    /**
+     * Remove $subcateg
+     *
+     * @param AoSubCateg $subcateg
+     *
+     * @return User
+     */
+    public function removeSubcateg(AoSubCateg $subcateg)
+    {
+        $this->subcategs->removeElement($subcateg);
+
+        return $this;
+    }
+
+    /**
+     * Get $subcategs
+     *
+     * @return ArrayCollection
+     */
+    public function getSubcategs()
+    {
+        return $this->subcategs;
+    }
+
+    /**
+     * Set $subcategs
+     *
+     * @param Collection $subcategs
+     *
+     * @return User
+     */
+    public function setSubcategs(Collection $subcategs)
+    {
+        $this->subcategs = $subcategs;
 
         return $this;
     }

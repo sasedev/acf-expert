@@ -273,6 +273,7 @@ pagetitle.user.edit.txt: Edition Utilisateur "%user%"
 
 User.tab.overview: Détails
 User.tab.edit: Edition
+User.tab.subcategs: Abonnements Appels d'Offres
 
 User.tlabel.list: Liste des Utilisateurs
 User.tlabel.add: Ajouter nouvel Utilisateur
@@ -286,6 +287,8 @@ User.tlabel.editPassword: Modification du Mot de passe de l'Utilisateur
 User.tlabel.editLockout: Modification du Verrouillage de compte de l'Utilisateur
 User.tlabel.editUserRoles: Modification des privilèges de l'Utilisateur
 User.tlabel.editLastValidity: Modification Date de fin de validité du compte de l'Utilisateur
+User.tlabel.subcategs: Liste des Abonnements aux Appels d'Offres
+User.tlabel.editSubcategs: Modification des Abonnements aux Appels d'Offres
 
 User.empty: Aucun Utilisateur trouvé dans la base de donnée
 
