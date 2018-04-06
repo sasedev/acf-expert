@@ -14,8 +14,8 @@
 {%endblock end_static_js%}
 {%block end2_dynamic_jstxt%}
 $(function() {
-	{% if callfortenders|length != 0 %}
-	$('#callfortenderList').dataTable({
+	{% if auctions|length != 0 %}
+	$('#auctionList').dataTable({
 		"order": [[ 0, "desc" ]],
 		{%if app.request.locale != 'en'%}
 		"language": {"url": '{{preload(asset('bundles/acfres/json/dataTables/i18n/'~app.request.locale~'.json'))}}'},
@@ -35,11 +35,7 @@ $(function() {
 	});
 	{% endif %}
 	
-	$('#SearchForm_grp').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect: true});
-	
 	$('#SearchForm_nature').chosen({width: "100%", disable_search: true, allow_single_deselect: true});
-	
-	$('#SearchForm_typeAvis').chosen({width: "100%", disable_search: true, allow_single_deselect: true});
 	
 	const now = new Date();
 	var dd = now.getDate()
@@ -110,7 +106,34 @@ $(function() {
 			clearBtn: true
 		}).datetimepicker('show');
 	});
-	$('#searchBlock').hide();
+	
+	$('#SearchForm_dtOpenBegin').click(function( event ) {
+		event.preventDefault();
+		$('#SearchForm_dtOpenBegin').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd',
+			clearBtn: true
+		}).datetimepicker('show');
+	});
+	
+	$('#SearchForm_dtOpenEnd').click(function( event ) {
+		event.preventDefault();
+		$('#SearchForm_dtOpenEnd').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd',
+			clearBtn: true
+		}).datetimepicker('show');
+	});
 	$('#searchBlockLink').css( 'cursor', 'pointer' );
 	$('#searchBlockLink').click(function( event ) {
 		$('#searchBlock').toggle( "slow");
@@ -119,9 +142,7 @@ $(function() {
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
 <ol class="breadcrumb">
-	<li><a href="{{ path('ao_front_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.ao'|trans|raw}}</a></li>
-	<li><a href="{{ path('ao_front_categ_editGet', {'uid': subCateg.categ.id}) }}">{{faIco('object-ungroup')}} &nbsp; {{subCateg.categ.title}}</a></li>
-	<li class="active"><a href="{{ path('ao_front_subcateg_editGet', {'uid': subCateg.id}) }}">{{faIco('object-group')}} &nbsp; {{subCateg.ref}} : {{subCateg.title}}</a></li>
+	<li class="active"><a href="{{ path('ve_front_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.ve'|trans|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}
 {%block content%}
@@ -129,22 +150,14 @@ $(function() {
 	<div class="col-lg-12">
 		<div class="box box-success">
 			<div class="box-header">
-				<h3 class="box-title" id="searchBlockLink">{{ 'AoCallfortender.search.form'|trans|raw}}</h3>
+				<h3 class="box-title" id="searchBlockLink">{{ 'AoAuction.search.form'|trans|raw}}</h3>
 			</div>
 			<div class="box-body table-responsive" id="searchBlock">
-				{{form_start(SearchForm, {'method':'GET', 'action': path('ao_front_search'), 'style': 'horizontal'})}}
+				{{form_start(SearchForm, {'method':'GET', 'action': path('ve_front_search'), 'style': 'horizontal'})}}
 				<table class="table table-small">
 					<tr>
 						<td width="50%">
 							{{form_row(SearchForm.country, {'label_col': 3, 'widget_col': 8 })}}
-						</td>
-						<td>
-							{{form_row(SearchForm.grp, {'label_col': 3, 'widget_col': 8})}}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							{{form_row(SearchForm.typeAvis, {'label_col': 3, 'widget_col': 8})}}
 						</td>
 						<td>
 							{{form_row(SearchForm.nature, {'label_col': 3, 'widget_col': 8})}}
@@ -167,6 +180,14 @@ $(function() {
 						</td>
 					</tr>
 					<tr>
+						<td>
+							{{form_row(SearchForm.dtOpenBegin, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+						<td>
+							{{form_row(SearchForm.dtOpenEnd, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+					</tr>
+					<tr>
 						<td align="center" colspan="2">
 							<div class="form-group"><div class="col-lg-offset-8 col-lg-2"><button class="btn-primary btn btn-xs" type="submit"><span class="glyphicon glyphicon-search"></span> Rechercher</button></div></div>
 						</td>
@@ -177,41 +198,41 @@ $(function() {
 		</div>
 		<div class="box">
 			<div class="box-header">
-				<h3 class="box-title">{{ 'AoCateg.tlabel.list'|trans|raw}}</h3>
+				<h3 class="box-title">{{ 'AoAuction.tlabel.list'|trans|raw}}</h3>
 			</div>
 			<div class="box-body table-responsive">
-				<table class="table table-bordered table-hover " id="callfortenderList">
+				<table class="table table-bordered table-hover " id="auctionList">
 					<thead>
 						<tr>
-							<th>{{ 'AoCallfortender.dtPublication.label'|trans|raw }}</th>
-							<th>{{ 'AoCallfortender.country.label'|trans|raw }}</th>
-							<th>{{ 'AoCallfortender.description.label'|trans|raw }}</th>
-							<th>{{ 'AoCallfortender.company.label'|trans|raw }}</th>
-							<th>{{ 'AoCallfortender.nature.label'|trans|raw }}</th>
-							<th>{{ 'AoCallfortender.dtEnd.label'|trans|raw }}</th>
-							<th>{{ 'AoCallfortender.daysleft.label'|trans|raw }}</th>
-							<th>{{ 'AoCallfortender.refn.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.dtPublication.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.country.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.description.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.company.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.nature.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.dtEnd.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.daysleft.label'|trans|raw }}</th>
+							<th>{{ 'AoAuction.refn.label'|trans|raw }}</th>
 							<th>{{ 'action'|trans|raw }}</th>
 						</tr>
 					</thead>
 					<tbody>
-					{% for callfortender in callfortenders %}
+					{% for auction in auctions %}
 						<tr>
-							<td>{% if callfortender.dtPublication is not empty %}{{callfortender.dtPublication|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
-							<td>{% if callfortender.country is not empty %}{{callfortender.country}}{%else%}{{'_NA'|trans}}{% endif %}</td>
-							<td>{% if callfortender.description is not empty %}{{callfortender.description|raw}}{%else%}{{'_NA'|trans}}{% endif %}</td>
-							<td>{% if callfortender.company is not empty %}{{callfortender.company}}{%else%}{{'_NA'|trans}}{% endif %}</td>
-							<td>{% if callfortender.nature is not empty %}{{('AoCallfortender.nature.'~callfortender.nature)|trans}}{%else%}{{'_NA'|trans}}{% endif %}</td>
-							<td>{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
-							<td>{% if callfortender.dtEnd is not empty and callfortender.dtEnd > date("now") %}{{ callfortender.dtEnd.diff(date("now")).days }}{%else%}{{'AoCallfortender.expired'|trans}}{% endif %}</td>
-							<td>{% if callfortender.ref is not empty %}{{callfortender.ref}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if auction.dtPublication is not empty %}{{auction.dtPublication|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if auction.country is not empty %}{{auction.country}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if auction.description is not empty %}{{auction.description|raw}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if auction.company is not empty %}{{auction.company}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if auction.nature is not empty %}{{('AoAuction.nature.'~auction.nature)|trans}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if auction.dtEnd is not empty %}{{auction.dtEnd|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td>{% if auction.dtEnd is not empty and auction.dtEnd > date("now") %}{{ auction.dtEnd.diff(date("now")).days }}{%else%}{{'AoAuction.expired'|trans}}{% endif %}</td>
+							<td>{% if auction.ref is not empty %}{{auction.ref}}{%else%}{{'_NA'|trans}}{% endif %}</td>
 							<td>
-								<a class="btn btn-sm btn-info" href="{{path('ao_front_callfortender_editGet',{'uid':callfortender.id})}}">{{ glyphIco('eye-open') }} &nbsp; {{ 'action.show'|trans }}</a>
+								<a class="btn btn-sm btn-info" href="{{path('ve_front_auction_editGet',{'uid':auction.id})}}">{{ glyphIco('eye-open') }} &nbsp; {{ 'action.show'|trans }}</a>
 							</td>
 						</tr>
 					{% else %}
 						<tr>
-							<td colspan="9">{{ 'AoCallfortender.empty'|trans|raw }}</td>
+							<td colspan="9">{{ 'AoAuction.empty'|trans|raw }}</td>
 						</tr>
 					{% endfor %}
 					</tbody>

@@ -2752,7 +2752,7 @@ table.text-center th {
 }
 .login-box,
 .register-box {
-	width: 580px;
+	width: 780px;
 	margin: 2% auto;
 }
 @media (max-width: 768px) {

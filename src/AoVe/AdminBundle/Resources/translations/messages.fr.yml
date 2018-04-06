@@ -134,6 +134,12 @@ AoCallfortender.import.failure: Echec de l'Import du Fichier Excel
 AoCallfortender.excel.label: 'Appels d''Offre (Excel) :'
 AoCallfortender.tlabel.import: 'Import Excel d''Appels d''Offre'
 
+AoCallfortender.search.form: Filtrer le résultats
+AoCallfortender.dtPublication.begin.label: 'Date publication entre le :'
+AoCallfortender.dtPublication.end.label: 'et le :'
+AoCallfortender.dtEnd.begin.label: 'Date échéance entre le :'
+AoCallfortender.dtEnd.end.label: 'et le :'
+
 #AoAuction
 menu.admin.auction: Ventes Aux enchères
 menu.admin.aoauction.add: Ajouter Vente aux enchères

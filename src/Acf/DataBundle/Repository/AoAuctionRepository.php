@@ -63,6 +63,67 @@ class AoAuctionRepository extends EntityRepository
     }
 
     /**
+     * Get Query for All Entities
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getSearchFrontQuery($data)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.status = :status')
+            ->setParameter('status', AoAuction::STATUS_SHOW)
+            ->orderBy('a.dtPublication', 'DESC');
+        if (\is_array($data)) {
+            if (isset($data['country']) && $data['country'] != null) {
+                $qb->andWhere('LOWER(a.country) LIKE :country');
+                $qb->setParameter('country', '%' . \strtolower(\trim($data['country'])) . '%');
+            }
+            if (isset($data['nature']) && $data['nature'] != null) {
+                $qb->andWhere('a.nature = :nature');
+                $qb->setParameter('nature', $data['nature']);
+            }
+            if (isset($data['dtPublicationBegin']) && $data['dtPublicationBegin'] != null) {
+                $qb->andWhere('a.dtPublication >= :dtPublicationBegin');
+                $qb->setParameter('dtPublicationBegin', $data['dtPublicationBegin']);
+            }
+            if (isset($data['dtPublicationEnd']) && $data['dtPublicationEnd'] != null) {
+                $qb->andWhere('a.dtPublication <= :dtPublicationEnd');
+                $qb->setParameter('dtPublicationEnd', $data['dtPublicationEnd']);
+            }
+            if (isset($data['dtEndBegin']) && $data['dtEndBegin'] != null) {
+                $qb->andWhere('a.dtEnd >= :dtEndBegin');
+                $qb->setParameter('dtEndBegin', $data['dtEndBegin']);
+            }
+            if (isset($data['dtEndEnd']) && $data['dtEndEnd'] != null) {
+                $qb->andWhere('a.dtEnd <= :dtEndEnd');
+                $qb->setParameter('dtEndEnd', $data['dtEndEnd']);
+            }
+            if (isset($data['dtOpenBegin']) && $data['dtOpenBegin'] != null) {
+                $qb->andWhere('a.dtOpen >= :dtOpenBegin');
+                $qb->setParameter('dtOpenBegin', $data['dtOpenBegin']);
+            }
+            if (isset($data['dtOpenEnd']) && $data['dtOpenEnd'] != null) {
+                $qb->andWhere('a.dtOpen <= :dtOpenEnd');
+                $qb->setParameter('dtOpenEnd', $data['dtOpenEnd']);
+            }
+        }
+
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get All Entities
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function getSearchFront($data)
+    {
+        return $this->getSearchFrontQuery($data)->execute();
+    }
+
+    /**
      * Get Query for Next Element
      *
      * @param AoAuction $auction

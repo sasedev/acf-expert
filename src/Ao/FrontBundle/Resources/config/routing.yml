@@ -2,6 +2,10 @@ ao_front_homepage:
     path:     /
     defaults: { _controller: "AoFrontBundle:Default:index" }
 
+ao_front_search:
+    path:     /search
+    defaults: { _controller: "AoFrontBundle:Default:search" }
+
 ao_front_categ_editGet:
     path:     /c/{uid}
     defaults: { _controller: "AoFrontBundle:Categ:editGet" }

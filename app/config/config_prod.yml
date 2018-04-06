@@ -27,6 +27,8 @@ monolog:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%_error.log"
             level: error
+            excluded_404s:
+                - ^/
         syslog_info:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%_info.log"

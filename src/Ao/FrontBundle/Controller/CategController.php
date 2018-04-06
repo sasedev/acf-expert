@@ -1,6 +1,7 @@
 <?php
 namespace Ao\FrontBundle\Controller;
 
+use Ao\FrontBundle\Form\SearchTForm;
 use Sasedev\Commons\SharedBundle\Controller\BaseController;
 
 /**
@@ -43,6 +44,10 @@ class CategController extends BaseController
             if (null == $categ) {
                 $this->flashMsgSession('warning', $this->translate('AoCateg.edit.notfound'));
             } else {
+
+                $searchForm = $this->createForm(SearchTForm::class, null, array());
+
+                $this->gvars['SearchForm'] = $searchForm->createView();
 
                 $callfortenders = $em->getRepository('AcfDataBundle:AoCallfortender')->getAllFrontByCateg($categ);
                 $this->gvars['callfortenders'] = $callfortenders;

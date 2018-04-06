@@ -367,7 +367,7 @@ class AoSubCateg
      */
     public function __toString()
     {
-        return $this->getRef() . ' : ' . $this->getTitle();
+        return $this->getRef() . ' : ' . $this->getTitle() . ' (' . $this->getCateg()->getTitle() . ')';
     }
 
     /**

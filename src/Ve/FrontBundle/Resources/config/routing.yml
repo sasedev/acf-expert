@@ -2,6 +2,10 @@ ve_front_homepage:
     path:     /
     defaults: { _controller: "VeFrontBundle:Default:index" }
 
+ve_front_search:
+    path:     /search
+    defaults: { _controller: "VeFrontBundle:Default:search" }
+
 
 ve_front_auction_editGet:
     path:     /ve/{uid}

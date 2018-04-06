@@ -247,4 +247,34 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     {
         return $this->getAllUnlockedQuery()->execute();
     }
+
+    /**
+     * Get Query for All Entities where lockout is unlocked
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getAllAoNewsletterQuery()
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->leftJoin('u.userRoles', 'r')
+            ->where('u.lockout = :uLockout')
+            ->andWhere('r.name = :rName')
+            ->orderBy('u.username', 'ASC')
+            ->setParameter('uLockout', User::LOCKOUT_UNLOCKED)
+            ->setParameter('rName', 'ROLE_CLIENT10');
+
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get All Entities where lockout is unlocked
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function getAllAoNewsletter()
+    {
+        return $this->getAllAoNewsletterQuery()->execute();
+    }
 }

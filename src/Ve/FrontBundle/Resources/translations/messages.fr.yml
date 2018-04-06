@@ -2,3 +2,10 @@ menu.ve: Ventes aux enchères
 breadcrumb.ve: Ventes aux enchères
 
 
+AoAuction.search.form: Filtrer le résultats
+AoAuction.dtPublication.begin.label: 'Date publication entre le :'
+AoAuction.dtPublication.end.label: 'et le :'
+AoAuction.dtEnd.begin.label: 'Date échéance entre le :'
+AoAuction.dtEnd.end.label: 'et le :'
+AoAuction.dtOpen.begin.label: 'Ouverture des plis entre le :'
+AoAuction.dtOpen.end.label: 'et le :'

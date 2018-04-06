@@ -1,0 +1,46 @@
+<html>
+<body>
+Bonjour <b>{{ user.fullName }}</b>.,<br>
+
+Nous avons le plaisir de vous envoyer les appels d'offres parus sur  <a href="https://appelsdoffres.tn">appelsdoffres.tn</a>  selon vos critères de choix : <br>
+
+{% for subcateg in  subcategs %}
+<h3 style="text-decoration: underline;">{{ subcateg.title }}</h3>
+<table style="width: 90%; border: 1px solid black;">
+<thead>
+	<tr style="background-color: #BFBFBF;">
+		<th>{{ 'AoCallfortender.dtPublication.label'|trans|raw }}</th>
+		<th>{{ 'AoCallfortender.country.label'|trans|raw }}</th>
+		<th>{{ 'AoCallfortender.description.label'|trans|raw }}</th>
+		<th>{{ 'AoCallfortender.company.label'|trans|raw }}</th>
+		<th>{{ 'AoCallfortender.nature.label'|trans|raw }}</th>
+		<th>{{ 'AoCallfortender.dtEnd.label'|trans|raw }}</th>
+		<th>{{ 'AoCallfortender.refn.label'|trans|raw }}</th>
+	</tr>
+</thead>
+<tbody>
+	{% for callfortender in  subcateg.content %}
+	<tr style="background-color: {{ cycle(['#90CEDD', '#E2EBF2'], loop.index0) }};">
+		<td>{% if callfortender.dtPublication is not empty %}{{callfortender.dtPublication|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+		<td>{% if callfortender.country is not empty %}{{callfortender.country}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+		<td>{% if callfortender.description is not empty %}{{callfortender.description|raw}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+		<td>{% if callfortender.company is not empty %}{{callfortender.company}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+		<td>{% if callfortender.nature is not empty %}{{('AoCallfortender.nature.'~callfortender.nature)|trans}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+		<td>{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+		<td>{% if callfortender.ref is not empty %}{{callfortender.ref}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+	</tr>
+	{% endfor %}
+</tbody>
+</table>
+{% endfor %}
+<p>
+<br>
+<br>
+<b>Nous vous remercions pour votre confiance</b><br><small><b>L’Equipe « L’Expert des Marchés »</b></small><br>
+<img alt="Cabinet FAKHFAKH d'Expertise Comptable" src="{{ logo }}"><br>
+Tél : +216 20 825 000<br>
+Email : <a href="mailto:contact@appelsdoffres.tn">contact@appelsdoffres.tn</a><br>
+<small>REMARQUE : Ce courriel a été généré automatiquement par <a href="https://www.acf-expert.tn">https://www.acf-expert.tn</a>.<br>
+Ne répondez pas à ce courriel.</small>
+</body>
+</html>

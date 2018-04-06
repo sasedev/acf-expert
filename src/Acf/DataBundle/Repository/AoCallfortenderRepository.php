@@ -69,6 +69,67 @@ class AoCallfortenderRepository extends EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
+    public function getSearchFrontQuery($data)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.status = :status')
+            ->setParameter('status', AoCallfortender::STATUS_SHOW)
+            ->orderBy('a.dtPublication', 'DESC');
+        if (\is_array($data)) {
+            if (isset($data['country']) && $data['country'] != null) {
+                $qb->andWhere('LOWER(a.country) LIKE :country');
+                $qb->setParameter('country', '%' . \strtolower(\trim($data['country'])) . '%');
+            }
+            if (isset($data['grp']) && $data['grp'] != null) {
+                $qb->andWhere('a.grp = :grp');
+                $qb->setParameter('grp', $data['grp']);
+            }
+            if (isset($data['typeAvis']) && $data['typeAvis'] != null) {
+                $qb->andWhere('a.typeAvis = :typeAvis');
+                $qb->setParameter('typeAvis', $data['typeAvis']);
+            }
+            if (isset($data['nature']) && $data['nature'] != null) {
+                $qb->andWhere('a.nature = :nature');
+                $qb->setParameter('nature', $data['nature']);
+            }
+            if (isset($data['dtPublicationBegin']) && $data['dtPublicationBegin'] != null) {
+                $qb->andWhere('a.dtPublication >= :dtPublicationBegin');
+                $qb->setParameter('dtPublicationBegin', $data['dtPublicationBegin']);
+            }
+            if (isset($data['dtPublicationEnd']) && $data['dtPublicationEnd'] != null) {
+                $qb->andWhere('a.dtPublication <= :dtPublicationEnd');
+                $qb->setParameter('dtPublicationEnd', $data['dtPublicationEnd']);
+            }
+            if (isset($data['dtEndBegin']) && $data['dtEndBegin'] != null) {
+                $qb->andWhere('a.dtEnd >= :dtEndBegin');
+                $qb->setParameter('dtEndBegin', $data['dtEndBegin']);
+            }
+            if (isset($data['dtEndEnd']) && $data['dtEndEnd'] != null) {
+                $qb->andWhere('a.dtEnd <= :dtEndEnd');
+                $qb->setParameter('dtEndEnd', $data['dtEndEnd']);
+            }
+        }
+
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get All Entities
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function getSearchFront($data)
+    {
+        return $this->getSearchFrontQuery($data)->execute();
+    }
+
+    /**
+     * Get Query for All Entities
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getAllFrontByCategQuery(AoCateg $categ)
     {
         $qb = $this->createQueryBuilder('a')
@@ -121,6 +182,42 @@ class AoCallfortenderRepository extends EntityRepository
     public function getAllFrontByGrp(AoSubCateg $grp)
     {
         return $this->getAllFrontByGrpQuery($grp)->execute();
+    }
+
+    /**
+     * Get Query for All Entities
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getAllNewsletterQuery(AoSubCateg $grp)
+    {
+        $today = new \DateTime('now');
+        $yesterday = new \DateTime('now');
+        $yesterday = $yesterday->modify('-1 day');
+        $qb = $this->createQueryBuilder('a')
+            ->join('a.grp', 'sc')
+            ->where('a.status = :status')
+            ->andWhere('sc.id = :scid')
+            ->andWhere('a.dtCrea >= :yesterday')
+            ->andWhere('a.dtCrea <= :today')
+            ->setParameter('status', AoCallfortender::STATUS_SHOW)
+            ->setParameter('scid', $grp->getId())
+            ->setParameter('yesterday', $yesterday)
+            ->setParameter('today', $today)
+            ->orderBy('a.dtPublication', 'DESC');
+        $query = $qb->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get All Entities
+     *
+     * @return mixed|\Doctrine\DBAL\Driver\Statement|array|NULL
+     */
+    public function getAllNewsletter(AoSubCateg $grp)
+    {
+        return $this->getAllNewsletterQuery($grp)->execute();
     }
 
     /**

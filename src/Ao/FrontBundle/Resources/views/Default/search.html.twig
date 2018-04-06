@@ -29,6 +29,7 @@ $(function() {
 			null,
 			null,
 			null,
+			null,
 			{ "searchable": false, "sortable": false }
 		],
 		"pageLength": 10
@@ -37,9 +38,9 @@ $(function() {
 	
 	$('#SearchForm_grp').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect: true});
 	
-	$('#SearchForm_nature').chosen({width: "100%", disable_search: true, allow_single_deselect: true});
+	$('#SearchForm_nature').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect: true});
 	
-	$('#SearchForm_typeAvis').chosen({width: "100%", disable_search: true, allow_single_deselect: true});
+	$('#SearchForm_typeAvis').chosen({width: "100%", disable_search_threshold: 10, allow_single_deselect: true});
 	
 	const now = new Date();
 	var dd = now.getDate()
@@ -110,18 +111,15 @@ $(function() {
 			clearBtn: true
 		}).datetimepicker('show');
 	});
-	$('#searchBlock').hide();
 	$('#searchBlockLink').css( 'cursor', 'pointer' );
 	$('#searchBlockLink').click(function( event ) {
-		$('#searchBlock').toggle( "slow");
+		$('#searchBlock').toggle("fast");
 	});
 });
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
 <ol class="breadcrumb">
-	<li><a href="{{ path('ao_front_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.ao'|trans|raw}}</a></li>
-	<li><a href="{{ path('ao_front_categ_editGet', {'uid': subCateg.categ.id}) }}">{{faIco('object-ungroup')}} &nbsp; {{subCateg.categ.title}}</a></li>
-	<li class="active"><a href="{{ path('ao_front_subcateg_editGet', {'uid': subCateg.id}) }}">{{faIco('object-group')}} &nbsp; {{subCateg.ref}} : {{subCateg.title}}</a></li>
+	<li class="active"><a href="{{ path('ao_front_homepage') }}">{{ faIco('dashboard') }} &nbsp; {{'breadcrumb.ao'|trans|raw}}</a></li>
 </ol>
 {%endblock breadcrumb%}
 {%block content%}
@@ -131,9 +129,9 @@ $(function() {
 			<div class="box-header">
 				<h3 class="box-title" id="searchBlockLink">{{ 'AoCallfortender.search.form'|trans|raw}}</h3>
 			</div>
-			<div class="box-body table-responsive" id="searchBlock">
+			<div class="box-body table-responsive">
 				{{form_start(SearchForm, {'method':'GET', 'action': path('ao_front_search'), 'style': 'horizontal'})}}
-				<table class="table table-small">
+				<table class="table table-small" id="searchBlock">
 					<tr>
 						<td width="50%">
 							{{form_row(SearchForm.country, {'label_col': 3, 'widget_col': 8 })}}
@@ -177,7 +175,7 @@ $(function() {
 		</div>
 		<div class="box">
 			<div class="box-header">
-				<h3 class="box-title">{{ 'AoCateg.tlabel.list'|trans|raw}}</h3>
+				<h3 class="box-title">{{ 'AoCallfortender.tlabel.list'|trans|raw}}</h3>
 			</div>
 			<div class="box-body table-responsive">
 				<table class="table table-bordered table-hover " id="callfortenderList">
@@ -191,6 +189,7 @@ $(function() {
 							<th>{{ 'AoCallfortender.dtEnd.label'|trans|raw }}</th>
 							<th>{{ 'AoCallfortender.daysleft.label'|trans|raw }}</th>
 							<th>{{ 'AoCallfortender.refn.label'|trans|raw }}</th>
+							<th>{{ 'AoCallfortender.grp.label'|trans|raw }}</th>
 							<th>{{ 'action'|trans|raw }}</th>
 						</tr>
 					</thead>
@@ -205,13 +204,14 @@ $(function() {
 							<td>{% if callfortender.dtEnd is not empty %}{{callfortender.dtEnd|date('Y-m-d')}}{%else%}{{'_NA'|trans}}{% endif %}</td>
 							<td>{% if callfortender.dtEnd is not empty and callfortender.dtEnd > date("now") %}{{ callfortender.dtEnd.diff(date("now")).days }}{%else%}{{'AoCallfortender.expired'|trans}}{% endif %}</td>
 							<td>{% if callfortender.ref is not empty %}{{callfortender.ref}}{%else%}{{'_NA'|trans}}{% endif %}</td>
+							<td><a href="{{ path('ao_front_categ_editGet', {'uid': callfortender.grp.categ.id}) }}">{{ callfortender.grp.categ.title }}</a> / <a href="{{ path('ao_front_subcateg_editGet', {'uid': callfortender.grp.id}) }}">{{ callfortender.grp.ref }} - {{ callfortender.grp.title }}</a></td>
 							<td>
 								<a class="btn btn-sm btn-info" href="{{path('ao_front_callfortender_editGet',{'uid':callfortender.id})}}">{{ glyphIco('eye-open') }} &nbsp; {{ 'action.show'|trans }}</a>
 							</td>
 						</tr>
 					{% else %}
 						<tr>
-							<td colspan="9">{{ 'AoCallfortender.empty'|trans|raw }}</td>
+							<td colspan="10">{{ 'AoCallfortender.empty'|trans|raw }}</td>
 						</tr>
 					{% endfor %}
 					</tbody>

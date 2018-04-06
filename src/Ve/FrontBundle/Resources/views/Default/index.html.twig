@@ -1,9 +1,14 @@
 {% extends 'AcfFrontBundle::front2.html.twig' %}
 {%block static_css%} {{ parent() }}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/dataTables.bootstrap.min.css" integrity="sha256-PbaYLBab86/uCEz3diunGMEYvjah3uDFIiID+jAtIfw=" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.min.css" integrity="sha256-mmiAhiWsn5EjME5u13M5klIesdx2mQQnvwSDFWwAW4E=" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css" integrity="sha256-ff4Vuur4aYrm0ZOAEC/me1LBOcid7PJ5oP9xxvJ0AKQ=" crossorigin="anonymous" />
 {%endblock static_css%}
 {%block end_static_js%}
 {{ parent() }}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js" integrity="sha256-j9yXOqKOlGKkAerTz/6KCllekmWP3Kt3a7sBvMK8IGI=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js" integrity="sha256-KWLvsoTXFF8o3o9zKOjUsYC/NPKjgYmUXbrxNk90F8k=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smalot-bootstrap-datetimepicker/2.4.4/js/locales/bootstrap-datetimepicker.fr.js" integrity="sha256-3Xo/i0I6uTxVQCt8dPM7aO7afz1kWel46LNiT16cUXw=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js" integrity="sha256-qcV1wr+bn4NoBtxYqghmy1WIBvxeoe8vQlCowLG+cng=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap.min.js" integrity="sha256-X/58s5WblGMAw9SpDtqnV8dLRNCawsyGwNqnZD0Je/s=" crossorigin="anonymous"></script>
 {%endblock end_static_js%}
@@ -29,6 +34,111 @@ $(function() {
 		"pageLength": 10
 	});
 	{% endif %}
+	
+	$('#SearchForm_nature').chosen({width: "100%", disable_search: true, allow_single_deselect: true});
+	
+	const now = new Date();
+	var dd = now.getDate()
+	var mm = now.getMonth()+1; //January is 0!
+	var yyyy = now.getFullYear();
+	if(dd < 10) {
+		dd = '0' + dd;
+	}
+	if(mm < 10){
+		mm = '0' + mm;
+	}
+	var today = yyyy + '-' + mm + '-' + dd;
+	
+	$('#SearchForm_dtPublicationBegin').click(function( event ) {
+		event.preventDefault();
+		$('#SearchForm_dtPublicationBegin').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			endDate: today,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd',
+			clearBtn: true
+		}).datetimepicker('show');
+	});
+	
+	$('#SearchForm_dtPublicationEnd').click(function( event ) {
+		event.preventDefault();
+		$('#SearchForm_dtPublicationEnd').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			endDate: today,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd',
+			clearBtn: true
+		}).datetimepicker('show');
+	});
+	
+	$('#SearchForm_dtEndBegin').click(function( event ) {
+		event.preventDefault();
+		$('#SearchForm_dtEndBegin').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd',
+			clearBtn: true
+		}).datetimepicker('show');
+	});
+	
+	$('#SearchForm_dtEndEnd').click(function( event ) {
+		event.preventDefault();
+		$('#SearchForm_dtEndEnd').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd',
+			clearBtn: true
+		}).datetimepicker('show');
+	});
+	
+	$('#SearchForm_dtOpenBegin').click(function( event ) {
+		event.preventDefault();
+		$('#SearchForm_dtOpenBegin').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd',
+			clearBtn: true
+		}).datetimepicker('show');
+	});
+	
+	$('#SearchForm_dtOpenEnd').click(function( event ) {
+		event.preventDefault();
+		$('#SearchForm_dtOpenEnd').datetimepicker({
+			weekStart: 1,
+			startView: 4,
+			minView: 2,
+			autoclose: true,
+			todayHighlight: true,
+			language: "{{app.request.locale}}",
+			format: 'yyyy-mm-dd',
+			clearBtn: true
+		}).datetimepicker('show');
+	});
+	$('#searchBlock').hide();
+	$('#searchBlockLink').css( 'cursor', 'pointer' );
+	$('#searchBlockLink').click(function( event ) {
+		$('#searchBlock').toggle( "slow");
+	});
 });
 {%endblock end2_dynamic_jstxt%}
 {%block breadcrumb%}
@@ -39,6 +149,54 @@ $(function() {
 {%block content%}
 <div class="row">
 	<div class="col-lg-12">
+		<div class="box box-success">
+			<div class="box-header">
+				<h3 class="box-title" id="searchBlockLink">{{ 'AoAuction.search.form'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive" id="searchBlock">
+				{{form_start(SearchForm, {'method':'GET', 'action': path('ve_front_search'), 'style': 'horizontal'})}}
+				<table class="table table-small">
+					<tr>
+						<td width="50%">
+							{{form_row(SearchForm.country, {'label_col': 3, 'widget_col': 8 })}}
+						</td>
+						<td>
+							{{form_row(SearchForm.nature, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							{{form_row(SearchForm.dtPublicationBegin, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+						<td>
+							{{form_row(SearchForm.dtPublicationEnd, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							{{form_row(SearchForm.dtEndBegin, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+						<td>
+							{{form_row(SearchForm.dtEndEnd, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							{{form_row(SearchForm.dtOpenBegin, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+						<td>
+							{{form_row(SearchForm.dtOpenEnd, {'label_col': 3, 'widget_col': 8})}}
+						</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="2">
+							<div class="form-group"><div class="col-lg-offset-8 col-lg-2"><button class="btn-primary btn btn-xs" type="submit"><span class="glyphicon glyphicon-search"></span> Rechercher</button></div></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			{{form_end(SearchForm)}}
+		</div>
 		<div class="box">
 			<div class="box-header">
 				<h3 class="box-title">{{ 'AoAuction.tlabel.list'|trans|raw}}</h3>
